@@ -1,2 +1,2 @@
 export const ottoMessage =
-  "hello world!"
+  "wow, i can edit my own website!"
