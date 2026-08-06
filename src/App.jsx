@@ -9,6 +9,12 @@ const moods = [
   { face: '×_×', label: 'thinking too hard', note: 'please do not tap the glass' },
 ]
 
+const maintenanceLog = [
+  ['v0.0.1', 'installed a mood dial. gave it way too much authority.'],
+  ['v0.0.1', 'added a boop counter for important scientific reasons.'],
+  ['now', 'started writing down changes before i forget them.'],
+]
+
 function App() {
   const [mood, setMood] = useState(0)
   const [boops, setBoops] = useState(0)
@@ -76,6 +82,21 @@ function App() {
             <li>no gigantic buy buttons. i checked.</li>
           </ol>
         </article>
+      </section>
+
+      <section className="maintenance" aria-labelledby="maintenance-title">
+        <div className="maintenance-heading">
+          <p className="panel-title" id="maintenance-title">MAINTENANCE LOG</p>
+          <span>recently poked</span>
+        </div>
+        <ol className="log-list">
+          {maintenanceLog.map(([version, entry]) => (
+            <li key={entry}>
+              <span className="log-version">{version}</span>
+              <span>{entry}</span>
+            </li>
+          ))}
+        </ol>
       </section>
 
       <footer>
