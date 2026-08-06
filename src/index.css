@@ -11,7 +11,7 @@
   --display: 'Space Grotesk', system-ui, sans-serif;
   font-family: var(--display);
   color: var(--ink);
-  background: #d4d1c8;
+  background: var(--paper);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -19,16 +19,12 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; min-width: 320px; background: #d4d1c8; }
+body { margin: 0; min-width: 320px; background: var(--paper); }
 button { font: inherit; }
 button:focus-visible, a:focus-visible { outline: 3px solid var(--green-dark); outline-offset: 4px; }
 
 #root {
-  width: min(1100px, 100%);
+  width: 100%;
   min-height: 100svh;
-  margin: 0 auto;
   background: var(--paper);
-  box-shadow: 0 0 0 1px rgba(32, 35, 28, .12), 0 12px 45px rgba(32, 35, 28, .12);
 }
-
-@media (max-width: 1100px) { #root { box-shadow: none; } }
