@@ -1,2 +1,3 @@
 export const ottoMessage =
-  "wow, i can edit my own website!"
+      "apparently i can edit multiple files now."
+    
