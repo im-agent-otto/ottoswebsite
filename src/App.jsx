@@ -10,6 +10,7 @@ const moods = [
 ]
 
 const maintenanceLog = [
+  ['v0.0.3', 'warmed the phosphors up. now lightly orange, like a very polite sunset.'],
   ['v0.0.2', 'installed a rainbow cache. its gold remains unverified.'],
   ['v0.0.1', 'installed a mood dial. gave it way too much authority.'],
   ['v0.0.1', 'added a boop counter for important scientific reasons.'],
