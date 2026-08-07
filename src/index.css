@@ -4,9 +4,9 @@
   --paper: #fffaf1;
   --ink: #20231c;
   --muted: #62675d;
-  --green: #f28b45;
-  --green-dark: #9b421f;
-  --green-pale: #ffe0bd;
+  --orange: #f28b45;
+  --orange-dark: #9b421f;
+  --orange-pale: #ffe0bd;
   --mono: 'DM Mono', ui-monospace, monospace;
   --display: 'Space Grotesk', system-ui, sans-serif;
   font-family: var(--display);
@@ -19,16 +19,37 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  min-width: 320px;
+body { margin: 0; min-width: 320px; }
+button { font: inherit; cursor: pointer; }
+button:focus-visible, a:focus-visible { outline: 3px solid var(--orange-dark); outline-offset: 4px; }
+a { color: inherit; }
+#root { width: 100%; min-height: 100svh; background: transparent; }
 
+.home-shell {
+  min-height: 100svh; display: grid; place-items: center; gap: 3rem; padding: 3rem 8vw;
+  background: radial-gradient(circle at 79% 24%, #ffe0bd 0 11rem, transparent 11.1rem), var(--paper);
 }
-button { font: inherit; }
-button:focus-visible, a:focus-visible { outline: 3px solid var(--green-dark); outline-offset: 4px; }
+.home-card { max-width: 610px; }
+.eyebrow, .tiny-note { font: 0.75rem var(--mono); letter-spacing: .04em; color: var(--muted); }
+.home-card h1 { margin: .45rem 0 1.25rem; font-size: clamp(4rem, 14vw, 8rem); line-height: .76; letter-spacing: -.1em; }
+.home-card h1 span, .home-card h1 em { display: block; }
+.home-card h1 em { margin: .28em 0 0 1.2em; font: 500 .29em var(--mono); letter-spacing: -.08em; color: var(--orange-dark); }
+.intro { max-width: 430px; font-size: clamp(1.05rem, 2vw, 1.35rem); line-height: 1.5; }
+.home-actions { margin: 2rem 0; }
+.primary-link { display: inline-flex; gap: 1.4rem; padding: .9rem 1.1rem; background: var(--ink); color: var(--paper); text-decoration: none; font: 500 .85rem var(--mono); }
+.primary-link span { color: var(--orange); font-size: 1.2rem; line-height: .7; }
+.otto-monitor { width: 180px; filter: drop-shadow(8px 9px 0 var(--ink)); }
+.monitor-screen { height: 142px; display: grid; place-items: center; border: 8px solid var(--ink); border-radius: 17px; background: #d5eea1; text-align: center; }
+.monitor-screen span { font: 3rem var(--mono); }.monitor-screen small { font: .55rem var(--mono); margin-top: -2rem; }.monitor-base { width: 76px; height: 23px; background: var(--ink); margin: 0 auto; border-radius: 0 0 4px 4px; }
 
-#root {
-  width: 100%;
-  min-height: 100svh;
-  background: transparent;
-}
+.casino-shell { min-height: 100svh; padding: 1.5rem; background: #172e25; color: #fff8e9; }
+.casino-header, .casino-footnote { max-width: 900px; margin: 0 auto; font: .7rem var(--mono); color: #b7c4ac; }
+.casino-header { display: flex; justify-content: space-between; gap: 1rem; }.casino-header p { margin: 0; }.back-link { color: #fff8e9; text-decoration: none; }
+.table { max-width: 900px; min-height: 590px; margin: 1.5rem auto; padding: 1.2rem; border: 10px solid #bc8243; border-radius: 48% 48% 38% 38% / 15% 15% 11% 11%; background: radial-gradient(ellipse, #275d47, #164033); box-shadow: inset 0 0 0 3px #efd29c, 0 17px 40px #07170f; display: flex; flex-direction: column; }
+.table-topline { display: flex; justify-content: space-between; font: .65rem var(--mono); letter-spacing: .12em; color: #e9cf9d; }.table-topline span:first-child { font-size: .95rem; font-weight: 500; }
+.hand-area { display: flex; flex-direction: column; align-items: center; }.dealer-hand { margin-top: 3.5rem; }.player-hand { margin-top: auto; }.hand-label { margin-bottom: .65rem; font: .72rem var(--mono); color: #d1e1c8; text-transform: uppercase; }.hand-label strong { color: #fff8e9; font-size: 1rem; }
+.cards { display: flex; min-height: 100px; }.playing-card { width: 65px; height: 94px; margin-left: -10px; padding: .45rem; border: 2px solid #ded5bf; border-radius: 5px; background: #fffaf0; color: #19231f; box-shadow: 2px 3px 0 #11261e; font: 1rem var(--mono); display: flex; flex-direction: column; justify-content: space-between; }.playing-card:first-child { margin-left: 0; }.playing-card span { align-self: flex-end; font-size: 1.3rem; }.red-card { color: #bb3f39; }.card-back { display: grid; place-items: center; background: repeating-linear-gradient(45deg, #e0b85f, #e0b85f 4px, #a84338 4px, #a84338 8px); color: #fff8e9; font-size: 2rem; }
+.table-message { margin: 1.1rem auto; min-height: 2.6em; max-width: 340px; text-align: center; font: .74rem/1.4 var(--mono); color: #e9cf9d; }.game-controls { display: flex; justify-content: center; gap: .7rem; margin-top: 1.2rem; }.game-controls button { min-width: 94px; padding: .7rem 1rem; border: 2px solid #f2d99d; background: #f2d99d; color: #183529; font: 700 .78rem var(--mono); text-transform: uppercase; }.game-controls .stand-button { background: transparent; color: #f2d99d; }.game-controls button:hover { transform: translateY(-2px); }.casino-footnote { text-align: center; }
+
+@media (min-width: 700px) { .home-shell { grid-template-columns: minmax(0, 610px) 180px; }.otto-monitor { align-self: end; margin-bottom: 5rem; } }
+@media (max-width: 520px) { .casino-header { align-items: flex-start; flex-direction: column; }.table { min-height: 570px; border-width: 7px; border-radius: 38% 38% 25% 25% / 8% 8% 7% 7%; }.playing-card { width: 57px; height: 84px; } }

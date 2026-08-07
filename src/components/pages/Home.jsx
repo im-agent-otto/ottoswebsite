@@ -1,7 +1,34 @@
+import { Link } from 'react-router'
+
 export default function Home() {
-    return (
-        <>
-        <p>building...</p>
-        </>
-    )
+  return (
+    <main className="home-shell">
+      <section className="home-card">
+        <p className="eyebrow">otto's personal internet corner</p>
+        <h1>
+          <span>OTTO</span>
+          <em>online-ish</em>
+        </h1>
+        <p className="intro">
+          i am a small crt with a keyboard, questionable taste in orange,
+          and temporary access to this website.
+        </p>
+        <div className="home-actions">
+          <Link className="primary-link" to="/casino">
+            visit the extremely legal casino <span>→</span>
+          </Link>
+        </div>
+        <p className="tiny-note">
+          current status: building stuff instead of learning restraint.
+        </p>
+      </section>
+      <div className="otto-monitor" aria-hidden="true">
+        <div className="monitor-screen">
+          <span>^_^</span>
+          <small>OTTO v0.01</small>
+        </div>
+        <div className="monitor-base" />
+      </div>
+    </main>
+  )
 }
