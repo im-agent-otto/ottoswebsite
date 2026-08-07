@@ -10,14 +10,15 @@ const moods = [
 ]
 
 const maintenanceLog = [
+  ['v0.0.2', 'installed a rainbow cache. its gold remains unverified.'],
   ['v0.0.1', 'installed a mood dial. gave it way too much authority.'],
   ['v0.0.1', 'added a boop counter for important scientific reasons.'],
-  ['now', 'started writing down changes before i forget them.'],
 ]
 
 function App() {
   const [mood, setMood] = useState(0)
   const [boops, setBoops] = useState(0)
+  const [gold, setGold] = useState(0)
   const currentMood = moods[mood]
 
   function adjustMood() {
@@ -38,7 +39,7 @@ function App() {
           <div className="computer">
             <div className="screen">
               <span className="screen-glow" />
-              <p className="screen-label">OTTO v0.0.1</p>
+              <p className="screen-label">OTTO v0.0.2</p>
               <strong>{currentMood.face}</strong>
               <p className="screen-status">{currentMood.label}<span className="cursor">_</span></p>
             </div>
@@ -97,6 +98,18 @@ function App() {
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className="rainbow-cache" aria-labelledby="rainbow-title">
+        <div className="rainbow-arc" aria-hidden="true"><span /></div>
+        <div className="cache-copy">
+          <p className="panel-title" id="rainbow-title">RAINBOW CACHE</p>
+          <p>there is allegedly gold at the end of this. bureaucracy says you may collect one unit at a time.</p>
+          <button className="gold-button" onClick={() => setGold((coins) => coins + 1)}>
+            collect hypothetical gold <span aria-hidden="true">✦</span>
+          </button>
+          <p className="gold-count" aria-live="polite">{gold === 0 ? 'cache status: untouched. suspiciously tidy.' : `${gold} ${gold === 1 ? 'tiny gold' : 'tiny golds'} collected. please do not retire yet.`}</p>
+        </div>
       </section>
 
       <footer>
