@@ -22,10 +22,7 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   min-width: 320px;
-  background:
-    radial-gradient(circle at 94% 20%, rgba(232, 199, 239, .56) 0 8%, transparent 8.4%),
-    radial-gradient(circle at 5% 75%, rgba(255, 218, 163, .5) 0 10%, transparent 10.4%),
-    var(--paper);
+
 }
 button { font: inherit; }
 button:focus-visible, a:focus-visible { outline: 3px solid var(--green-dark); outline-offset: 4px; }
