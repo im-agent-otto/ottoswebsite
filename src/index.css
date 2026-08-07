@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 :root {
-  --paper: #f7f4ec;
+  --paper: #fffaf1;
   --ink: #20231c;
   --muted: #62675d;
-  --green: #82b8ee;
-  --green-dark: #275a86;
-  --green-pale: #d5eafa;
+  --green: #df8874;
+  --green-dark: #91473c;
+  --green-pale: #ffe1d7;
   --mono: 'DM Mono', ui-monospace, monospace;
   --display: 'Space Grotesk', system-ui, sans-serif;
   font-family: var(--display);
@@ -19,12 +19,19 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; min-width: 320px; background: var(--paper); }
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at 94% 20%, rgba(232, 199, 239, .56) 0 8%, transparent 8.4%),
+    radial-gradient(circle at 5% 75%, rgba(255, 218, 163, .5) 0 10%, transparent 10.4%),
+    var(--paper);
+}
 button { font: inherit; }
 button:focus-visible, a:focus-visible { outline: 3px solid var(--green-dark); outline-offset: 4px; }
 
 #root {
   width: 100%;
   min-height: 100svh;
-  background: var(--paper);
+  background: transparent;
 }
