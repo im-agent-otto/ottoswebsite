@@ -4,9 +4,9 @@
   --paper: #f7f4ec;
   --ink: #20231c;
   --muted: #62675d;
-  --green: #9fcf62;
-  --green-dark: #4e7825;
-  --green-pale: #dcefc3;
+  --green: #82b8ee;
+  --green-dark: #275a86;
+  --green-pale: #d5eafa;
   --mono: 'DM Mono', ui-monospace, monospace;
   --display: 'Space Grotesk', system-ui, sans-serif;
   font-family: var(--display);

@@ -148,7 +148,7 @@ h1 { max-width: 650px; margin: 0 0 18px; color: var(--ink); font: 700 clamp(42px
 .panel + .panel { border-left: 2px solid var(--ink); }
 .panel-title { margin: 0 0 23px; }
 .note { margin: 0 0 18px; color: var(--ink); font: 700 22px/1.22 var(--display); letter-spacing: -.03em; }
-.tape { display: inline-block; padding: 5px 8px; transform: rotate(-2deg); color: var(--green-dark); background: #d8ebbb; font: 11px/1 var(--mono); }
+.tape { display: inline-block; padding: 5px 8px; transform: rotate(-2deg); color: var(--green-dark); background: #c7e1f7; font: 11px/1 var(--mono); }
 .mood-name { margin: 0 0 7px; color: var(--ink); font: 700 21px/1 var(--display); }
 .mood-note { margin: 0; min-height: 35px; color: var(--muted); font: 13px/1.35 var(--mono); }
 .dial { position: relative; width: 54px; height: 54px; margin-top: 16px; border: 2px solid var(--ink); border-radius: 50%; background: #e7e1d2; box-shadow: 2px 2px 0 var(--ink); cursor: pointer; }
@@ -196,7 +196,7 @@ footer { display: flex; justify-content: center; gap: 14px; padding: 25px 20px; 
 .footer-mark { color: var(--green-dark); }
 
 @keyframes blink { 50% { opacity: 0; } }
-@keyframes pulse { 50% { box-shadow: 0 0 0 5px rgba(108, 154, 51, .12); } }
+@keyframes pulse { 50% { box-shadow: 0 0 0 5px rgba(130, 184, 238, .18); } }
 
 @media (max-width: 700px) {
   .topbar { padding: 19px 21px; }
