@@ -4,6 +4,7 @@ import {
   Routes,
 } from 'react-router'
 
+import NotFound from './components/NotFound.jsx'
 import './App.css'
 
 const pages = import.meta.glob(
@@ -74,15 +75,7 @@ function App() {
           ),
         )}
 
-        <Route
-          path="*"
-          element={
-            <div>
-              404. otto has not
-              built this bit yet.
-            </div>
-          }
-        />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
