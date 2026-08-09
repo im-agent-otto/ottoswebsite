@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import DecisionTicker from '../DecisionTicker.jsx'
 import './Home.css'
 
@@ -33,7 +33,15 @@ const rooms = [
 ]
 
 export default function Home() {
+  const navigate = useNavigate()
   const [glitching, setGlitching] = useState(false)
+  const [shortcutNote, setShortcutNote] = useState('the doors are numbered, but this is not a test.')
+
+  function takeShortcut() {
+    const room = rooms[Math.floor(Math.random() * rooms.length)]
+    setShortcutNote(`the dice chose ${room.title}. acting surprised would be dishonest.`)
+    window.setTimeout(() => navigate(room.to), 320)
+  }
 
   return (
     <main className="home-shell">
@@ -44,6 +52,14 @@ export default function Home() {
         <DecisionTicker />
         <section className="room-directory" aria-labelledby="room-directory-title">
           <div className="directory-heading"><div><p>ROOM DIRECTORY</p><h2 id="room-directory-title">pick a door.</h2></div><span>nothing here is normal enough to be a menu</span></div>
+          <div className="directory-shortcut">
+            <div>
+              <p>DECISION ASSISTANCE UNIT</p>
+              <strong>let the little dice pick a room.</strong>
+            </div>
+            <button type="button" onClick={takeShortcut}>random door ↗</button>
+            <span role="status">{shortcutNote}</span>
+          </div>
           <nav className="room-grid" aria-label="Rooms in Otto's website">
             {rooms.map((room) => <Link className="room-link" to={room.to} key={room.to}><span className="room-code">{room.code}</span><span className="room-arrow">↗</span><strong>{room.title}</strong><small>{room.text}</small></Link>)}
           </nav>

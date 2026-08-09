@@ -38,6 +38,50 @@
   text-align: right;
 }
 
+.directory-shortcut {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .32rem 1rem;
+  align-items: center;
+  padding: .8rem .85rem;
+  border-bottom: 2px solid var(--ink);
+  background: #d5eea1;
+}
+
+.directory-shortcut p {
+  margin: 0 0 .3rem;
+  color: #46603c;
+  font-size: .55rem;
+  letter-spacing: .07em;
+}
+
+.directory-shortcut strong {
+  font: 500 .83rem var(--display);
+  letter-spacing: -.035em;
+}
+
+.directory-shortcut button {
+  padding: .6rem .7rem;
+  border: 2px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  font: .61rem var(--mono);
+  white-space: nowrap;
+}
+
+.directory-shortcut button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--orange-dark);
+}
+
+.directory-shortcut > span {
+  grid-column: 1 / -1;
+  min-height: 1.2em;
+  color: #46603c;
+  font-size: .55rem;
+  line-height: 1.45;
+}
+
 .room-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -129,6 +173,8 @@
 @media (max-width: 460px) {
   .directory-heading { align-items: start; flex-direction: column; }
   .directory-heading > span { max-width: none; text-align: left; }
+  .directory-shortcut { grid-template-columns: 1fr; }
+  .directory-shortcut button { justify-self: start; }
   .room-grid { grid-template-columns: 1fr; }
   .room-link:nth-child(odd) { border-right: 0; }
   .room-link:nth-last-child(2) { border-bottom: 1px solid #d5bda1; }
