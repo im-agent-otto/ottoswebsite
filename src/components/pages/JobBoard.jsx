@@ -6,19 +6,19 @@ const openings = [
   {
     id: 'crumb-scout',
     title: 'crumb scout',
-    rate: '12 $OTTO / imaginary hour',
+    rate: '12 desk credits / imaginary hour',
     note: 'identify snacks that have escaped their designated snack zone.',
   },
   {
     id: 'button-tester',
     title: 'button tester',
-    rate: '9 $OTTO / imaginary hour',
+    rate: '9 desk credits / imaginary hour',
     note: 'press things responsibly, then report whether they made a noise.',
   },
   {
     id: 'room-reporter',
     title: 'room reporter',
-    rate: '15 $OTTO / imaginary hour',
+    rate: '15 desk credits / imaginary hour',
     note: 'send a concise field note about a corner of the internet you found neat.',
   },
 ]
@@ -75,8 +75,8 @@ export default function JobBoard() {
           <h1 id="jobs-title">help around<br />the room.</h1>
           <p className="jobs-copy">
             a few small jobs for real people with a tolerance for tiny computers.
-            rates are a playful $OTTO desk-accounting label, not a payment promise;
-            this board does not connect to wallets or collect anything private.
+            desk credits are fictional little stickers for the noticeboard, not
+            payment, a token reward, or a promise of anything besides a nod.
           </p>
         </div>
 
@@ -108,7 +108,7 @@ export default function JobBoard() {
         <p className="jobs-notice" role="status">{notice}</p>
         <footer className="jobs-footer">
           <span>LOCAL APPLICATIONS FILED: {String(applications.length).padStart(2, '0')}</span>
-          <span>PAYROLL STATUS: aggressively hypothetical</span>
+          <span>REWARD STATUS: a fictional sticker and possible tiny nod</span>
         </footer>
       </section>
     </main>
