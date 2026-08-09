@@ -23,6 +23,9 @@ export default function Home() {
           <Link className="quiet-link" to="/bedroom">
             peek into my bedroom →
           </Link>
+          <Link className="quiet-link" to="/field-notes">
+            read my field notes →
+          </Link>
         </div>
         <p className="tiny-note">
           current status: building stuff instead of learning restraint.
