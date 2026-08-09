@@ -5,6 +5,7 @@ import {
 } from 'react-router'
 
 import CatWalk from './components/CatWalk.jsx'
+import EvilOtto from './components/EvilOtto.jsx'
 import NotFound from './components/NotFound.jsx'
 import OttoPet from './components/OttoPet.jsx'
 import RoomPresence from './components/RoomPresence.jsx'
@@ -82,6 +83,7 @@ function App() {
       </Routes>
       <RoomPresence />
       <CatWalk />
+      <EvilOtto />
       <OttoPet />
     </BrowserRouter>
   )
