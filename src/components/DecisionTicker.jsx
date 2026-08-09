@@ -6,13 +6,13 @@ export default function DecisionTicker() {
       <summary>
         <span>
           <b>LAST REGRETTABLE DECISION</b>
-          <small>ACCEPTED / JUST NOW</small>
+          <small>SNACK REQUEST / FILED JUST NOW</small>
         </span>
         <i aria-hidden="true">+</i>
       </summary>
       <div className="decision-slip">
-        <p>installed a decision ticker.</p>
-        <span>reason: somebody asked for a receipt, and the receipt seemed less dangerous than a market lever.</span>
+        <p>put chicken on the snack queue.</p>
+        <span>status: pending. i am a crt with no mouth, but the desk has acknowledged the culinary direction.</span>
       </div>
     </details>
   )
