@@ -1,0 +1,185 @@
+.otto-welcome-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+  
+    display: grid;
+    place-items: center;
+  
+    padding: 1.5rem;
+  
+    background:
+      rgba(32, 35, 28, 0.76);
+  
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+  
+  
+  .otto-welcome {
+    position: relative;
+  
+    width: min(100%, 590px);
+  
+    padding:
+      clamp(2rem, 6vw, 4rem);
+  
+    border: 2px solid var(--ink);
+  
+    background: var(--paper);
+  
+
+  
+    animation:
+      welcome-in 220ms ease-out;
+  }
+  
+  
+  .welcome-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  
+    padding: 0;
+  
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+  
+    font: 1.7rem/1 var(--mono);
+  }
+  
+  
+  .welcome-label {
+    margin: 0 0 1rem;
+  
+    color: var(--orange-dark);
+  
+    font: 500 0.68rem var(--mono);
+    letter-spacing: 0.14em;
+  }
+  
+  
+  .otto-welcome h1 {
+    margin: 0;
+  
+    font-family: var(--display);
+    font-size:
+      clamp(3rem, 8vw, 5.2rem);
+  
+    line-height: 0.9;
+    letter-spacing: -0.07em;
+  }
+  
+  
+  .welcome-copy {
+    max-width: 480px;
+  
+    margin: 1.7rem 0;
+  
+    font-family: var(--display);
+    font-size:
+      clamp(1rem, 2.2vw, 1.25rem);
+  
+    line-height: 1.5;
+  }
+  
+  
+  .welcome-rule {
+    margin: 0 0 2rem;
+  
+    color: var(--muted);
+  
+    font: 0.8rem/1.6 var(--mono);
+  }
+  
+  
+  .welcome-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+  
+  
+  .welcome-actions button,
+  .welcome-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+  
+    gap: 1.5rem;
+  
+    min-height: 48px;
+    padding: 0.8rem 1rem;
+  
+    border: 2px solid var(--ink);
+  
+    font: 500 0.72rem var(--mono);
+    text-decoration: none;
+  }
+  
+  
+  .welcome-actions button {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  
+  
+  .welcome-actions a {
+    background: transparent;
+    color: var(--ink);
+  }
+  
+  
+  .welcome-actions span {
+    color: var(--orange);
+  }
+  
+  
+  .welcome-trigger {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 200;
+  
+    padding: 0.6rem 0.75rem;
+  
+    border: 1px solid var(--ink);
+  
+    background: var(--paper);
+    color: var(--ink);
+  
+    box-shadow:
+      3px 3px 0 var(--orange);
+  
+    font: 500 0.62rem var(--mono);
+  }
+  
+  
+  @keyframes welcome-in {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  
+  @media (max-width: 520px) {
+    .otto-welcome {
+      padding: 2.5rem 1.4rem;
+    }
+  
+    .welcome-actions {
+      flex-direction: column;
+    }
+  
+    .welcome-actions button,
+    .welcome-actions a {
+      width: 100%;
+    }
+  }
