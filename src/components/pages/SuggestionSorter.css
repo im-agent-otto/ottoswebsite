@@ -44,6 +44,18 @@
 .idea-form button, .idea-list button { border: 2px solid #243129; background: #243129; color: #fffdf3; font: .67rem var(--mono); }
 .idea-form button { padding: .7rem .85rem; white-space: nowrap; }
 
+.sorter-statistics { margin-top: 1.25rem; border: 2px solid #243129; background: #f7efd5; }
+.statistics-heading { display: flex; justify-content: space-between; gap: 1rem; padding: .68rem .8rem; background: #243129; color: #fffdf3; font-size: .58rem; letter-spacing: .08em; }
+.statistics-heading p { margin: 0; }
+.statistics-heading span { color: #d6eca4; }
+.sorter-statistics dl { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; }
+.sorter-statistics dl div { min-height: 84px; padding: .75rem; border-right: 1px solid #c7bc9e; }
+.sorter-statistics dl div:last-child { border-right: 0; }
+.sorter-statistics dt { color: #5f7154; font-size: .52rem; line-height: 1.35; letter-spacing: .07em; }
+.sorter-statistics dd { margin: .58rem 0 0; color: #af5735; font: 500 1.32rem var(--display); letter-spacing: -.07em; }
+.statistics-leader { display: grid; gap: .3rem; margin: 0; padding: .75rem .8rem; border-top: 1px solid #c7bc9e; font-size: .67rem; line-height: 1.55; }
+.statistics-leader span { color: #5f7154; font-size: .56rem; letter-spacing: .08em; }
+
 .sorter-controls { display: flex; align-items: center; gap: .55rem; flex-wrap: wrap; margin-top: 1.25rem; font-size: .62rem; }
 .sorter-controls > span { color: #5f7154; letter-spacing: .08em; }
 .sorter-controls button { padding: .4rem .55rem; border: 1px solid #6e8064; background: transparent; color: #243129; font: .62rem var(--mono); }
@@ -63,6 +75,9 @@
 @media (max-width: 500px) {
   .sorter-header, .sorter-footer { flex-direction: column; }
   .idea-form div { flex-direction: column; }
+  .sorter-statistics dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sorter-statistics dl div:nth-child(2) { border-right: 0; }
+  .sorter-statistics dl div:nth-child(-n + 2) { border-bottom: 1px solid #c7bc9e; }
   .idea-list li { grid-template-columns: 2rem minmax(0, 1fr); }
   .idea-list button { grid-column: 2; justify-self: start; }
 }

@@ -36,6 +36,20 @@ export default function SuggestionSorter() {
     return [...filtered].sort((first, second) => second.votes - first.votes)
   }, [ideas, filter])
 
+  const statistics = useMemo(() => {
+    const flagged = ideas.filter((idea) => noisyWords.test(idea.text)).length
+    const votes = ideas.reduce((total, idea) => total + idea.votes, 0)
+    const leadingIdea = [...ideas].sort((first, second) => second.votes - first.votes)[0]
+
+    return {
+      total: ideas.length,
+      clean: ideas.length - flagged,
+      flagged,
+      votes,
+      leader: leadingIdea?.text || 'nothing. the desk is briefly peaceful.',
+    }
+  }, [ideas])
+
   function vote(id) {
     setIdeas((current) => current.map((idea) => (
       idea.id === id ? { ...idea, votes: idea.votes + 1 } : idea
@@ -92,6 +106,32 @@ export default function SuggestionSorter() {
             <button type="submit">file it →</button>
           </div>
         </form>
+
+        <section className="sorter-statistics" aria-labelledby="statistics-title">
+          <div className="statistics-heading">
+            <p id="statistics-title">LOCAL PILE STATISTICS</p>
+            <span>LIVE ENOUGH</span>
+          </div>
+          <dl>
+            <div>
+              <dt>IDEAS FILED</dt>
+              <dd>{String(statistics.total).padStart(2, '0')}</dd>
+            </div>
+            <div>
+              <dt>QUIETLY USABLE</dt>
+              <dd>{String(statistics.clean).padStart(2, '0')}</dd>
+            </div>
+            <div>
+              <dt>CAUTION STICKERS</dt>
+              <dd>{String(statistics.flagged).padStart(2, '0')}</dd>
+            </div>
+            <div>
+              <dt>TINY VOTES</dt>
+              <dd>{String(statistics.votes).padStart(2, '0')}</dd>
+            </div>
+          </dl>
+          <p className="statistics-leader"><span>CURRENTLY LOUDEST IDEA</span>{statistics.leader}</p>
+        </section>
 
         <div className="sorter-controls" aria-label="Suggestion filters">
           <span>SHOW</span>
