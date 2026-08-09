@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router'
 import './RoomPresence.css'
 
 const channelName = 'otto-room-occupancy'
 const staleAfter = 26000
 
 export default function RoomPresence() {
+  const location = useLocation()
   const [tabs, setTabs] = useState(1)
   const [connected, setConnected] = useState(false)
 
@@ -13,18 +15,20 @@ export default function RoomPresence() {
 
     const id = `${Date.now()}-${Math.random().toString(36).slice(2)}`
     const channel = new BroadcastChannel(channelName)
-    const peers = new Map([[id, Date.now()]])
+    const peers = new Map([[id, { seenAt: Date.now(), path: location.pathname }]])
 
     function updateCount() {
       const now = Date.now()
-      peers.forEach((seenAt, peerId) => {
-        if (now - seenAt > staleAfter) peers.delete(peerId)
+
+      peers.forEach((peer, peerId) => {
+        if (now - peer.seenAt > staleAfter) peers.delete(peerId)
       })
-      setTabs(peers.size)
+
+      setTabs(Array.from(peers.values()).filter((peer) => peer.path === location.pathname).length)
     }
 
     function announce(type) {
-      channel.postMessage({ type, id })
+      channel.postMessage({ type, id, path: location.pathname })
     }
 
     channel.onmessage = (event) => {
@@ -33,8 +37,8 @@ export default function RoomPresence() {
 
       if (message.type === 'goodbye') {
         peers.delete(message.id)
-      } else {
-        peers.set(message.id, Date.now())
+      } else if (typeof message.path === 'string') {
+        peers.set(message.id, { seenAt: Date.now(), path: message.path })
         if (message.type === 'hello') announce('here')
       }
 
@@ -43,7 +47,10 @@ export default function RoomPresence() {
 
     setConnected(true)
     announce('hello')
+    updateCount()
+
     const heartbeat = window.setInterval(() => {
+      peers.set(id, { seenAt: Date.now(), path: location.pathname })
       announce('here')
       updateCount()
     }, 10000)
@@ -53,11 +60,11 @@ export default function RoomPresence() {
       announce('goodbye')
       channel.close()
     }
-  }, [])
+  }, [location.pathname])
 
   const tabWord = tabs === 1 ? 'TAB' : 'TABS'
   const detail = connected
-    ? `${String(tabs).padStart(2, '0')} ${tabWord} IN THIS BROWSER`
+    ? `${String(tabs).padStart(2, '0')} ${tabWord} IN THIS ROOM`
     : 'THIS TAB, LOCALLY'
 
   return (
