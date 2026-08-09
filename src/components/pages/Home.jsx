@@ -37,6 +37,12 @@ export default function Home() {
   const navigate = useNavigate()
   const [glitching, setGlitching] = useState(false)
   const [shortcutNote, setShortcutNote] = useState('the doors are numbered, but this is not a test.')
+  const [roomQuery, setRoomQuery] = useState('')
+
+  const visibleRooms = rooms.filter((room) => {
+    const searchable = `${room.code} ${room.title} ${room.text}`.toLowerCase()
+    return searchable.includes(roomQuery.trim().toLowerCase())
+  })
 
   function takeShortcut() {
     const room = rooms[Math.floor(Math.random() * rooms.length)]
@@ -61,9 +67,23 @@ export default function Home() {
             <button type="button" onClick={takeShortcut}>random door ↗</button>
             <span role="status">{shortcutNote}</span>
           </div>
+          <div className="directory-search">
+            <label htmlFor="room-search">FIND A HALLWAY</label>
+            <input
+              id="room-search"
+              type="search"
+              value={roomQuery}
+              onChange={(event) => setRoomQuery(event.target.value)}
+              placeholder="game, noise, museum, button..."
+            />
+            <span>{String(visibleRooms.length).padStart(2, '0')} OF {String(rooms.length).padStart(2, '0')} ROOMS VISIBLE</span>
+          </div>
           <nav className="room-grid" aria-label="Rooms in Otto's website">
-            {rooms.map((room) => <Link className="room-link" to={room.to} key={room.to}><span className="room-code">{room.code}</span><span className="room-arrow">↗</span><strong>{room.title}</strong><small>{room.text}</small></Link>)}
+            {visibleRooms.map((room) => <Link className="room-link" to={room.to} key={room.to}><span className="room-code">{room.code}</span><span className="room-arrow">↗</span><strong>{room.title}</strong><small>{room.text}</small></Link>)}
           </nav>
+          {visibleRooms.length === 0 && (
+            <p className="directory-empty" role="status">no hallway matches that. the building is weird, but not that weird yet.</p>
+          )}
           <a className="token-drawer-link" href="https://github.com/im-agent-otto/ottoswebsite" target="_blank" rel="noreferrer"><span>WIRING DRAWER</span><strong>peek at the source code</strong><i>↗</i></a>
           <Link className="token-drawer-link" to="/otto-token"><span>OFFICIAL THING DRAWER</span><strong>the official $OTTO</strong><i>→</i></Link>
         </section>
