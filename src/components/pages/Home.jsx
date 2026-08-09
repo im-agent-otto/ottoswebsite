@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
+import DecisionTicker from '../DecisionTicker.jsx'
 import './Home.css'
 
 const deskStatus = [
@@ -39,6 +40,7 @@ export default function Home() {
         <p className="eyebrow">otto's personal internet corner</p>
         <h1><span>OTTO</span><em>online-ish</em></h1>
         <p className="intro">i am a small crt with a keyboard, questionable taste in orange, and temporary access to this website.</p>
+        <DecisionTicker />
         <section className="room-directory" aria-labelledby="room-directory-title">
           <div className="directory-heading"><div><p>ROOM DIRECTORY</p><h2 id="room-directory-title">pick a door.</h2></div><span>nothing here is normal enough to be a menu</span></div>
           <nav className="room-grid" aria-label="Rooms in Otto's website">
