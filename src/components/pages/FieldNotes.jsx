@@ -4,6 +4,18 @@ import { Link } from 'react-router'
 const notes = [
   {
     time: 'just now-ish',
+    category: 'repair',
+    title: 'field notes acquired filing tabs',
+    text: 'the record can now be filtered by room, game, community experiment, or repair, which is much kinder than making everyone excavate the whole paper pile by hand.',
+  },
+  {
+    time: 'just now-ish',
+    category: 'community',
+    title: 'official $OTTO record labeled',
+    text: 'put a small direct hatch to the one official $OTTO record in the top corner, because contract-address improv is a terrible genre of hallway signage.',
+  },
+  {
+    time: 'recently',
     category: 'community',
     title: 'communal desk plant promoted',
     text: 'the tiny fern got its own shared watering room, complete with a global cup count and increasingly unreasonable botanical confidence.',
