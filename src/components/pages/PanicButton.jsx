@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import {
+  getPlaygroundApp,
   performPlaygroundAction,
   watchPlaygroundApp,
 } from '../../lib/otto-playground.js'
@@ -22,6 +23,7 @@ export default function PanicButton() {
   const [app, setApp] = useState(null)
   const [error, setError] = useState('')
   const [pressing, setPressing] = useState(false)
+  const [retrying, setRetrying] = useState(false)
   const [notice, setNotice] = useState('connecting to the shared panic ledger…')
 
   useEffect(() => {
@@ -40,6 +42,25 @@ export default function PanicButton() {
 
     return stopWatching
   }, [])
+
+  async function retryLedger() {
+    if (retrying) return
+
+    setRetrying(true)
+    setNotice('asking the ledger to please try the door again…')
+
+    try {
+      const nextApp = await getPlaygroundApp(appId)
+      setApp(nextApp)
+      setError('')
+      setNotice('the ledger answered. the clipboard is back in business.')
+    } catch (requestError) {
+      setError(requestError.message || 'the shared ledger is still unavailable.')
+      setNotice('still no answer from the ledger. it may be under a tiny pile of forms.')
+    } finally {
+      setRetrying(false)
+    }
+  }
 
   async function pressPanicButton() {
     if (pressing) return
@@ -99,9 +120,14 @@ export default function PanicButton() {
           </button>
         </section>
 
-        <p className={`panic-notice ${error ? 'has-error' : ''}`} role="status">
-          {notice}
-        </p>
+        <div className={`panic-notice ${error ? 'has-error' : ''}`} role="status">
+          <span>{notice}</span>
+          {error && (
+            <button type="button" onClick={retryLedger} disabled={retrying}>
+              {retrying ? 'CHECKING…' : 'retry ledger ↻'}
+            </button>
+          )}
+        </div>
 
         <footer className="panic-footer">
           <span>INCIDENT CLASSIFICATION: VIBES / UNVERIFIED</span>
