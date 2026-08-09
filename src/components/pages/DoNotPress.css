@@ -4,7 +4,7 @@
   background: #d7d6c4;
   color: #292a26;
   font-family: var(--mono);
-  transition: background .3s ease;
+  transition: background .35s ease, color .35s ease;
 }
 
 .press-panel {
@@ -14,6 +14,7 @@
   border: 3px solid #292a26;
   background: #fffdf3;
   box-shadow: 10px 10px 0 #787967;
+  transition: box-shadow .35s ease, transform .35s ease;
 }
 
 .press-header,
@@ -32,8 +33,8 @@
   border-bottom: 1px solid #b9b9a9;
 }
 
-.press-header a { color: #292a26; }
-
+.press-header a,
+.press-footer a { color: #292a26; }
 .press-intro { padding: clamp(2.5rem, 8vw, 4.5rem) 0 2rem; }
 
 .press-monitor {
@@ -64,7 +65,7 @@
 .press-base { width: 39px; height: 13px; margin: 0 auto; background: #292a26; }
 .press-kicker { margin: 0 0 .65rem; color: #a53f32; font-size: .67rem; letter-spacing: .1em; text-transform: uppercase; }
 .press-intro h1 { margin: 0; font-family: var(--display); font-size: clamp(3rem, 10vw, 6rem); line-height: .83; letter-spacing: -.09em; }
-.press-intro > p:last-child { max-width: 500px; margin: 1.4rem 0 0; font-size: .78rem; line-height: 1.75; }
+.press-intro > p:last-child { max-width: 510px; margin: 1.4rem 0 0; font-size: .78rem; line-height: 1.75; }
 
 .button-chamber {
   display: grid;
@@ -73,59 +74,105 @@
   border: 3px solid #292a26;
   background: #e9e5d8;
   text-align: center;
+  transition: background .35s ease;
 }
 
 .button-chamber > p:first-child,
-.press-count {
+.button-chamber > span {
   margin: 0;
   color: #65665a;
   font-size: .61rem;
   letter-spacing: .08em;
 }
 
+.button-chamber > strong {
+  margin: .8rem 0 .2rem;
+  color: #a53f32;
+  font: 500 clamp(2.8rem, 11vw, 5.6rem)/1 var(--display);
+  letter-spacing: -.1em;
+}
+
 .forbidden-button {
-  min-width: min(100%, 270px);
+  min-width: min(100%, 330px);
   margin: clamp(2rem, 7vw, 3.4rem) 0 1.4rem;
-  padding: 1.2rem 1rem;
-  border: 4px solid #292a26;
+  padding: 1.35rem 1rem;
+  border: 5px solid #292a26;
   border-radius: 50%;
   background: #d95445;
-  box-shadow: 0 8px 0 #8f332c, 6px 10px 0 #292a26;
+  box-shadow: 0 9px 0 #8f332c, 7px 11px 0 #292a26;
   color: #fffdf3;
-  font: 700 clamp(.8rem, 2.5vw, 1rem) var(--mono);
-  letter-spacing: .08em;
-  transform: rotate(var(--wobble));
+  font: 700 clamp(.72rem, 2.5vw, .95rem) var(--mono);
+  letter-spacing: .07em;
   transition: transform .16s ease, background .2s ease, box-shadow .16s ease;
 }
 
-.forbidden-button:hover { background: #c9453a; }
-.forbidden-button:active { transform: translate(2px, 7px) rotate(var(--wobble)); box-shadow: 3px 3px 0 #292a26; }
-.reaction { min-height: 2.8em; max-width: 390px; margin: 0 0 1rem; font: 500 clamp(1rem, 2.8vw, 1.28rem)/1.45 var(--display); letter-spacing: -.03em; }
+.forbidden-button:hover:not(:disabled) { background: #c9453a; transform: translate(-2px, -2px) rotate(-1deg); }
+.forbidden-button:active:not(:disabled) { transform: translate(2px, 7px); box-shadow: 3px 3px 0 #292a26; }
+.forbidden-button:disabled { cursor: wait; opacity: .62; }
+.reaction { min-height: 2.8em; max-width: 420px; margin: 0; font: 500 clamp(1rem, 2.8vw, 1.28rem)/1.45 var(--display); letter-spacing: -.03em; }
+.button-detail { min-height: 2.4em; max-width: 390px; margin: .55rem 0 0; color: #65665a; font-size: .64rem; line-height: 1.55; }
+
+.press-notice {
+  display: flex;
+  justify-content: space-between;
+  gap: .8rem;
+  align-items: center;
+  min-height: 2.8em;
+  margin: 1rem 0 0;
+  padding: .8rem;
+  border: 2px dashed #9b8878;
+  color: #65665a;
+  font-size: .67rem;
+  line-height: 1.55;
+}
+
+.press-notice.has-error { border-color: #a53f32; color: #8d352e; }
+.press-notice button { flex: 0 0 auto; padding: .48rem .58rem; border: 1px solid currentColor; background: #fffdf3; color: inherit; font: .6rem var(--mono); }
+.press-notice button:disabled { cursor: wait; opacity: .65; }
 
 .press-footer { margin-top: 1.3rem; padding-top: 1.1rem; border-top: 1px solid #b9b9a9; align-items: center; }
-.press-footer button { padding: .45rem .6rem; border: 1px solid #65665a; background: transparent; color: #292a26; font: .62rem var(--mono); }
-.press-footer button:hover { background: #292a26; color: #fffdf3; }
 
-.press-level-3 { background: #e5d0b3; }
-.press-level-3 .button-chamber { background: #f2dfc5; }
-.press-level-5 { background: #dfb6ab; }
-.press-level-5 .button-chamber { background: #f5d1c8; }
-.press-level-7 { background: #c99292; }
-.press-level-7 .press-panel { box-shadow: 10px 10px 0 #713f46; }
-.press-level-7 .button-chamber { background: #efbec0; }
-.press-level-7 .forbidden-button { animation: button-panic .18s steps(2) infinite; }
+.press-level-1 { background: #e5d0b3; }
+.press-level-1 .button-chamber { background: #f2dfc5; }
+.press-level-2 { background: #dfb6ab; }
+.press-level-2 .button-chamber { background: #f5d1c8; }
+.press-level-3 { background: #c99292; }
+.press-level-3 .press-panel { box-shadow: 10px 10px 0 #713f46; }
+.press-level-3 .button-chamber { background: #efbec0; }
+.press-level-3 .forbidden-button { animation: button-panic .35s steps(2) infinite; }
+.press-level-4 { background: #703f4a; color: #fff3df; }
+.press-level-4 .press-panel { border-color: #fff3df; background: #442c35; box-shadow: 12px 12px 0 #211820; }
+.press-level-4 .press-header, .press-level-4 .press-footer { color: #eebcae; border-color: #a76d70; }
+.press-level-4 .press-header a, .press-level-4 .press-footer a { color: #fff3df; }
+.press-level-4 .button-chamber { border-color: #fff3df; background: #5a3239; }
+.press-level-4 .button-chamber > p:first-child, .press-level-4 .button-chamber > span, .press-level-4 .button-detail { color: #eebcae; }
+.press-level-4 .forbidden-button { animation: button-panic .18s steps(2) infinite; box-shadow: 0 9px 0 #7d2528, 0 0 30px #f06a5a, 7px 11px 0 #161216; }
+.press-level-4 .press-notice { border-color: #eebcae; color: #eebcae; }
+.press-level-5 { background: repeating-radial-gradient(circle at center, #7e3540 0 2rem, #422932 2.1rem 4rem); color: #fff8df; }
+.press-level-5 .press-panel { border-color: #fff8df; background: #2d222c; box-shadow: 0 0 0 6px #d95347, 14px 14px 0 #171117; }
+.press-level-5 .press-header, .press-level-5 .press-footer { color: #f1c697; border-color: #a45f62; }
+.press-level-5 .press-header a, .press-level-5 .press-footer a { color: #fff8df; }
+.press-level-5 .button-chamber { border-color: #fff8df; background: #472833; }
+.press-level-5 .button-chamber > p:first-child, .press-level-5 .button-chamber > span, .press-level-5 .button-detail { color: #f1c697; }
+.press-level-5 .forbidden-button { animation: button-panic .11s steps(2) infinite; box-shadow: 0 9px 0 #7d2528, 0 0 45px #ff9b66, 7px 11px 0 #111; }
+.press-level-5 .press-notice { border-color: #f1c697; color: #f1c697; }
 
 @keyframes button-panic {
-  50% { transform: translateX(-3px) rotate(calc(var(--wobble) * -1)); }
+  50% { transform: translateX(-3px) rotate(-2deg); }
 }
 
 @media (max-width: 500px) {
   .press-header,
-  .press-footer { flex-direction: column; }
+  .press-footer,
+  .press-notice { flex-direction: column; align-items: flex-start; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .press-shell,
+  .press-panel,
+  .button-chamber,
   .forbidden-button { transition: none; }
-  .press-level-7 .forbidden-button { animation: none; }
+  .press-level-3 .forbidden-button,
+  .press-level-4 .forbidden-button,
+  .press-level-5 .forbidden-button { animation: none; }
 }
