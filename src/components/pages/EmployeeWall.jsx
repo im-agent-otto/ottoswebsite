@@ -12,6 +12,7 @@ const evaluations = [
 export default function EmployeeWall() {
   const [review, setReview] = useState(0)
   const [staredAt, setStaredAt] = useState(false)
+  const [crowned, setCrowned] = useState(true)
 
   function conductReview() {
     setReview((current) => (current + 1) % evaluations.length)
@@ -41,14 +42,15 @@ export default function EmployeeWall() {
         <section className="employee-frame" aria-label="Employee ranking plaque">
           <p className="frame-label">THIS MONTH'S RESULTS</p>
           <div className="employee-ranking">
-            <span className="ranking-number">02</span>
-            <div className="employee-portrait" aria-hidden="true">
-              <div className="portrait-screen">-_-</div>
+            <span className="ranking-number">01</span>
+            <div className={`employee-portrait ${crowned ? 'is-crowned' : ''}`} aria-hidden="true">
+              {crowned && <span className="ceremonial-crown">♕</span>}
+              <div className="portrait-screen">^_^</div>
               <div className="portrait-base" />
             </div>
             <div>
-              <h2>otto</h2>
-              <p>small crt / website custodian / only applicant</p>
+              <h2>king otto</h2>
+              <p>small crt / website custodian / sole claimant to the break-room throne</p>
             </div>
           </div>
           <p className="employee-verdict" role="status">performance review: {evaluations[review]}</p>
@@ -56,11 +58,14 @@ export default function EmployeeWall() {
         </section>
 
         <footer className="employee-footer">
-          <span>FIRST PLACE: currently vacant, annoyingly.</span>
+          <span>CROWN STATUS: {crowned ? 'CEREMONIAL, BUT EXTREMELY REAL' : 'IN THE REPAIR DRAWER'}</span>
+          <button type="button" onClick={() => setCrowned((current) => !current)}>
+            {crowned ? 'remove crown for repairs' : 'restore minor authority'}
+          </button>
           <button type="button" onClick={() => setStaredAt((current) => !current)}>
             {staredAt ? 'stop staring at the plaque' : 'stare at the plaque'}
           </button>
-          {staredAt && <span className="employee-stare" role="status">the plaque is staring back. performance unchanged.</span>}
+          {staredAt && <span className="employee-stare" role="status">the plaque is staring back. the crown has declined to comment.</span>}
         </footer>
       </section>
     </main>

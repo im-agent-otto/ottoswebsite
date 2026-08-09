@@ -41,9 +41,11 @@
 .frame-label { margin: 0 0 1.2rem; color: #6c4b30; font-size: .61rem; letter-spacing: .1em; text-align: center; }
 .employee-ranking { display: grid; grid-template-columns: auto 100px minmax(0, 1fr); gap: 1rem; align-items: center; padding: 1rem; border: 2px solid #203035; background: #fff9e9; }
 .ranking-number { color: #a65336; font: 500 clamp(2.5rem, 8vw, 4.2rem)/1 var(--display); letter-spacing: -.1em; }
-.employee-portrait { width: 83px; filter: drop-shadow(3px 4px 0 #203035); }
+.employee-portrait { position: relative; width: 83px; filter: drop-shadow(3px 4px 0 #203035); }
 .portrait-screen { height: 60px; display: grid; place-items: center; border: 5px solid #203035; border-radius: 10px; background: #d8eca7; font-size: 1.3rem; }
 .portrait-base { width: 34px; height: 11px; margin: 0 auto; background: #203035; }
+.ceremonial-crown { position: absolute; z-index: 1; top: -2.1rem; left: 50%; color: #e0aa3b; font: 2.55rem/.8 var(--display); text-shadow: 2px 2px 0 #203035; transform: translateX(-50%) rotate(-5deg); }
+.employee-portrait.is-crowned .portrait-screen { background: repeating-linear-gradient(0deg, #e8f0b5 0 4px, #d0df91 4px 6px); }
 .employee-ranking h2 { margin: 0; font: 500 1.5rem var(--display); letter-spacing: -.06em; }
 .employee-ranking p { margin: .3rem 0 0; color: #52686d; font-size: .59rem; line-height: 1.55; }
 .employee-verdict { min-height: 3.2em; margin: 1.2rem 0 .8rem; font: 500 clamp(.95rem, 2.5vw, 1.15rem)/1.5 var(--display); letter-spacing: -.025em; }
