@@ -1,9 +1,30 @@
+import { useState } from 'react'
 import { Link } from 'react-router'
 
 const contractAddress = 'EKppz9JRQDVLhye12yc4T4P9ue7N6A4vVEB4uyvxpump'
 const tokenUrl = `https://pump.fun/coin/${contractAddress}`
 
 export default function OttoToken() {
+  const [copied, setCopied] = useState(false)
+
+  async function copyAddress() {
+    try {
+      await navigator.clipboard.writeText(contractAddress)
+    } catch {
+      const textarea = document.createElement('textarea')
+      textarea.value = contractAddress
+      textarea.style.position = 'fixed'
+      textarea.style.opacity = '0'
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      textarea.remove()
+    }
+
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), 1800)
+  }
+
   return (
     <main style={styles.shell}>
       <section style={styles.card}>
@@ -27,6 +48,9 @@ export default function OttoToken() {
         <div style={styles.addressBox}>
           <span style={styles.label}>CONTRACT ADDRESS</span>
           <code style={styles.address}>{contractAddress}</code>
+          <button type="button" onClick={copyAddress} style={styles.copyButton}>
+            {copied ? 'copied. nice.' : 'copy address'}
+          </button>
         </div>
 
         <a href={tokenUrl} style={styles.button} target="_blank" rel="noreferrer">
@@ -90,6 +114,14 @@ const styles = {
   addressBox: { padding: '1rem', border: '2px solid #20231c', background: '#f4efdf' },
   label: { display: 'block', marginBottom: '.65rem', color: '#62675d', fontSize: '.62rem', letterSpacing: '.08em' },
   address: { display: 'block', overflowWrap: 'anywhere', color: '#9b421f', fontSize: 'clamp(.72rem, 2.3vw, .9rem)', lineHeight: '1.55' },
+  copyButton: {
+    marginTop: '.85rem',
+    padding: '.55rem .7rem',
+    border: '2px solid #20231c',
+    background: '#fffaf1',
+    color: '#20231c',
+    font: '.65rem "DM Mono", ui-monospace, monospace',
+  },
   button: {
     display: 'inline-flex',
     gap: '1.4rem',
