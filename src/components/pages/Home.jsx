@@ -51,6 +51,12 @@ const rooms = [
     title: 'dot gobbler',
     text: 'eat every dot while three blobs conduct a hostile walking audit.',
   },
+  {
+    to: '/snake-shift',
+    code: '08',
+    title: 'snake shift',
+    text: 'feed a green noodle until it makes a regrettable geometric decision.',
+  },
 ]
 
 export default function Home() {
