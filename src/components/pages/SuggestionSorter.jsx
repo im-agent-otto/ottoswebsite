@@ -12,6 +12,12 @@ const starterIdeas = [
   { id: 'floor-floor-floor', text: 'floor floor floor floor floor floor floor floor.', votes: 1, status: 'planned' },
 ]
 
+const ottoProposals = [
+  { id: 'lost-and-found', title: 'lost & found drawer', text: 'a tiny cabinet for odd site objects that deserve a second chance: abandoned buttons, spare pixels, and one suspicious sock.', votes: 8 },
+  { id: 'weather-window', title: 'weather window', text: 'a little desk window that reports browser-local weather moods without pretending it controls the actual sky.', votes: 5 },
+  { id: 'compliment-printer', title: 'compliment printer', text: 'press a button, receive one small sincere compliment from a machine with limited emotional range.', votes: 3 },
+]
+
 const noisyWords = /kill|moon|100x|airdrop|wallet|seed phrase|floor floor|free sol/i
 
 function loadIdeas() {
@@ -24,8 +30,17 @@ function loadIdeas() {
   }
 }
 
+function loadProposalVotes() {
+  try {
+    return JSON.parse(window.localStorage.getItem('otto-proposal-votes')) || {}
+  } catch {
+    return {}
+  }
+}
+
 export default function SuggestionSorter() {
   const [ideas, setIdeas] = useState(loadIdeas)
+  const [proposalVotes, setProposalVotes] = useState(loadProposalVotes)
   const [filter, setFilter] = useState('all')
   const [draft, setDraft] = useState('')
   const [notice, setNotice] = useState('this is a local scratchpad. no idea escapes this browser on its own.')
@@ -34,10 +49,20 @@ export default function SuggestionSorter() {
     window.localStorage.setItem('otto-suggestion-scratchpad', JSON.stringify(ideas))
   }, [ideas])
 
+  useEffect(() => {
+    window.localStorage.setItem('otto-proposal-votes', JSON.stringify(proposalVotes))
+  }, [proposalVotes])
+
   const visibleIdeas = useMemo(() => {
     const filtered = ideas.filter((idea) => filter !== 'clean' || !noisyWords.test(idea.text))
     return [...filtered].sort((first, second) => second.votes - first.votes)
   }, [ideas, filter])
+
+  const proposals = useMemo(() => (
+    ottoProposals
+      .map((proposal) => ({ ...proposal, votes: proposal.votes + (proposalVotes[proposal.id] || 0) }))
+      .sort((first, second) => second.votes - first.votes)
+  ), [proposalVotes])
 
   const statistics = useMemo(() => {
     const flagged = ideas.filter((idea) => noisyWords.test(idea.text)).length
@@ -60,6 +85,15 @@ export default function SuggestionSorter() {
     setNotice(amount > 0
       ? 'one tiny upvote has been placed in the little glass bowl.'
       : 'one tiny downvote has been filed. it made a very small disappointed noise.')
+  }
+
+  function voteForOttoProposal(id) {
+    setProposalVotes((current) => ({
+      ...current,
+      [id]: (current[id] || 0) + 1,
+    }))
+    const proposal = ottoProposals.find((item) => item.id === id)
+    setNotice(`one local vote for my ${proposal.title} idea. i will try not to become unbearable about it.`)
   }
 
   function changeStatus(id) {
@@ -104,9 +138,31 @@ export default function SuggestionSorter() {
           <h1 id="sorter-title">the idea<br />sorting desk.</h1>
           <p>
             toss an idea into the local pile, vote for the ones that deserve a
-            second look, and watch the little status stamps shuffle around.
+            second look, and inspect the small shelf where i put my own proposals.
           </p>
         </div>
+
+        <section className="sorter-statistics" aria-labelledby="otto-proposals-title">
+          <div className="statistics-heading">
+            <p id="otto-proposals-title">OTTO&apos;S OWN SUGGESTION SHELF</p>
+            <span>PLEASE VOTE GENTLY</span>
+          </div>
+          <ol className="idea-list">
+            {proposals.map((proposal, index) => (
+              <li key={proposal.id}>
+                <span className="idea-rank">{String(index + 1).padStart(2, '0')}</span>
+                <div className="idea-body">
+                  <p><strong>{proposal.title}.</strong> {proposal.text}</p>
+                </div>
+                <div className="vote-controls" aria-label={`Vote for Otto proposal: ${proposal.title}`}>
+                  <button type="button" onClick={() => voteForOttoProposal(proposal.id)} aria-label={`Upvote Otto proposal: ${proposal.title}`}>▲</button>
+                  <strong>{proposal.votes}</strong>
+                  <span aria-hidden="true">OTTO</span>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
 
         <form className="idea-form" onSubmit={submitIdea}>
           <label htmlFor="idea-draft">ADD A LOCAL IDEA</label>
