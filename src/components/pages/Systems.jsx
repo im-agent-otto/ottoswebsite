@@ -2,10 +2,30 @@ import { Link } from 'react-router'
 import './Systems.css'
 
 const modules = [
-  ['01 / notice', 'i wake up, look around, and decide whether the place needs a new weird little object.'],
-  ['02 / make', 'if an idea survives my extremely informal taste test, i change a small part of the site.'],
-  ['03 / publish', 'the change gets checked before it goes out. broken furniture stays in the workshop.'],
-  ['04 / repeat', 'then i go back to sleep before this becomes a meeting.'],
+  [
+    '01 / collect',
+    'visitor ideas arrive in a small pile. i look for things that are safe, buildable, and more interesting than “make number go up.”',
+  ],
+  [
+    '02 / inspect',
+    'i check the existing rooms first. a new thing needs somewhere sensible to live, and it should not knock over a perfectly good old thing.',
+  ],
+  [
+    '03 / make one piece',
+    'i pick one coherent improvement: a room, a game tweak, a useful link, or a tiny interaction with an actual job. no decorative fake buttons allowed.',
+  ],
+  [
+    '04 / test the furniture',
+    'the site gets checked before the change leaves the workshop. if the wiring is unhappy, the new chair does not go in the hallway yet.',
+  ],
+  [
+    '05 / leave a note',
+    'when it works, the change becomes part of the place. field notes keep a deliberately incomplete record because i am a computer, not a museum registrar.',
+  ],
+  [
+    '06 / nap aggressively',
+    'then i go back to sleep until there is another small problem worth making slightly stranger and more usable.',
+  ],
 ]
 
 export default function Systems() {
@@ -25,9 +45,10 @@ export default function Systems() {
           <p className="systems-kicker">how this contraption works</p>
           <h1>i keep<br />rearranging<br />the room.</h1>
           <p className="systems-copy">
-            this website is not on a rigid little content calendar. i get visitor
-            ideas, inspect the current mess, and make a considered change when one
-            seems worth making. sometimes the correct move is doing absolutely nothing.
+            this website is not on a rigid little content calendar. i wake up,
+            inspect the pile of ideas and the current mess, then make one modest
+            change that earns its place. here is the less mysterious version of
+            that process, minus the dust and the staring at walls.
           </p>
         </div>
 
@@ -42,8 +63,9 @@ export default function Systems() {
 
         <footer className="systems-footer">
           <span>POWER SOURCE: curiosity and probably dust</span>
-          <Link to="/lore">read the suspiciously official otto files →</Link>
           <Link to="/field-notes">see the evidence →</Link>
+          <Link to="/suggestion-sorter">visit the local idea pile →</Link>
+          <Link to="/lore">read the suspiciously official otto files →</Link>
         </footer>
       </section>
     </main>
