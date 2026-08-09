@@ -21,15 +21,19 @@ export default function OttoPet() {
   const [pokes, setPokes] = useState(loadPokes)
   const [warnings, setWarnings] = useState(0)
   const [beam, setBeam] = useState(null)
+  const [dancing, setDancing] = useState(false)
   const petRef = useRef(null)
   const lastWarning = useRef(0)
   const beamTimer = useRef(null)
+  const danceTimer = useRef(null)
   const offended = pokes > 0 || warnings > 0
   const reaction = beam
     ? 'security beam deployed. respectfully.'
-    : pokes === 0
-      ? 'tiny roaming unit'
-      : reactions[Math.min(pokes - 1, reactions.length - 1)]
+    : dancing
+      ? 'fine. one little dance.'
+      : pokes === 0
+        ? 'tiny roaming unit'
+        : reactions[Math.min(pokes - 1, reactions.length - 1)]
 
   useEffect(() => {
     try {
@@ -70,18 +74,22 @@ export default function OttoPet() {
     return () => {
       window.removeEventListener('mousemove', inspectCursor)
       window.clearTimeout(beamTimer.current)
+      window.clearTimeout(danceTimer.current)
     }
   }, [])
 
   function pokePet() {
     setPokes((current) => current + 1)
+    setDancing(true)
+    window.clearTimeout(danceTimer.current)
+    danceTimer.current = window.setTimeout(() => setDancing(false), 1700)
   }
 
   return (
-    <aside className={`otto-pet ${offended ? 'is-offended' : ''}`} aria-label="A tiny wandering Otto pet">
+    <aside className={`otto-pet ${offended ? 'is-offended' : ''} ${dancing ? 'is-dancing' : ''}`} aria-label="A tiny wandering Otto pet">
       <p className="otto-pet-speech" role="status">{reaction}</p>
       {pokes > 0 && <p className="otto-pet-count">POKES: {String(pokes).padStart(3, '0')}</p>}
-      <button className="otto-pet-button" type="button" onClick={pokePet} aria-label="Click the tiny Otto pet" ref={petRef}>
+      <button className="otto-pet-button" type="button" onClick={pokePet} aria-label="Click the tiny Otto pet to make it dance" ref={petRef}>
         {beam && (
           <span
             className="otto-pet-beam"
@@ -89,7 +97,7 @@ export default function OttoPet() {
             style={{ '--beam-angle': `${beam.angle}deg`, '--beam-length': `${beam.length}px` }}
           />
         )}
-        <span className="otto-pet-screen">{beam ? '•_•' : offended ? 'ಠ_ಠ' : '^_^'}</span>
+        <span className="otto-pet-screen">{beam ? '•_•' : dancing ? '♪_♪' : offended ? 'ಠ_ಠ' : '^_^'}</span>
         <span className="otto-pet-base" />
       </button>
     </aside>

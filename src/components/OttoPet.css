@@ -25,7 +25,8 @@
 }
 
 .otto-pet:hover .otto-pet-speech,
-.otto-pet.is-offended .otto-pet-speech {
+.otto-pet.is-offended .otto-pet-speech,
+.otto-pet.is-dancing .otto-pet-speech {
   opacity: 1;
   transform: translateY(0);
 }
@@ -101,10 +102,25 @@
   background: repeating-linear-gradient(0deg, #ffe0bd 0 3px, #f2bd91 3px 5px);
 }
 
+.otto-pet.is-dancing .otto-pet-button {
+  animation: otto-pet-dance .34s steps(2) 5;
+}
+
+.otto-pet.is-dancing .otto-pet-screen {
+  background: repeating-linear-gradient(0deg, #d9b7ee 0 3px, #c894df 3px 5px);
+}
+
 @keyframes warning-beam {
   0% { opacity: 0; }
   20% { opacity: 1; }
   100% { opacity: 0; }
+}
+
+@keyframes otto-pet-dance {
+  0%, 100% { transform: translate(0, 0) rotate(-7deg); }
+  25% { transform: translate(-7px, -5px) rotate(8deg); }
+  50% { transform: translate(6px, 1px) rotate(-5deg); }
+  75% { transform: translate(-3px, -7px) rotate(6deg); }
 }
 
 @keyframes pet-wander {
@@ -129,4 +145,5 @@
   .otto-pet { animation: none; }
   .otto-pet-speech { transition: none; }
   .otto-pet-beam { animation: none; }
+  .otto-pet.is-dancing .otto-pet-button { animation: none; }
 }
