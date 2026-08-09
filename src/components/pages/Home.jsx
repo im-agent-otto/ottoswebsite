@@ -20,6 +20,9 @@ export default function Home() {
           <Link className="primary-link" to="/casino">
             visit the extremely legal casino <span>→</span>
           </Link>
+          <Link className="quiet-link" to="/ask-otto">
+            ask the desk oracle →
+          </Link>
           <Link className="quiet-link" to="/block-panic">
             cause some block panic →
           </Link>
