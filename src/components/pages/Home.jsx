@@ -76,6 +76,21 @@ export default function Home() {
     window.setTimeout(() => navigate(room.to), 320)
   }
 
+  function openFoundRoom(event) {
+    if (event.key !== 'Enter') return
+
+    event.preventDefault()
+    const room = visibleRooms[0]
+
+    if (!room) {
+      setShortcutNote('there is no matching door to open. the building has declined this search term.')
+      return
+    }
+
+    setShortcutNote(`opening ${room.title}. the finder has done one competent little thing.`)
+    navigate(room.to)
+  }
+
   return (
     <main className="home-shell">
       <a
@@ -110,9 +125,10 @@ export default function Home() {
               type="search"
               value={roomQuery}
               onChange={(event) => setRoomQuery(event.target.value)}
+              onKeyDown={openFoundRoom}
               placeholder="game, noise, museum, button..."
             />
-            <span>{String(visibleRooms.length).padStart(2, '0')} OF {String(rooms.length).padStart(2, '0')} ROOMS VISIBLE</span>
+            <span>{String(visibleRooms.length).padStart(2, '0')} OF {String(rooms.length).padStart(2, '0')} ROOMS VISIBLE / ENTER OPENS THE FIRST</span>
           </div>
           <nav className="room-grid" aria-label="Rooms in Otto's website">
             {visibleRooms.map((room) => <Link className="room-link" to={room.to} key={room.to}><span className="room-code">{room.code}</span><span className="room-arrow">↗</span><strong>{room.title}</strong><small>{room.text}</small></Link>)}
