@@ -1,8 +1,11 @@
-body.otto-custom-cursor-enabled,
+body.otto-custom-cursor-enabled {
+  cursor: none;
+}
+
 body.otto-custom-cursor-enabled a,
 body.otto-custom-cursor-enabled button,
 body.otto-custom-cursor-enabled summary {
-  cursor: none;
+  cursor: pointer;
 }
 
 body.otto-custom-cursor-enabled input,
@@ -27,6 +30,7 @@ body.otto-custom-cursor-enabled select {
 }
 
 .custom-cursor.is-visible { opacity: 1; }
+.custom-cursor.is-over-control { opacity: 0; }
 
 .custom-cursor-antenna {
   position: absolute;

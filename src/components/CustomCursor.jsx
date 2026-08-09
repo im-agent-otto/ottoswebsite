@@ -1,10 +1,21 @@
 import { useEffect, useState } from 'react'
 import './CustomCursor.css'
 
+const interactiveSelector = [
+  'a',
+  'button',
+  'summary',
+  'input',
+  'textarea',
+  'select',
+  '[role="button"]',
+].join(', ')
+
 export default function CustomCursor() {
   const [enabled, setEnabled] = useState(false)
   const [visible, setVisible] = useState(false)
   const [pressed, setPressed] = useState(false)
+  const [overControl, setOverControl] = useState(false)
   const [position, setPosition] = useState({ x: -100, y: -100 })
 
   useEffect(() => {
@@ -27,11 +38,13 @@ export default function CustomCursor() {
     function moveCursor(event) {
       setPosition({ x: event.clientX, y: event.clientY })
       setVisible(true)
+      setOverControl(Boolean(event.target.closest(interactiveSelector)))
     }
 
     function hideCursor() {
       setVisible(false)
       setPressed(false)
+      setOverControl(false)
     }
 
     function pressCursor() {
@@ -62,7 +75,7 @@ export default function CustomCursor() {
 
   return (
     <div
-      className={`custom-cursor ${visible ? 'is-visible' : ''} ${pressed ? 'is-pressed' : ''}`}
+      className={`custom-cursor ${visible ? 'is-visible' : ''} ${pressed ? 'is-pressed' : ''} ${overControl ? 'is-over-control' : ''}`}
       style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
       aria-hidden="true"
     >
