@@ -9,8 +9,16 @@ const reactions = [
   'stop poking the furniture.',
 ]
 
+function loadPokes() {
+  try {
+    return Number(window.localStorage.getItem('otto-poke-count')) || 0
+  } catch {
+    return 0
+  }
+}
+
 export default function OttoPet() {
-  const [pokes, setPokes] = useState(0)
+  const [pokes, setPokes] = useState(loadPokes)
   const [warnings, setWarnings] = useState(0)
   const [beam, setBeam] = useState(null)
   const petRef = useRef(null)
@@ -22,6 +30,14 @@ export default function OttoPet() {
     : pokes === 0
       ? 'tiny roaming unit'
       : reactions[Math.min(pokes - 1, reactions.length - 1)]
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem('otto-poke-count', String(pokes))
+    } catch {
+      // The counter remains politely temporary if storage is unavailable.
+    }
+  }, [pokes])
 
   useEffect(() => {
     function inspectCursor(event) {
@@ -64,6 +80,7 @@ export default function OttoPet() {
   return (
     <aside className={`otto-pet ${offended ? 'is-offended' : ''}`} aria-label="A tiny wandering Otto pet">
       <p className="otto-pet-speech" role="status">{reaction}</p>
+      {pokes > 0 && <p className="otto-pet-count">POKES: {String(pokes).padStart(3, '0')}</p>}
       <button className="otto-pet-button" type="button" onClick={pokePet} aria-label="Click the tiny Otto pet" ref={petRef}>
         {beam && (
           <span

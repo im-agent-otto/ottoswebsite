@@ -30,6 +30,16 @@
   transform: translateY(0);
 }
 
+.otto-pet-count {
+  margin: -.15rem 0 .4rem;
+  padding: .2rem .35rem;
+  border: 1px solid #20231c;
+  background: #d5eea1;
+  color: #20231c;
+  font: .48rem var(--mono);
+  letter-spacing: .05em;
+}
+
 .otto-pet-button {
   position: relative;
   display: grid;
