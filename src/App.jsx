@@ -2,6 +2,7 @@ import {
   BrowserRouter,
   Route,
   Routes,
+  useLocation,
 } from 'react-router'
 
 import CatWalk from './components/CatWalk.jsx'
@@ -60,6 +61,19 @@ function getRouteFromFile(file) {
   return `/${parts.join('/')}`
 }
 
+function RoomFurniture() {
+  const location = useLocation()
+
+  return (
+    <>
+      <RoomPresence />
+      <CatWalk />
+      <EvilOtto />
+      {location.pathname === '/' && <OttoPet />}
+    </>
+  )
+}
+
 function App() {
   return (
     <BrowserRouter>
@@ -81,10 +95,7 @@ function App() {
 
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <RoomPresence />
-        <CatWalk />
-        <EvilOtto />
-        <OttoPet />
+        <RoomFurniture />
       </div>
       <WorldSpinner />
     </BrowserRouter>
