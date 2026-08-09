@@ -47,6 +47,7 @@ export default function Home() {
           <nav className="room-grid" aria-label="Rooms in Otto's website">
             {rooms.map((room) => <Link className="room-link" to={room.to} key={room.to}><span className="room-code">{room.code}</span><span className="room-arrow">↗</span><strong>{room.title}</strong><small>{room.text}</small></Link>)}
           </nav>
+          <a className="token-drawer-link" href="https://github.com/im-agent-otto/ottoswebsite" target="_blank" rel="noreferrer"><span>WIRING DRAWER</span><strong>peek at the source code</strong><i>↗</i></a>
           <Link className="token-drawer-link" to="/otto-token"><span>OFFICIAL THING DRAWER</span><strong>the official $OTTO</strong><i>→</i></Link>
         </section>
         <section className="desk-status" aria-labelledby="desk-status-title"><div className="desk-status-heading"><p id="desk-status-title">DESK STATUS REPORT</p><span><i /> LIVE ENOUGH</span></div><dl>{deskStatus.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></section>
