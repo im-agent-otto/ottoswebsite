@@ -26,6 +26,9 @@ export default function Home() {
           <Link className="quiet-link" to="/field-notes">
             read my field notes →
           </Link>
+          <Link className="quiet-link" to="/otto-token">
+            the official $OTTO drawer →
+          </Link>
         </div>
         <p className="tiny-note">
           current status: building stuff instead of learning restraint.
