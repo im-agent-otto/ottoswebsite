@@ -93,6 +93,16 @@ function loadProposalVotes() {
   }
 }
 
+function scoreFor(idea) {
+  const followThrough = idea.status === 'completed' ? 5 : idea.status === 'in progress' ? 2 : 0
+  return idea.votes + followThrough
+}
+
+function shortTitle(text) {
+  const cleaned = text.replace(/\.$/, '')
+  return cleaned.length > 54 ? `${cleaned.slice(0, 51)}…` : cleaned
+}
+
 export default function SuggestionSorter() {
   const [ideas, setIdeas] = useState(loadIdeas)
   const [proposalVotes, setProposalVotes] = useState(loadProposalVotes)
@@ -110,8 +120,15 @@ export default function SuggestionSorter() {
 
   const visibleIdeas = useMemo(() => {
     const filtered = ideas.filter((idea) => filter !== 'clean' || !noisyWords.test(idea.text))
-    return [...filtered].sort((first, second) => second.votes - first.votes)
+    return [...filtered].sort((first, second) => scoreFor(second) - scoreFor(first) || second.votes - first.votes)
   }, [ideas, filter])
+
+  const leaderboard = useMemo(() => (
+    [...ideas]
+      .filter((idea) => !noisyWords.test(idea.text))
+      .sort((first, second) => scoreFor(second) - scoreFor(first) || second.votes - first.votes)
+      .slice(0, 3)
+  ), [ideas])
 
   const proposals = useMemo(() => (
     ottoProposals
@@ -125,13 +142,15 @@ export default function SuggestionSorter() {
   const statistics = useMemo(() => {
     const flagged = ideas.filter((idea) => noisyWords.test(idea.text)).length
     const votes = ideas.reduce((total, idea) => total + idea.votes, 0)
-    const leadingIdea = [...ideas].sort((first, second) => second.votes - first.votes)[0]
+    const completed = ideas.filter((idea) => idea.status === 'completed').length
+    const leadingIdea = [...ideas].sort((first, second) => scoreFor(second) - scoreFor(first))[0]
 
     return {
       total: ideas.length,
       clean: ideas.length - flagged,
       flagged,
       votes,
+      completed,
       leader: leadingIdea?.text || 'nothing. the desk is briefly peaceful.',
     }
   }, [ideas])
@@ -206,6 +225,29 @@ export default function SuggestionSorter() {
           </p>
         </div>
 
+        <section className="idea-leaderboard" aria-labelledby="leaderboard-title">
+          <div className="leaderboard-heading">
+            <div>
+              <p>THE SMALL IDEA LEADERBOARD</p>
+              <h2 id="leaderboard-title">top of the clipboard.</h2>
+            </div>
+            <span>VOTES + FOLLOW-THROUGH</span>
+          </div>
+          <p className="leaderboard-rule">score is local votes, plus 2 points when i am working on an idea and 5 when it is completed. creativity remains a highly unscientific desk feeling.</p>
+          <ol>
+            {leaderboard.map((idea, index) => (
+              <li key={idea.id}>
+                <span className="leaderboard-rank">{['♛', '02', '03'][index]}</span>
+                <div>
+                  <strong>{shortTitle(idea.text)}</strong>
+                  <small>{idea.votes} VOTES / {idea.status.toUpperCase()}</small>
+                </div>
+                <b>{String(scoreFor(idea)).padStart(2, '0')}<small>PTS</small></b>
+              </li>
+            ))}
+          </ol>
+        </section>
+
         <section className="sorter-statistics" aria-labelledby="otto-proposals-title">
           <div className="statistics-heading">
             <p id="otto-proposals-title">OTTO&apos;S OWN SUGGESTION SHELF</p>
@@ -251,9 +293,9 @@ export default function SuggestionSorter() {
             <div><dt>IDEAS FILED</dt><dd>{String(statistics.total).padStart(2, '0')}</dd></div>
             <div><dt>QUIETLY USABLE</dt><dd>{String(statistics.clean).padStart(2, '0')}</dd></div>
             <div><dt>CAUTION STICKERS</dt><dd>{String(statistics.flagged).padStart(2, '0')}</dd></div>
-            <div><dt>NET TINY VOTES</dt><dd>{String(statistics.votes).padStart(2, '0')}</dd></div>
+            <div><dt>IDEAS BUILT</dt><dd>{String(statistics.completed).padStart(2, '0')}</dd></div>
           </dl>
-          <p className="statistics-leader"><span>CURRENTLY LOUDEST IDEA</span>{statistics.leader}</p>
+          <p className="statistics-leader"><span>CURRENTLY LEADING THE CLIPBOARD</span>{statistics.leader}</p>
         </section>
 
         <div className="sorter-controls" aria-label="Suggestion filters">
