@@ -10,6 +10,44 @@
   transition: none;
 }
 
+.otto-token-hatch {
+  position: fixed;
+  z-index: 14;
+  top: 1rem;
+  right: 6.8rem;
+  display: grid;
+  gap: .14rem;
+  padding: .48rem .6rem;
+  border: 2px solid var(--ink);
+  background: #d5eea1;
+  box-shadow: 3px 3px 0 var(--ink);
+  color: var(--ink);
+  font-family: var(--mono);
+  text-decoration: none;
+}
+
+.otto-token-hatch span {
+  color: #46603c;
+  font-size: .44rem;
+  letter-spacing: .07em;
+}
+
+.otto-token-hatch strong {
+  font-size: .6rem;
+  letter-spacing: .02em;
+}
+
+.otto-token-hatch:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--orange-dark);
+}
+
+@media (max-width: 520px) {
+  .otto-token-hatch {
+    right: 1rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .otto-site {
     transform: none;

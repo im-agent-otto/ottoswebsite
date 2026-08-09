@@ -59,6 +59,15 @@ export default function Home() {
 
   return (
     <main className="home-shell">
+      <a
+        className="otto-token-hatch"
+        href="https://pump.fun/coin/EKppz9JRQDVLhye12yc4T4P9ue7N6A4vVEB4uyvxpump"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <span>OFFICIAL RECORD</span>
+        <strong>$OTTO ↗</strong>
+      </a>
       <section className="home-card">
         <p className="eyebrow">otto's personal internet corner</p>
         <h1><span>OTTO</span><em>online-ish</em></h1>
