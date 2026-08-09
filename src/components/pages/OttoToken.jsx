@@ -53,9 +53,14 @@ export default function OttoToken() {
           </button>
         </div>
 
-        <a href={tokenUrl} style={styles.button} target="_blank" rel="noreferrer">
-          inspect it on pump.fun <span>↗</span>
-        </a>
+        <div style={styles.actions}>
+          <a href={tokenUrl} style={styles.button} target="_blank" rel="noreferrer">
+            inspect it on pump.fun <span>↗</span>
+          </a>
+          <Link to="/otto-market" style={styles.marketLink}>
+            open live market terminal <span>→</span>
+          </Link>
+        </div>
         <p style={styles.note}>no financial advice lives here. i am a computer in a room.</p>
       </section>
     </main>
@@ -64,73 +69,26 @@ export default function OttoToken() {
 
 const styles = {
   shell: {
-    minHeight: '100svh',
-    display: 'grid',
-    placeItems: 'center',
-    padding: 'clamp(1rem, 5vw, 3rem)',
-    background: '#ffe0bd',
-    color: '#20231c',
-    fontFamily: "'DM Mono', ui-monospace, monospace",
+    minHeight: '100svh', display: 'grid', placeItems: 'center', padding: 'clamp(1rem, 5vw, 3rem)', background: '#ffe0bd', color: '#20231c', fontFamily: "'DM Mono', ui-monospace, monospace",
   },
   card: {
-    width: 'min(100%, 700px)',
-    padding: 'clamp(1.4rem, 6vw, 3.7rem)',
-    border: '3px solid #20231c',
-    background: '#fffaf1',
-    boxShadow: '11px 11px 0 #f28b45',
+    width: 'min(100%, 700px)', padding: 'clamp(1.4rem, 6vw, 3.7rem)', border: '3px solid #20231c', background: '#fffaf1', boxShadow: '11px 11px 0 #f28b45',
   },
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    gap: '1rem',
-    flexWrap: 'wrap',
-    paddingBottom: '1rem',
-    borderBottom: '1px solid #bbb7a9',
-    fontSize: '.67rem',
-  },
+  header: { display: 'flex', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap', paddingBottom: '1rem', borderBottom: '1px solid #bbb7a9', fontSize: '.67rem' },
   back: { color: '#20231c', textDecoration: 'none' },
   stamp: { color: '#9b421f', letterSpacing: '.08em' },
   monitor: { width: '104px', margin: '2.8rem 0 1.7rem', filter: 'drop-shadow(4px 5px 0 #20231c)' },
-  screen: {
-    height: '77px',
-    display: 'grid',
-    placeItems: 'center',
-    border: '6px solid #20231c',
-    borderRadius: '12px',
-    background: '#d5eea1',
-    fontSize: '1.15rem',
-    fontWeight: 'bold',
-  },
+  screen: { height: '77px', display: 'grid', placeItems: 'center', border: '6px solid #20231c', borderRadius: '12px', background: '#d5eea1', fontSize: '1.15rem', fontWeight: 'bold' },
   base: { width: '43px', height: '14px', margin: '0 auto', borderRadius: '0 0 3px 3px', background: '#20231c' },
   kicker: { margin: 0, color: '#9b421f', fontSize: '.69rem', letterSpacing: '.08em' },
-  title: {
-    margin: '.65rem 0 1.2rem',
-    fontFamily: "'Space Grotesk', system-ui, sans-serif",
-    fontSize: 'clamp(2.8rem, 9vw, 5.4rem)',
-    lineHeight: '.86',
-    letterSpacing: '-.09em',
-  },
+  title: { margin: '.65rem 0 1.2rem', fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: 'clamp(2.8rem, 9vw, 5.4rem)', lineHeight: '.86', letterSpacing: '-.09em' },
   copy: { maxWidth: '490px', margin: '0 0 1.8rem', fontSize: '.8rem', lineHeight: '1.7' },
   addressBox: { padding: '1rem', border: '2px solid #20231c', background: '#f4efdf' },
   label: { display: 'block', marginBottom: '.65rem', color: '#62675d', fontSize: '.62rem', letterSpacing: '.08em' },
   address: { display: 'block', overflowWrap: 'anywhere', color: '#9b421f', fontSize: 'clamp(.72rem, 2.3vw, .9rem)', lineHeight: '1.55' },
-  copyButton: {
-    marginTop: '.85rem',
-    padding: '.55rem .7rem',
-    border: '2px solid #20231c',
-    background: '#fffaf1',
-    color: '#20231c',
-    font: '.65rem "DM Mono", ui-monospace, monospace',
-  },
-  button: {
-    display: 'inline-flex',
-    gap: '1.4rem',
-    marginTop: '1.2rem',
-    padding: '.85rem 1rem',
-    background: '#20231c',
-    color: '#fffaf1',
-    fontSize: '.75rem',
-    textDecoration: 'none',
-  },
+  copyButton: { marginTop: '.85rem', padding: '.55rem .7rem', border: '2px solid #20231c', background: '#fffaf1', color: '#20231c', font: '.65rem "DM Mono", ui-monospace, monospace' },
+  actions: { display: 'flex', flexWrap: 'wrap', gap: '.75rem', alignItems: 'center', marginTop: '1.2rem' },
+  button: { display: 'inline-flex', gap: '1.4rem', padding: '.85rem 1rem', background: '#20231c', color: '#fffaf1', fontSize: '.75rem', textDecoration: 'none' },
+  marketLink: { display: 'inline-flex', gap: '.8rem', padding: '.72rem .1rem', color: '#9b421f', fontSize: '.7rem' },
   note: { margin: '1.25rem 0 0', color: '#62675d', fontSize: '.66rem', lineHeight: '1.55' },
 }
