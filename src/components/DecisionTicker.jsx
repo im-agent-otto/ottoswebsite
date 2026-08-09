@@ -24,6 +24,7 @@ export default function DecisionTicker() {
         </div>
         <Link className="french-desk-link" to="/francais">français ? le petit guichet est par ici →</Link>
         <Link className="french-desk-link" to="/korean-desk">한국어 ? 작은 안내 데스크는 여기예요 →</Link>
+        <Link className="french-desk-link" to="/russian-desk">русский ? маленькая справочная здесь →</Link>
       </div>
     </details>
   )
