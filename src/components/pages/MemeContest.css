@@ -1,0 +1,86 @@
+.meme-shell {
+  min-height: 100svh;
+  padding: clamp(1rem, 5vw, 3rem);
+  background: #e4c9d6;
+  color: #302431;
+  font-family: var(--mono);
+}
+
+.meme-panel {
+  width: min(100%, 800px);
+  margin: 0 auto;
+  padding: clamp(1.3rem, 5vw, 3.4rem);
+  border: 3px solid #302431;
+  background: #fffaf2;
+  box-shadow: 10px 10px 0 #875b73;
+}
+
+.meme-header,
+.meme-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #745569;
+  font-size: .64rem;
+  letter-spacing: .05em;
+}
+
+.meme-header {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #cfb6c1;
+}
+
+.meme-header a { color: #302431; }
+.meme-intro { padding: clamp(2.5rem, 8vw, 4.5rem) 0 2rem; }
+.meme-kicker { margin: 0 0 .65rem; color: #b04d4d; font-size: .67rem; letter-spacing: .1em; text-transform: uppercase; }
+.meme-intro h1 { margin: 0; font-family: var(--display); font-size: clamp(3rem, 10vw, 6rem); line-height: .83; letter-spacing: -.09em; }
+.meme-intro > p:last-child { max-width: 520px; margin: 1.4rem 0 0; font-size: .78rem; line-height: 1.75; }
+
+.meme-stage {
+  display: grid;
+  place-items: center;
+  gap: 1rem;
+  padding: clamp(1.4rem, 5vw, 2.3rem);
+  border: 3px solid #302431;
+  background: repeating-linear-gradient(45deg, #f5d8ad 0 12px, #f0c994 12px 24px);
+  text-align: center;
+}
+
+.meme-monitor { width: 148px; filter: drop-shadow(6px 7px 0 #302431); }
+.meme-screen { height: 108px; display: grid; place-items: center; border: 7px solid #302431; border-radius: 15px; background: repeating-linear-gradient(0deg, #d8eca4 0 4px, #bddb8a 4px 6px); font: 2.5rem var(--mono); }
+.meme-screen small { margin-top: -2rem; font: .43rem var(--mono); letter-spacing: .08em; }
+.meme-base { width: 60px; height: 18px; margin: 0 auto; background: #302431; }
+.meme-stage p { max-width: 380px; margin: 0; padding: .75rem; border: 2px solid #302431; background: #fffaf2; font-size: .69rem; line-height: 1.55; }
+
+.meme-form { display: grid; gap: .65rem; margin-top: 1.3rem; padding: 1rem; border: 2px solid #302431; background: #f2e5ed; }
+.meme-form label { color: #745569; font-size: .61rem; letter-spacing: .08em; }
+.meme-form div { display: flex; gap: .6rem; }
+.meme-form input { min-width: 0; flex: 1; padding: .72rem; border: 2px solid #302431; border-radius: 0; background: #fffaf2; color: #302431; font: .72rem var(--mono); }
+.meme-form button,
+.meme-gallery button { border: 2px solid #302431; background: #302431; color: #fffaf2; font: .65rem var(--mono); }
+.meme-form button { padding: .7rem .85rem; white-space: nowrap; }
+.meme-form button:hover,
+.meme-gallery button:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 #b04d4d; }
+.meme-notice { min-height: 1.5em; margin: .8rem 0; color: #745569; font-size: .64rem; line-height: 1.5; }
+
+.meme-gallery { border: 2px solid #302431; }
+.gallery-heading { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: .75rem .85rem; background: #302431; color: #fffaf2; }
+.gallery-heading h2 { margin: 0; font: 500 .95rem var(--display); letter-spacing: -.04em; }
+.gallery-heading span { color: #d8eca4; font-size: .58rem; letter-spacing: .07em; }
+.meme-gallery ol { margin: 0; padding: 0; list-style: none; }
+.meme-gallery li { display: grid; grid-template-columns: 2.8rem minmax(0, 1fr) auto; gap: .8rem; align-items: center; padding: .85rem; border-bottom: 1px solid #cfb6c1; background: #fff7e9; }
+.meme-gallery li:last-child { border-bottom: 0; }
+.meme-rank { color: #b04d4d; font-size: .66rem; }
+.meme-gallery p { margin: 0; font-size: .71rem; line-height: 1.55; }
+.meme-gallery button { min-width: 4.4rem; padding: .48rem; }
+.meme-gallery button strong { color: #d8eca4; }
+.meme-footer { margin-top: 1.3rem; padding-top: 1.1rem; border-top: 1px solid #cfb6c1; }
+
+@media (max-width: 500px) {
+  .meme-header,
+  .meme-footer { flex-direction: column; }
+  .meme-form div { flex-direction: column; }
+  .meme-gallery li { grid-template-columns: 2rem minmax(0, 1fr); }
+  .meme-gallery button { grid-column: 2; justify-self: start; }
+}

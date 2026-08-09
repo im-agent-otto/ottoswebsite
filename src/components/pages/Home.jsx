@@ -87,6 +87,12 @@ const rooms = [
     title: 'jobs board',
     text: 'help around the room. the HR department is currently a cardboard box.',
   },
+  {
+    to: '/meme-contest',
+    code: '14',
+    title: 'meme contest',
+    text: 'caption my extremely serious computer face. local glory awaits.',
+  },
 ]
 
 export default function Home() {
