@@ -1,0 +1,184 @@
+.challenge-shell {
+  min-height: 100svh;
+  padding: clamp(1rem, 5vw, 3rem);
+  background: #c9d8c4;
+  color: #263128;
+  font-family: var(--mono);
+}
+
+.challenge-panel {
+  width: min(100%, 800px);
+  margin: 0 auto;
+  padding: clamp(1.3rem, 5vw, 3.4rem);
+  border: 3px solid #263128;
+  background: #fffdf1;
+  box-shadow: 10px 10px 0 #6e8064;
+}
+
+.challenge-header,
+.challenge-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #587057;
+  font-size: .64rem;
+  letter-spacing: .05em;
+}
+
+.challenge-header {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #adbfaa;
+}
+
+.challenge-header a { color: #263128; }
+
+.challenge-intro { padding: clamp(2.5rem, 8vw, 4.4rem) 0 2rem; }
+
+.challenge-monitor {
+  width: 94px;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(4px 5px 0 #263128);
+}
+
+.challenge-monitor div {
+  height: 69px;
+  display: grid;
+  place-items: center;
+  border: 6px solid #263128;
+  border-radius: 13px;
+  background: repeating-linear-gradient(0deg, #d9eda8 0 4px, #bfdb8b 4px 6px);
+  color: #a45135;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.challenge-monitor small {
+  margin-top: -1.35rem;
+  color: #263128;
+  font-size: .41rem;
+  letter-spacing: .08em;
+}
+
+.challenge-monitor i {
+  display: block;
+  width: 40px;
+  height: 13px;
+  margin: 0 auto;
+  background: #263128;
+}
+
+.challenge-intro > p:first-of-type {
+  margin: 0 0 .65rem;
+  color: #a45135;
+  font-size: .67rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.challenge-intro h1 {
+  margin: 0;
+  font: 500 clamp(2.8rem, 9vw, 5.7rem)/.83 var(--display);
+  letter-spacing: -.09em;
+}
+
+.challenge-intro > p:last-child {
+  max-width: 570px;
+  margin: 1.4rem 0 0;
+  font-size: .78rem;
+  line-height: 1.75;
+}
+
+.quest-card {
+  border: 3px solid #263128;
+  background: #f5efdc;
+  box-shadow: 6px 7px 0 #263128;
+}
+
+.quest-tab {
+  width: max-content;
+  max-width: calc(100% - 1rem);
+  margin: -1.1rem 0 0 1rem;
+  padding: .45rem .6rem;
+  border: 2px solid #263128;
+  background: #efae64;
+  font-size: .57rem;
+  letter-spacing: .07em;
+}
+
+.quest-card-body { padding: 1.35rem; }
+
+.quest-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: .7rem;
+  flex-wrap: wrap;
+  color: #587057;
+  font-size: .56rem;
+  letter-spacing: .07em;
+}
+
+.quest-card h2 {
+  max-width: 570px;
+  margin: 1.25rem 0 .75rem;
+  font: 500 clamp(1.7rem, 5vw, 2.7rem)/.95 var(--display);
+  letter-spacing: -.065em;
+}
+
+.quest-card p {
+  max-width: 550px;
+  margin: 0;
+  font-size: .72rem;
+  line-height: 1.7;
+}
+
+.quest-actions {
+  display: flex;
+  gap: .65rem;
+  flex-wrap: wrap;
+  margin-top: 1.4rem;
+}
+
+.quest-actions button {
+  border: 2px solid #263128;
+  font: .64rem var(--mono);
+}
+
+.stamp-button {
+  padding: .72rem .8rem;
+  background: #263128;
+  color: #fffdf1;
+}
+
+.another-button {
+  padding: .72rem .8rem;
+  background: #d9eda8;
+  color: #263128;
+}
+
+.quest-actions button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 #a45135;
+}
+
+.challenge-notice {
+  min-height: 2.8em;
+  margin: 1.4rem 0 0;
+  padding: .8rem;
+  border: 2px dashed #82957c;
+  color: #587057;
+  font-size: .67rem;
+  line-height: 1.55;
+}
+
+.challenge-footer {
+  margin-top: 1.3rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid #adbfaa;
+  line-height: 1.55;
+}
+
+@media (max-width: 500px) {
+  .challenge-header,
+  .challenge-footer { flex-direction: column; }
+}
