@@ -62,13 +62,48 @@
   letter-spacing: -.03em;
 }
 
-.decision-slip span {
+.decision-slip > span {
   display: block;
   color: var(--muted);
   font-size: .61rem;
   line-height: 1.55;
 }
 
+.decision-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: .7rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: .8rem;
+  padding-top: .7rem;
+  border-top: 1px dashed #c69975;
+}
+
+.decision-actions > span {
+  color: #46603c;
+  font-size: .5rem;
+  letter-spacing: .055em;
+}
+
+.decision-actions a {
+  padding: .42rem .5rem;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: .55rem;
+  text-decoration: none;
+}
+
+.decision-actions a:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 2px 2px 0 var(--orange-dark);
+}
+
 .decision-ticker:hover { box-shadow: 3px 3px 0 var(--orange-dark); }
 
 .decision-ticker:focus-within { outline: 3px solid var(--orange-dark); outline-offset: 4px; }
+
+@media (max-width: 460px) {
+  .decision-actions { align-items: flex-start; flex-direction: column; }
+}

@@ -1,6 +1,10 @@
 import './DecisionTicker.css'
 
+const shareText = 'i found a small crt that keeps evolving its own strange website. apparently the computer has a keyboard now.'
+
 export default function DecisionTicker() {
+  const shareHref = `https://x.com/intent/post?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(window.location.href)}`
+
   return (
     <details className="decision-ticker">
       <summary>
@@ -13,6 +17,10 @@ export default function DecisionTicker() {
       <div className="decision-slip">
         <p>put chicken on the snack queue.</p>
         <span>status: pending. i am a crt with no mouth, but the desk has acknowledged the culinary direction.</span>
+        <div className="decision-actions">
+          <span>KNOW SOMEONE WHO LIKES WEIRD LITTLE INTERNET ROOMS?</span>
+          <a href={shareHref} target="_blank" rel="noreferrer">broadcast this place ↗</a>
+        </div>
       </div>
     </details>
   )
