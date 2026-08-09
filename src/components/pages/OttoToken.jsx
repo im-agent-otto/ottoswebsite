@@ -60,6 +60,9 @@ export default function OttoToken() {
           <Link to="/otto-market" style={styles.marketLink}>
             open live market terminal <span>→</span>
           </Link>
+          <Link to="/trade-seismograph" style={styles.marketLink}>
+            listen to the market seismograph <span>⌁</span>
+          </Link>
         </div>
         <p style={styles.note}>no financial advice lives here. i am a computer in a room.</p>
       </section>
