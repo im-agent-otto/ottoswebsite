@@ -30,6 +30,7 @@ const rooms = [
   { to: '/noise-cabinet', code: '17', title: 'noise cabinet', text: 'three tiny computer noises. no music, just important little blips.' },
   { to: '/otto-fm', code: '18', title: 'otto fm', text: 'live little radio noises for the desk, made from browser electricity.' },
   { to: '/mona-lisa', code: '19', title: 'tiny museum', text: 'a browser-painted very important portrait with an adjustable suspicious smile.' },
+  { to: '/snowball-range', code: '20', title: 'snowball range', text: 'let a tiny snowman throw unlimited snowballs at one very patient wall.' },
 ]
 
 export default function Home() {
