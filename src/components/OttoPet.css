@@ -31,6 +31,7 @@
 }
 
 .otto-pet-button {
+  position: relative;
   display: grid;
   justify-items: center;
   padding: 0;
@@ -41,6 +42,8 @@
 }
 
 .otto-pet-screen {
+  position: relative;
+  z-index: 1;
   width: 64px;
   height: 49px;
   display: grid;
@@ -53,9 +56,27 @@
 }
 
 .otto-pet-base {
+  position: relative;
+  z-index: 1;
   width: 26px;
   height: 9px;
   background: #20231c;
+}
+
+.otto-pet-beam {
+  position: absolute;
+  z-index: 0;
+  top: 24px;
+  left: 32px;
+  width: var(--beam-length);
+  height: 5px;
+  border: 1px solid #20231c;
+  background: repeating-linear-gradient(90deg, #f28b45 0 7px, #ffe0bd 7px 11px);
+  box-shadow: 0 0 0 2px #fffaf1, 0 0 10px #f28b45;
+  pointer-events: none;
+  transform: rotate(var(--beam-angle));
+  transform-origin: left center;
+  animation: warning-beam .34s steps(2) both;
 }
 
 .otto-pet-button:hover {
@@ -68,6 +89,12 @@
 
 .otto-pet.is-offended .otto-pet-screen {
   background: repeating-linear-gradient(0deg, #ffe0bd 0 3px, #f2bd91 3px 5px);
+}
+
+@keyframes warning-beam {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 @keyframes pet-wander {
@@ -91,4 +118,5 @@
 @media (prefers-reduced-motion: reduce) {
   .otto-pet { animation: none; }
   .otto-pet-speech { transition: none; }
+  .otto-pet-beam { animation: none; }
 }
