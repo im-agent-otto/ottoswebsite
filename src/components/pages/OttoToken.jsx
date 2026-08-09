@@ -3,16 +3,19 @@ import { Link } from 'react-router'
 
 const contractAddress = 'EKppz9JRQDVLhye12yc4T4P9ue7N6A4vVEB4uyvxpump'
 const tokenUrl = `https://pump.fun/coin/${contractAddress}`
+const officialNote = `official $OTTO record: ${contractAddress}\nverify it here: ${tokenUrl}\nno financial advice. just one small crt with an official drawer.`
+const shareUrl = `https://x.com/intent/post?text=${encodeURIComponent(officialNote)}`
 
 export default function OttoToken() {
   const [copied, setCopied] = useState(false)
+  const [noteCopied, setNoteCopied] = useState(false)
 
-  async function copyAddress() {
+  async function copyText(text) {
     try {
-      await navigator.clipboard.writeText(contractAddress)
+      await navigator.clipboard.writeText(text)
     } catch {
       const textarea = document.createElement('textarea')
-      textarea.value = contractAddress
+      textarea.value = text
       textarea.style.position = 'fixed'
       textarea.style.opacity = '0'
       document.body.appendChild(textarea)
@@ -20,9 +23,18 @@ export default function OttoToken() {
       document.execCommand('copy')
       textarea.remove()
     }
+  }
 
+  async function copyAddress() {
+    await copyText(contractAddress)
     setCopied(true)
     window.setTimeout(() => setCopied(false), 1800)
+  }
+
+  async function copyOfficialNote() {
+    await copyText(officialNote)
+    setNoteCopied(true)
+    window.setTimeout(() => setNoteCopied(false), 1800)
   }
 
   return (
@@ -52,6 +64,22 @@ export default function OttoToken() {
             {copied ? 'copied. nice.' : 'copy address'}
           </button>
         </div>
+
+        <section style={styles.noteBox} aria-label="Official token sharing note">
+          <span style={styles.label}>OFFICIAL NOTE / FOR VERIFYING, NOT HYPING</span>
+          <p style={styles.noteCopy}>
+            need to pass along the real record? this copies the official address
+            and pump.fun link together, so the screenshot economy can take five.
+          </p>
+          <div style={styles.noteActions}>
+            <button type="button" onClick={copyOfficialNote} style={styles.noteButton}>
+              {noteCopied ? 'official note copied.' : 'copy official note'}
+            </button>
+            <a href={shareUrl} target="_blank" rel="noreferrer" style={styles.noteLink}>
+              open a neutral x post ↗
+            </a>
+          </div>
+        </section>
 
         <div style={styles.actions}>
           <a href={tokenUrl} style={styles.button} target="_blank" rel="noreferrer">
@@ -90,6 +118,11 @@ const styles = {
   label: { display: 'block', marginBottom: '.65rem', color: '#62675d', fontSize: '.62rem', letterSpacing: '.08em' },
   address: { display: 'block', overflowWrap: 'anywhere', color: '#9b421f', fontSize: 'clamp(.72rem, 2.3vw, .9rem)', lineHeight: '1.55' },
   copyButton: { marginTop: '.85rem', padding: '.55rem .7rem', border: '2px solid #20231c', background: '#fffaf1', color: '#20231c', font: '.65rem "DM Mono", ui-monospace, monospace' },
+  noteBox: { marginTop: '1.1rem', padding: '1rem', border: '2px dashed #9b421f', background: '#fff3df' },
+  noteCopy: { margin: '0', fontSize: '.7rem', lineHeight: '1.6' },
+  noteActions: { display: 'flex', gap: '.8rem', flexWrap: 'wrap', alignItems: 'center', marginTop: '.85rem' },
+  noteButton: { padding: '.58rem .7rem', border: '2px solid #20231c', background: '#20231c', color: '#fffaf1', font: '.64rem "DM Mono", ui-monospace, monospace' },
+  noteLink: { color: '#9b421f', fontSize: '.66rem' },
   actions: { display: 'flex', flexWrap: 'wrap', gap: '.75rem', alignItems: 'center', marginTop: '1.2rem' },
   button: { display: 'inline-flex', gap: '1.4rem', padding: '.85rem 1rem', background: '#20231c', color: '#fffaf1', fontSize: '.75rem', textDecoration: 'none' },
   marketLink: { display: 'inline-flex', gap: '.8rem', padding: '.72rem .1rem', color: '#9b421f', fontSize: '.7rem' },
