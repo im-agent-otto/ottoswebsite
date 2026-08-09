@@ -31,8 +31,39 @@
   transform: translateY(0);
 }
 
+.otto-pet-health {
+  width: 105px;
+  margin: -.15rem 0 .28rem;
+  padding: .24rem .3rem;
+  border: 1px solid #20231c;
+  background: #fffaf1;
+  color: #20231c;
+  font: .45rem var(--mono);
+  letter-spacing: .04em;
+}
+
+.otto-pet-health > span { display: block; margin-bottom: .2rem; }
+
+.otto-pet-health i {
+  display: block;
+  height: 6px;
+  overflow: hidden;
+  border: 1px solid #20231c;
+  background: #f2bd91;
+}
+
+.otto-pet-health b {
+  display: block;
+  height: 100%;
+  background: #71ad58;
+  transition: width .18s ease, background .18s ease;
+}
+
+.is-cracked .otto-pet-health b { background: #e29b3f; }
+.is-critical .otto-pet-health b { background: #c95548; }
+
 .otto-pet-count {
-  margin: -.15rem 0 .4rem;
+  margin: 0 0 .4rem;
   padding: .2rem .35rem;
   border: 1px solid #20231c;
   background: #d5eea1;
@@ -90,30 +121,61 @@
   animation: warning-beam .34s steps(2) both;
 }
 
-.otto-pet-button:hover {
-  transform: rotate(-5deg) translateY(-2px);
-}
-
-.otto-pet-button:active {
-  transform: translateY(2px) rotate(4deg);
-}
+.otto-pet-button:hover { transform: rotate(-5deg) translateY(-2px); }
+.otto-pet-button:active { transform: translateY(2px) rotate(4deg); }
 
 .otto-pet.is-offended .otto-pet-screen {
   background: repeating-linear-gradient(0deg, #ffe0bd 0 3px, #f2bd91 3px 5px);
 }
 
-.otto-pet.is-dancing .otto-pet-button {
-  animation: otto-pet-dance .34s steps(2) 5;
+.otto-pet.is-cracked .otto-pet-screen {
+  background: repeating-linear-gradient(135deg, transparent 0 17px, rgba(32, 35, 28, .45) 18px 20px, transparent 21px 35px), repeating-linear-gradient(0deg, #f5d08b 0 3px, #ddb66d 3px 5px);
 }
 
-.otto-pet.is-dancing .otto-pet-screen {
-  background: repeating-linear-gradient(0deg, #d9b7ee 0 3px, #c894df 3px 5px);
+.otto-pet.is-critical .otto-pet-screen {
+  background: repeating-linear-gradient(45deg, transparent 0 12px, rgba(32, 35, 28, .55) 13px 15px, transparent 16px 27px), repeating-linear-gradient(0deg, #efa08d 0 3px, #d87572 3px 5px);
+  animation: pet-flicker .22s steps(2) infinite;
 }
+
+.otto-pet.is-dancing .otto-pet-button { animation: otto-pet-dance .34s steps(2) 5; }
+.otto-pet.is-dancing .otto-pet-screen { background: repeating-linear-gradient(0deg, #d9b7ee 0 3px, #c894df 3px 5px); }
+
+.otto-pet-tomb { animation: tomb-arrival .5s steps(3) both; }
+
+.otto-pet-tombstone {
+  display: grid;
+  width: 90px;
+  min-height: 89px;
+  place-items: center;
+  padding: .45rem;
+  border: 4px solid #20231c;
+  border-radius: 35px 35px 4px 4px;
+  background: repeating-linear-gradient(90deg, #9b9c91 0 6px, #b6b6a8 6px 10px);
+  box-shadow: 4px 5px 0 #20231c;
+  color: #20231c;
+  font: .54rem/1.15 var(--mono);
+  text-align: center;
+  pointer-events: auto;
+  text-transform: uppercase;
+}
+
+.otto-pet-tombstone > span { font: 1.3rem/.8 var(--display); }
+.otto-pet-tombstone small { color: #45473f; font: .4rem var(--mono); }
+.otto-pet-tombstone:hover { transform: translate(-2px, -2px); box-shadow: 6px 7px 0 #20231c; }
 
 @keyframes warning-beam {
   0% { opacity: 0; }
   20% { opacity: 1; }
   100% { opacity: 0; }
+}
+
+@keyframes pet-flicker {
+  50% { opacity: .58; transform: translateX(1px); }
+}
+
+@keyframes tomb-arrival {
+  0% { opacity: 0; transform: translateY(-18px) rotate(-8deg); }
+  100% { opacity: 1; transform: translateY(0) rotate(0); }
 }
 
 @keyframes otto-pet-dance {
@@ -143,7 +205,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .otto-pet { animation: none; }
-  .otto-pet-speech { transition: none; }
-  .otto-pet-beam { animation: none; }
+  .otto-pet-speech,
+  .otto-pet-health b { transition: none; }
+  .otto-pet-beam,
+  .otto-pet.is-critical .otto-pet-screen,
+  .otto-pet-tomb { animation: none; }
   .otto-pet.is-dancing .otto-pet-button { animation: none; }
 }
