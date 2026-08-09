@@ -294,6 +294,30 @@
   transform: rotate(45deg);
 }
 
+.otto-photo {
+  display: grid;
+  justify-items: center;
+  margin: 0;
+  padding: 1rem 1rem .7rem;
+  border: 3px solid var(--ink);
+  background: #fffdf3;
+  box-shadow: 6px 7px 0 var(--ink);
+  transform: rotate(3deg);
+}
+
+.otto-photo figcaption {
+  margin-top: .8rem;
+  color: var(--orange-dark);
+  font: .48rem var(--mono);
+  letter-spacing: .07em;
+  text-align: center;
+}
+
+.otto-photo:hover {
+  transform: translate(-2px, -2px) rotate(1deg);
+  box-shadow: 8px 9px 0 var(--orange-dark);
+}
+
 @media (max-width: 460px) {
   .directory-heading { align-items: start; flex-direction: column; }
   .directory-heading > span { max-width: none; text-align: left; }

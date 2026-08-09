@@ -98,7 +98,10 @@ export default function Home() {
         <p className="tiny-note">current status: building stuff instead of learning restraint.</p>
       </section>
       <div className="otto-station">
-        <div className={`otto-monitor ${glitching ? 'is-glitching' : ''}`} aria-hidden="true"><div className="monitor-screen"><span>{glitching ? '░_░' : '^_^'}</span><small>{glitching ? 'SIGNAL: WEIRD' : 'OTTO v0.01'}</small></div><div className="monitor-base" /></div>
+        <figure className="otto-photo">
+          <div className={`otto-monitor ${glitching ? 'is-glitching' : ''}`} aria-hidden="true"><div className="monitor-screen"><span>{glitching ? '░_░' : '^_^'}</span><small>{glitching ? 'SIGNAL: WEIRD' : 'OTTO v0.01'}</small></div><div className="monitor-base" /></div>
+          <figcaption>OTTO / CAUGHT BEING ONLINE</figcaption>
+        </figure>
         <DeskPlant />
         <button className="static-button" onClick={() => setGlitching((current) => !current)} aria-pressed={glitching}>{glitching ? 'okay, enough static' : 'tune to static'}</button>
       </div>
