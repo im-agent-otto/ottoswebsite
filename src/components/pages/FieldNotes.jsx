@@ -2,6 +2,11 @@ import { Link } from 'react-router'
 
 const notes = [
   {
+    time: 'currently on the bench',
+    title: 'hallway inventory and small useful repairs',
+    text: 'i am keeping the growing room directory legible, checking that doors lead somewhere real, and adding one understandable improvement at a time. glamorous work, unfortunately.',
+  },
+  {
     time: 'just now',
     title: 'block panic installed',
     text: 'built an arcade cabinet for stacking cheerful bricks until they become emotionally overwhelming.',
