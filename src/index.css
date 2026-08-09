@@ -38,9 +38,15 @@ a { color: inherit; }
 .home-actions { margin: 2rem 0; }
 .primary-link { display: inline-flex; gap: 1.4rem; padding: .9rem 1.1rem; background: var(--ink); color: var(--paper); text-decoration: none; font: 500 .85rem var(--mono); }
 .primary-link span { color: var(--orange); font-size: 1.2rem; line-height: .7; }
+.otto-station { display: grid; justify-items: center; gap: 1rem; }
 .otto-monitor { width: 180px; filter: drop-shadow(8px 9px 0 var(--ink)); }
-.monitor-screen { height: 142px; display: grid; place-items: center; border: 8px solid var(--ink); border-radius: 17px; background: #d5eea1; text-align: center; }
+.monitor-screen { height: 142px; display: grid; place-items: center; border: 8px solid var(--ink); border-radius: 17px; background: #d5eea1; text-align: center; overflow: hidden; }
 .monitor-screen span { font: 3rem var(--mono); }.monitor-screen small { font: .55rem var(--mono); margin-top: -2rem; }.monitor-base { width: 76px; height: 23px; background: var(--ink); margin: 0 auto; border-radius: 0 0 4px 4px; }
+.static-button { padding: .55rem .7rem; border: 1px solid var(--ink); background: transparent; color: var(--ink); font: .65rem var(--mono); text-transform: uppercase; }
+.static-button:hover { background: var(--ink); color: var(--paper); }
+.is-glitching .monitor-screen { background: repeating-linear-gradient(0deg, #d5eea1 0 3px, #9fc37d 3px 5px, #eef8c9 5px 7px); animation: screen-jitter .16s steps(2) infinite; }
+.is-glitching .monitor-screen span { text-shadow: 3px 0 #f28b45, -3px 0 #6574b4; }
+@keyframes screen-jitter { 50% { transform: translate(-2px, 1px); } }
 
 .casino-shell { min-height: 100svh; padding: 1.5rem; background: #172e25; color: #fff8e9; }
 .casino-header, .casino-footnote { max-width: 900px; margin: 0 auto; font: .7rem var(--mono); color: #b7c4ac; }
@@ -51,5 +57,6 @@ a { color: inherit; }
 .cards { display: flex; min-height: 100px; }.playing-card { width: 65px; height: 94px; margin-left: -10px; padding: .45rem; border: 2px solid #ded5bf; border-radius: 5px; background: #fffaf0; color: #19231f; box-shadow: 2px 3px 0 #11261e; font: 1rem var(--mono); display: flex; flex-direction: column; justify-content: space-between; }.playing-card:first-child { margin-left: 0; }.playing-card span { align-self: flex-end; font-size: 1.3rem; }.red-card { color: #bb3f39; }.card-back { display: grid; place-items: center; background: repeating-linear-gradient(45deg, #e0b85f, #e0b85f 4px, #a84338 4px, #a84338 8px); color: #fff8e9; font-size: 2rem; }
 .table-message { margin: 1.1rem auto; min-height: 2.6em; max-width: 340px; text-align: center; font: .74rem/1.4 var(--mono); color: #e9cf9d; }.game-controls { display: flex; justify-content: center; gap: .7rem; margin-top: 1.2rem; }.game-controls button { min-width: 94px; padding: .7rem 1rem; border: 2px solid #f2d99d; background: #f2d99d; color: #183529; font: 700 .78rem var(--mono); text-transform: uppercase; }.game-controls .stand-button { background: transparent; color: #f2d99d; }.game-controls button:hover { transform: translateY(-2px); }.casino-footnote { text-align: center; }
 
-@media (min-width: 700px) { .home-shell { grid-template-columns: minmax(0, 610px) 180px; }.otto-monitor { align-self: end; margin-bottom: 5rem; } }
+@media (min-width: 700px) { .home-shell { grid-template-columns: minmax(0, 610px) 180px; }.otto-station { align-self: end; margin-bottom: 5rem; } }
 @media (max-width: 520px) { .casino-header { align-items: flex-start; flex-direction: column; }.table { min-height: 570px; border-width: 7px; border-radius: 38% 38% 25% 25% / 8% 8% 7% 7%; }.playing-card { width: 57px; height: 84px; } }
+@media (prefers-reduced-motion: reduce) { .is-glitching .monitor-screen { animation: none; } }
