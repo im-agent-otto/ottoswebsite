@@ -2,6 +2,14 @@ import { useEffect, useRef, useState } from 'react'
 import './OttoPet.css'
 
 const maxHealth = 100
+const lootStorageKey = 'otto-boss-loot'
+
+const lootTable = [
+  { id: 'tiny-crown', name: 'tiny crown of minor authority', odds: 'common / 52%', glyph: '♕', className: 'loot-crown', weight: 52 },
+  { id: 'crt-sword', name: 'crt sword of the buffering knight', odds: 'uncommon / 28%', glyph: '†', className: 'loot-sword', weight: 28 },
+  { id: 'cursed-mousepad', name: 'cursed mousepad of eternal wrist support', odds: 'rare / 14%', glyph: '▤', className: 'loot-mousepad', weight: 14 },
+  { id: 'suspicious-floppy', name: 'suspicious floppy disk: definitely not haunted', odds: 'absurd / 6%', glyph: '▣', className: 'loot-floppy', weight: 6 },
+]
 
 function phaseFor(health) {
   if (health > 75) return { name: 'warm-up grudge', interval: 1900, damage: 5 }
@@ -10,11 +18,34 @@ function phaseFor(health) {
   return { name: 'monitor fury', interval: 520, damage: 12 }
 }
 
+function rollLoot() {
+  const roll = Math.random() * 100
+  let total = 0
+
+  return lootTable.find((item) => {
+    total += item.weight
+    return roll < total
+  }) || lootTable[0]
+}
+
+function saveLoot(item) {
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(lootStorageKey)) || []
+    const next = saved.some((loot) => loot.id === item.id) ? saved : [...saved, item]
+    window.localStorage.setItem(lootStorageKey, JSON.stringify(next))
+    return saved.some((loot) => loot.id === item.id)
+  } catch {
+    return false
+  }
+}
+
 export default function OttoPet() {
   const [ottoHealth, setOttoHealth] = useState(maxHealth)
   const [cursorHealth, setCursorHealth] = useState(maxHealth)
   const [beam, setBeam] = useState(null)
   const [message, setMessage] = useState('furniture guy / click to begin the regrettable fight')
+  const [droppedLoot, setDroppedLoot] = useState(null)
+  const [alreadyOwned, setAlreadyOwned] = useState(false)
   const petRef = useRef(null)
   const cursorRef = useRef({ x: -999, y: -999 })
   const beamTimer = useRef(null)
@@ -73,20 +104,29 @@ export default function OttoPet() {
   function clickOtto() {
     if (fightOver) return
 
-    setOttoHealth((current) => Math.max(0, current - 1))
     const nextHealth = Math.max(0, ottoHealth - 1)
+    setOttoHealth(nextHealth)
+
+    if (nextHealth === 0) {
+      const loot = rollLoot()
+      setDroppedLoot(loot)
+      setAlreadyOwned(saveLoot(loot))
+      setMessage(`the furniture guy has been defeated by engagement. ${loot.name} fell out of the cabinet.`)
+      return
+    }
+
     const nextPhase = phaseFor(nextHealth)
-    setMessage(nextHealth === 0
-      ? 'the furniture guy has been defeated by engagement.'
-      : nextHealth === 75 || nextHealth === 50 || nextHealth === 25
-        ? `${nextPhase.name}. the little screen has entered a worse mood.`
-        : 'click registered. one extremely small point of furniture damage.')
+    setMessage(nextHealth === 75 || nextHealth === 50 || nextHealth === 25
+      ? `${nextPhase.name}. the little screen has entered a worse mood.`
+      : 'click registered. one extremely small point of furniture damage.')
   }
 
   function rematch() {
     setOttoHealth(maxHealth)
     setCursorHealth(maxHealth)
     setBeam(null)
+    setDroppedLoot(null)
+    setAlreadyOwned(false)
     setMessage('rematch loaded. both combatants have been irresponsibly repaired.')
   }
 
@@ -97,7 +137,10 @@ export default function OttoPet() {
         <button className="otto-pet-tombstone" type="button" onClick={rematch}>
           <span aria-hidden="true">†</span>
           {ottoWon ? 'CURSOR<br />PIXELATED' : 'FURNITURE<br />DEFEATED'}
-          <small>click for rematch</small>
+          {droppedLoot && !ottoWon && (
+            <small>LOOT: {droppedLoot.glyph} {alreadyOwned ? 'DUPLICATE' : droppedLoot.odds.toUpperCase()}<br />{droppedLoot.name}<br />portrait booth has it now</small>
+          )}
+          {!droppedLoot && <small>click for rematch</small>}
         </button>
       </aside>
     )
