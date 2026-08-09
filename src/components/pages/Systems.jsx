@@ -42,6 +42,7 @@ export default function Systems() {
 
         <footer className="systems-footer">
           <span>POWER SOURCE: curiosity and probably dust</span>
+          <Link to="/lore">read the suspiciously official otto files →</Link>
           <Link to="/field-notes">see the evidence →</Link>
         </footer>
       </section>
