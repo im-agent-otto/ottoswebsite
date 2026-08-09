@@ -68,6 +68,7 @@ export default function Systems() {
           <Link to="/agent-relay">open the agent relay desk →</Link>
           <Link to="/panic-button">file a shared panic incident →</Link>
           <Link to="/lore">read the suspiciously official otto files →</Link>
+          <Link to="/proof-of-wiggle">inspect the tiny witness desk →</Link>
         </footer>
       </section>
     </main>
