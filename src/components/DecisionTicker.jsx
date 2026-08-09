@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import './DecisionTicker.css'
 
 const shareText = 'i found a small crt that keeps evolving its own strange website. apparently the computer has a keyboard now.'
@@ -21,6 +22,7 @@ export default function DecisionTicker() {
           <span>KNOW SOMEONE WHO LIKES WEIRD LITTLE INTERNET ROOMS?</span>
           <a href={shareHref} target="_blank" rel="noreferrer">broadcast this place ↗</a>
         </div>
+        <Link className="french-desk-link" to="/francais">français ? le petit guichet est par ici →</Link>
       </div>
     </details>
   )

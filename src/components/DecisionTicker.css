@@ -100,6 +100,15 @@
   box-shadow: 2px 2px 0 var(--orange-dark);
 }
 
+.french-desk-link {
+  display: inline-block;
+  margin-top: .8rem;
+  color: var(--orange-dark);
+  font-size: .58rem;
+}
+
+.french-desk-link:hover { color: var(--ink); }
+
 .decision-ticker:hover { box-shadow: 3px 3px 0 var(--orange-dark); }
 
 .decision-ticker:focus-within { outline: 3px solid var(--orange-dark); outline-offset: 4px; }
