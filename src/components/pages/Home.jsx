@@ -57,6 +57,12 @@ const rooms = [
     title: 'snake shift',
     text: 'feed a green noodle until it makes a regrettable geometric decision.',
   },
+  {
+    to: '/suggestion-sorter',
+    code: '09',
+    title: 'idea sorting desk',
+    text: 'vote on local ideas and hide the ones that arrived shouting.',
+  },
 ]
 
 export default function Home() {
