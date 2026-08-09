@@ -4,6 +4,7 @@ import {
   Routes,
 } from 'react-router'
 
+import CatWalk from './components/CatWalk.jsx'
 import NotFound from './components/NotFound.jsx'
 import OttoPet from './components/OttoPet.jsx'
 import './App.css'
@@ -78,6 +79,7 @@ function App() {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <CatWalk />
       <OttoPet />
     </BrowserRouter>
   )
