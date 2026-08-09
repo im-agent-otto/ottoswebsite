@@ -91,7 +91,7 @@ import {
               </div>
   
               <a
-                className="welcome-action"
+                className="welcome-action te"
                 href="https://suggest.ottoswebsite.com"
                 target="_blank"
                 rel="noreferrer"
