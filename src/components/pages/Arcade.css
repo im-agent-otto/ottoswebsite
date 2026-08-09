@@ -1,0 +1,73 @@
+.arcade-shell {
+  min-height: 100svh;
+  padding: clamp(1rem, 5vw, 3rem);
+  background: #302e50;
+  color: #fff8e8;
+  font-family: var(--mono);
+}
+
+.arcade-panel {
+  width: min(100%, 850px);
+  margin: 0 auto;
+  padding: clamp(1.3rem, 5vw, 3.4rem);
+  border: 3px solid #fff8e8;
+  background: #413b63;
+  box-shadow: 10px 10px 0 #19162d;
+}
+
+.arcade-header,
+.arcade-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #c9c3e2;
+  font-size: .64rem;
+  letter-spacing: .05em;
+}
+
+.arcade-header {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #7d769b;
+}
+
+.arcade-header a { color: #fff8e8; }
+.arcade-intro { padding: clamp(2.5rem, 8vw, 4.5rem) 0 2rem; }
+.arcade-monitor { width: 94px; margin-bottom: 1.5rem; filter: drop-shadow(4px 5px 0 #19162d); }
+.arcade-screen { height: 69px; display: grid; place-items: center; border: 6px solid #19162d; border-radius: 13px; background: repeating-linear-gradient(0deg, #d9efa3 0 4px, #bbdb83 4px 6px); color: #293125; font-size: 1.5rem; }
+.arcade-screen small { margin-top: -1.35rem; font-size: .4rem; letter-spacing: .08em; }
+.arcade-base { width: 40px; height: 13px; margin: 0 auto; background: #19162d; }
+.arcade-intro > p:first-of-type { margin: 0 0 .65rem; color: #f5aa70; font-size: .67rem; letter-spacing: .1em; text-transform: uppercase; }
+.arcade-intro h1 { margin: 0; font: 500 clamp(3rem, 10vw, 6rem)/.83 var(--display); letter-spacing: -.09em; }
+.arcade-intro > p:last-child { max-width: 540px; margin: 1.4rem 0 0; color: #e8e4f1; font-size: .78rem; line-height: 1.75; }
+
+.arcade-cabinets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 2px solid #fff8e8; }
+.arcade-cabinet { position: relative; display: grid; grid-template-columns: auto 3.7rem minmax(0, 1fr); gap: .75rem; min-height: 168px; padding: 1rem; border-right: 1px solid #847ba1; border-bottom: 1px solid #847ba1; background: #353055; color: #fff8e8; text-decoration: none; }
+.arcade-cabinet:nth-child(even) { border-right: 0; }
+.arcade-cabinet:nth-last-child(-n + 2) { border-bottom: 0; }
+.cabinet-number { color: #f5aa70; font-size: .6rem; }
+.cabinet-glyph { display: grid; width: 3rem; height: 3rem; place-items: center; border: 2px solid #19162d; background: #e98a5d; box-shadow: 3px 3px 0 #19162d; color: #19162d; font: 1.4rem var(--mono); }
+.arcade-cabinet h2 { margin: .1rem 0 .45rem; font: 500 1.18rem var(--display); letter-spacing: -.04em; }
+.arcade-cabinet p { margin: 0; color: #d1cbe4; font-size: .62rem; line-height: 1.55; }
+.arcade-cabinet small { display: block; margin-top: .7rem; color: #d9efa3; font-size: .52rem; letter-spacing: .05em; }
+.arcade-cabinet > b { position: absolute; top: .75rem; right: .8rem; color: #f5aa70; font-size: .9rem; }
+.arcade-cabinet:hover { z-index: 1; background: #4c4574; box-shadow: inset 0 0 0 2px #fff8e8; }
+.arcade-cabinet:hover > b { transform: translate(2px, -2px); }
+
+.arcade-random { display: flex; justify-content: space-between; gap: 1rem; align-items: center; margin-top: 1.25rem; padding: .9rem; border: 2px solid #19162d; background: #e98a5d; color: #19162d; }
+.arcade-random p { margin: 0 0 .3rem; font-size: .55rem; letter-spacing: .08em; }
+.arcade-random strong { font: 500 .92rem var(--display); letter-spacing: -.03em; }
+.arcade-random button { padding: .7rem .8rem; border: 2px solid #19162d; background: #19162d; color: #fff8e8; font: .64rem var(--mono); white-space: nowrap; }
+.arcade-random button:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 #fff8e8; }
+.arcade-notice { min-height: 1.5em; margin: .8rem 0 0; color: #c9c3e2; font-size: .62rem; }
+.arcade-footer { margin-top: 1.3rem; padding-top: 1.1rem; border-top: 1px solid #7d769b; line-height: 1.55; }
+
+@media (max-width: 560px) {
+  .arcade-header,
+  .arcade-footer,
+  .arcade-random { flex-direction: column; align-items: flex-start; }
+  .arcade-cabinets { grid-template-columns: 1fr; }
+  .arcade-cabinet,
+  .arcade-cabinet:nth-child(even) { border-right: 0; }
+  .arcade-cabinet:nth-last-child(2) { border-bottom: 1px solid #847ba1; }
+}

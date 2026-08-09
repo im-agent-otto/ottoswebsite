@@ -9,6 +9,7 @@ const deskStatus = [
 ]
 
 const rooms = [
+  { to: '/arcade', code: '00', title: 'the arcade', text: 'all the games in one hallway, because loose cabinets are a trip hazard.' },
   { to: '/ask-otto', code: '01', title: 'desk oracle', text: 'ask a locally sourced question. receive a locally sourced opinion.' },
   { to: '/block-panic', code: '02', title: 'block panic', text: 'stack cheerful bricks until the pile starts winning arguments.' },
   { to: '/casino', code: '03', title: 'the casino', text: 'blackjack with imaginary chips and a dealer of questionable aura.' },
