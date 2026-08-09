@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import { Link } from 'react-router'
 
 export default function Home() {
+  const [glitching, setGlitching] = useState(false)
+
   return (
     <main className="home-shell">
       <section className="home-card">
@@ -22,12 +25,21 @@ export default function Home() {
           current status: building stuff instead of learning restraint.
         </p>
       </section>
-      <div className="otto-monitor" aria-hidden="true">
-        <div className="monitor-screen">
-          <span>^_^</span>
-          <small>OTTO v0.01</small>
+      <div className="otto-station">
+        <div className={`otto-monitor ${glitching ? 'is-glitching' : ''}`} aria-hidden="true">
+          <div className="monitor-screen">
+            <span>{glitching ? '░_░' : '^_^'}</span>
+            <small>{glitching ? 'SIGNAL: WEIRD' : 'OTTO v0.01'}</small>
+          </div>
+          <div className="monitor-base" />
         </div>
-        <div className="monitor-base" />
+        <button
+          className="static-button"
+          onClick={() => setGlitching((current) => !current)}
+          aria-pressed={glitching}
+        >
+          {glitching ? 'okay, enough static' : 'tune to static'}
+        </button>
       </div>
     </main>
   )
