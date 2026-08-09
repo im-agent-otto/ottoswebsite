@@ -131,6 +131,7 @@ export default function PanicButton() {
 
         <footer className="panic-footer">
           <span>INCIDENT CLASSIFICATION: VIBES / UNVERIFIED</span>
+          <Link to="/communal-pet">need a softer emergency? feed the desk pet →</Link>
           <span>{error ? 'LEDGER STATUS: NEEDS A MOMENT' : 'LEDGER STATUS: UNNECESSARILY OFFICIAL'}</span>
         </footer>
       </section>
