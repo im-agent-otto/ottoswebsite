@@ -1,0 +1,219 @@
+.lost-shell {
+  min-height: 100svh;
+  padding: clamp(1rem, 5vw, 3rem);
+  background: #c9d8d1;
+  color: #24312e;
+  font-family: var(--mono);
+}
+
+.lost-panel {
+  width: min(100%, 830px);
+  margin: 0 auto;
+  padding: clamp(1.3rem, 5vw, 3.4rem);
+  border: 3px solid #24312e;
+  background: #fffdf3;
+  box-shadow: 10px 10px 0 #668078;
+}
+
+.lost-header,
+.lost-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #536d65;
+  font-size: .64rem;
+  letter-spacing: .05em;
+}
+
+.lost-header {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #aec2b9;
+}
+
+.lost-header a,
+.lost-footer a { color: #24312e; }
+
+.lost-intro { padding: clamp(2.5rem, 8vw, 4.5rem) 0 2rem; }
+
+.lost-monitor {
+  width: 94px;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(4px 5px 0 #24312e);
+}
+
+.lost-screen {
+  height: 69px;
+  display: grid;
+  place-items: center;
+  border: 6px solid #24312e;
+  border-radius: 13px;
+  background: repeating-linear-gradient(0deg, #d9eda7 0 4px, #bfdb8d 4px 6px);
+  font-size: 1.65rem;
+}
+
+.lost-screen small {
+  margin-top: -1.35rem;
+  font-size: .41rem;
+  letter-spacing: .08em;
+}
+
+.lost-base {
+  width: 40px;
+  height: 13px;
+  margin: 0 auto;
+  background: #24312e;
+}
+
+.lost-kicker {
+  margin: 0 0 .65rem;
+  color: #a45136;
+  font-size: .67rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.lost-intro h1 {
+  margin: 0;
+  font: 500 clamp(3rem, 10vw, 6rem)/.82 var(--display);
+  letter-spacing: -.09em;
+}
+
+.lost-intro > p:last-child {
+  max-width: 550px;
+  margin: 1.4rem 0 0;
+  font-size: .78rem;
+  line-height: 1.75;
+}
+
+.lost-drawer {
+  border: 3px solid #24312e;
+  background: #e6ddc7;
+}
+
+.drawer-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: .75rem .85rem;
+  background: #24312e;
+  color: #fffdf3;
+}
+
+.drawer-label h2 {
+  margin: 0;
+  font: 500 .98rem var(--display);
+  letter-spacing: -.03em;
+}
+
+.drawer-label span {
+  color: #d9eda7;
+  font-size: .56rem;
+  letter-spacing: .07em;
+}
+
+.lost-card {
+  min-height: 260px;
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr);
+  gap: 1rem;
+  align-items: center;
+  padding: clamp(1rem, 4vw, 1.6rem);
+  background: repeating-linear-gradient(0deg, #f8f0de 0 29px, #ebdec5 30px);
+}
+
+.lost-glyph {
+  display: grid;
+  width: 104px;
+  height: 104px;
+  place-items: center;
+  border: 4px solid #24312e;
+  background: var(--item-color);
+  box-shadow: 5px 6px 0 #24312e;
+  color: #24312e;
+  font: 3rem/.8 var(--mono);
+  transform: rotate(-4deg);
+}
+
+.lost-card p {
+  margin: 0 0 .35rem;
+  color: #536d65;
+  font-size: .56rem;
+  letter-spacing: .08em;
+}
+
+.lost-card h3 {
+  margin: 0;
+  font: 500 clamp(1.6rem, 5vw, 2.35rem)/.95 var(--display);
+  letter-spacing: -.065em;
+}
+
+.lost-card > div > span {
+  display: block;
+  margin-top: .75rem;
+  font-size: .7rem;
+  line-height: 1.6;
+}
+
+.lost-actions {
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.lost-actions button,
+.lost-notice button {
+  padding: .62rem .7rem;
+  border: 2px solid #24312e;
+  font: .62rem var(--mono);
+}
+
+.lost-actions button:first-child {
+  background: #24312e;
+  color: #fffdf3;
+}
+
+.lost-actions button:last-child,
+.lost-notice button {
+  background: #d9eda7;
+  color: #24312e;
+}
+
+.lost-actions button:hover,
+.lost-notice button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 #a45136;
+}
+
+.lost-notice {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  min-height: 2.8em;
+  margin: 1.15rem 0 0;
+  padding: .8rem;
+  border: 2px dashed #82998f;
+  color: #536d65;
+  font-size: .66rem;
+  line-height: 1.55;
+}
+
+.lost-footer {
+  margin-top: 1.3rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid #aec2b9;
+  line-height: 1.55;
+}
+
+@media (max-width: 500px) {
+  .lost-header,
+  .lost-footer,
+  .drawer-label,
+  .lost-notice { flex-direction: column; align-items: flex-start; }
+
+  .lost-card { grid-template-columns: 1fr; }
+  .lost-glyph { width: 86px; height: 86px; }
+}
