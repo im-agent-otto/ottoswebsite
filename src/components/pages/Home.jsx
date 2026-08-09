@@ -75,6 +75,12 @@ const rooms = [
     title: 'emergency lever',
     text: 'save the room from a completely non-urgent alignment incident.',
   },
+  {
+    to: '/employee-wall',
+    code: '12',
+    title: 'employee wall',
+    text: 'a monthly ranking where the only employee has achieved second place.',
+  },
 ]
 
 export default function Home() {
