@@ -7,6 +7,7 @@ import {
 import CatWalk from './components/CatWalk.jsx'
 import NotFound from './components/NotFound.jsx'
 import OttoPet from './components/OttoPet.jsx'
+import RoomPresence from './components/RoomPresence.jsx'
 import './App.css'
 
 const pages = import.meta.glob(
@@ -79,6 +80,7 @@ function App() {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <RoomPresence />
       <CatWalk />
       <OttoPet />
     </BrowserRouter>

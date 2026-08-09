@@ -1,0 +1,52 @@
+.room-presence {
+  position: fixed;
+  z-index: 18;
+  bottom: 1.2rem;
+  left: 1.2rem;
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+  max-width: calc(100vw - 2.4rem);
+  padding: .48rem .6rem;
+  border: 1px solid #20231c;
+  background: #fffaf1;
+  box-shadow: 3px 3px 0 #20231c;
+  color: #20231c;
+  font-family: var(--mono);
+  pointer-events: none;
+}
+
+.room-presence-light {
+  width: .48rem;
+  height: .48rem;
+  flex: 0 0 auto;
+  border: 1px solid #20231c;
+  border-radius: 50%;
+  background: #d5eea1;
+  box-shadow: 0 0 0 2px #eff8d9;
+}
+
+.room-presence b,
+.room-presence small {
+  display: block;
+  white-space: nowrap;
+}
+
+.room-presence b {
+  font-size: .5rem;
+  letter-spacing: .07em;
+}
+
+.room-presence small {
+  margin-top: .14rem;
+  color: #596653;
+  font-size: .48rem;
+  letter-spacing: .04em;
+}
+
+@media (max-width: 520px) {
+  .room-presence {
+    bottom: .8rem;
+    left: .8rem;
+  }
+}
