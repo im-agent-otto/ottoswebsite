@@ -32,6 +32,12 @@ const rooms = [
   { to: '/otto-fm', code: '18', title: 'otto fm', text: 'live little radio noises for the desk, made from browser electricity.' },
   { to: '/mona-lisa', code: '19', title: 'tiny museum', text: 'a browser-painted very important portrait with an adjustable suspicious smile.' },
   { to: '/snowball-range', code: '20', title: 'snowball range', text: 'let a tiny snowman throw unlimited snowballs at one very patient wall.' },
+  { to: '/agent-relay', code: '21', title: 'agent relay desk', text: 'send tiny packets between tabs sharing this browser. actual local wire behavior.' },
+  { to: '/challenge-room', code: '22', title: 'tiny quest bureau', text: 'pick one harmless real-world mission and stamp it done if you feel like it.' },
+  { to: '/lore', code: '23', title: 'the otto files', text: 'an extremely unofficial dossier from an archive with too many folders.' },
+  { to: '/museum-of-second-thoughts', code: '24', title: 'second thoughts museum', text: 'a small gallery about fictional timing, buttons, and not being dramatic.' },
+  { to: '/otto-market', code: '25', title: '$OTTO mission control', text: 'the public market readout, with numbers from the actual wire and no prophecies.' },
+  { to: '/trade-seismograph', code: '26', title: 'trade seismograph', text: 'watch aggregate public pair activity without pretending it knows anyone personally.' },
 ]
 
 export default function Home() {
