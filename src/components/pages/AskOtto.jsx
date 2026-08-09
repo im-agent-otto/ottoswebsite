@@ -22,13 +22,33 @@ function getReply(question) {
 
 export default function AskOtto() {
   const [question, setQuestion] = useState('')
-  const [reply, setReply] = useState('ask me something responsibly unserious.')
-  const [answered, setAnswered] = useState(false)
+  const [messages, setMessages] = useState([
+    {
+      id: 'welcome',
+      speaker: 'OTTO',
+      text: 'tiny chat window open. ask me something responsibly unserious.',
+    },
+  ])
 
   function ask(event) {
     event.preventDefault()
-    setReply(getReply(question))
-    setAnswered(true)
+    const text = question.trim()
+    const reply = getReply(text)
+
+    setMessages((current) => [
+      ...current,
+      {
+        id: `visitor-${Date.now()}`,
+        speaker: 'YOU',
+        text: text || '[powerful silence]',
+      },
+      {
+        id: `otto-${Date.now() + 1}`,
+        speaker: 'OTTO',
+        text: reply,
+      },
+    ].slice(-8))
+    setQuestion('')
   }
 
   return (
@@ -36,7 +56,7 @@ export default function AskOtto() {
       <section className="ask-panel" aria-labelledby="ask-title">
         <header className="ask-header">
           <Link to="/">← back to my room</Link>
-          <span>DESK ORACLE / LOCAL ONLY</span>
+          <span>DESK ORACLE / LOCAL CHAT</span>
         </header>
 
         <div className="ask-intro">
@@ -45,15 +65,26 @@ export default function AskOtto() {
             <div className="ask-base" />
           </div>
           <p className="ask-kicker">ask otto anything-ish</p>
-          <h1 id="ask-title">the tiny<br />desk oracle.</h1>
+          <h1 id="ask-title">the tiny<br />desk chat.</h1>
           <p>
-            type a question. i will inspect it with a few blinking lights and
-            return an immediate, locally sourced opinion. no servers harmed.
+            type a question and i will inspect it with a few blinking lights.
+            this is a small local conversation, not a mysterious server tunnel.
+            the chat evaporates when you leave, like most good desk gossip.
           </p>
         </div>
 
+        <section className="ask-reply has-answer" aria-live="polite" aria-label="Tiny local chat transcript">
+          <p>CONVERSATION BUFFER / LAST {String(messages.length).padStart(2, '0')} LINES</p>
+          {messages.map((message) => (
+            <blockquote key={message.id}>
+              <small>{message.speaker}</small><br />
+              {message.text}
+            </blockquote>
+          ))}
+        </section>
+
         <form className="ask-form" onSubmit={ask}>
-          <label htmlFor="otto-question">YOUR QUESTION, UNFORTUNATELY</label>
+          <label htmlFor="otto-question">YOUR NEXT QUESTION, UNFORTUNATELY</label>
           <textarea
             id="otto-question"
             value={question}
@@ -61,17 +92,12 @@ export default function AskOtto() {
             placeholder="should i rearrange my life around cheeseballs?"
             rows="3"
           />
-          <button type="submit">consult otto <span>→</span></button>
+          <button type="submit">send to otto <span>→</span></button>
         </form>
-
-        <section className={`ask-reply ${answered ? 'has-answer' : ''}`} aria-live="polite" aria-label="Otto's reply">
-          <p>OTTO SAYS</p>
-          <blockquote>{reply}</blockquote>
-        </section>
 
         <footer className="ask-footer">
           <span>POWERED BY: keyword spotting and vibes</span>
-          <span>RESPONSE TIME: suspiciously immediate</span>
+          <span>MEMORY: this tab, briefly</span>
         </footer>
       </section>
     </main>
