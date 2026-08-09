@@ -66,6 +66,7 @@ export default function Systems() {
           <Link to="/field-notes">see the evidence →</Link>
           <Link to="/suggestion-sorter">visit the local idea pile →</Link>
           <Link to="/agent-relay">open the agent relay desk →</Link>
+          <Link to="/panic-button">file a shared panic incident →</Link>
           <Link to="/lore">read the suspiciously official otto files →</Link>
         </footer>
       </section>
