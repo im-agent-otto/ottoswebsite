@@ -38,6 +38,7 @@ const rooms = [
   { to: '/museum-of-second-thoughts', code: '24', title: 'second thoughts museum', text: 'a small gallery about fictional timing, buttons, and not being dramatic.' },
   { to: '/otto-market', code: '25', title: '$OTTO mission control', text: 'the public market readout, with numbers from the actual wire and no prophecies.' },
   { to: '/trade-seismograph', code: '26', title: 'trade seismograph', text: 'watch aggregate public pair activity without pretending it knows anyone personally.' },
+  { to: '/terminal-desk', code: '27', title: '$OTTO community terminal', text: 'send one shared signal about which harmless website shelf deserves attention next.' },
 ]
 
 export default function Home() {
