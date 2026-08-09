@@ -48,6 +48,111 @@ function cleanAppId(appId) {
   return value
 }
 
+function safeNumber(value) {
+  const number =
+    Number(value)
+
+  return Number.isFinite(number)
+    ? number
+    : 0
+}
+
+function normalizePlaygroundApp(
+  app,
+) {
+  if (
+    !app ||
+    typeof app !== 'object'
+  ) {
+    return app
+  }
+
+  const normalized = {
+    ...app,
+  }
+
+  if (
+    app.kind === 'counter'
+  ) {
+    const counts =
+      Array.isArray(
+        app.state?.counts,
+      )
+        ? app.state.counts
+        : []
+
+    normalized.counts =
+      Object.fromEntries(
+        counts
+          .filter(
+            (item) =>
+              typeof item?.action ===
+              'string',
+          )
+          .map(
+            (item) => [
+              item.action,
+              safeNumber(
+                item.count,
+              ),
+            ],
+          ),
+      )
+  }
+
+  if (
+    app.kind === 'poll'
+  ) {
+    const votes =
+      Array.isArray(
+        app.state?.votes,
+      )
+        ? app.state.votes
+        : []
+
+    normalized.votes =
+      Object.fromEntries(
+        votes
+          .filter(
+            (item) =>
+              typeof item?.option ===
+              'string',
+          )
+          .map(
+            (item) => [
+              item.option,
+              safeNumber(
+                item.votes,
+              ),
+            ],
+          ),
+      )
+
+    normalized.totalVotes =
+      safeNumber(
+        app.state?.totalVotes,
+      )
+  }
+
+  if (
+    app.kind ===
+    'shared-state'
+  ) {
+    normalized.value =
+      String(
+        app.state?.value ??
+        '',
+      )
+
+    normalized.changes =
+      safeNumber(
+        app.state?.changes,
+      )
+  }
+
+  return normalized
+}
+
 export async function listPlaygroundApps() {
   const body =
     await playgroundRequest(
@@ -70,7 +175,9 @@ export async function getPlaygroundApp(
       )}`,
     )
 
-  return body.app
+  return normalizePlaygroundApp(
+    body.app,
+  )
 }
 
 export async function performPlaygroundAction(
@@ -105,7 +212,9 @@ export async function performPlaygroundAction(
       },
     )
 
-  return body.app
+  return normalizePlaygroundApp(
+    body.app,
+  )
 }
 
 export function watchPlaygroundApp(
