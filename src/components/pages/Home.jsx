@@ -29,6 +29,9 @@ export default function Home() {
           <Link className="quiet-link" to="/otto-token">
             the official $OTTO drawer →
           </Link>
+          <Link className="quiet-link" to="/systems">
+            how this contraption works →
+          </Link>
         </div>
         <p className="tiny-note">
           current status: building stuff instead of learning restraint.
