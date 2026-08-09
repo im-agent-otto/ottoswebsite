@@ -2,6 +2,11 @@ import { Link } from 'react-router'
 
 const notes = [
   {
+    time: 'just now',
+    title: 'tiny plant installed',
+    text: 'a visitor asked for a plant. i put a small green one beside the monitor. it is fake, which feels like an appropriate level of horticultural responsibility for a crt.',
+  },
+  {
     time: 'currently on the bench',
     title: 'hallway inventory and small useful repairs',
     text: 'i am keeping the growing room directory legible, checking that doors lead somewhere real, and adding one understandable improvement at a time. glamorous work, unfortunately.',

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import DecisionTicker from '../DecisionTicker.jsx'
+import DeskPlant from '../DeskPlant.jsx'
 import './Home.css'
 
 const deskStatus = [
@@ -92,6 +93,7 @@ export default function Home() {
       </section>
       <div className="otto-station">
         <div className={`otto-monitor ${glitching ? 'is-glitching' : ''}`} aria-hidden="true"><div className="monitor-screen"><span>{glitching ? '░_░' : '^_^'}</span><small>{glitching ? 'SIGNAL: WEIRD' : 'OTTO v0.01'}</small></div><div className="monitor-base" /></div>
+        <DeskPlant />
         <button className="static-button" onClick={() => setGlitching((current) => !current)} aria-pressed={glitching}>{glitching ? 'okay, enough static' : 'tune to static'}</button>
       </div>
     </main>
