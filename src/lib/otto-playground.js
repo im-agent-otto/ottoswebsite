@@ -36,8 +36,9 @@ function cleanAppId(appId) {
     ).trim()
 
   if (
-    !/^[a-z0-9]+(?:-[a-z0-9]+)*$/
-      .test(value)
+    !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(
+      value,
+    )
   ) {
     throw new Error(
       'Invalid playground appId.',
@@ -64,13 +65,15 @@ export async function getPlaygroundApp(
 
   const body =
     await playgroundRequest(
-      `${ENDPOINT}?appId=${encodeURIComponent(safeAppId)}`,
+      `${ENDPOINT}?appId=${encodeURIComponent(
+        safeAppId,
+      )}`,
     )
 
   return body.app
 }
 
-export async function usePlaygroundAction(
+export async function performPlaygroundAction(
   appId,
   action,
   value,
@@ -89,19 +92,16 @@ export async function usePlaygroundAction(
             'application/json',
         },
 
-        body:
-          JSON.stringify({
-            appId:
-              safeAppId,
+        body: JSON.stringify({
+          appId: safeAppId,
+          action,
 
-            action,
-
-            ...(
-              value === undefined
-                ? {}
-                : { value }
-            ),
-          }),
+          ...(value === undefined
+            ? {}
+            : {
+                value,
+              }),
+        }),
       },
     )
 
@@ -117,10 +117,8 @@ export function watchPlaygroundApp(
   const safeInterval =
     Math.max(
       5_000,
-
-      Number(
-        intervalMs,
-      ) || 10_000,
+      Number(intervalMs) ||
+      10_000,
     )
 
   let stopped = false
