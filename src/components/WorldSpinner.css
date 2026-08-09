@@ -1,0 +1,96 @@
+.world-spinner {
+  position: fixed;
+  z-index: 30;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  justify-items: center;
+  gap: .4rem;
+  font-family: var(--mono);
+}
+
+.world-spinner-dial {
+  position: relative;
+  display: grid;
+  width: 78px;
+  height: 78px;
+  place-items: center;
+  padding: .25rem;
+  border: 4px solid #20231c;
+  border-radius: 50%;
+  background: repeating-conic-gradient(#f28b45 0 14deg, #f5d766 14deg 28deg);
+  box-shadow: 4px 5px 0 #20231c;
+  color: #20231c;
+  cursor: ew-resize;
+  touch-action: none;
+  user-select: none;
+}
+
+.world-spinner-dial::before {
+  position: absolute;
+  inset: 8px;
+  border: 3px solid #20231c;
+  border-radius: 50%;
+  background: #d5eea1;
+  content: '';
+}
+
+.world-spinner-dial:hover,
+.world-spinner-dial.is-dragging {
+  transform: translate(-2px, -2px) rotate(-5deg);
+  box-shadow: 6px 7px 0 #9b421f;
+}
+
+.world-spinner-dial:active {
+  transform: translate(2px, 3px) rotate(4deg);
+  box-shadow: 1px 2px 0 #20231c;
+}
+
+.world-spinner-dial span {
+  position: relative;
+  z-index: 1;
+}
+
+.world-spinner-face {
+  margin-bottom: -5px;
+  font: 1.35rem/.9 var(--mono);
+}
+
+.world-spinner-dial > span:last-child {
+  font: .43rem/.95 var(--mono);
+  letter-spacing: .035em;
+  text-align: center;
+}
+
+.world-spinner-lights {
+  position: absolute;
+  top: -12px;
+  left: 3px;
+  width: 66px;
+  color: #d95445;
+  font: .55rem var(--mono);
+  letter-spacing: .35rem;
+  white-space: nowrap;
+}
+
+.world-spinner-dial.is-dragging .world-spinner-lights {
+  color: #f5d766;
+  text-shadow: 0 0 7px #f28b45;
+}
+
+.world-spinner-reset {
+  padding: .3rem .42rem;
+  border: 1px solid #20231c;
+  background: #fffaf1;
+  color: #20231c;
+  font: .48rem var(--mono);
+}
+
+.world-spinner-reset:hover {
+  background: #20231c;
+  color: #fffaf1;
+}
+
+@media (max-width: 520px), (prefers-reduced-motion: reduce) {
+  .world-spinner { display: none; }
+}

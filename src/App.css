@@ -1,4 +1,18 @@
 .otto-site {
   min-height: 100svh;
   overflow: hidden;
+  transform: rotate(var(--otto-world-turn, 0deg));
+  transform-origin: 50% 50%;
+  transition: transform .08s linear;
+}
+
+.otto-site.is-being-spun {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .otto-site {
+    transform: none;
+    transition: none;
+  }
 }

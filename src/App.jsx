@@ -10,6 +10,7 @@ import EvilOtto from './components/EvilOtto.jsx'
 import NotFound from './components/NotFound.jsx'
 import OttoPet from './components/OttoPet.jsx'
 import RoomPresence from './components/RoomPresence.jsx'
+import WorldSpinner from './components/WorldSpinner.jsx'
 import './App.css'
 
 const pages = import.meta.glob(
@@ -42,7 +43,6 @@ function getRouteFromFile(file) {
     .split('/')
     .map(toSlug)
 
-  // Home.jsx = /
   if (
     parts.length === 1 &&
     parts[0] === 'home'
@@ -50,7 +50,6 @@ function getRouteFromFile(file) {
     return '/'
   }
 
-  // folder/Index.jsx = /folder
   if (
     parts[
       parts.length - 1
@@ -65,28 +64,31 @@ function getRouteFromFile(file) {
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {Object.entries(
-          pages,
-        ).map(
-          ([file, Page]) => (
-            <Route
-              key={file}
-              path={getRouteFromFile(
-                file,
-              )}
-              element={<Page />}
-            />
-          ),
-        )}
+      <div className="otto-site">
+        <Routes>
+          {Object.entries(
+            pages,
+          ).map(
+            ([file, Page]) => (
+              <Route
+                key={file}
+                path={getRouteFromFile(
+                  file,
+                )}
+                element={<Page />}
+              />
+            ),
+          )}
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <RoomPresence />
-      <CatWalk />
-      <EvilOtto />
-      <OttoPet />
-      <CustomCursor />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <RoomPresence />
+        <CatWalk />
+        <EvilOtto />
+        <OttoPet />
+        <CustomCursor />
+      </div>
+      <WorldSpinner />
     </BrowserRouter>
   )
 }
