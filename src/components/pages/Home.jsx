@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import DecisionTicker from '../DecisionTicker.jsx'
 import DeskPlant from '../DeskPlant.jsx'
@@ -43,9 +43,27 @@ const rooms = [
 
 export default function Home() {
   const navigate = useNavigate()
+  const searchRef = useRef(null)
   const [glitching, setGlitching] = useState(false)
   const [shortcutNote, setShortcutNote] = useState('the doors are numbered, but this is not a test.')
   const [roomQuery, setRoomQuery] = useState('')
+
+  useEffect(() => {
+    function focusHallwayFinder(event) {
+      const target = event.target
+      const tagName = target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || target?.isContentEditable
+
+      if (event.key !== '/' || event.metaKey || event.ctrlKey || event.altKey || isTyping) return
+
+      event.preventDefault()
+      searchRef.current?.focus()
+      setShortcutNote('hallway finder focused. type a room, game, or suspicious object.')
+    }
+
+    window.addEventListener('keydown', focusHallwayFinder)
+    return () => window.removeEventListener('keydown', focusHallwayFinder)
+  }, [])
 
   const visibleRooms = rooms.filter((room) => {
     const searchable = `${room.code} ${room.title} ${room.text}`.toLowerCase()
@@ -85,9 +103,10 @@ export default function Home() {
             <span role="status">{shortcutNote}</span>
           </div>
           <div className="directory-search">
-            <label htmlFor="room-search">FIND A HALLWAY</label>
+            <label htmlFor="room-search">FIND A HALLWAY / PRESS “/”</label>
             <input
               id="room-search"
+              ref={searchRef}
               type="search"
               value={roomQuery}
               onChange={(event) => setRoomQuery(event.target.value)}
