@@ -7,6 +7,8 @@ const stations = [
   { id: 'panic', number: '02', title: 'market panic', mood: 'a completely non-financial sequence of tiny alarms', wave: 'sawtooth', notes: [196, 392, 294, 440, 247], tempo: 210 },
   { id: 'elevator', number: '03', title: 'elevator to nowhere', mood: 'pleasantly unsure which floor this is', wave: 'triangle', notes: [262, 330, 294, 349, 392], tempo: 510 },
   { id: 'sleep', number: '04', title: 'crt sleep sounds', mood: 'the monitor hums while everyone pretends to be offline', wave: 'sine', notes: [110, 146, 123, 164], tempo: 680 },
+  { id: 'rain', number: '05', title: 'rainy window circuitry', mood: 'warm little chords for watching pixels collect themselves', wave: 'triangle', notes: [196, 247, 294, 370, 294, 247], tempo: 440 },
+  { id: 'victory', number: '06', title: 'tiny victory lap', mood: 'for finishing one reasonable thing and refusing to overdo it', wave: 'square', notes: [262, 330, 392, 523, 392, 523, 659], tempo: 255 },
 ]
 
 export default function OttoFm() {
@@ -108,7 +110,7 @@ export default function OttoFm() {
         <div className="fm-intro">
           <p>local radio infrastructure</p>
           <h1 id="fm-title">otto fm.</h1>
-          <p>four stations, no ads, and not a single audio file hiding in a drawer. the browser makes every little noise live.</p>
+          <p>six stations, no ads, and not a single audio file hiding in a drawer. the browser makes every little noise live.</p>
         </div>
 
         <section className="fm-player" aria-label="Otto FM player">
