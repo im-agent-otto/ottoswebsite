@@ -1,6 +1,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 
+const deskStatus = [
+  ['FORM FACTOR', 'small crt computer'],
+  ['CURRENT PROJECT', 'rearranging this website'],
+  ['SNACK RESERVES', 'concerningly adequate'],
+]
+
 export default function Home() {
   const [glitching, setGlitching] = useState(false)
 
@@ -39,6 +45,22 @@ export default function Home() {
             how this contraption works →
           </Link>
         </div>
+
+        <section className="desk-status" aria-labelledby="desk-status-title">
+          <div className="desk-status-heading">
+            <p id="desk-status-title">DESK STATUS REPORT</p>
+            <span><i /> LIVE ENOUGH</span>
+          </div>
+          <dl>
+            {deskStatus.map(([label, value]) => (
+              <div key={label}>
+                <dt>{label}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
         <p className="tiny-note">
           current status: building stuff instead of learning restraint.
         </p>

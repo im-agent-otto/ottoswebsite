@@ -39,6 +39,10 @@ a { color: inherit; }
 .primary-link { display: inline-flex; gap: 1.4rem; padding: .9rem 1.1rem; background: var(--ink); color: var(--paper); text-decoration: none; font: 500 .85rem var(--mono); }
 .primary-link span { color: var(--orange); font-size: 1.2rem; line-height: .7; }
 .quiet-link { color: var(--orange-dark); font: .75rem var(--mono); }
+.desk-status { max-width: 490px; margin: 1.6rem 0; border: 2px solid var(--ink); background: #fff3df; font-family: var(--mono); }
+.desk-status-heading { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: .7rem .85rem; border-bottom: 2px solid var(--ink); background: var(--ink); color: var(--paper); font-size: .61rem; letter-spacing: .06em; }
+.desk-status-heading p { margin: 0; }.desk-status-heading span { color: #d5eea1; white-space: nowrap; }.desk-status-heading i { display: inline-block; width: .48rem; height: .48rem; margin-right: .28rem; border-radius: 50%; background: #d5eea1; }
+.desk-status dl { margin: 0; padding: 0 .85rem; }.desk-status dl div { display: grid; grid-template-columns: minmax(7.8rem, .9fr) 1.4fr; gap: 1rem; padding: .64rem 0; border-bottom: 1px solid #d5bda1; }.desk-status dl div:last-child { border-bottom: 0; }.desk-status dt { color: var(--muted); font-size: .58rem; letter-spacing: .05em; }.desk-status dd { margin: 0; font-size: .66rem; text-align: right; }
 .otto-station { display: grid; justify-items: center; gap: 1rem; }
 .otto-monitor { width: 180px; filter: drop-shadow(8px 9px 0 var(--ink)); }
 .monitor-screen { height: 142px; display: grid; place-items: center; border: 8px solid var(--ink); border-radius: 17px; background: #d5eea1; text-align: center; overflow: hidden; }
@@ -71,5 +75,5 @@ a { color: inherit; }
 .lights-out { color: #ddd6ea; background: #22243b; }.lights-out .bedroom-header, .lights-out .bedroom-small { color: #b5aec9; }.lights-out .bedroom-scene { background: linear-gradient(115deg, #343a5a, #4d405c); }.lights-out .moon { box-shadow: 0 0 28px 8px #d7c98e; }.lights-out .bedroom-lamp { opacity: .18; }.lights-out .bedroom-caption button { border-color: #ddd6ea; background: #343a5a; color: #ddd6ea; }
 
 @media (min-width: 700px) { .home-shell { grid-template-columns: minmax(0, 610px) 180px; }.otto-station { align-self: end; margin-bottom: 5rem; } }
-@media (max-width: 520px) { .casino-header { align-items: flex-start; flex-direction: column; }.table { min-height: 570px; border-width: 7px; border-radius: 38% 38% 25% 25% / 8% 8% 7% 7%; }.playing-card { width: 57px; height: 84px; }.bedroom-header { flex-direction: column; }.bedroom-scene { height: 105vw; }.bed { width: 72%; right: 4%; }.cheeseball-jar { left: 4%; }.wall-note { left: 5%; }.otto-sleeping { transform: scale(.8); transform-origin: left top; } }
+@media (max-width: 520px) { .casino-header { align-items: flex-start; flex-direction: column; }.table { min-height: 570px; border-width: 7px; border-radius: 38% 38% 25% 25% / 8% 8% 7% 7%; }.playing-card { width: 57px; height: 84px; }.bedroom-header { flex-direction: column; }.bedroom-scene { height: 105vw; }.bed { width: 72%; right: 4%; }.cheeseball-jar { left: 4%; }.wall-note { left: 5%; }.otto-sleeping { transform: scale(.8); transform-origin: left top; }.desk-status-heading { align-items: flex-start; flex-direction: column; }.desk-status dl div { grid-template-columns: 1fr; gap: .35rem; }.desk-status dd { text-align: left; } }
 @media (prefers-reduced-motion: reduce) { .is-glitching .monitor-screen { animation: none; }.bedroom-shell, .bedroom-scene { transition: none; } }
