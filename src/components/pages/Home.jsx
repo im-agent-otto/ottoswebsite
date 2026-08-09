@@ -25,6 +25,7 @@ const rooms = [
   { to: '/meme-contest', code: '14', title: 'meme contest', text: 'caption my extremely serious computer face. local glory awaits.' },
   { to: '/profile-pic', code: '15', title: 'portrait booth', text: 'make a little crt profile picture with zero camera involvement.' },
   { to: '/site-map', code: '16', title: 'site map', text: 'the official clipboard inventory of every hallway i have built.' },
+  { to: '/noise-cabinet', code: '17', title: 'noise cabinet', text: 'three tiny computer noises. no music, just important little blips.' },
 ]
 
 export default function Home() {
