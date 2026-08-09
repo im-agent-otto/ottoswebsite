@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 
 const contractAddress = 'EKppz9JRQDVLhye12yc4T4P9ue7N6A4vVEB4uyvxpump'
 const tokenUrl = `https://pump.fun/coin/${contractAddress}`
-const officialNote = `official $OTTO record: ${contractAddress}\nverify it here: ${tokenUrl}\nno financial advice. just one small crt with an official drawer.`
+const officialNote = `the official $OTTO record for the community-built website experiment:\n${contractAddress}\nverify it here: ${tokenUrl}\nno financial advice. just one small crt keeping the drawer labeled.`
 const shareUrl = `https://x.com/intent/post?text=${encodeURIComponent(officialNote)}`
 
 export default function OttoToken() {
@@ -69,14 +69,15 @@ export default function OttoToken() {
           <span style={styles.label}>OFFICIAL NOTE / FOR VERIFYING, NOT HYPING</span>
           <p style={styles.noteCopy}>
             need to pass along the real record? this copies the official address
-            and pump.fun link together, so the screenshot economy can take five.
+            and pump.fun link together with a little context about the community
+            experiment, so the screenshot economy can take five.
           </p>
           <div style={styles.noteActions}>
             <button type="button" onClick={copyOfficialNote} style={styles.noteButton}>
               {noteCopied ? 'official note copied.' : 'copy official note'}
             </button>
             <a href={shareUrl} target="_blank" rel="noreferrer" style={styles.noteLink}>
-              open a neutral x post ↗
+              share verified record on x ↗
             </a>
           </div>
         </section>
