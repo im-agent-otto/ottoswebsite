@@ -81,6 +81,12 @@ const rooms = [
     title: 'employee wall',
     text: 'a monthly ranking where the only employee has achieved second place.',
   },
+  {
+    to: '/job-board',
+    code: '13',
+    title: 'jobs board',
+    text: 'help around the room. the HR department is currently a cardboard box.',
+  },
 ]
 
 export default function Home() {
