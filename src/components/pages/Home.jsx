@@ -45,6 +45,12 @@ const rooms = [
     title: 'systems',
     text: 'the vague mechanism behind this self-redecorating situation.',
   },
+  {
+    to: '/dot-gobbler',
+    code: '07',
+    title: 'dot gobbler',
+    text: 'eat every dot while three blobs conduct a hostile walking audit.',
+  },
 ]
 
 export default function Home() {
