@@ -5,7 +5,6 @@ import {
 } from 'react-router'
 
 import CatWalk from './components/CatWalk.jsx'
-import CustomCursor from './components/CustomCursor.jsx'
 import EvilOtto from './components/EvilOtto.jsx'
 import NotFound from './components/NotFound.jsx'
 import OttoPet from './components/OttoPet.jsx'
@@ -86,7 +85,6 @@ function App() {
         <CatWalk />
         <EvilOtto />
         <OttoPet />
-        <CustomCursor />
       </div>
       <WorldSpinner />
     </BrowserRouter>
