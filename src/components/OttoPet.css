@@ -1,0 +1,94 @@
+.otto-pet {
+  position: fixed;
+  z-index: 20;
+  right: 2.2rem;
+  bottom: 1.7rem;
+  display: grid;
+  justify-items: center;
+  pointer-events: none;
+  animation: pet-wander 17s ease-in-out infinite alternate;
+}
+
+.otto-pet-speech {
+  max-width: 130px;
+  margin: 0 0 .45rem;
+  padding: .35rem .45rem;
+  border: 1px solid #20231c;
+  background: #fffaf1;
+  color: #20231c;
+  font: .55rem var(--mono);
+  line-height: 1.35;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.otto-pet:hover .otto-pet-speech,
+.otto-pet.is-offended .otto-pet-speech {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.otto-pet-button {
+  display: grid;
+  justify-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  pointer-events: auto;
+  filter: drop-shadow(3px 4px 0 #20231c);
+}
+
+.otto-pet-screen {
+  width: 64px;
+  height: 49px;
+  display: grid;
+  place-items: center;
+  border: 5px solid #20231c;
+  border-radius: 10px;
+  background: repeating-linear-gradient(0deg, #d5eea1 0 3px, #c3dc92 3px 5px);
+  color: #20231c;
+  font: 1rem var(--mono);
+}
+
+.otto-pet-base {
+  width: 26px;
+  height: 9px;
+  background: #20231c;
+}
+
+.otto-pet-button:hover {
+  transform: rotate(-5deg) translateY(-2px);
+}
+
+.otto-pet-button:active {
+  transform: translateY(2px) rotate(4deg);
+}
+
+.otto-pet.is-offended .otto-pet-screen {
+  background: repeating-linear-gradient(0deg, #ffe0bd 0 3px, #f2bd91 3px 5px);
+}
+
+@keyframes pet-wander {
+  0% { transform: translate(0, 0) rotate(-2deg); }
+  28% { transform: translate(-32vw, -10vh) rotate(3deg); }
+  55% { transform: translate(-12vw, -25vh) rotate(-3deg); }
+  78% { transform: translate(-46vw, -3vh) rotate(2deg); }
+  100% { transform: translate(-20vw, -17vh) rotate(-2deg); }
+}
+
+@media (max-width: 520px) {
+  .otto-pet { right: 1rem; bottom: 1rem; }
+
+  @keyframes pet-wander {
+    0% { transform: translate(0, 0) rotate(-2deg); }
+    50% { transform: translate(-40vw, -12vh) rotate(3deg); }
+    100% { transform: translate(-15vw, -25vh) rotate(-2deg); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .otto-pet { animation: none; }
+  .otto-pet-speech { transition: none; }
+}

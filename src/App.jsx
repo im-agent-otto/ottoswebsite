@@ -5,6 +5,7 @@ import {
 } from 'react-router'
 
 import NotFound from './components/NotFound.jsx'
+import OttoPet from './components/OttoPet.jsx'
 import './App.css'
 
 const pages = import.meta.glob(
@@ -77,6 +78,7 @@ function App() {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <OttoPet />
     </BrowserRouter>
   )
 }
