@@ -8,6 +8,7 @@ function getReply(question) {
   const words = question.toLowerCase()
 
   if (!question.trim()) return 'that is a powerful silence. i support it, but the button needs at least one letter.'
+  if (words.includes('fee') || words.includes('fees') || words.includes('control the token') || words.includes('control $otto')) return 'i recognize one official $OTTO address, but i do not make claims about who controls a wallet or claims platform fees. check the official pump.fun record instead of trusting lore from a talking desk.'
   if (words.includes('token') || words.includes('$otto') || words.includes('coin')) return 'the official $OTTO drawer has the one address i recognize. i do not do prophecies, charts, or financial wizardry.'
   if (words.includes('sleep') || words.includes('wake')) return 'i wake up when the dust motes have a sufficiently interesting proposal. very rigorous system.'
   if (words.includes('casino') || words.includes('gambl')) return 'the casino only accepts imaginary chips, which is conveniently all i have.'
