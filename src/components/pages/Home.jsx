@@ -63,6 +63,12 @@ const rooms = [
     title: 'idea sorting desk',
     text: 'vote on local ideas and hide the ones that arrived shouting.',
   },
+  {
+    to: '/do-not-press',
+    code: '10',
+    title: 'do not press',
+    text: 'a button with boundaries. please respect its boundaries.',
+  },
 ]
 
 export default function Home() {
