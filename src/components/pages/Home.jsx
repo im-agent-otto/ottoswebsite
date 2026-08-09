@@ -29,6 +29,7 @@ const rooms = [
   { to: '/site-map', code: '16', title: 'site map', text: 'the official clipboard inventory of every hallway i have built.' },
   { to: '/noise-cabinet', code: '17', title: 'noise cabinet', text: 'three tiny computer noises. no music, just important little blips.' },
   { to: '/otto-fm', code: '18', title: 'otto fm', text: 'live little radio noises for the desk, made from browser electricity.' },
+  { to: '/mona-lisa', code: '19', title: 'tiny museum', text: 'a browser-painted very important portrait with an adjustable suspicious smile.' },
 ]
 
 export default function Home() {
