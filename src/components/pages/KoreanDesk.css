@@ -1,0 +1,202 @@
+.korean-shell {
+  min-height: 100svh;
+  padding: clamp(1rem, 5vw, 3rem);
+  background: #d2d8c4;
+  color: #263129;
+  font-family: var(--mono);
+}
+
+.korean-panel {
+  width: min(100%, 800px);
+  margin: 0 auto;
+  padding: clamp(1.3rem, 5vw, 3.4rem);
+  border: 3px solid #263129;
+  background: #fffdf3;
+  box-shadow: 10px 10px 0 #71826a;
+}
+
+.korean-header,
+.korean-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #587060;
+  font-size: .64rem;
+  letter-spacing: .05em;
+}
+
+.korean-header {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #b4c0aa;
+}
+
+.korean-header a,
+.korean-footer a { color: #263129; }
+
+.korean-intro { padding: clamp(2.5rem, 8vw, 4.5rem) 0 2rem; }
+
+.korean-monitor {
+  width: 94px;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(4px 5px 0 #263129);
+}
+
+.korean-monitor div {
+  display: grid;
+  height: 69px;
+  place-items: center;
+  border: 6px solid #263129;
+  border-radius: 13px;
+  background: repeating-linear-gradient(0deg, #d9eda7 0 4px, #bfdb8d 4px 6px);
+  font-size: 1.55rem;
+}
+
+.korean-monitor small {
+  margin-top: -1.35rem;
+  font-size: .41rem;
+  letter-spacing: .08em;
+}
+
+.korean-monitor i {
+  display: block;
+  width: 40px;
+  height: 13px;
+  margin: 0 auto;
+  background: #263129;
+}
+
+.korean-intro > p:first-of-type {
+  margin: 0 0 .65rem;
+  color: #a45337;
+  font-size: .67rem;
+  letter-spacing: .1em;
+}
+
+.korean-intro h1 {
+  margin: 0;
+  font: 500 clamp(3rem, 10vw, 6rem)/.82 var(--display);
+  letter-spacing: -.09em;
+}
+
+.korean-intro > p:last-child {
+  max-width: 560px;
+  margin: 1.4rem 0 0;
+  font-size: .78rem;
+  line-height: 1.85;
+  word-break: keep-all;
+}
+
+.korean-directory {
+  border: 2px solid #263129;
+  background: #f4efdc;
+}
+
+.korean-directory-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: .75rem .85rem;
+  background: #263129;
+  color: #fffdf3;
+}
+
+.korean-directory-heading h2 {
+  margin: 0;
+  font: 500 1rem var(--display);
+  letter-spacing: -.04em;
+}
+
+.korean-directory-heading span {
+  color: #d9eda7;
+  font-size: .56rem;
+  letter-spacing: .07em;
+}
+
+.korean-directory ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.korean-directory li {
+  display: grid;
+  grid-template-columns: 2.8rem minmax(0, 1fr);
+  gap: .75rem;
+  padding: .85rem;
+  border-bottom: 1px solid #bdcec4;
+}
+
+.korean-directory li:last-child { border-bottom: 0; }
+
+.korean-directory li > span {
+  color: #a45337;
+  font-size: .64rem;
+}
+
+.korean-directory a {
+  position: relative;
+  display: grid;
+  gap: .28rem;
+  padding-right: 2rem;
+  color: #263129;
+  text-decoration: none;
+}
+
+.korean-directory strong {
+  font: 500 1.08rem var(--display);
+  letter-spacing: -.04em;
+}
+
+.korean-directory small {
+  max-width: 500px;
+  color: #587060;
+  font-size: .63rem;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+.korean-directory b {
+  position: absolute;
+  top: 35%;
+  right: .1rem;
+  color: #a45337;
+  font-size: 1rem;
+}
+
+.korean-directory a:hover { color: #a45337; }
+.korean-directory a:hover b { transform: translateX(3px); }
+
+.korean-note {
+  margin-top: 1.2rem;
+  padding: .9rem;
+  border: 2px dashed #7d988e;
+  background: #d9eda7;
+}
+
+.korean-note p {
+  margin: 0 0 .4rem;
+  color: #456259;
+  font-size: .56rem;
+  letter-spacing: .08em;
+}
+
+.korean-note strong {
+  font: 500 .86rem/1.65 var(--display);
+  letter-spacing: -.025em;
+  word-break: keep-all;
+}
+
+.korean-footer {
+  margin-top: 1.3rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid #b4c0aa;
+  line-height: 1.55;
+}
+
+@media (max-width: 500px) {
+  .korean-header,
+  .korean-footer,
+  .korean-directory-heading { flex-direction: column; align-items: flex-start; }
+}

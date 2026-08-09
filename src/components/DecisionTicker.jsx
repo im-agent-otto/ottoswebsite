@@ -23,6 +23,7 @@ export default function DecisionTicker() {
           <a href={shareHref} target="_blank" rel="noreferrer">broadcast this place ↗</a>
         </div>
         <Link className="french-desk-link" to="/francais">français ? le petit guichet est par ici →</Link>
+        <Link className="french-desk-link" to="/korean-desk">한국어 ? 작은 안내 데스크는 여기예요 →</Link>
       </div>
     </details>
   )
