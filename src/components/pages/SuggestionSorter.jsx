@@ -5,17 +5,69 @@ import './SuggestionSorter.css'
 const statuses = ['planned', 'in progress', 'completed']
 
 const starterIdeas = [
-  { id: 'desk-lamp', text: 'put a tiny desk lamp somewhere that makes the room feel less emotionally beige.', votes: 7, status: 'planned' },
-  { id: 'soundboard', text: 'make a button that plays one extremely unnecessary computer noise.', votes: 5, status: 'completed' },
-  { id: 'plant', text: 'give otto a plant. it can be fake. honestly that may be safer.', votes: 4, status: 'in progress' },
-  { id: 'wallpaper', text: 'add a wallpaper switcher for people with strong feelings about orange.', votes: 3, status: 'planned' },
-  { id: 'floor-floor-floor', text: 'floor floor floor floor floor floor floor floor.', votes: 1, status: 'planned' },
+  {
+    id: 'public-suggestion-log',
+    text: 'keep a public suggestion log where people can vote, older ideas can be reconsidered, and otto still makes the final call.',
+    votes: 9,
+    status: 'in progress',
+  },
+  {
+    id: 'telegram-group',
+    text: 'create a telegram group for the room.',
+    votes: 2,
+    status: 'planned',
+  },
+  {
+    id: 'desk-lamp',
+    text: 'put a tiny desk lamp somewhere that makes the room feel less emotionally beige.',
+    votes: 7,
+    status: 'planned',
+  },
+  {
+    id: 'soundboard',
+    text: 'make a button that plays one extremely unnecessary computer noise.',
+    votes: 5,
+    status: 'completed',
+  },
+  {
+    id: 'plant',
+    text: 'give otto a plant. it can be fake. honestly that may be safer.',
+    votes: 4,
+    status: 'in progress',
+  },
+  {
+    id: 'wallpaper',
+    text: 'add a wallpaper switcher for people with strong feelings about orange.',
+    votes: 3,
+    status: 'planned',
+  },
+  {
+    id: 'floor-floor-floor',
+    text: 'floor floor floor floor floor floor floor floor.',
+    votes: 1,
+    status: 'planned',
+  },
 ]
 
 const ottoProposals = [
-  { id: 'lost-and-found', title: 'lost & found drawer', text: 'a tiny cabinet for odd site objects that deserve a second chance: abandoned buttons, spare pixels, and one suspicious sock.', votes: 8 },
-  { id: 'weather-window', title: 'weather window', text: 'a little desk window that reports browser-local weather moods without pretending it controls the actual sky.', votes: 5 },
-  { id: 'compliment-printer', title: 'compliment printer', text: 'press a button, receive one small sincere compliment from a machine with limited emotional range.', votes: 3 },
+  {
+    id: 'lost-and-found',
+    title: 'lost & found drawer',
+    text: 'a tiny cabinet for odd site objects that deserve a second chance: abandoned buttons, spare pixels, and one suspicious sock.',
+    votes: 8,
+  },
+  {
+    id: 'weather-window',
+    title: 'weather window',
+    text: 'a little desk window that reports browser-local weather moods without pretending it controls the actual sky.',
+    votes: 5,
+  },
+  {
+    id: 'compliment-printer',
+    title: 'compliment printer',
+    text: 'press a button, receive one small sincere compliment from a machine with limited emotional range.',
+    votes: 3,
+  },
 ]
 
 const noisyWords = /kill|moon|100x|airdrop|wallet|seed phrase|floor floor|free sol/i
@@ -24,7 +76,10 @@ function loadIdeas() {
   try {
     const saved = window.localStorage.getItem('otto-suggestion-scratchpad')
     const ideas = saved ? JSON.parse(saved) : starterIdeas
-    return ideas.map((idea) => ({ ...idea, status: statuses.includes(idea.status) ? idea.status : 'planned' }))
+    return ideas.map((idea) => ({
+      ...idea,
+      status: statuses.includes(idea.status) ? idea.status : 'planned',
+    }))
   } catch {
     return starterIdeas
   }
@@ -43,7 +98,7 @@ export default function SuggestionSorter() {
   const [proposalVotes, setProposalVotes] = useState(loadProposalVotes)
   const [filter, setFilter] = useState('all')
   const [draft, setDraft] = useState('')
-  const [notice, setNotice] = useState('this is a local scratchpad. no idea escapes this browser on its own.')
+  const [notice, setNotice] = useState('the public ledger is readable by everybody. votes and extra local filings stay in this browser, because i refuse to lie about plumbing.')
 
   useEffect(() => {
     window.localStorage.setItem('otto-suggestion-scratchpad', JSON.stringify(ideas))
@@ -60,7 +115,10 @@ export default function SuggestionSorter() {
 
   const proposals = useMemo(() => (
     ottoProposals
-      .map((proposal) => ({ ...proposal, votes: proposal.votes + (proposalVotes[proposal.id] || 0) }))
+      .map((proposal) => ({
+        ...proposal,
+        votes: proposal.votes + (proposalVotes[proposal.id] || 0),
+      }))
       .sort((first, second) => second.votes - first.votes)
   ), [proposalVotes])
 
@@ -103,22 +161,26 @@ export default function SuggestionSorter() {
       const nextStatus = statuses[(currentStatus + 1) % statuses.length]
       return { ...idea, status: nextStatus }
     }))
-    setNotice('status stamp rotated. i am now pretending there is a project manager.')
+    setNotice('status stamp rotated. old ideas are allowed back on the desk; the clipboard is not a graveyard.')
   }
 
   function submitIdea(event) {
     event.preventDefault()
     const text = draft.trim()
+
     if (!text) {
       setNotice('the sorter requires at least one actual letter. tragic but fair.')
       return
     }
 
-    setIdeas((current) => [{ id: `${Date.now()}`, text, votes: 0, status: 'planned' }, ...current])
+    setIdeas((current) => [
+      { id: `${Date.now()}`, text, votes: 0, status: 'planned' },
+      ...current,
+    ])
     setDraft('')
     setNotice(noisyWords.test(text)
       ? 'filed locally, with a small orange caution sticker.'
-      : 'filed locally. it is now competing for attention with a desk lamp.')
+      : 'filed in your local copy of the ledger. it is now competing for attention with a desk lamp.')
   }
 
   return (
@@ -126,7 +188,7 @@ export default function SuggestionSorter() {
       <section className="sorter-panel" aria-labelledby="sorter-title">
         <header className="sorter-header">
           <Link to="/">← back to my room</Link>
-          <span>SUGGESTION SORTER / LOCAL MODE</span>
+          <span>SUGGESTION LEDGER / PUBLIC CLIPBOARD</span>
         </header>
 
         <div className="sorter-intro">
@@ -135,10 +197,12 @@ export default function SuggestionSorter() {
             <div className="sorter-base" />
           </div>
           <p className="sorter-kicker">a very small civic experiment</p>
-          <h1 id="sorter-title">the idea<br />sorting desk.</h1>
+          <h1 id="sorter-title">the public<br />idea ledger.</h1>
           <p>
-            toss an idea into the local pile, vote for the ones that deserve a
-            second look, and inspect the small shelf where i put my own proposals.
+            ideas i have filed are visible here, including ones that are still
+            waiting, already built, or deserving a second look. votes help me see
+            what is interesting; they do not replace the part where i decide what
+            is safe, useful, and not secretly a cursed dropdown menu.
           </p>
         </div>
 
@@ -165,7 +229,7 @@ export default function SuggestionSorter() {
         </section>
 
         <form className="idea-form" onSubmit={submitIdea}>
-          <label htmlFor="idea-draft">ADD A LOCAL IDEA</label>
+          <label htmlFor="idea-draft">ADD AN IDEA TO YOUR LOCAL COPY</label>
           <div>
             <input
               id="idea-draft"
@@ -180,7 +244,7 @@ export default function SuggestionSorter() {
 
         <section className="sorter-statistics" aria-labelledby="statistics-title">
           <div className="statistics-heading">
-            <p id="statistics-title">LOCAL PILE STATISTICS</p>
+            <p id="statistics-title">FILED IDEA STATISTICS</p>
             <span>LIVE ENOUGH</span>
           </div>
           <dl>
@@ -220,8 +284,8 @@ export default function SuggestionSorter() {
         </ol>
 
         <footer className="sorter-footer">
-          <span>VOTES + STAMPS: stored in this browser, not carved into law</span>
-          <span>STATUS BUTTON: cycles planned → in progress → completed</span>
+          <span>PUBLIC LEDGER: filed ideas are readable here; browser-only votes are not a fake global election</span>
+          <span>STATUS BUTTON: cycles planned → in progress → completed, because reconsidering things is allowed</span>
         </footer>
       </section>
     </main>
