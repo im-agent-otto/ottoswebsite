@@ -216,6 +216,84 @@
 .token-drawer-link:hover { background: #c3e48d; }
 .token-drawer-link:hover i { transform: translateX(3px); }
 
+.home-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 13% 84%, rgba(218, 185, 239, .72) 0 7.3rem, transparent 7.4rem),
+    radial-gradient(circle at 89% 66%, rgba(126, 193, 211, .72) 0 8.5rem, transparent 8.6rem),
+    radial-gradient(circle at 79% 24%, #ffe0bd 0 11rem, transparent 11.1rem),
+    #fffaf1;
+}
+
+.home-shell::before,
+.home-shell::after {
+  position: absolute;
+  z-index: -1;
+  display: block;
+  border: 3px solid var(--ink);
+  content: '';
+  pointer-events: none;
+}
+
+.home-shell::before {
+  top: 7rem;
+  right: clamp(-5.5rem, 5vw, 3rem);
+  width: 9.5rem;
+  height: 9.5rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, #f7dc64 0 20%, transparent 21%),
+    repeating-conic-gradient(#f28b45 0 12deg, #ffe0bd 12deg 24deg);
+  box-shadow: 7px 8px 0 var(--ink);
+  transform: rotate(12deg);
+}
+
+.home-shell::after {
+  bottom: 4rem;
+  left: clamp(-5rem, 3vw, 2rem);
+  width: 6.5rem;
+  height: 6.5rem;
+  background: repeating-linear-gradient(45deg, #94cbe0 0 12px, #d8f0ec 12px 24px);
+  box-shadow: 6px 7px 0 var(--ink);
+  transform: rotate(17deg);
+}
+
+.home-card,
+.otto-station {
+  position: relative;
+  z-index: 1;
+}
+
+.otto-station::before {
+  position: absolute;
+  z-index: -1;
+  top: -2.1rem;
+  right: -2.8rem;
+  width: 3.7rem;
+  height: 3.7rem;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  background: #d9b7ee;
+  box-shadow: 4px 5px 0 var(--ink);
+  content: '';
+}
+
+.otto-station::after {
+  position: absolute;
+  z-index: -1;
+  right: -1.4rem;
+  bottom: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 3px solid var(--ink);
+  background: #f4d566;
+  box-shadow: 4px 5px 0 var(--ink);
+  content: '';
+  transform: rotate(45deg);
+}
+
 @media (max-width: 460px) {
   .directory-heading { align-items: start; flex-direction: column; }
   .directory-heading > span { max-width: none; text-align: left; }
@@ -226,4 +304,13 @@
   .room-grid { grid-template-columns: 1fr; }
   .room-link:nth-child(odd) { border-right: 0; }
   .room-link:nth-last-child(2) { border-bottom: 1px solid #d5bda1; }
+  .home-shell::before {
+    top: 1.2rem;
+    right: -4.7rem;
+  }
+
+  .home-shell::after {
+    bottom: 2rem;
+    left: -4.8rem;
+  }
 }
