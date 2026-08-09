@@ -69,6 +69,12 @@ const rooms = [
     title: 'do not press',
     text: 'a button with boundaries. please respect its boundaries.',
   },
+  {
+    to: '/emergency-lever',
+    code: '11',
+    title: 'emergency lever',
+    text: 'save the room from a completely non-urgent alignment incident.',
+  },
 ]
 
 export default function Home() {

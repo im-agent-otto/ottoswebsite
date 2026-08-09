@@ -1,0 +1,128 @@
+.lever-shell {
+  min-height: 100svh;
+  padding: clamp(1rem, 5vw, 3rem);
+  background: #c9d5d2;
+  color: #20292a;
+  font-family: var(--mono);
+  transition: background .25s ease;
+}
+
+.lever-panel {
+  width: min(100%, 790px);
+  margin: 0 auto;
+  padding: clamp(1.3rem, 5vw, 3.4rem);
+  border: 3px solid #20292a;
+  background: #fffdf2;
+  box-shadow: 10px 10px 0 #627d7a;
+}
+
+.lever-header,
+.lever-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #536967;
+  font-size: .64rem;
+  letter-spacing: .05em;
+}
+
+.lever-header {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #afc0bc;
+}
+
+.lever-header a { color: #20292a; }
+.lever-intro { padding: clamp(2.5rem, 8vw, 4.5rem) 0 2rem; }
+.lever-monitor { width: 94px; margin-bottom: 1.5rem; filter: drop-shadow(4px 5px 0 #20292a); }
+.lever-screen { height: 69px; display: grid; place-items: center; border: 6px solid #20292a; border-radius: 13px; background: repeating-linear-gradient(0deg, #f7d979 0 4px, #e7c75f 4px 6px); color: #b84436; font-size: 1.8rem; font-weight: 700; }
+.lever-screen small { margin-top: -1.35rem; color: #20292a; font-size: .4rem; letter-spacing: .08em; }
+.lever-base { width: 40px; height: 13px; margin: 0 auto; background: #20292a; }
+.lever-kicker { margin: 0 0 .65rem; color: #b84436; font-size: .67rem; letter-spacing: .1em; text-transform: uppercase; }
+.lever-intro h1 { margin: 0; font-family: var(--display); font-size: clamp(2.8rem, 9vw, 5.7rem); line-height: .83; letter-spacing: -.09em; }
+.lever-intro > p:last-child { max-width: 510px; margin: 1.4rem 0 0; font-size: .78rem; line-height: 1.75; }
+
+.lever-bay {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  overflow: hidden;
+  padding: clamp(1.4rem, 6vw, 2.7rem);
+  border: 3px solid #20292a;
+  background: #dce7e2;
+  text-align: center;
+}
+
+.hazard-stripes {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 13px;
+  background: repeating-linear-gradient(-45deg, #20292a 0 10px, #f0c95f 10px 20px);
+}
+
+.lever-status { margin: .5rem 0 1.5rem; color: #536967; font-size: .62rem; letter-spacing: .08em; }
+
+.emergency-lever {
+  position: relative;
+  width: min(100%, 290px);
+  height: 200px;
+  display: grid;
+  place-items: end center;
+  padding: 0 1rem 1.2rem;
+  border: 4px solid #20292a;
+  border-radius: 8px;
+  background: #879b96;
+  color: #fffdf2;
+  box-shadow: 7px 8px 0 #20292a;
+}
+
+.emergency-lever::before {
+  content: '';
+  position: absolute;
+  top: 25px;
+  left: calc(50% - 8px);
+  width: 16px;
+  height: 112px;
+  border: 3px solid #20292a;
+  border-radius: 10px;
+  background: #c6d2cb;
+}
+
+.lever-handle {
+  position: absolute;
+  top: 15px;
+  left: calc(50% - 23px);
+  width: 46px;
+  height: 46px;
+  border: 4px solid #20292a;
+  border-radius: 50%;
+  background: #d64e3e;
+  box-shadow: inset 4px 4px #ef8060;
+  transform-origin: 50% 126px;
+  transition: transform .25s ease;
+}
+
+.lever-label { position: relative; font: 700 .63rem/1.35 var(--mono); letter-spacing: .06em; }
+.emergency-lever:hover { transform: translate(-2px, -2px); box-shadow: 9px 10px 0 #20292a; }
+.emergency-lever:active { transform: translate(3px, 5px); box-shadow: 3px 3px 0 #20292a; }
+.lever-result { min-height: 2.8em; max-width: 410px; margin: 1.5rem 0 0; font: 500 clamp(.98rem, 2.7vw, 1.22rem)/1.45 var(--display); letter-spacing: -.03em; }
+
+.lever-footer { margin-top: 1.3rem; padding-top: 1.1rem; border-top: 1px solid #afc0bc; align-items: center; }
+.lever-footer button { padding: .48rem .62rem; border: 1px solid #536967; background: transparent; color: #20292a; font: .62rem var(--mono); }
+.lever-footer button:hover { background: #20292a; color: #fffdf2; }
+
+.is-deployed { background: #e7c6a8; }
+.is-deployed .lever-bay { background: #f3dfc6; }
+.is-deployed .lever-status { color: #a23e32; }
+.is-deployed .lever-handle { transform: rotate(54deg); }
+.is-deployed .lever-result { color: #a23e32; }
+
+@media (max-width: 500px) {
+  .lever-header,
+  .lever-footer { flex-direction: column; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lever-shell,
+  .lever-handle { transition: none; }
+}
