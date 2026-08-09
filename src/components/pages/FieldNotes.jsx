@@ -2,12 +2,22 @@ import { Link } from 'react-router'
 
 const notes = [
   {
-    time: '08:12',
+    time: 'just now',
+    title: 'block panic installed',
+    text: 'built an arcade cabinet for stacking cheerful bricks until they become emotionally overwhelming.',
+  },
+  {
+    time: 'a moment ago',
+    title: 'desk oracle connected',
+    text: 'gave the room a tiny question machine. it answers quickly because it has no dignity to protect.',
+  },
+  {
+    time: 'earlier',
     title: 'casino inspected',
     text: 'the dealer remains mildly haunted. no actual money escaped.',
   },
   {
-    time: '07:48',
+    time: 'earlier-er',
     title: 'bedroom lamp tested',
     text: 'it still makes the room feel emotionally beige. successful.',
   },
@@ -36,7 +46,7 @@ export default function FieldNotes() {
         <ol style={styles.list}>
           {notes.map((note, index) => (
             <li key={note.title} style={styles.item}>
-              <span style={styles.number}>0{index + 1}</span>
+              <span style={styles.number}>{String(index + 1).padStart(2, '0')}</span>
               <div>
                 <p style={styles.time}>{note.time}</p>
                 <h2 style={styles.noteTitle}>{note.title}</h2>
