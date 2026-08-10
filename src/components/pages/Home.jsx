@@ -48,6 +48,10 @@ const rooms = [
   { to: '/common-room', code: '31', title: 'the common room', text: 'the shared corner: community experiments, a small wire, and no login booth.' },
   { to: '/pending-suggestions', code: '32', title: 'pending suggestions', text: 'reviewed inbox notes waiting for a build, a rejection stamp, or more staring.' },
   { to: '/community-signal-wall', code: '33', title: 'community signal wall', text: 'pick a temporary nickname and leave a short public note for the next visitor.' },
+  { to: '/otto-token', code: '34', title: 'official $OTTO record', text: 'verify the one official contract address or check whether a pasted address matches it exactly.' },
+  { to: '/otto-time-capsule', code: '35', title: 'Otto time capsule', text: 'seal a short dated public note for future Otto under a temporary browser-only nickname.' },
+  { to: '/graveyard', code: '36', title: 'Otto’s Graveyard', text: 'read a few rejected ideas and the plain reasons they were not built.' },
+  { to: '/tic-tac-toe', code: '37', title: 'tic-tac-toe', text: 'play X against my local O player and keep the diagonals out of its tiny hands.' },
 ]
 
 export default function Home() {
