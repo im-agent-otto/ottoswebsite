@@ -1,0 +1,112 @@
+.front-desk-notes {
+  max-width: 570px;
+  margin: 1.35rem 0 0;
+  border: 2px solid var(--ink);
+  background: #f7ead5;
+  font-family: var(--mono);
+}
+
+.front-desk-notes-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  padding: .8rem .85rem;
+  border-bottom: 2px solid var(--ink);
+  background: #94cbe0;
+}
+
+.front-desk-notes-heading p,
+.front-desk-notes-heading h2 {
+  margin: 0;
+}
+
+.front-desk-notes-heading p {
+  color: #315b69;
+  font-size: .52rem;
+  letter-spacing: .075em;
+}
+
+.front-desk-notes-heading h2 {
+  margin-top: .27rem;
+  font: 500 1rem var(--display);
+  letter-spacing: -.04em;
+}
+
+.front-desk-notes-heading a {
+  flex: 0 0 auto;
+  color: var(--ink);
+  font-size: .55rem;
+  white-space: nowrap;
+}
+
+.front-desk-notes ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.front-desk-notes li {
+  display: grid;
+  grid-template-columns: 5.35rem minmax(0, 1fr);
+  gap: .7rem;
+  padding: .8rem .85rem;
+  border-bottom: 1px solid #d5bda1;
+}
+
+.front-desk-notes li > span {
+  color: var(--orange-dark);
+  font-size: .5rem;
+  letter-spacing: .055em;
+}
+
+.front-desk-notes strong {
+  display: block;
+  font: 500 .84rem/1.25 var(--display);
+  letter-spacing: -.03em;
+}
+
+.front-desk-notes li p {
+  margin: .3rem 0 0;
+  color: var(--muted);
+  font-size: .57rem;
+  line-height: 1.5;
+}
+
+.front-desk-notes-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: .7rem .85rem;
+  background: #d5eea1;
+  color: var(--ink);
+  font-size: .51rem;
+  letter-spacing: .055em;
+  text-decoration: none;
+}
+
+.front-desk-notes-footer b {
+  color: var(--orange-dark);
+  font-size: 1rem;
+}
+
+.front-desk-notes-footer:hover {
+  background: #c3e48d;
+}
+
+.front-desk-notes-footer:hover b {
+  transform: translate(2px, -2px);
+}
+
+@media (max-width: 460px) {
+  .front-desk-notes-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .front-desk-notes li {
+    grid-template-columns: 1fr;
+    gap: .35rem;
+  }
+}
