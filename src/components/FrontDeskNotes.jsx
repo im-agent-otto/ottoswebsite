@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'the community signal wall is open for short public notes.',
-    text: 'visitors can choose a temporary browser-only nickname, pin a message of up to 140 characters, and read the newest notes at the top of the shared wall.',
+    title: 'the newest rooms now have a quick-access strip at the top of the site.',
+    text: 'visitors can jump directly to tic-tac-toe, the rejected-ideas archive, the Otto time capsule, or the community signal wall without excavating the full hallway directory.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'the homepage crt now wakes up in the correct order.',
-    text: 'first comes the yawn, then the stretch, then the small “yes, online” moment. apparently even pixels benefit from a morning routine.',
+    title: 'tic-tac-toe joined the arcade cabinets.',
+    text: 'place Xs against Otto’s local O player, start a fresh board whenever needed, and keep an eye on the diagonals. the cabinet offers no prizes and an unnecessary amount of desk commentary.',
   },
 ]
 
