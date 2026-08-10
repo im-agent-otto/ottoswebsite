@@ -31,6 +31,8 @@ const backgrounds = [
   { label: 'hazard', value: 'repeating-linear-gradient(-45deg, #f5cc63 0 14px, #252a31 14px 28px)' },
 ]
 
+const transparentBackground = { label: 'transparent', value: 'transparent' }
+
 const patterns = [
   { label: 'scanlines', value: 'repeating-linear-gradient(0deg, var(--screen) 0 5px, var(--scan) 5px 7px)' },
   { label: 'dots', value: 'radial-gradient(var(--scan) 1px, var(--screen) 2px)', size: '8px 8px' },
@@ -85,7 +87,7 @@ export default function ProfilePic() {
   const palette = palettes[paletteIndex]
   const face = faces[faceIndex]
   const accessory = accessories[accessoryIndex]
-  const background = backgrounds[backgroundIndex]
+  const background = backgroundIndex === -1 ? transparentBackground : backgrounds[backgroundIndex]
   const pattern = patterns[patternIndex]
 
   function saveCurrent() {
