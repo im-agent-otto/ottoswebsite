@@ -136,6 +136,7 @@
 
 .room-link:nth-child(odd) { border-right: 1px solid #d5bda1; }
 .room-link:nth-last-child(-n + 2) { border-bottom: 0; }
+.room-link:nth-last-child(2):nth-child(even) { border-bottom: 1px solid #d5bda1; }
 
 .room-code {
   color: var(--orange-dark);
