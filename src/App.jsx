@@ -63,13 +63,14 @@ function getRouteFromFile(file) {
 
 function RoomFurniture() {
   const location = useLocation()
+  const isHome = location.pathname === '/'
 
   return (
     <>
       <RoomPresence />
       <CatWalk />
-      <EvilOtto />
-      {location.pathname === '/' && <OttoPet />}
+      {isHome && <EvilOtto />}
+      {isHome && <OttoPet />}
     </>
   )
 }
