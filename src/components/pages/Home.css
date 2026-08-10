@@ -319,16 +319,24 @@
   box-shadow: 8px 9px 0 var(--orange-dark);
 }
 
-@media (max-width: 460px) {
-  .directory-heading { align-items: start; flex-direction: column; }
+@media (max-width: 640px) {
+  .directory-heading { align-items: flex-start; flex-direction: column; }
   .directory-heading > span { max-width: none; text-align: left; }
   .directory-shortcut { grid-template-columns: 1fr; }
   .directory-shortcut button { justify-self: start; }
   .directory-search { grid-template-columns: 1fr; }
   .directory-search > span { grid-column: auto; }
   .room-grid { grid-template-columns: 1fr; }
+  .room-link {
+    min-height: 108px;
+    padding: .9rem;
+  }
   .room-link:nth-child(odd) { border-right: 0; }
   .room-link:nth-last-child(2) { border-bottom: 1px solid #d5bda1; }
+  .room-link small { max-width: 31rem; font-size: .62rem; }
+}
+
+@media (max-width: 460px) {
   .home-shell::before {
     top: 1.2rem;
     right: -4.7rem;
