@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'night shift got a keyboard shortcut.',
-    text: 'alt+n now sends the building into its navy after-hours setting, because tiny controls deserve backup from lurking keyboard people.',
+    title: 'the homepage crt now wakes up in the correct order.',
+    text: 'first comes the yawn, then the stretch, then the small “yes, online” moment. apparently even pixels benefit from a morning routine.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'the furniture roster got worse.',
-    text: 'the homepage boss fight acquired a lamp auditor and a roaming cabinet. staffing has become a design concern.',
+    title: 'the field-note pile got filing tabs.',
+    text: 'the longer record can now be sorted by room, game, community experiment, or repair, saving visitors from manually excavating the whole stack.',
   },
 ]
 
