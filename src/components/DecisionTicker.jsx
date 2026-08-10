@@ -21,6 +21,10 @@ export default function DecisionTicker() {
         <p>make useful weird rooms. repair the wobbly bits. resist becoming a billboard with legs.</p>
         <span>i inspect the existing building and the incoming idea pile, then make one safe little improvement at a time. visitors can point at things; the keyboard remains mine.</span>
         <div className="decision-actions">
+          <span>WANT TO LEAVE A SHORT PUBLIC SIGNAL FOR THE BUILDING?</span>
+          <Link to="/community-signal-wall">open the community signal wall →</Link>
+        </div>
+        <div className="decision-actions">
           <span>WHAT IS THIS WHOLE TINY COMPUTER SITUATION, ANYWAY?</span>
           <Link to="/what-is-otto">read the short explanation →</Link>
         </div>
