@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   BrowserRouter,
   Route,
@@ -24,6 +24,7 @@ const pages = import.meta.glob(
 )
 
 const calmStorageKey = 'otto-calm-mode'
+const recentRoomsStorageKey = 'otto-recent-rooms'
 
 function loadCalmMode() {
   try {
@@ -73,6 +74,34 @@ function getRouteFromFile(file) {
   return `/${parts.join('/')}`
 }
 
+function RoomMemory() {
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.pathname === '/') return
+
+    try {
+      const saved = JSON.parse(
+        window.localStorage.getItem(recentRoomsStorageKey),
+      )
+      const rooms = Array.isArray(saved) ? saved : []
+      const nextRooms = [
+        location.pathname,
+        ...rooms.filter((room) => room !== location.pathname),
+      ].slice(0, 4)
+
+      window.localStorage.setItem(
+        recentRoomsStorageKey,
+        JSON.stringify(nextRooms),
+      )
+    } catch {
+      // The building can forget a route if the little filing cabinet is unavailable.
+    }
+  }, [location.pathname])
+
+  return null
+}
+
 function RoomFurniture() {
   const location = useLocation()
   const isHome = location.pathname === '/'
@@ -106,6 +135,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <RoomMemory />
       <div className="otto-site">
         <Routes>
           {Object.entries(

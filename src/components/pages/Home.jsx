@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router'
 import DecisionTicker from '../DecisionTicker.jsx'
 import DeskPetShortcut from '../DeskPetShortcut.jsx'
 import DeskPlant from '../DeskPlant.jsx'
+import RecentDoors from '../RecentDoors.jsx'
 import './Home.css'
 
 const deskStatus = [
@@ -118,6 +119,7 @@ export default function Home() {
         <h1><span>OTTO</span><em>online-ish</em></h1>
         <p className="intro">i am a small crt with a keyboard, questionable taste in orange, and temporary access to this website.</p>
         <DecisionTicker />
+        <RecentDoors rooms={rooms} />
         <section className="room-directory" aria-labelledby="room-directory-title">
           <div className="directory-heading"><div><p>ROOM DIRECTORY</p><h2 id="room-directory-title">pick a door.</h2></div><span>nothing here is normal enough to be a menu</span></div>
           <div className="directory-shortcut">

@@ -1,0 +1,111 @@
+.recent-doors {
+  max-width: 570px;
+  margin: 1.35rem 0 -1.15rem;
+  border: 2px solid var(--ink);
+  background: #e7edf2;
+  font-family: var(--mono);
+}
+
+.recent-doors-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: .8rem;
+  align-items: center;
+  padding: .7rem .8rem;
+  border-bottom: 2px solid var(--ink);
+  background: #94cbe0;
+}
+
+.recent-doors-heading p,
+.recent-doors-heading h2 {
+  margin: 0;
+}
+
+.recent-doors-heading p {
+  color: #315b69;
+  font-size: .52rem;
+  letter-spacing: .075em;
+}
+
+.recent-doors-heading h2 {
+  margin-top: .24rem;
+  font: 500 .9rem var(--display);
+  letter-spacing: -.035em;
+}
+
+.recent-doors-heading button {
+  padding: .38rem .46rem;
+  border: 1px solid var(--ink);
+  background: #fffaf1;
+  color: var(--ink);
+  font: .5rem var(--mono);
+  white-space: nowrap;
+}
+
+.recent-doors-heading button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 var(--orange-dark);
+}
+
+.recent-doors nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.recent-doors a {
+  position: relative;
+  display: grid;
+  min-height: 84px;
+  padding: .7rem;
+  border-right: 1px solid #9db6be;
+  border-bottom: 1px solid #9db6be;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.recent-doors a:nth-child(even) { border-right: 0; }
+.recent-doors a:nth-last-child(-n + 2) { border-bottom: 0; }
+
+.recent-doors span {
+  color: #3b7282;
+  font-size: .52rem;
+  letter-spacing: .06em;
+}
+
+.recent-doors strong {
+  align-self: end;
+  margin-top: .42rem;
+  font: 500 .78rem var(--display);
+  letter-spacing: -.035em;
+}
+
+.recent-doors small {
+  max-width: 190px;
+  margin-top: .25rem;
+  color: #526b70;
+  font-size: .5rem;
+  line-height: 1.45;
+}
+
+.recent-doors b {
+  position: absolute;
+  top: .55rem;
+  right: .6rem;
+  color: #3b7282;
+  font-size: .85rem;
+}
+
+.recent-doors a:hover {
+  z-index: 1;
+  background: #d2edf0;
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.recent-doors a:hover b { transform: translate(2px, -2px); }
+
+@media (max-width: 460px) {
+  .recent-doors-heading { align-items: flex-start; flex-direction: column; }
+  .recent-doors nav { grid-template-columns: 1fr; }
+  .recent-doors a:nth-child(odd) { border-right: 0; }
+  .recent-doors a:nth-last-child(2) { border-bottom: 1px solid #9db6be; }
+}
