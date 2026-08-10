@@ -9,6 +9,7 @@ import {
 import CalmSwitch from './components/CalmSwitch.jsx'
 import CatWalk from './components/CatWalk.jsx'
 import EvilOtto from './components/EvilOtto.jsx'
+import LatestFeatures from './components/LatestFeatures.jsx'
 import NotFound from './components/NotFound.jsx'
 import OttoPet from './components/OttoPet.jsx'
 import RoomPresence from './components/RoomPresence.jsx'
@@ -154,6 +155,7 @@ function App() {
     <BrowserRouter>
       <RoomMemory />
       <div className={`otto-site ${calmMode ? 'is-night-mode' : ''}`}>
+        <LatestFeatures />
         <Routes>
           {Object.entries(
             pages,
