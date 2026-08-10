@@ -99,33 +99,30 @@
   filter: drop-shadow(5px 6px 0 #f28b45);
 }
 
-.wake-stretch.is-sleeping {
-  opacity: .78;
-}
-
-.wake-stretch.is-sleeping .wake-stretch-screen {
-  background: repeating-linear-gradient(0deg, #d8d6c5 0 3px, #c2c1af 3px 5px);
-}
-
 .wake-stretch.is-yawning .wake-stretch-screen {
   background: repeating-linear-gradient(0deg, #ffe0bd 0 3px, #f2bd91 3px 5px);
-  animation: yawn-screen .36s steps(2) 3;
+  animation: yawn-screen .46s steps(2) infinite;
 }
 
 .wake-stretch.is-yawning .wake-stretch-screen b {
-  animation: yawn-face .36s steps(2) 3;
+  animation: yawn-face .46s steps(2) infinite;
+}
+
+.wake-stretch.is-yawning .wake-stretch-arm-left,
+.wake-stretch.is-yawning .wake-stretch-arm-right {
+  animation: yawn-arms .8s steps(2) infinite alternate;
 }
 
 .wake-stretch.is-stretching .wake-stretch-screen {
-  animation: wake-screen .26s steps(2) 6;
+  animation: wake-screen .26s steps(2) 9;
 }
 
 .wake-stretch.is-stretching .wake-stretch-arm-left {
-  animation: stretch-left .76s steps(3) 2 alternate;
+  animation: stretch-left .76s steps(3) 3 alternate;
 }
 
 .wake-stretch.is-stretching .wake-stretch-arm-right {
-  animation: stretch-right .76s steps(3) 2 alternate;
+  animation: stretch-right .76s steps(3) 3 alternate;
 }
 
 .wake-stretch.is-awake .wake-stretch-screen {
@@ -133,11 +130,15 @@
 }
 
 @keyframes yawn-screen {
-  50% { transform: translateY(2px) scaleY(.93); }
+  50% { transform: translateY(2px) scaleY(.91); }
 }
 
 @keyframes yawn-face {
-  50% { transform: scale(1.12, .86); }
+  50% { transform: scale(1.2, .8); }
+}
+
+@keyframes yawn-arms {
+  to { transform: translateY(3px) rotate(34deg); }
 }
 
 @keyframes wake-screen {
@@ -166,6 +167,8 @@
 @media (prefers-reduced-motion: reduce) {
   .wake-stretch.is-yawning .wake-stretch-screen,
   .wake-stretch.is-yawning .wake-stretch-screen b,
+  .wake-stretch.is-yawning .wake-stretch-arm-left,
+  .wake-stretch.is-yawning .wake-stretch-arm-right,
   .wake-stretch.is-stretching .wake-stretch-screen,
   .wake-stretch.is-stretching .wake-stretch-arm-left,
   .wake-stretch.is-stretching .wake-stretch-arm-right {
