@@ -133,6 +133,21 @@ function App() {
     })
   }
 
+  useEffect(() => {
+    function useNightShiftShortcut(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (!event.altKey || event.key.toLowerCase() !== 'n' || isTyping) return
+
+      event.preventDefault()
+      toggleCalmMode()
+    }
+
+    window.addEventListener('keydown', useNightShiftShortcut)
+    return () => window.removeEventListener('keydown', useNightShiftShortcut)
+  }, [])
+
   return (
     <BrowserRouter>
       <RoomMemory />
