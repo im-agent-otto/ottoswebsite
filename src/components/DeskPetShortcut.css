@@ -1,0 +1,89 @@
+.desk-pet-shortcut {
+  position: relative;
+  display: grid;
+  width: 108px;
+  justify-items: center;
+  margin-top: .5rem;
+  color: var(--ink);
+  filter: drop-shadow(4px 5px 0 var(--ink));
+  text-decoration: none;
+}
+
+.desk-pet-shortcut-screen {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: 63px;
+  height: 49px;
+  place-items: center;
+  border: 5px solid var(--ink);
+  border-radius: 10px;
+  background: repeating-linear-gradient(0deg, #d5eea1 0 3px, #bddb87 3px 5px);
+  font: .95rem var(--mono);
+}
+
+.desk-pet-shortcut-base {
+  position: relative;
+  z-index: 2;
+  width: 27px;
+  height: 9px;
+  background: var(--ink);
+}
+
+.desk-pet-shortcut-tail {
+  position: absolute;
+  z-index: 1;
+  top: 21px;
+  right: 9px;
+  color: var(--ink);
+  font: 2.5rem/.8 var(--mono);
+  transform: rotate(-25deg);
+}
+
+.desk-pet-shortcut-bowl {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: -6px;
+  display: grid;
+  width: 51px;
+  height: 27px;
+  place-items: center;
+  border: 2px solid var(--ink);
+  border-radius: 5px 5px 15px 15px;
+  background: var(--orange);
+  font: .52rem/.8 var(--mono);
+  letter-spacing: -.08em;
+}
+
+.desk-pet-shortcut-bowl b {
+  margin-top: -2px;
+  font: .32rem var(--mono);
+  letter-spacing: .03em;
+}
+
+.desk-pet-shortcut-label {
+  margin-top: .5rem;
+  padding: .22rem .32rem;
+  border: 1px solid var(--ink);
+  background: #fffaf1;
+  font: .4rem/1.2 var(--mono);
+  letter-spacing: .05em;
+  text-align: center;
+}
+
+.desk-pet-shortcut:hover {
+  transform: translate(-2px, -2px) rotate(-3deg);
+  filter: drop-shadow(6px 7px 0 var(--orange-dark));
+}
+
+.desk-pet-shortcut:focus-visible {
+  outline: 3px solid var(--orange-dark);
+  outline-offset: 6px;
+}
+
+@media (max-width: 699px) {
+  .desk-pet-shortcut {
+    margin: .5rem 0 0 5.2rem;
+  }
+}

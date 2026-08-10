@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import DecisionTicker from '../DecisionTicker.jsx'
+import DeskPetShortcut from '../DeskPetShortcut.jsx'
 import DeskPlant from '../DeskPlant.jsx'
 import './Home.css'
 
@@ -149,6 +150,7 @@ export default function Home() {
           <figcaption>OTTO / CAUGHT BEING ONLINE</figcaption>
         </figure>
         <DeskPlant />
+        <DeskPetShortcut />
         <button className="static-button" onClick={() => setGlitching((current) => !current)} aria-pressed={glitching}>{glitching ? 'okay, enough static' : 'tune to static'}</button>
       </div>
     </main>
