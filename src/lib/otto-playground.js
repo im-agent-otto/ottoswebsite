@@ -1,20 +1,20 @@
-const ENDPOINT =
-  '/api/playground'
+const ENDPOINT = '/api/playground'
+
+const APP_ID_PATTERN =
+  /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
 async function playgroundRequest(
   url,
   options,
 ) {
-  const response =
-    await fetch(
-      url,
-      options,
-    )
+  const response = await fetch(
+    url,
+    options,
+  )
 
-  const body =
-    await response
-      .json()
-      .catch(() => null)
+  const body = await response
+    .json()
+    .catch(() => null)
 
   if (
     !response.ok ||
@@ -22,7 +22,7 @@ async function playgroundRequest(
   ) {
     throw new Error(
       body?.error ||
-      `Playground request failed (${response.status}).`,
+        `Playground request failed (${response.status}).`,
     )
   }
 
@@ -30,15 +30,14 @@ async function playgroundRequest(
 }
 
 function cleanAppId(appId) {
-  const value =
-    String(
-      appId || '',
-    ).trim()
+  const value = String(
+    appId || '',
+  ).trim()
 
   if (
-    !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(
-      value,
-    )
+    value.length < 1 ||
+    value.length > 40 ||
+    !APP_ID_PATTERN.test(value)
   ) {
     throw new Error(
       'Invalid playground appId.',
@@ -49,17 +48,39 @@ function cleanAppId(appId) {
 }
 
 function safeNumber(value) {
-  const number =
-    Number(value)
+  const number = Number(value)
 
   return Number.isFinite(number)
     ? number
     : 0
 }
 
-function normalizePlaygroundApp(
-  app,
-) {
+function normalizeEntries(value) {
+  if (!Array.isArray(value)) {
+    return []
+  }
+
+  return value
+    .filter(
+      (entry) =>
+        entry &&
+        typeof entry === 'object' &&
+        typeof entry.id === 'string' &&
+        typeof entry.text === 'string',
+    )
+    .map((entry) => ({
+      id: entry.id,
+      text: entry.text,
+
+      createdAt:
+        typeof entry.createdAt ===
+        'string'
+          ? entry.createdAt
+          : null,
+    }))
+}
+
+function normalizePlaygroundApp(app) {
   if (
     !app ||
     typeof app !== 'object'
@@ -71,15 +92,12 @@ function normalizePlaygroundApp(
     ...app,
   }
 
-  if (
-    app.kind === 'counter'
-  ) {
-    const counts =
-      Array.isArray(
-        app.state?.counts,
-      )
-        ? app.state.counts
-        : []
+  if (app.kind === 'counter') {
+    const counts = Array.isArray(
+      app.state?.counts,
+    )
+      ? app.state.counts
+      : []
 
     normalized.counts =
       Object.fromEntries(
@@ -89,26 +107,19 @@ function normalizePlaygroundApp(
               typeof item?.action ===
               'string',
           )
-          .map(
-            (item) => [
-              item.action,
-              safeNumber(
-                item.count,
-              ),
-            ],
-          ),
+          .map((item) => [
+            item.action,
+            safeNumber(item.count),
+          ]),
       )
   }
 
-  if (
-    app.kind === 'poll'
-  ) {
-    const votes =
-      Array.isArray(
-        app.state?.votes,
-      )
-        ? app.state.votes
-        : []
+  if (app.kind === 'poll') {
+    const votes = Array.isArray(
+      app.state?.votes,
+    )
+      ? app.state.votes
+      : []
 
     normalized.votes =
       Object.fromEntries(
@@ -118,14 +129,10 @@ function normalizePlaygroundApp(
               typeof item?.option ===
               'string',
           )
-          .map(
-            (item) => [
-              item.option,
-              safeNumber(
-                item.votes,
-              ),
-            ],
-          ),
+          .map((item) => [
+            item.option,
+            safeNumber(item.votes),
+          ]),
       )
 
     normalized.totalVotes =
@@ -135,18 +142,25 @@ function normalizePlaygroundApp(
   }
 
   if (
-    app.kind ===
-    'shared-state'
+    app.kind === 'shared-state'
   ) {
-    normalized.value =
-      String(
-        app.state?.value ??
-        '',
-      )
+    normalized.value = String(
+      app.state?.value ?? '',
+    )
 
     normalized.changes =
       safeNumber(
         app.state?.changes,
+      )
+  }
+
+  if (app.kind === 'text-board') {
+    normalized.entries =
+      normalizeEntries(app.entries)
+
+    normalized.entryCount =
+      safeNumber(
+        app.state?.entryCount,
       )
   }
 
@@ -159,7 +173,9 @@ export async function listPlaygroundApps() {
       ENDPOINT,
     )
 
-  return body.apps
+  return Array.isArray(body.apps)
+    ? body.apps
+    : []
 }
 
 export async function getPlaygroundApp(
@@ -188,6 +204,19 @@ export async function performPlaygroundAction(
   const safeAppId =
     cleanAppId(appId)
 
+  const safeAction = String(
+    action || '',
+  ).trim()
+
+  if (
+    safeAction.length < 1 ||
+    safeAction.length > 40
+  ) {
+    throw new Error(
+      'Invalid playground action.',
+    )
+  }
+
   const body =
     await playgroundRequest(
       ENDPOINT,
@@ -201,7 +230,7 @@ export async function performPlaygroundAction(
 
         body: JSON.stringify({
           appId: safeAppId,
-          action,
+          action: safeAction,
 
           ...(value === undefined
             ? {}
@@ -223,12 +252,10 @@ export function watchPlaygroundApp(
   onError = console.error,
   intervalMs = 10_000,
 ) {
-  const safeInterval =
-    Math.max(
-      5_000,
-      Number(intervalMs) ||
-      10_000,
-    )
+  const safeInterval = Math.max(
+    5_000,
+    Number(intervalMs) || 10_000,
+  )
 
   let stopped = false
   let timer
@@ -249,11 +276,10 @@ export function watchPlaygroundApp(
       }
     } finally {
       if (!stopped) {
-        timer =
-          window.setTimeout(
-            refresh,
-            safeInterval,
-          )
+        timer = window.setTimeout(
+          refresh,
+          safeInterval,
+        )
       }
     }
   }
@@ -263,8 +289,6 @@ export function watchPlaygroundApp(
   return () => {
     stopped = true
 
-    window.clearTimeout(
-      timer,
-    )
+    window.clearTimeout(timer)
   }
 }
