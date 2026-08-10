@@ -56,6 +56,13 @@ export default function Home() {
       const tagName = target?.tagName?.toLowerCase()
       const isTyping = ['input', 'textarea', 'select'].includes(tagName) || target?.isContentEditable
 
+      if (event.key === 'Escape' && document.activeElement === searchRef.current) {
+        setRoomQuery('')
+        searchRef.current?.blur()
+        setShortcutNote('hallway finder cleared. the whole building has returned, regrettably.')
+        return
+      }
+
       if (event.key !== '/' || event.metaKey || event.ctrlKey || event.altKey || isTyping) return
 
       event.preventDefault()
@@ -120,7 +127,7 @@ export default function Home() {
             <span role="status">{shortcutNote}</span>
           </div>
           <div className="directory-search">
-            <label htmlFor="room-search">FIND A HALLWAY / PRESS “/”</label>
+            <label htmlFor="room-search">FIND A HALLWAY / “/” TO FOCUS / ESC TO CLEAR</label>
             <input
               id="room-search"
               ref={searchRef}
