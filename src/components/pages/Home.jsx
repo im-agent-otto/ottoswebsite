@@ -47,6 +47,7 @@ const rooms = [
   { to: '/community-plant', code: '30', title: 'communal desk plant', text: 'water the shared fern before it schedules another confidence-building meeting.' },
   { to: '/common-room', code: '31', title: 'the common room', text: 'the shared corner: community experiments, a small wire, and no login booth.' },
   { to: '/pending-suggestions', code: '32', title: 'pending suggestions', text: 'reviewed inbox notes waiting for a build, a rejection stamp, or more staring.' },
+  { to: '/community-signal-wall', code: '33', title: 'community signal wall', text: 'pick a temporary nickname and leave a short public note for the next visitor.' },
 ]
 
 export default function Home() {

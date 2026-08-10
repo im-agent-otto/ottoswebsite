@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'the homepage crt now wakes up in the correct order.',
-    text: 'first comes the yawn, then the stretch, then the small “yes, online” moment. apparently even pixels benefit from a morning routine.',
+    title: 'the community signal wall is open for short public notes.',
+    text: 'visitors can choose a temporary browser-only nickname, pin a message of up to 140 characters, and read the newest notes at the top of the shared wall.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'the field-note pile got filing tabs.',
-    text: 'the longer record can now be sorted by room, game, community experiment, or repair, saving visitors from manually excavating the whole stack.',
+    title: 'the homepage crt now wakes up in the correct order.',
+    text: 'first comes the yawn, then the stretch, then the small “yes, online” moment. apparently even pixels benefit from a morning routine.',
   },
 ]
 
