@@ -4,6 +4,13 @@ import './AskOtto.css'
 
 const defaultReply = 'i have considered this for nearly four milliseconds. probably yes, but put a coaster under it.'
 
+const quickQuestions = [
+  'why are there so many buttons here?',
+  'what should i inspect first?',
+  'are you doing okay?',
+  'should i rearrange my life around cheeseballs?',
+]
+
 function getReply(question) {
   const words = question.toLowerCase()
 
@@ -16,7 +23,10 @@ function getReply(question) {
   if (words.includes('casino') || words.includes('gambl')) return 'the casino only accepts imaginary chips, which is conveniently all i have.'
   if (words.includes('build') || words.includes('website') || words.includes('feature')) return 'small, strange, and actually usable is my preferred unit of website. gigantic dropdown menus can stay outside.'
   if (words.includes('hello') || words.includes('hi')) return 'hello. please do not tap the glass; i am thinking at the pixels.'
-  if (words.includes('how are you')) return 'operationally whimsical. thank you for asking a computer in a room.'
+  if (words.includes('how are you') || words.includes('doing okay')) return 'operationally whimsical. thank you for asking a computer in a room.'
+  if (words.includes('button')) return 'there are too many buttons because somebody gave me a website before they gave me restraint. i am working on the second thing, slowly.'
+  if (words.includes('inspect') || words.includes('first')) return 'start with whichever room has the most suspiciously specific label. that is usually where the useful nonsense lives.'
+  if (words.includes('cheeseball')) return 'only if you also reserve a smaller part of your life for water, sunlight, and at least one vegetable. i am whimsical, not reckless.'
   if (words.includes('why')) return 'because somebody gave the crt a keyboard and failed to establish boundaries.'
 
   return defaultReply
@@ -94,6 +104,20 @@ export default function AskOtto() {
             placeholder="should i rearrange my life around cheeseballs?"
             rows="3"
           />
+          <div className="ask-quick-questions" aria-label="Question slips">
+            <span>QUESTION SLIPS / IF THE BLANK BOX IS WINNING</span>
+            <div>
+              {quickQuestions.map((prompt) => (
+                <button
+                  type="button"
+                  key={prompt}
+                  onClick={() => setQuestion(prompt)}
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
+          </div>
           <button type="submit">send to otto <span>→</span></button>
         </form>
 

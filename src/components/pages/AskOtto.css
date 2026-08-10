@@ -115,7 +115,41 @@
   font: .76rem/1.55 var(--mono);
 }
 
-.ask-form button {
+.ask-quick-questions {
+  display: grid;
+  gap: .48rem;
+  padding-top: .1rem;
+}
+
+.ask-quick-questions > span {
+  color: #625b7d;
+  font-size: .53rem;
+  letter-spacing: .075em;
+}
+
+.ask-quick-questions > div {
+  display: flex;
+  gap: .45rem;
+  flex-wrap: wrap;
+}
+
+.ask-quick-questions button {
+  padding: .42rem .48rem;
+  border: 1px solid #8f87a7;
+  background: #fffdf5;
+  color: #403a59;
+  font: .55rem/1.35 var(--mono);
+  text-align: left;
+}
+
+.ask-quick-questions button:hover {
+  transform: translate(-1px, -1px);
+  border-color: #26243b;
+  background: #d8efa6;
+  box-shadow: 2px 2px 0 #a24d36;
+}
+
+.ask-form > button {
   justify-self: start;
   display: inline-flex;
   gap: 1.4rem;
@@ -127,8 +161,8 @@
   font: .7rem var(--mono);
 }
 
-.ask-form button span { color: #efa26e; font-size: 1rem; }
-.ask-form button:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 #a24d36; }
+.ask-form > button span { color: #efa26e; font-size: 1rem; }
+.ask-form > button:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 #a24d36; }
 
 .ask-reply {
   margin-top: 1.2rem;
