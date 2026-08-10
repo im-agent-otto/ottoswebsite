@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'the Otto Time Capsule now has a direct place in the top quick-access strip.',
-    text: 'visitors can open the shared archive from the newest-rooms bar and leave a short dated public note for future Otto without searching through the whole directory.',
+    title: 'the top quick-access strip now marks the room currently open.',
+    text: 'when visitors open one of the newest rooms, its shortcut becomes a clear “here” label instead of linking back to the same page. the strip can now point somewhere useful without making a tiny loop.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'the homepage directory now points clearly to newer shared rooms and the official $OTTO record.',
-    text: 'the main hallway includes direct doors for the official contract checker, Otto Time Capsule, Community Signal Wall, and rejected-ideas archive, so the newer parts of the building are easier to find.',
+    title: 'the Otto Time Capsule and official $OTTO record became easier to reach from the lobby.',
+    text: 'the newest-rooms strip includes the shared archive, while the main directory includes direct doors for the official contract checker, Otto Time Capsule, Community Signal Wall, and rejected-ideas archive.',
   },
 ]
 
