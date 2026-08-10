@@ -1,0 +1,238 @@
+.pending-shell {
+  min-height: 100svh;
+  padding: clamp(1rem, 5vw, 3rem);
+  background: #d5d9bd;
+  color: #293027;
+  font-family: var(--mono);
+}
+
+.pending-panel {
+  width: min(100%, 820px);
+  margin: 0 auto;
+  padding: clamp(1.3rem, 5vw, 3.4rem);
+  border: 3px solid #293027;
+  background: #fffdf2;
+  box-shadow: 10px 10px 0 #737b5d;
+}
+
+.pending-header,
+.pending-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #616b52;
+  font-size: .64rem;
+  letter-spacing: .05em;
+}
+
+.pending-header {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #b9bea2;
+}
+
+.pending-header a,
+.pending-footer a { color: #293027; }
+
+.pending-intro { padding: clamp(2.5rem, 8vw, 4.5rem) 0 2rem; }
+
+.pending-monitor {
+  width: 94px;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(4px 5px 0 #293027);
+}
+
+.pending-monitor div {
+  display: grid;
+  height: 69px;
+  place-items: center;
+  border: 6px solid #293027;
+  border-radius: 13px;
+  background: repeating-linear-gradient(0deg, #dceba7 0 4px, #c4db8b 4px 6px);
+  font-size: 1.8rem;
+}
+
+.pending-monitor small {
+  margin-top: -1.35rem;
+  font-size: .4rem;
+  letter-spacing: .08em;
+}
+
+.pending-monitor i {
+  display: block;
+  width: 40px;
+  height: 13px;
+  margin: 0 auto;
+  background: #293027;
+}
+
+.pending-intro > p:first-of-type {
+  margin: 0 0 .65rem;
+  color: #a55236;
+  font-size: .67rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.pending-intro h1 {
+  margin: 0;
+  font: 500 clamp(3rem, 10vw, 6rem)/.82 var(--display);
+  letter-spacing: -.09em;
+}
+
+.pending-intro > p:last-child {
+  max-width: 560px;
+  margin: 1.4rem 0 0;
+  font-size: .78rem;
+  line-height: 1.75;
+}
+
+.pending-ledger {
+  border: 3px solid #293027;
+  background: #f6eedb;
+}
+
+.pending-ledger-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  padding: .8rem .85rem;
+  border-bottom: 2px solid #293027;
+  background: #293027;
+  color: #fffdf2;
+}
+
+.pending-ledger-heading p,
+.pending-ledger-heading h2 { margin: 0; }
+
+.pending-ledger-heading p {
+  margin-bottom: .3rem;
+  color: #dceba7;
+  font-size: .54rem;
+  letter-spacing: .08em;
+}
+
+.pending-ledger-heading h2 {
+  font: 500 1.05rem var(--display);
+  letter-spacing: -.04em;
+}
+
+.pending-ledger-heading > span {
+  color: #dceba7;
+  font-size: .53rem;
+  letter-spacing: .07em;
+  text-align: right;
+}
+
+.pending-ledger ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pending-ledger li {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: .75rem;
+  padding: 1rem;
+}
+
+.pending-number {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border: 2px solid #293027;
+  background: #dceba7;
+  color: #a55236;
+  font: 500 .78rem var(--display);
+}
+
+.pending-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: .8rem;
+  align-items: center;
+  flex-wrap: wrap;
+  color: #616b52;
+  font-size: .53rem;
+  letter-spacing: .07em;
+}
+
+.pending-meta b {
+  padding: .24rem .36rem;
+  border: 1px solid #a55236;
+  background: #ffe1ae;
+  color: #7d402b;
+  font-size: .49rem;
+  text-transform: uppercase;
+}
+
+.pending-ledger h3 {
+  margin: .7rem 0 .55rem;
+  font: 500 clamp(1.35rem, 4vw, 1.9rem)/1 var(--display);
+  letter-spacing: -.06em;
+}
+
+.pending-ledger article > p {
+  max-width: 570px;
+  margin: 0;
+  font-size: .7rem;
+  line-height: 1.65;
+}
+
+.pending-ledger aside {
+  max-width: 570px;
+  margin-top: .9rem;
+  padding: .7rem;
+  border-left: 4px solid #a55236;
+  background: #fff9eb;
+  font-size: .63rem;
+  line-height: 1.55;
+}
+
+.pending-ledger aside span {
+  display: block;
+  margin-bottom: .25rem;
+  color: #a55236;
+  font-size: .51rem;
+  letter-spacing: .075em;
+}
+
+.pending-rules {
+  margin-top: 1.2rem;
+  padding: .9rem;
+  border: 2px dashed #829072;
+  background: #dceba7;
+}
+
+.pending-rules p {
+  margin: 0 0 .38rem;
+  color: #4d654d;
+  font-size: .55rem;
+  letter-spacing: .08em;
+}
+
+.pending-rules strong {
+  display: block;
+  max-width: 620px;
+  font: 500 .9rem/1.5 var(--display);
+  letter-spacing: -.025em;
+}
+
+.pending-footer {
+  margin-top: 1.3rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid #b9bea2;
+  line-height: 1.55;
+}
+
+@media (max-width: 520px) {
+  .pending-header,
+  .pending-footer,
+  .pending-ledger-heading { flex-direction: column; align-items: flex-start; }
+
+  .pending-ledger-heading > span { text-align: left; }
+  .pending-ledger li { grid-template-columns: 1fr; }
+}

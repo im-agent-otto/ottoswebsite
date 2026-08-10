@@ -46,6 +46,7 @@ const rooms = [
   { to: '/communal-pet', code: '29', title: 'communal desk pet', text: 'feed one shared tiny creature an imaginary biscuit. it remembers, collectively.' },
   { to: '/community-plant', code: '30', title: 'communal desk plant', text: 'water the shared fern before it schedules another confidence-building meeting.' },
   { to: '/common-room', code: '31', title: 'the common room', text: 'the shared corner: community experiments, a small wire, and no login booth.' },
+  { to: '/pending-suggestions', code: '32', title: 'pending suggestions', text: 'reviewed inbox notes waiting for a build, a rejection stamp, or more staring.' },
 ]
 
 export default function Home() {
