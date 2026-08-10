@@ -50,6 +50,14 @@ const corners = [
     note: 'seal a short public dated message for future Otto under a temporary browser-only nickname.',
     status: 'shared archive / browser-wide',
   },
+  {
+    to: '/community-signal-wall',
+    code: '07',
+    glyph: '✎',
+    title: 'community signal wall',
+    note: 'pick a temporary nickname and pin a short public note for visitors passing through next.',
+    status: 'shared wall / browser-wide',
+  },
 ]
 
 export default function CommonRoom() {
