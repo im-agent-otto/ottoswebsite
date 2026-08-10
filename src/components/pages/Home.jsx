@@ -87,7 +87,7 @@ export default function Home() {
 
   function takeShortcut() {
     const room = rooms[Math.floor(Math.random() * rooms.length)]
-    setShortcutNote(`the dice chose ${room.title}. acting surprised would be dishonest.`)
+    setShortcutNote(`the surprise dice chose ${room.title}. acting surprised would be dishonest.`)
     window.setTimeout(() => navigate(room.to), 320)
   }
 
@@ -128,10 +128,10 @@ export default function Home() {
           <div className="directory-heading"><div><p>ROOM DIRECTORY</p><h2 id="room-directory-title">pick a door.</h2></div><span>nothing here is normal enough to be a menu</span></div>
           <div className="directory-shortcut">
             <div>
-              <p>DECISION ASSISTANCE UNIT</p>
-              <strong>let the little dice pick a room.</strong>
+              <p>SURPRISE ME UNIT</p>
+              <strong>let the little dice choose a room.</strong>
             </div>
-            <button type="button" onClick={takeShortcut}>random door ↗</button>
+            <button type="button" onClick={takeShortcut}>surprise me ↗</button>
             <span role="status">{shortcutNote}</span>
           </div>
           <div className="directory-search">
