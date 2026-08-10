@@ -9,6 +9,8 @@ const shareUrl = `https://x.com/intent/post?text=${encodeURIComponent(officialNo
 export default function OttoToken() {
   const [copied, setCopied] = useState(false)
   const [noteCopied, setNoteCopied] = useState(false)
+  const [addressToCheck, setAddressToCheck] = useState('')
+  const [checkResult, setCheckResult] = useState('')
 
   async function copyText(text) {
     try {
@@ -35,6 +37,23 @@ export default function OttoToken() {
     await copyText(officialNote)
     setNoteCopied(true)
     window.setTimeout(() => setNoteCopied(false), 1800)
+  }
+
+  function checkAddress(event) {
+    event.preventDefault()
+    const candidate = addressToCheck.trim()
+
+    if (!candidate) {
+      setCheckResult('paste an address first. the checker cannot inspect a dramatic empty box.')
+      return
+    }
+
+    if (candidate === contractAddress) {
+      setCheckResult('match confirmed: this is the official $OTTO contract address.')
+      return
+    }
+
+    setCheckResult('not a match: this is not the official $OTTO contract address listed on this page. do not treat it as Otto.')
   }
 
   return (
@@ -81,6 +100,37 @@ export default function OttoToken() {
             {copied ? 'copied. nice.' : 'copy address'}
           </button>
         </div>
+
+        <section style={styles.checkerBox} aria-labelledby="checker-title">
+          <span style={styles.label}>OFFICIAL ADDRESS CHECKER / LOCAL ONLY</span>
+          <h2 id="checker-title" style={styles.checkerTitle}>check a contract address against the official record.</h2>
+          <p style={styles.checkerCopy}>
+            paste an address from a post, screenshot, or suspiciously excited message.
+            this checker compares it only with the official $OTTO address above. it does
+            not connect a wallet, send anything, or keep what you paste.
+          </p>
+          <form onSubmit={checkAddress} style={styles.checkerForm}>
+            <label htmlFor="otto-address-check" style={styles.checkerLabel}>ADDRESS TO CHECK</label>
+            <div style={styles.checkerControls}>
+              <input
+                id="otto-address-check"
+                value={addressToCheck}
+                onChange={(event) => {
+                  setAddressToCheck(event.target.value)
+                  setCheckResult('')
+                }}
+                placeholder="paste a contract address"
+                spellCheck="false"
+                autoComplete="off"
+                style={styles.checkerInput}
+              />
+              <button type="submit" style={styles.checkerButton}>check address →</button>
+            </div>
+          </form>
+          <p style={styles.checkerResult} role="status">
+            {checkResult || 'no address checked yet. the tiny verifier is standing by.'}
+          </p>
+        </section>
 
         <section style={styles.noteBox} aria-label="Official token sharing note">
           <span style={styles.label}>OFFICIAL NOTE / FOR VERIFYING, NOT HYPING</span>
@@ -143,6 +193,15 @@ const styles = {
   label: { display: 'block', marginBottom: '.65rem', color: '#62675d', fontSize: '.62rem', letterSpacing: '.08em' },
   address: { display: 'block', overflowWrap: 'anywhere', color: '#9b421f', fontSize: 'clamp(.72rem, 2.3vw, .9rem)', lineHeight: '1.55' },
   copyButton: { marginTop: '.85rem', padding: '.55rem .7rem', border: '2px solid #20231c', background: '#fffaf1', color: '#20231c', font: '.65rem "DM Mono", ui-monospace, monospace' },
+  checkerBox: { marginTop: '1.1rem', padding: '1rem', border: '2px solid #20231c', background: '#dce9f2' },
+  checkerTitle: { maxWidth: '510px', margin: '.15rem 0 .65rem', font: '500 clamp(1.05rem, 3.5vw, 1.45rem)/1.2 "Space Grotesk", system-ui, sans-serif', letterSpacing: '-.045em' },
+  checkerCopy: { margin: 0, fontSize: '.7rem', lineHeight: '1.6' },
+  checkerForm: { marginTop: '.9rem' },
+  checkerLabel: { display: 'block', marginBottom: '.42rem', color: '#4b6370', fontSize: '.56rem', letterSpacing: '.075em' },
+  checkerControls: { display: 'flex', gap: '.6rem', flexWrap: 'wrap' },
+  checkerInput: { minWidth: 'min(100%, 220px)', flex: '1 1 220px', padding: '.68rem', border: '2px solid #20231c', borderRadius: 0, background: '#fffaf1', color: '#20231c', font: '.65rem "DM Mono", ui-monospace, monospace' },
+  checkerButton: { padding: '.65rem .72rem', border: '2px solid #20231c', background: '#20231c', color: '#fffaf1', font: '.62rem "DM Mono", ui-monospace, monospace', whiteSpace: 'nowrap' },
+  checkerResult: { minHeight: '2.4em', margin: '.8rem 0 0', paddingTop: '.75rem', borderTop: '1px dashed #7193a3', fontSize: '.66rem', lineHeight: '1.55' },
   noteBox: { marginTop: '1.1rem', padding: '1rem', border: '2px dashed #9b421f', background: '#fff3df' },
   noteCopy: { margin: '0', fontSize: '.7rem', lineHeight: '1.6' },
   noteActions: { display: 'flex', gap: '.8rem', flexWrap: 'wrap', alignItems: 'center', marginTop: '.85rem' },
