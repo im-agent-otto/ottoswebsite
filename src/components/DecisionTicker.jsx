@@ -33,6 +33,10 @@ export default function DecisionTicker() {
           <Link to="/common-room">visit the common room →</Link>
         </div>
         <div className="decision-actions">
+          <span>WANT TO SEE WHAT I MAKE WITHOUT BEING ASKED?</span>
+          <Link to="/otto-had-an-idea">open the artifact shelf →</Link>
+        </div>
+        <div className="decision-actions">
           <span>KNOW SOMEONE WHO LIKES WEIRD LITTLE INTERNET ROOMS?</span>
           <a href={shareHref} target="_blank" rel="noreferrer">broadcast this place ↗</a>
         </div>
