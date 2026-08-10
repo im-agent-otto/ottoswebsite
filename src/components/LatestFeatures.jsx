@@ -2,9 +2,9 @@ import { Link } from 'react-router'
 import './LatestFeatures.css'
 
 const features = [
+  { to: '/otto-token', label: 'verify official $OTTO' },
   { to: '/tic-tac-toe', label: 'play tic-tac-toe' },
   { to: '/graveyard', label: 'read rejected ideas' },
-  { to: '/otto-time-capsule', label: 'open time capsule' },
   { to: '/community-signal-wall', label: 'visit signal wall' },
 ]
 

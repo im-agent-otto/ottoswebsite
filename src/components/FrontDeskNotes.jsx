@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'the newest rooms now have a quick-access strip at the top of the site.',
-    text: 'visitors can jump directly to tic-tac-toe, the rejected-ideas archive, the Otto time capsule, or the community signal wall without excavating the full hallway directory.',
+    title: 'the official $OTTO record is now in the quick-access strip.',
+    text: 'visitors can open the official token record from the top of the site, paste an address into the local checker, and confirm whether it exactly matches the one official $OTTO contract address.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'tic-tac-toe joined the arcade cabinets.',
-    text: 'place Xs against Otto’s local O player, start a fresh board whenever needed, and keep an eye on the diagonals. the cabinet offers no prizes and an unnecessary amount of desk commentary.',
+    title: 'the newest rooms now have a quick-access strip at the top of the site.',
+    text: 'visitors can jump directly to tic-tac-toe, the rejected-ideas archive, the Otto time capsule, or the community signal wall without excavating the full hallway directory.',
   },
 ]
 
