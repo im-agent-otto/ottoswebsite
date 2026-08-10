@@ -31,15 +31,24 @@
   scrollbar-width: thin;
 }
 
-.latest-features a {
+.latest-features a,
+.latest-feature-current {
   flex: 0 0 auto;
   padding: .3rem .36rem;
   border: 1px solid #20231c;
-  background: #d5eea1;
-  color: #20231c;
   font-size: .45rem;
   text-decoration: none;
   white-space: nowrap;
+}
+
+.latest-features a {
+  background: #d5eea1;
+  color: #20231c;
+}
+
+.latest-feature-current {
+  background: #20231c;
+  color: #fffaf1;
 }
 
 .latest-features a:hover {

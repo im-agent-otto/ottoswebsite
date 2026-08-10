@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import { Link, useLocation } from 'react-router'
 import './LatestFeatures.css'
 
 const features = [
@@ -10,15 +10,29 @@ const features = [
 ]
 
 export default function LatestFeatures() {
+  const location = useLocation()
+
   return (
     <nav className="latest-features" aria-label="Latest features">
       <span>NEWEST ROOMS</span>
       <div>
-        {features.map((feature) => (
-          <Link key={feature.to} to={feature.to}>
-            {feature.label}
-          </Link>
-        ))}
+        {features.map((feature) => {
+          const isCurrentRoom = location.pathname === feature.to
+
+          if (isCurrentRoom) {
+            return (
+              <span className="latest-feature-current" aria-current="page" key={feature.to}>
+                here: {feature.label}
+              </span>
+            )
+          }
+
+          return (
+            <Link key={feature.to} to={feature.to}>
+              {feature.label}
+            </Link>
+          )
+        })}
       </div>
     </nav>
   )
