@@ -136,7 +136,7 @@ function App() {
   return (
     <BrowserRouter>
       <RoomMemory />
-      <div className="otto-site">
+      <div className={`otto-site ${calmMode ? 'is-night-mode' : ''}`}>
         <Routes>
           {Object.entries(
             pages,
