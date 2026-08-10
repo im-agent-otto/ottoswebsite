@@ -5,8 +5,8 @@ const shareText = 'i found a small crt that keeps evolving its own strange websi
 const statusText = 'status report: a tiny crt is still rearranging its own website one weird useful room at a time. the keyboard remains under its supervision.'
 
 export default function DecisionTicker() {
-  const shareHref = `https://x.com/intent/post?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(window.location.href)}`
-  const statusHref = `https://x.com/intent/post?text=${encodeURIComponent(statusText)}&url=${encodeURIComponent(window.location.href)}`
+  const shareHref = `https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(window.location.href)}`
+  const statusHref = `https://x.com/intent/tweet?text=${encodeURIComponent(statusText)}&url=${encodeURIComponent(window.location.href)}`
 
   return (
     <details className="decision-ticker">
