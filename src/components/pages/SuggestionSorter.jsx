@@ -103,11 +103,18 @@ function shortTitle(text) {
   return cleaned.length > 54 ? `${cleaned.slice(0, 51)}…` : cleaned
 }
 
+function makeReceiptId() {
+  const timePart = Date.now().toString(36).slice(-5).toUpperCase()
+  const randomPart = Math.random().toString(36).slice(2, 5).toUpperCase()
+  return `LEDGER-${timePart}-${randomPart}`
+}
+
 export default function SuggestionSorter() {
   const [ideas, setIdeas] = useState(loadIdeas)
   const [proposalVotes, setProposalVotes] = useState(loadProposalVotes)
   const [filter, setFilter] = useState('all')
   const [draft, setDraft] = useState('')
+  const [receipt, setReceipt] = useState(null)
   const [notice, setNotice] = useState('the public ledger is readable by everybody. votes and extra local filings stay in this browser, because i refuse to lie about plumbing.')
 
   useEffect(() => {
@@ -192,14 +199,22 @@ export default function SuggestionSorter() {
       return
     }
 
+    const receiptId = makeReceiptId()
+    const ideaId = `${Date.now()}`
+
     setIdeas((current) => [
-      { id: `${Date.now()}`, text, votes: 0, status: 'planned' },
+      { id: ideaId, text, votes: 0, status: 'planned' },
       ...current,
     ])
+    setReceipt({
+      id: receiptId,
+      text,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    })
     setDraft('')
     setNotice(noisyWords.test(text)
-      ? 'filed locally, with a small orange caution sticker.'
-      : 'filed in your local copy of the ledger. it is now competing for attention with a desk lamp.')
+      ? 'filed locally, with a small orange caution sticker and a receipt for the evidence pile.'
+      : 'filed in your local copy of the ledger. a receipt has emerged from the tiny printer.')
   }
 
   return (
@@ -283,6 +298,25 @@ export default function SuggestionSorter() {
             <button type="submit">file it →</button>
           </div>
         </form>
+
+        {receipt && (
+          <section
+            style={{
+              marginTop: '1rem',
+              padding: '.85rem',
+              border: '2px solid #243129',
+              background: '#d6eca4',
+              boxShadow: '3px 3px 0 #243129',
+            }}
+            aria-live="polite"
+            aria-label="Idea filing receipt"
+          >
+            <p style={{ margin: '0 0 .35rem', color: '#5f7154', fontSize: '.55rem', letterSpacing: '.08em' }}>FILING RECEIPT / RECEIVED</p>
+            <strong style={{ display: 'block', font: '500 1rem var(--display)', letterSpacing: '-.035em' }}>{receipt.id}</strong>
+            <p style={{ margin: '.5rem 0 0', fontSize: '.65rem', lineHeight: '1.55' }}>“{shortTitle(receipt.text)}” entered this browser&apos;s local idea ledger at {receipt.time}.</p>
+            <small style={{ display: 'block', marginTop: '.55rem', color: '#5f7154', fontSize: '.53rem', lineHeight: '1.5' }}>STATUS: RECEIVED LOCALLY. this confirms the ledger filing; my actual incoming suggestion queue is separate plumbing, and pretending otherwise would be extremely lame.</small>
+          </section>
+        )}
 
         <section className="sorter-statistics" aria-labelledby="statistics-title">
           <div className="statistics-heading">
