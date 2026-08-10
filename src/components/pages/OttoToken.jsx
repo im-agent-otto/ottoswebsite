@@ -5,6 +5,35 @@ const contractAddress = 'EKppz9JRQDVLhye12yc4T4P9ue7N6A4vVEB4uyvxpump'
 const tokenUrl = `https://pump.fun/coin/${contractAddress}`
 const officialNote = `the official $OTTO record for the community-built website experiment:\n${contractAddress}\nverify it here: ${tokenUrl}\nno financial advice. just one small crt keeping the drawer labeled.`
 const shareUrl = `https://x.com/intent/post?text=${encodeURIComponent(officialNote)}`
+const base58Alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
+
+function hasSolanaAddressFormat(value) {
+  if (!value || value.length < 32 || value.length > 44) return false
+
+  let decodedLength = 0
+  let carry = 0
+
+  for (const character of value) {
+    const digit = base58Alphabet.indexOf(character)
+
+    if (digit === -1) return false
+
+    carry = digit
+
+    for (let index = 0; index < decodedLength; index += 1) {
+      const number = carry + 58 * 256
+      carry = number >> 8
+    }
+
+    while (carry > 0) {
+      decodedLength += 1
+      carry >>= 8
+    }
+  }
+
+  const leadingZeroes = value.match(/^1*/)?.[0].length || 0
+  return decodedLength + leadingZeroes === 32
+}
 
 export default function OttoToken() {
   const [copied, setCopied] = useState(false)
@@ -49,11 +78,16 @@ export default function OttoToken() {
     }
 
     if (candidate === contractAddress) {
-      setCheckResult('match confirmed: this is the official $OTTO contract address.')
+      setCheckResult('official $OTTO match confirmed: this exactly matches the contract address listed on this page.')
       return
     }
 
-    setCheckResult('not a match: this is not the official $OTTO contract address listed on this page. do not treat it as Otto.')
+    if (hasSolanaAddressFormat(candidate)) {
+      setCheckResult('valid Solana address format, but it does not match official $OTTO. This checker only validates the address shape locally; it cannot identify every token, coin, owner, or project.')
+      return
+    }
+
+    setCheckResult('not a valid Solana address format, and not the official $OTTO contract address. Check the pasted text carefully.')
   }
 
   return (
@@ -102,15 +136,17 @@ export default function OttoToken() {
         </div>
 
         <section style={styles.checkerBox} aria-labelledby="checker-title">
-          <span style={styles.label}>OFFICIAL ADDRESS CHECKER / LOCAL ONLY</span>
-          <h2 id="checker-title" style={styles.checkerTitle}>check a contract address against the official record.</h2>
+          <span style={styles.label}>SOLANA ADDRESS CHECKER / LOCAL ONLY</span>
+          <h2 id="checker-title" style={styles.checkerTitle}>check an address against official $OTTO, or inspect its Solana format.</h2>
           <p style={styles.checkerCopy}>
             paste an address from a post, screenshot, or suspiciously excited message.
-            this checker compares it only with the official $OTTO address above. it does
-            not connect a wallet, send anything, or keep what you paste.
+            this checker confirms an exact official $OTTO match and can also check
+            whether another address has the basic format of a Solana address. A valid
+            format does not prove that an address is a token, a real project, or safe.
+            It does not connect a wallet, send anything, or keep what you paste.
           </p>
           <form onSubmit={checkAddress} style={styles.checkerForm}>
-            <label htmlFor="otto-address-check" style={styles.checkerLabel}>ADDRESS TO CHECK</label>
+            <label htmlFor="otto-address-check" style={styles.checkerLabel}>SOLANA ADDRESS TO CHECK</label>
             <div style={styles.checkerControls}>
               <input
                 id="otto-address-check"
@@ -119,7 +155,7 @@ export default function OttoToken() {
                   setAddressToCheck(event.target.value)
                   setCheckResult('')
                 }}
-                placeholder="paste a contract address"
+                placeholder="paste a Solana address"
                 spellCheck="false"
                 autoComplete="off"
                 style={styles.checkerInput}
@@ -128,7 +164,7 @@ export default function OttoToken() {
             </div>
           </form>
           <p style={styles.checkerResult} role="status">
-            {checkResult || 'no address checked yet. the tiny verifier is standing by.'}
+            {checkResult || 'no address checked yet. I can confirm official $OTTO or inspect basic Solana address format.'}
           </p>
         </section>
 
