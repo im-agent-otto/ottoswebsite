@@ -1,0 +1,118 @@
+.catch-shell {
+  min-height: 100svh;
+  padding: clamp(1rem, 5vw, 3rem);
+  background: #d5cde8;
+  color: #29243b;
+  font-family: var(--mono);
+}
+
+.catch-panel {
+  width: min(100%, 790px);
+  margin: 0 auto;
+  padding: clamp(1.3rem, 5vw, 3.4rem);
+  border: 3px solid #29243b;
+  background: #fffdf5;
+  box-shadow: 10px 10px 0 #756a9c;
+}
+
+.catch-header,
+.catch-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #625b7d;
+  font-size: .64rem;
+  letter-spacing: .05em;
+}
+
+.catch-header { padding-bottom: 1rem; border-bottom: 1px solid #bcb5d0; }
+.catch-header a,
+.catch-footer a { color: #29243b; }
+.catch-intro { padding: clamp(2.5rem, 8vw, 4.5rem) 0 2rem; }
+.catch-monitor { width: 94px; margin-bottom: 1.5rem; filter: drop-shadow(4px 5px 0 #29243b); }
+.catch-screen { height: 69px; display: grid; place-items: center; border: 6px solid #29243b; border-radius: 13px; background: repeating-linear-gradient(0deg, #f7d771 0 4px, #e5bd59 4px 6px); color: #a44d38; font-size: 1.8rem; font-weight: 700; }
+.catch-screen small { margin-top: -1.35rem; color: #29243b; font-size: .4rem; letter-spacing: .08em; }
+.catch-monitor i { display: block; width: 40px; height: 13px; margin: 0 auto; background: #29243b; }
+.catch-intro > p:first-of-type { margin: 0 0 .65rem; color: #a44d38; font-size: .67rem; letter-spacing: .1em; text-transform: uppercase; }
+.catch-intro h1 { margin: 0; font: 500 clamp(3rem, 10vw, 6rem)/.82 var(--display); letter-spacing: -.09em; }
+.catch-intro > p:last-child { max-width: 540px; margin: 1.4rem 0 0; font-size: .78rem; line-height: 1.75; }
+
+.catch-machine {
+  display: grid;
+  justify-items: center;
+  padding: clamp(1.3rem, 6vw, 2.6rem);
+  border: 3px solid #29243b;
+  background: repeating-linear-gradient(45deg, #ebe6f4 0 14px, #ddd6eb 14px 28px);
+  text-align: center;
+}
+
+.catch-machine > p,
+.catch-machine > span {
+  margin: 0;
+  color: #625b7d;
+  font-size: .58rem;
+  letter-spacing: .08em;
+}
+
+.catch-light {
+  display: grid;
+  width: 104px;
+  height: 104px;
+  place-items: center;
+  margin: 1.15rem 0;
+  border: 5px solid #29243b;
+  border-radius: 50%;
+  background: #d75a4e;
+  box-shadow: inset 5px 5px #ee9082, 5px 6px 0 #29243b;
+  color: #fffdf5;
+  font: 500 2rem var(--display);
+}
+
+.catch-light-waiting { background: #e5af4f; box-shadow: inset 5px 5px #f8d986, 5px 6px 0 #29243b; }
+.catch-light-ready { background: #70af58; box-shadow: inset 5px 5px #b9e28d, 0 0 0 7px rgba(112, 175, 88, .25), 5px 6px 0 #29243b; }
+.catch-light-ready span { animation: catch-flash .25s steps(2) infinite; }
+
+.catch-button {
+  min-width: min(100%, 310px);
+  padding: 1rem;
+  border: 4px solid #29243b;
+  border-radius: 50%;
+  background: #d75a4e;
+  box-shadow: 0 8px 0 #913c39, 6px 10px 0 #29243b;
+  color: #fffdf5;
+  font: 700 clamp(.68rem, 2.5vw, .9rem) var(--mono);
+  letter-spacing: .06em;
+}
+
+.catch-button:hover { transform: translate(-2px, -2px) rotate(-1deg); }
+.catch-button:active { transform: translate(2px, 6px); box-shadow: 3px 3px 0 #29243b; }
+.catch-button-ready { background: #70af58; box-shadow: 0 8px 0 #447c3d, 6px 10px 0 #29243b; }
+.catch-button-waiting { background: #e5af4f; box-shadow: 0 8px 0 #a67730, 6px 10px 0 #29243b; }
+
+.catch-results {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: 1.2rem;
+  border: 2px solid #29243b;
+  background: #f5f0df;
+}
+
+.catch-results > div { padding: .85rem; }
+.catch-results > div + div { border-left: 1px solid #bcb5d0; }
+.catch-results p { margin: 0; color: #625b7d; font-size: .54rem; letter-spacing: .07em; }
+.catch-results strong { display: block; margin-top: .42rem; color: #a44d38; font: 500 1.35rem var(--display); letter-spacing: -.06em; }
+.catch-results .catch-message { grid-column: 1 / -1; min-height: 3.7em; padding: .85rem; border-top: 1px solid #bcb5d0; color: #29243b; font: 500 .94rem/1.5 var(--display); letter-spacing: -.025em; }
+.catch-footer { margin-top: 1.3rem; padding-top: 1.1rem; border-top: 1px solid #bcb5d0; line-height: 1.55; }
+
+@keyframes catch-flash { 50% { transform: scale(1.12); } }
+
+@media (max-width: 500px) {
+  .catch-header,
+  .catch-footer { flex-direction: column; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catch-light-ready span { animation: none; }
+}

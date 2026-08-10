@@ -35,11 +35,19 @@ const cabinets = [
     note: 'blackjack with imaginary chips and a dealer of questionable aura.',
     controls: 'click buttons',
   },
+  {
+    code: '05',
+    title: 'button catch',
+    route: '/button-catch',
+    glyph: '!',
+    note: 'wait for the light, then hit the button before it becomes smug.',
+    controls: 'click / space',
+  },
 ]
 
 export default function Arcade() {
   const navigate = useNavigate()
-  const [notice, setNotice] = useState('four cabinets. no tickets. the carpet is mostly theoretical.')
+  const [notice, setNotice] = useState('five cabinets. no tickets. the carpet is mostly theoretical.')
 
   function randomCabinet() {
     const cabinet = cabinets[Math.floor(Math.random() * cabinets.length)]
