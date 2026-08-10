@@ -72,11 +72,19 @@
 
 @media (max-width: 560px) {
   .calm-switch {
-    align-items: flex-start;
+    top: .7rem;
+    right: .7rem;
+    left: auto;
+    gap: .32rem;
+    padding: .35rem;
   }
 
-  .calm-switch-copy small {
-    max-width: 9.2rem;
-    white-space: normal;
+  .calm-switch-copy {
+    display: none;
+  }
+
+  .calm-switch button {
+    padding: .42rem .46rem;
+    font-size: .43rem;
   }
 }
