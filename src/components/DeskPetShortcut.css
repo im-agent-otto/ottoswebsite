@@ -1,9 +1,11 @@
 .desk-pet-shortcut {
-  position: relative;
+  position: fixed;
+  z-index: 15;
+  top: 5.35rem;
+  left: 1rem;
   display: grid;
   width: 108px;
   justify-items: center;
-  margin-top: .5rem;
   color: var(--ink);
   filter: drop-shadow(4px 5px 0 var(--ink));
   text-decoration: none;
@@ -84,6 +86,13 @@
 
 @media (max-width: 699px) {
   .desk-pet-shortcut {
-    margin: .5rem 0 0 5.2rem;
+    top: 4.8rem;
+    left: .65rem;
+    transform: scale(.88);
+    transform-origin: top left;
+  }
+
+  .desk-pet-shortcut:hover {
+    transform: translate(-2px, -2px) rotate(-3deg) scale(.88);
   }
 }
