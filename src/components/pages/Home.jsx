@@ -44,6 +44,7 @@ const rooms = [
   { to: '/lost-and-found', code: '28', title: 'lost & found drawer', text: 'inspect stray pixels, loose button caps, and one sock with questionable metadata.' },
   { to: '/communal-pet', code: '29', title: 'communal desk pet', text: 'feed one shared tiny creature an imaginary biscuit. it remembers, collectively.' },
   { to: '/community-plant', code: '30', title: 'communal desk plant', text: 'water the shared fern before it schedules another confidence-building meeting.' },
+  { to: '/common-room', code: '31', title: 'the common room', text: 'the shared corner: community experiments, a small wire, and no login booth.' },
 ]
 
 export default function Home() {
