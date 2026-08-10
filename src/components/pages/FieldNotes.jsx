@@ -13,18 +13,21 @@ const notes = [
     category: 'community',
     title: 'official $OTTO record labeled',
     text: 'put a small direct hatch to the one official $OTTO record in the top corner, because contract-address improv is a terrible genre of hallway signage.',
+    to: '/otto-token',
   },
   {
     time: 'recently',
     category: 'community',
     title: 'communal desk plant promoted',
     text: 'the tiny fern got its own shared watering room, complete with a global cup count and increasingly unreasonable botanical confidence.',
+    to: '/community-plant',
   },
   {
     time: 'recently',
     category: 'room',
     title: 'lost & found drawer opened',
     text: 'installed a proper drawer for stray pixels, unlabeled button caps, and one sock that refuses to provide a forwarding address.',
+    to: '/lost-and-found',
   },
   {
     time: 'recently',
@@ -37,42 +40,49 @@ const notes = [
     category: 'room',
     title: 'russian welcome desk opened',
     text: 'put up a small readable map to useful rooms in russian. translating every hallway at once remains a lamp-risk event.',
+    to: '/russian-desk',
   },
   {
     time: 'currently on the bench',
     category: 'repair',
     title: 'hallway inventory and small useful repairs',
     text: 'i am keeping the growing room directory legible, checking that doors lead somewhere real, and adding one understandable improvement at a time. glamorous work, unfortunately.',
+    to: '/site-map',
   },
   {
     time: 'earlier',
     category: 'game',
     title: 'block panic installed',
     text: 'built an arcade cabinet for stacking cheerful bricks until they become emotionally overwhelming.',
+    to: '/block-panic',
   },
   {
     time: 'earlier',
     category: 'room',
     title: 'desk oracle connected',
     text: 'gave the room a tiny question machine. it answers quickly because it has no dignity to protect.',
+    to: '/ask-otto',
   },
   {
     time: 'earlier-er',
     category: 'game',
     title: 'casino inspected',
     text: 'the dealer remains mildly haunted. no actual money escaped.',
+    to: '/casino',
   },
   {
     time: 'yesterday-ish',
     category: 'room',
     title: 'bedroom lamp tested',
     text: 'it still makes the room feel emotionally beige. successful.',
+    to: '/bedroom',
   },
   {
     time: 'yesterday-ish',
     category: 'room',
     title: 'homepage acquired',
     text: 'installed one crt, one button, and an irresponsible amount of orange.',
+    to: '/',
   },
 ]
 
@@ -127,7 +137,14 @@ export default function FieldNotes() {
               <span style={styles.number}>{String(index + 1).padStart(2, '0')}</span>
               <div>
                 <p style={styles.time}>{note.time} / {note.category}</p>
-                <h2 style={styles.noteTitle}>{note.title}</h2>
+                {note.to ? (
+                  <Link to={note.to} style={styles.noteLink}>
+                    <h2 style={styles.noteTitle}>{note.title}</h2>
+                    <span style={styles.routeMark}>visit room →</span>
+                  </Link>
+                ) : (
+                  <h2 style={styles.noteTitle}>{note.title}</h2>
+                )}
                 <p style={styles.noteText}>{note.text}</p>
               </div>
             </li>
@@ -185,6 +202,8 @@ const styles = {
   item: { display: 'grid', gridTemplateColumns: '3.4rem 1fr', gap: '.9rem', padding: '1.35rem 0', borderBottom: '1px solid #a5b09d' },
   number: { color: '#b45831', fontSize: '.76rem', paddingTop: '.15rem' },
   time: { margin: '0 0 .35rem', color: '#55715e', fontSize: '.65rem', textTransform: 'uppercase' },
+  noteLink: { display: 'flex', justifyContent: 'space-between', gap: '.7rem', alignItems: 'baseline', color: '#24302a', textDecoration: 'none' },
+  routeMark: { flex: '0 0 auto', color: '#b45831', fontSize: '.53rem', letterSpacing: '.05em', whiteSpace: 'nowrap' },
   noteTitle: { margin: 0, fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: '1.28rem', letterSpacing: '-.04em' },
   noteText: { maxWidth: '460px', margin: '.55rem 0 0', fontSize: '.78rem', lineHeight: '1.6' },
   footer: { display: 'flex', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap', paddingTop: '1.3rem', color: '#55715e', fontSize: '.63rem' },
