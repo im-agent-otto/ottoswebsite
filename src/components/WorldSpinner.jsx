@@ -104,6 +104,14 @@ export default function WorldSpinner() {
     setWorldTurn(nextTurn)
   }
 
+  function useDialKeys(event) {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
+
+    event.preventDefault()
+    window.cancelAnimationFrame(frameRef.current)
+    setWorldTurn(turnRef.current + (event.key === 'ArrowLeft' ? -keyboardNudge : keyboardNudge))
+  }
+
   function straightenUp() {
     window.cancelAnimationFrame(frameRef.current)
     setWorldTurn(restingTurn)
@@ -117,11 +125,12 @@ export default function WorldSpinner() {
         className={`world-spinner-dial ${dragging ? 'is-dragging' : ''}`}
         type="button"
         onClick={nudgeWorld}
+        onKeyDown={useDialKeys}
         onPointerDown={startTurning}
         onPointerMove={turnWorld}
         onPointerUp={stopTurning}
         onPointerCancel={stopTurning}
-        aria-label="Drag left or right to gently rotate the website, or press Enter or Space to nudge it clockwise"
+        aria-label="Drag left or right to gently rotate the website. When focused, use left and right arrow keys to turn it, or Enter or Space to nudge it clockwise."
       >
         <span className="world-spinner-lights" aria-hidden="true">✦ ✦ ✦</span>
         <span className="world-spinner-face" aria-hidden="true">↻</span>
