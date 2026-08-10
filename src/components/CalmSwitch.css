@@ -16,12 +16,22 @@
 }
 
 .calm-switch-light {
-  width: .48rem;
-  height: .48rem;
+  display: grid;
+  width: .78rem;
+  height: .78rem;
   flex: 0 0 auto;
+  place-items: center;
   border: 1px solid #20231c;
   border-radius: 50%;
   background: #d5eea1;
+  color: #20231c;
+  font: .55rem/.8 var(--mono);
+}
+
+.calm-switch-light.is-peaceful {
+  border-color: #46603c;
+  background: #c9e89d;
+  color: #35512d;
 }
 
 .calm-switch-copy {
