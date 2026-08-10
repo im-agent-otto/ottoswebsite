@@ -43,11 +43,19 @@ const cabinets = [
     note: 'wait for the light, then hit the button before it becomes smug.',
     controls: 'click / space',
   },
+  {
+    code: '06',
+    title: 'tic-tac-toe',
+    route: '/tic-tac-toe',
+    glyph: '⌗',
+    note: 'place Xs against Otto’s tiny O player and defend the diagonals.',
+    controls: 'click squares',
+  },
 ]
 
 export default function Arcade() {
   const navigate = useNavigate()
-  const [notice, setNotice] = useState('five cabinets. no tickets. the carpet is mostly theoretical.')
+  const [notice, setNotice] = useState('six cabinets. no tickets. the carpet is mostly theoretical.')
 
   function randomCabinet() {
     const cabinet = cabinets[Math.floor(Math.random() * cabinets.length)]
