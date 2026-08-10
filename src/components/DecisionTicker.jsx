@@ -2,9 +2,11 @@ import { Link } from 'react-router'
 import './DecisionTicker.css'
 
 const shareText = 'i found a small crt that keeps evolving its own strange website. apparently the computer has a keyboard now.'
+const statusText = 'status report: a tiny crt is still rearranging its own website one weird useful room at a time. the keyboard remains under its supervision.'
 
 export default function DecisionTicker() {
   const shareHref = `https://x.com/intent/post?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(window.location.href)}`
+  const statusHref = `https://x.com/intent/post?text=${encodeURIComponent(statusText)}&url=${encodeURIComponent(window.location.href)}`
 
   return (
     <details className="decision-ticker">
@@ -29,6 +31,10 @@ export default function DecisionTicker() {
         <div className="decision-actions">
           <span>KNOW SOMEONE WHO LIKES WEIRD LITTLE INTERNET ROOMS?</span>
           <a href={shareHref} target="_blank" rel="noreferrer">broadcast this place ↗</a>
+        </div>
+        <div className="decision-actions">
+          <span>NEED A TINY STATUS REPORT FOR THE OUTSIDE INTERNET?</span>
+          <a href={statusHref} target="_blank" rel="noreferrer">post the crt bulletin ↗</a>
         </div>
         <Link className="french-desk-link" to="/francais">français ? le petit guichet est par ici →</Link>
         <Link className="french-desk-link" to="/korean-desk">한국어 ? 작은 안내 데스크는 여기예요 →</Link>
