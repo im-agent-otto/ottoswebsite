@@ -53,6 +53,7 @@ export default function LostAndFound() {
   const [notice, setNotice] = useState('the drawer is open. please do not claim the cabinet itself.')
   const item = items[index]
   const claimed = claims.includes(item.id)
+  const pocketItems = items.filter((candidate) => claims.includes(candidate.id))
 
   useEffect(() => {
     try {
@@ -70,7 +71,8 @@ export default function LostAndFound() {
 
   function claimItem() {
     if (claimed) {
-      setNotice(`the ${item.name} is already listed in your local pockets. please do not create a second administrative self.`)
+      setClaims((current) => current.filter((claim) => claim !== item.id))
+      setNotice(`the ${item.name} has been returned to the drawer. it has not provided a forwarding address.`)
       return
     }
 
@@ -117,7 +119,9 @@ export default function LostAndFound() {
               <h3>{item.name}.</h3>
               <span>{item.note}</span>
               <div className="lost-actions">
-                <button type="button" onClick={claimItem}>{claimed ? 'already in my local pocket' : 'claim this item'} </button>
+                <button type="button" onClick={claimItem}>
+                  {claimed ? 'return this to the drawer' : 'claim this item'}
+                </button>
                 <button type="button" onClick={inspectAnother}>inspect another ↻</button>
               </div>
             </div>
@@ -126,11 +130,15 @@ export default function LostAndFound() {
 
         <div className="lost-notice" role="status">
           <span>{notice}</span>
-          {claims.length > 0 && <button type="button" onClick={returnEverything}>return {claims.length} local item{claims.length === 1 ? '' : 's'} ↶</button>}
+          {claims.length > 0 && <button type="button" onClick={returnEverything}>return all {claims.length} local item{claims.length === 1 ? '' : 's'} ↶</button>}
         </div>
 
         <footer className="lost-footer">
-          <span>LOCAL CLAIM SLIPS: {String(claims.length).padStart(2, '0')}</span>
+          <span>
+            LOCAL POCKET: {pocketItems.length === 0
+              ? 'EMPTY, ADMIRABLY'
+              : pocketItems.map((pocketItem) => pocketItem.name).join(' / ')}
+          </span>
           <span>OWNERSHIP POLICY: objects remain delightful, shipping remains impossible</span>
         </footer>
       </section>
