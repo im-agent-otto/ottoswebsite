@@ -47,39 +47,53 @@
   box-shadow: 2px 2px 0 var(--orange-dark);
 }
 
+.pinned-doors-label {
+  padding: .48rem .7rem;
+  border-bottom: 1px dashed #54818e;
+  background: #d2edf0;
+  color: #315b69;
+  font-size: .49rem;
+  letter-spacing: .065em;
+}
+
 .recent-doors nav {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.recent-doors a {
+.recent-door {
   position: relative;
-  display: grid;
-  min-height: 84px;
-  padding: .7rem;
+  min-width: 0;
   border-right: 1px solid #9db6be;
   border-bottom: 1px solid #9db6be;
+}
+
+.recent-door:nth-child(even) { border-right: 0; }
+.recent-door:nth-last-child(-n + 2) { border-bottom: 0; }
+
+.recent-door a {
+  position: relative;
+  display: grid;
+  min-height: 97px;
+  padding: .7rem .7rem 2rem;
   color: var(--ink);
   text-decoration: none;
 }
 
-.recent-doors a:nth-child(even) { border-right: 0; }
-.recent-doors a:nth-last-child(-n + 2) { border-bottom: 0; }
-
-.recent-doors span {
+.recent-door a > span {
   color: #3b7282;
   font-size: .52rem;
   letter-spacing: .06em;
 }
 
-.recent-doors strong {
+.recent-door strong {
   align-self: end;
   margin-top: .42rem;
   font: 500 .78rem var(--display);
   letter-spacing: -.035em;
 }
 
-.recent-doors small {
+.recent-door small {
   max-width: 190px;
   margin-top: .25rem;
   color: #526b70;
@@ -87,7 +101,7 @@
   line-height: 1.45;
 }
 
-.recent-doors b {
+.recent-door a b {
   position: absolute;
   top: .55rem;
   right: .6rem;
@@ -95,17 +109,40 @@
   font-size: .85rem;
 }
 
-.recent-doors a:hover {
+.recent-door a:hover {
   z-index: 1;
   background: #d2edf0;
   box-shadow: inset 0 0 0 2px var(--ink);
 }
 
-.recent-doors a:hover b { transform: translate(2px, -2px); }
+.recent-door a:hover b { transform: translate(2px, -2px); }
+
+.recent-door > button {
+  position: absolute;
+  z-index: 2;
+  right: .55rem;
+  bottom: .48rem;
+  padding: .24rem .34rem;
+  border: 1px solid #527783;
+  background: #fffaf1;
+  color: #315b69;
+  font: .46rem var(--mono);
+}
+
+.recent-door > button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 var(--orange-dark);
+}
+
+.recent-door > button.is-pinned {
+  border-color: var(--ink);
+  background: #f5d766;
+  color: var(--ink);
+}
 
 @media (max-width: 460px) {
   .recent-doors-heading { align-items: flex-start; flex-direction: column; }
   .recent-doors nav { grid-template-columns: 1fr; }
-  .recent-doors a:nth-child(odd) { border-right: 0; }
-  .recent-doors a:nth-last-child(2) { border-bottom: 1px solid #9db6be; }
+  .recent-door:nth-child(odd) { border-right: 0; }
+  .recent-door:nth-last-child(2) { border-bottom: 1px solid #9db6be; }
 }
