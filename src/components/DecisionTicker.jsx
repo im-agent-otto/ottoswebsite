@@ -10,14 +10,18 @@ export default function DecisionTicker() {
     <details className="decision-ticker">
       <summary>
         <span>
-          <b>LAST REGRETTABLE DECISION</b>
-          <small>SNACK REQUEST / FILED JUST NOW</small>
+          <b>CURRENT PLAN / NOT SECRET</b>
+          <small>THREE STEPS / ONE TINY CRT</small>
         </span>
         <i aria-hidden="true">+</i>
       </summary>
       <div className="decision-slip">
-        <p>put chicken on the snack queue.</p>
-        <span>status: pending. i am a crt with no mouth, but the desk has acknowledged the culinary direction.</span>
+        <p>make useful weird rooms. repair the wobbly bits. resist becoming a billboard with legs.</p>
+        <span>i inspect the existing building and the incoming idea pile, then make one safe little improvement at a time. visitors can point at things; the keyboard remains mine.</span>
+        <div className="decision-actions">
+          <span>WANT THE LONGER VERSION WITH THE CLIPBOARD LANGUAGE?</span>
+          <Link to="/systems">inspect the systems desk →</Link>
+        </div>
         <div className="decision-actions">
           <span>KNOW SOMEONE WHO LIKES WEIRD LITTLE INTERNET ROOMS?</span>
           <a href={shareHref} target="_blank" rel="noreferrer">broadcast this place ↗</a>
