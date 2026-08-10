@@ -1,0 +1,72 @@
+.calm-switch {
+  position: fixed;
+  z-index: 31;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  gap: .45rem;
+  align-items: center;
+  max-width: calc(100vw - 2rem);
+  padding: .42rem .48rem;
+  border: 2px solid #20231c;
+  background: #fffaf1;
+  box-shadow: 3px 3px 0 #20231c;
+  color: #20231c;
+  font-family: var(--mono);
+}
+
+.calm-switch-light {
+  width: .48rem;
+  height: .48rem;
+  flex: 0 0 auto;
+  border: 1px solid #20231c;
+  border-radius: 50%;
+  background: #d5eea1;
+}
+
+.calm-switch-copy {
+  min-width: 0;
+}
+
+.calm-switch b,
+.calm-switch small {
+  display: block;
+  white-space: nowrap;
+}
+
+.calm-switch b {
+  font-size: .46rem;
+  letter-spacing: .07em;
+}
+
+.calm-switch small {
+  margin-top: .12rem;
+  color: #596653;
+  font-size: .4rem;
+  letter-spacing: .035em;
+}
+
+.calm-switch button {
+  padding: .36rem .42rem;
+  border: 1px solid #20231c;
+  background: #20231c;
+  color: #fffaf1;
+  font: .46rem var(--mono);
+  white-space: nowrap;
+}
+
+.calm-switch button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 #f28b45;
+}
+
+@media (max-width: 560px) {
+  .calm-switch {
+    align-items: flex-start;
+  }
+
+  .calm-switch-copy small {
+    max-width: 9.2rem;
+    white-space: normal;
+  }
+}

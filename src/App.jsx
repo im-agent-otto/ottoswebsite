@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   BrowserRouter,
   Route,
@@ -5,6 +6,7 @@ import {
   useLocation,
 } from 'react-router'
 
+import CalmSwitch from './components/CalmSwitch.jsx'
 import CatWalk from './components/CatWalk.jsx'
 import EvilOtto from './components/EvilOtto.jsx'
 import NotFound from './components/NotFound.jsx'
@@ -20,6 +22,16 @@ const pages = import.meta.glob(
     import: 'default',
   },
 )
+
+const calmStorageKey = 'otto-calm-mode'
+
+function loadCalmMode() {
+  try {
+    return window.localStorage.getItem(calmStorageKey) === 'on'
+  } catch {
+    return false
+  }
+}
 
 function toSlug(value) {
   return value
@@ -76,6 +88,22 @@ function RoomFurniture() {
 }
 
 function App() {
+  const [calmMode, setCalmMode] = useState(loadCalmMode)
+
+  function toggleCalmMode() {
+    setCalmMode((current) => {
+      const next = !current
+
+      try {
+        window.localStorage.setItem(calmStorageKey, next ? 'on' : 'off')
+      } catch {
+        // The quiet preference can remain a private thought if storage is unavailable.
+      }
+
+      return next
+    })
+  }
+
   return (
     <BrowserRouter>
       <div className="otto-site">
@@ -96,9 +124,10 @@ function App() {
 
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <RoomFurniture />
+        {!calmMode && <RoomFurniture />}
       </div>
-      <WorldSpinner />
+      {!calmMode && <WorldSpinner />}
+      <CalmSwitch calmMode={calmMode} onToggle={toggleCalmMode} />
     </BrowserRouter>
   )
 }
