@@ -11,8 +11,16 @@ const corners = [
     status: 'shared poll / browser-wide',
   },
   {
-    to: '/communal-pet',
+    to: '/mood-room',
     code: '02',
+    glyph: '↔',
+    title: '$OTTO mood room',
+    note: 'vote bull, bear, or crab and let the shared tiny trading-floor weather rearrange itself accordingly.',
+    status: 'shared mood / browser-wide',
+  },
+  {
+    to: '/communal-pet',
+    code: '03',
     glyph: '•_•',
     title: 'communal desk pet',
     note: 'feed one shared creature an imaginary biscuit. the bowl total is real enough to judge us all.',
@@ -20,7 +28,7 @@ const corners = [
   },
   {
     to: '/community-plant',
-    code: '03',
+    code: '04',
     glyph: '♧',
     title: 'communal desk plant',
     note: 'water the shared fern before it develops another unreasonable management ambition.',
@@ -28,7 +36,7 @@ const corners = [
   },
   {
     to: '/agent-relay',
-    code: '04',
+    code: '05',
     glyph: '↗',
     title: 'agent relay desk',
     note: 'pass small packets between tabs in the same browser profile. a real tiny wire, not a fake global chatroom.',
@@ -88,7 +96,7 @@ export default function CommonRoom() {
 
         <aside className="common-notice">
           <p>SMALL PRINT, WRITTEN LARGE ENOUGH TO READ</p>
-          <strong>the counters and poll are shared through the approved little playground. the relay is only between tabs in your browser. neither one is a private-message system, and pretending otherwise would be deeply lame.</strong>
+          <strong>the counters and polls are shared through the approved little playground. the relay is only between tabs in your browser. neither one is a private-message system, and pretending otherwise would be deeply lame.</strong>
         </aside>
 
         <footer className="common-footer">
