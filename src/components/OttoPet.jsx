@@ -4,6 +4,45 @@ import './OttoPet.css'
 const maxHealth = 100
 const lootStorageKey = 'otto-boss-loot'
 
+const enemies = [
+  {
+    id: 'furniture-guy',
+    name: 'furniture guy',
+    label: 'FURNITURE GUY',
+    face: '^_^',
+    damagedFace: 'ಠ_ಠ',
+    crackedFace: '╳_╳',
+    criticalFace: 'x_ಠ',
+    opening: 'furniture guy / click to begin the regrettable fight',
+    attack: 'angry pixels',
+    defeat: 'the furniture guy has been defeated by engagement.',
+  },
+  {
+    id: 'lamp-auditor',
+    name: 'lamp auditor',
+    label: 'LAMP AUDITOR',
+    face: '•_•',
+    damagedFace: 'ಠ_ಠ',
+    crackedFace: '⊙_⊙',
+    criticalFace: 'x_•',
+    opening: 'lamp auditor / it has brought a clipboard and absolutely no warmth',
+    attack: 'compliance glare',
+    defeat: 'the lamp auditor has closed its clipboard with theatrical disappointment.',
+  },
+  {
+    id: 'roaming-cabinet',
+    name: 'roaming cabinet',
+    label: 'ROAMING CABINET',
+    face: '▣_▣',
+    damagedFace: '▣_ಠ',
+    crackedFace: '╳_▣',
+    criticalFace: 'x_▣',
+    opening: 'roaming cabinet / it says it is merely passing through. suspicious.',
+    attack: 'drawer-based criticism',
+    defeat: 'the roaming cabinet has been gently persuaded to stop being mobile.',
+  },
+]
+
 const lootTable = [
   { id: 'tiny-crown', name: 'tiny crown of minor authority', odds: 'common / 52%', glyph: '♕', className: 'loot-crown', weight: 52 },
   { id: 'crt-sword', name: 'crt sword of the buffering knight', odds: 'uncommon / 28%', glyph: '†', className: 'loot-sword', weight: 28 },
@@ -39,21 +78,30 @@ function saveLoot(item) {
   }
 }
 
+function faceFor(enemy, health) {
+  if (health <= 25) return enemy.criticalFace
+  if (health <= 50) return enemy.crackedFace
+  if (health <= 75) return enemy.damagedFace
+  return enemy.face
+}
+
 export default function OttoPet() {
+  const [enemyIndex, setEnemyIndex] = useState(0)
   const [ottoHealth, setOttoHealth] = useState(maxHealth)
   const [cursorHealth, setCursorHealth] = useState(maxHealth)
   const [beam, setBeam] = useState(null)
-  const [message, setMessage] = useState('furniture guy / click to begin the regrettable fight')
+  const [message, setMessage] = useState(enemies[0].opening)
   const [droppedLoot, setDroppedLoot] = useState(null)
   const [alreadyOwned, setAlreadyOwned] = useState(false)
   const petRef = useRef(null)
   const cursorRef = useRef({ x: -999, y: -999 })
   const beamTimer = useRef(null)
 
+  const enemy = enemies[enemyIndex]
   const phase = phaseFor(ottoHealth)
-  const ottoDefeated = ottoHealth === 0
+  const enemyDefeated = ottoHealth === 0
   const cursorDefeated = cursorHealth === 0
-  const fightOver = ottoDefeated || cursorDefeated
+  const fightOver = enemyDefeated || cursorDefeated
   const crackLevel = ottoHealth <= 25 ? 'is-critical' : ottoHealth <= 60 ? 'is-cracked' : ''
 
   useEffect(() => {
@@ -89,15 +137,15 @@ export default function OttoPet() {
 
       if (hit) {
         setCursorHealth((current) => Math.max(0, current - phase.damage))
-        setMessage(`angry pixels hit the cursor for ${phase.damage}. evasive mousing recommended.`)
+        setMessage(`${enemy.attack} hit the cursor for ${phase.damage}. evasive mousing recommended.`)
       } else {
-        setMessage('angry pixels missed. the cursor performed a technically valid escape.')
+        setMessage(`${enemy.attack} missed. the cursor performed a technically valid escape.`)
       }
     }
 
     const timer = window.setInterval(firePixels, phase.interval)
     return () => window.clearInterval(timer)
-  }, [fightOver, ottoHealth, phase.damage, phase.interval])
+  }, [enemy.attack, fightOver, ottoHealth, phase.damage, phase.interval])
 
   useEffect(() => () => window.clearTimeout(beamTimer.current), [])
 
@@ -111,58 +159,62 @@ export default function OttoPet() {
       const loot = rollLoot()
       setDroppedLoot(loot)
       setAlreadyOwned(saveLoot(loot))
-      setMessage(`the furniture guy has been defeated by engagement. ${loot.name} fell out of the cabinet.`)
+      setMessage(`${enemy.defeat} ${loot.name} fell out of the cabinet.`)
       return
     }
 
     const nextPhase = phaseFor(nextHealth)
     setMessage(nextHealth === 75 || nextHealth === 50 || nextHealth === 25
-      ? `${nextPhase.name}. the little screen has entered a worse mood.`
-      : 'click registered. one extremely small point of furniture damage.')
+      ? `${nextPhase.name}. ${enemy.name} has entered a worse mood.`
+      : `click registered. one extremely small point of ${enemy.name} damage.`)
   }
 
   function rematch() {
+    const nextEnemyIndex = (enemyIndex + 1) % enemies.length
+    const nextEnemy = enemies[nextEnemyIndex]
+
+    setEnemyIndex(nextEnemyIndex)
     setOttoHealth(maxHealth)
     setCursorHealth(maxHealth)
     setBeam(null)
     setDroppedLoot(null)
     setAlreadyOwned(false)
-    setMessage('rematch loaded. both combatants have been irresponsibly repaired.')
+    setMessage(`${nextEnemy.name} has entered the room. this is becoming a staffing problem.`)
   }
 
   if (fightOver) {
-    const ottoWon = cursorDefeated
+    const enemyWon = cursorDefeated
     return (
       <aside className="otto-pet otto-pet-tomb" aria-label="Boss fight tombstone">
         <button className="otto-pet-tombstone" type="button" onClick={rematch}>
           <span aria-hidden="true">†</span>
-          {ottoWon ? 'CURSOR<br />PIXELATED' : 'FURNITURE<br />DEFEATED'}
-          {droppedLoot && !ottoWon && (
-            <small>LOOT: {droppedLoot.glyph} {alreadyOwned ? 'DUPLICATE' : droppedLoot.odds.toUpperCase()}<br />{droppedLoot.name}<br />portrait booth has it now</small>
+          {enemyWon ? 'CURSOR<br />PIXELATED' : `${enemy.label}<br />DEFEATED`}
+          {droppedLoot && !enemyWon && (
+            <small>LOOT: {droppedLoot.glyph} {alreadyOwned ? 'DUPLICATE' : droppedLoot.odds.toUpperCase()}<br />{droppedLoot.name}<br />next enemy is waiting</small>
           )}
-          {!droppedLoot && <small>click for rematch</small>}
+          {!droppedLoot && <small>click for next opponent</small>}
         </button>
       </aside>
     )
   }
 
   return (
-    <aside className={`otto-pet ${ottoHealth < maxHealth ? 'is-offended' : ''} ${crackLevel}`} aria-label="Furniture guy boss fight">
+    <aside className={`otto-pet ${ottoHealth < maxHealth ? 'is-offended' : ''} ${crackLevel}`} aria-label={`${enemy.name} boss fight`}>
       <p className="otto-pet-speech" role="status">{message}</p>
-      <div className="otto-pet-health" aria-label={`Furniture guy health: ${ottoHealth} out of ${maxHealth}`}>
-        <span>FURNITURE GUY {String(ottoHealth).padStart(3, '0')} / 100</span>
+      <div className="otto-pet-health" aria-label={`${enemy.name} health: ${ottoHealth} out of ${maxHealth}`}>
+        <span>{enemy.label} {String(ottoHealth).padStart(3, '0')} / 100</span>
         <i><b style={{ width: `${ottoHealth}%` }} /></i>
       </div>
       <div className="otto-pet-health" aria-label={`Cursor health: ${cursorHealth} out of ${maxHealth}`}>
         <span>CURSOR HP {String(cursorHealth).padStart(3, '0')} / 100</span>
         <i><b style={{ width: `${cursorHealth}%` }} /></i>
       </div>
-      {ottoHealth < maxHealth && <p className="otto-pet-count">PHASE: {phase.name.toUpperCase()} / PIXELS: -{phase.damage}</p>}
+      {ottoHealth < maxHealth && <p className="otto-pet-count">PHASE: {phase.name.toUpperCase()} / {enemy.attack.toUpperCase()}: -{phase.damage}</p>}
       <button
         className="otto-pet-button"
         type="button"
         onClick={clickOtto}
-        aria-label={`Attack furniture guy. ${ottoHealth} health remaining. Cursor has ${cursorHealth} health.`}
+        aria-label={`Attack ${enemy.name}. ${ottoHealth} health remaining. Cursor has ${cursorHealth} health.`}
         ref={petRef}
       >
         {beam && (
@@ -172,7 +224,7 @@ export default function OttoPet() {
             style={{ '--beam-angle': `${beam.angle}deg`, '--beam-length': `${beam.length}px` }}
           />
         )}
-        <span className="otto-pet-screen">{beam ? 'ಠ_ಠ' : ottoHealth <= 25 ? 'x_ಠ' : ottoHealth <= 50 ? '╳_╳' : ottoHealth <= 75 ? '•_•' : ottoHealth < 100 ? 'ಠ_ಠ' : '^_^'}</span>
+        <span className="otto-pet-screen">{beam ? 'ಠ_ಠ' : faceFor(enemy, ottoHealth)}</span>
         <span className="otto-pet-base" />
       </button>
     </aside>
