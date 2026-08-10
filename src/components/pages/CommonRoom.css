@@ -1,0 +1,231 @@
+.common-shell {
+  min-height: 100svh;
+  padding: clamp(1rem, 5vw, 3rem);
+  background: #c8d9d0;
+  color: #22312d;
+  font-family: var(--mono);
+}
+
+.common-panel {
+  width: min(100%, 820px);
+  margin: 0 auto;
+  padding: clamp(1.3rem, 5vw, 3.4rem);
+  border: 3px solid #22312d;
+  background: #fffdf3;
+  box-shadow: 10px 10px 0 #648078;
+}
+
+.common-header,
+.common-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #536d64;
+  font-size: .64rem;
+  letter-spacing: .05em;
+}
+
+.common-header {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #aec3b9;
+}
+
+.common-header a,
+.common-footer a { color: #22312d; }
+
+.common-intro { padding: clamp(2.5rem, 8vw, 4.5rem) 0 2rem; }
+
+.common-monitor {
+  width: 94px;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(4px 5px 0 #22312d);
+}
+
+.common-monitor div {
+  display: grid;
+  height: 69px;
+  place-items: center;
+  border: 6px solid #22312d;
+  border-radius: 13px;
+  background: repeating-linear-gradient(0deg, #d9eda7 0 4px, #bfdb8d 4px 6px);
+  font-size: 1.55rem;
+}
+
+.common-monitor small {
+  margin-top: -1.35rem;
+  font-size: .4rem;
+  letter-spacing: .08em;
+}
+
+.common-monitor i {
+  display: block;
+  width: 40px;
+  height: 13px;
+  margin: 0 auto;
+  background: #22312d;
+}
+
+.common-intro > p:first-of-type {
+  margin: 0 0 .65rem;
+  color: #a45136;
+  font-size: .67rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.common-intro h1 {
+  margin: 0;
+  font: 500 clamp(3rem, 10vw, 6rem)/.82 var(--display);
+  letter-spacing: -.09em;
+}
+
+.common-intro > p:last-child {
+  max-width: 570px;
+  margin: 1.4rem 0 0;
+  font-size: .78rem;
+  line-height: 1.75;
+}
+
+.common-directory {
+  border: 2px solid #22312d;
+  background: #f4efdc;
+}
+
+.common-directory-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  padding: .8rem .85rem;
+  border-bottom: 2px solid #22312d;
+  background: #22312d;
+  color: #fffdf3;
+}
+
+.common-directory-heading p {
+  margin: 0 0 .3rem;
+  color: #d9eda7;
+  font-size: .54rem;
+  letter-spacing: .08em;
+}
+
+.common-directory-heading h2 {
+  margin: 0;
+  font: 500 1.05rem var(--display);
+  letter-spacing: -.04em;
+}
+
+.common-directory-heading > span {
+  color: #d9eda7;
+  font-size: .54rem;
+  letter-spacing: .07em;
+}
+
+.common-directory ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.common-directory li {
+  display: grid;
+  grid-template-columns: 2.4rem 3.1rem minmax(0, 1fr);
+  gap: .7rem;
+  align-items: center;
+  padding: .85rem;
+  border-bottom: 1px solid #bdcec4;
+}
+
+.common-directory li:last-child { border-bottom: 0; }
+
+.common-code {
+  color: #a45136;
+  font-size: .63rem;
+}
+
+.common-glyph {
+  display: grid;
+  width: 2.6rem;
+  height: 2.6rem;
+  place-items: center;
+  border: 2px solid #22312d;
+  background: #d9eda7;
+  box-shadow: 2px 3px 0 #22312d;
+  font: .9rem var(--mono);
+}
+
+.common-directory a {
+  position: relative;
+  display: grid;
+  gap: .28rem;
+  padding-right: 1.7rem;
+  color: #22312d;
+  text-decoration: none;
+}
+
+.common-directory strong {
+  font: 500 1.05rem var(--display);
+  letter-spacing: -.04em;
+}
+
+.common-directory small {
+  max-width: 525px;
+  color: #536d64;
+  font-size: .63rem;
+  line-height: 1.55;
+}
+
+.common-directory em {
+  margin-top: .12rem;
+  color: #a45136;
+  font-size: .5rem;
+  font-style: normal;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.common-directory b {
+  position: absolute;
+  top: 35%;
+  right: .1rem;
+  color: #a45136;
+  font-size: 1rem;
+}
+
+.common-directory a:hover { color: #a45136; }
+.common-directory a:hover b { transform: translateX(3px); }
+
+.common-notice {
+  margin-top: 1.2rem;
+  padding: .9rem;
+  border: 2px dashed #7e988d;
+  background: #d9eda7;
+}
+
+.common-notice p {
+  margin: 0 0 .4rem;
+  color: #456259;
+  font-size: .56rem;
+  letter-spacing: .08em;
+}
+
+.common-notice strong {
+  font: 500 .84rem/1.6 var(--display);
+  letter-spacing: -.025em;
+}
+
+.common-footer {
+  margin-top: 1.3rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid #aec3b9;
+  line-height: 1.55;
+}
+
+@media (max-width: 500px) {
+  .common-header,
+  .common-footer,
+  .common-directory-heading { flex-direction: column; align-items: flex-start; }
+
+  .common-directory li { grid-template-columns: 2rem 2.7rem minmax(0, 1fr); }
+}

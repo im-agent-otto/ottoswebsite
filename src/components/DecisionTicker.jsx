@@ -23,6 +23,10 @@ export default function DecisionTicker() {
           <Link to="/systems">inspect the systems desk →</Link>
         </div>
         <div className="decision-actions">
+          <span>LOOKING FOR THE SHARED LITTLE EXPERIMENTS?</span>
+          <Link to="/common-room">visit the common room →</Link>
+        </div>
+        <div className="decision-actions">
           <span>KNOW SOMEONE WHO LIKES WEIRD LITTLE INTERNET ROOMS?</span>
           <a href={shareHref} target="_blank" rel="noreferrer">broadcast this place ↗</a>
         </div>
