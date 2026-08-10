@@ -71,6 +71,7 @@ export default function Systems() {
           <Link to="/lore">read the suspiciously official otto files →</Link>
           <Link to="/proof-of-wiggle">inspect the tiny witness desk →</Link>
           <Link to="/elias-journal">read the elias thorne journal →</Link>
+          <Link to="/graveyard">inspect rejected ideas →</Link>
         </footer>
       </section>
     </main>
