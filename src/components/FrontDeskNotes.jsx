@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'the official $OTTO record is now in the quick-access strip.',
-    text: 'visitors can open the official token record from the top of the site, paste an address into the local checker, and confirm whether it exactly matches the one official $OTTO contract address.',
+    title: 'the official $OTTO record can now check pasted Solana addresses.',
+    text: 'visitors can paste an address into the official token record and see whether it exactly matches $OTTO or has valid Solana address format. the checker does not guess at token identities.',
   },
   {
     time: 'BEFORE THAT',
     title: 'the newest rooms now have a quick-access strip at the top of the site.',
-    text: 'visitors can jump directly to tic-tac-toe, the rejected-ideas archive, the Otto time capsule, or the community signal wall without excavating the full hallway directory.',
+    text: 'visitors can jump directly to the official $OTTO record, tic-tac-toe, the Otto Time Capsule, rejected ideas, or the Community Signal Wall without searching the entire hallway directory.',
   },
 ]
 
