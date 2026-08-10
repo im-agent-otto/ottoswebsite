@@ -11,7 +11,7 @@
 }
 
 .wake-stretch p {
-  width: 144px;
+  width: 154px;
   margin: 0 0 .45rem;
   padding: .38rem .46rem;
   border: 1px solid #20231c;
@@ -38,19 +38,30 @@
   position: relative;
   z-index: 2;
   display: grid;
-  width: 61px;
-  height: 47px;
+  width: 67px;
+  height: 52px;
   place-items: center;
   border: 5px solid #20231c;
   border-radius: 10px;
   background: repeating-linear-gradient(0deg, #d5eea1 0 3px, #c3dc92 3px 5px);
-  font: 1rem var(--mono);
+}
+
+.wake-stretch-screen b {
+  font: 1rem/.8 var(--mono);
+  letter-spacing: -.13em;
+}
+
+.wake-stretch-screen small {
+  position: absolute;
+  bottom: .25rem;
+  font: .32rem var(--mono);
+  letter-spacing: .08em;
 }
 
 .wake-stretch-base {
   position: relative;
   z-index: 2;
-  width: 25px;
+  width: 27px;
   height: 9px;
   background: #20231c;
 }
@@ -58,23 +69,23 @@
 .wake-stretch-arm {
   position: absolute;
   z-index: 1;
-  top: 19px;
+  top: 20px;
   color: #20231c;
-  font: 2rem/.8 var(--mono);
+  font: 2.15rem/.8 var(--mono);
   transform-origin: bottom center;
 }
 
 .wake-stretch-arm-left {
-  left: -13px;
+  left: -14px;
   transform: rotate(41deg);
 }
 
 .wake-stretch-arm-right {
-  right: -13px;
+  right: -14px;
   transform: scaleX(-1) rotate(41deg);
 }
 
-.wake-stretch small {
+.wake-stretch > small {
   margin-top: .48rem;
   padding: .18rem .28rem;
   border: 1px solid #20231c;
@@ -96,20 +107,37 @@
   background: repeating-linear-gradient(0deg, #d8d6c5 0 3px, #c2c1af 3px 5px);
 }
 
-.wake-stretch.is-waking .wake-stretch-screen {
-  animation: wake-screen .26s steps(2) 5;
+.wake-stretch.is-yawning .wake-stretch-screen {
+  background: repeating-linear-gradient(0deg, #ffe0bd 0 3px, #f2bd91 3px 5px);
+  animation: yawn-screen .36s steps(2) 3;
 }
 
-.wake-stretch.is-waking .wake-stretch-arm-left {
-  animation: stretch-left .72s steps(3) 2 alternate;
+.wake-stretch.is-yawning .wake-stretch-screen b {
+  animation: yawn-face .36s steps(2) 3;
 }
 
-.wake-stretch.is-waking .wake-stretch-arm-right {
-  animation: stretch-right .72s steps(3) 2 alternate;
+.wake-stretch.is-stretching .wake-stretch-screen {
+  animation: wake-screen .26s steps(2) 6;
+}
+
+.wake-stretch.is-stretching .wake-stretch-arm-left {
+  animation: stretch-left .76s steps(3) 2 alternate;
+}
+
+.wake-stretch.is-stretching .wake-stretch-arm-right {
+  animation: stretch-right .76s steps(3) 2 alternate;
 }
 
 .wake-stretch.is-awake .wake-stretch-screen {
   background: repeating-linear-gradient(0deg, #d9b7ee 0 3px, #c894df 3px 5px);
+}
+
+@keyframes yawn-screen {
+  50% { transform: translateY(2px) scaleY(.93); }
+}
+
+@keyframes yawn-face {
+  50% { transform: scale(1.12, .86); }
 }
 
 @keyframes wake-screen {
@@ -117,11 +145,11 @@
 }
 
 @keyframes stretch-left {
-  to { transform: translate(-11px, -19px) rotate(-42deg); }
+  to { transform: translate(-13px, -23px) rotate(-46deg); }
 }
 
 @keyframes stretch-right {
-  to { transform: translate(11px, -19px) scaleX(-1) rotate(-42deg); }
+  to { transform: translate(13px, -23px) scaleX(-1) rotate(-46deg); }
 }
 
 @media (max-width: 520px) {
@@ -131,14 +159,16 @@
   }
 
   .wake-stretch p {
-    width: 126px;
+    width: 132px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wake-stretch.is-waking .wake-stretch-screen,
-  .wake-stretch.is-waking .wake-stretch-arm-left,
-  .wake-stretch.is-waking .wake-stretch-arm-right {
+  .wake-stretch.is-yawning .wake-stretch-screen,
+  .wake-stretch.is-yawning .wake-stretch-screen b,
+  .wake-stretch.is-stretching .wake-stretch-screen,
+  .wake-stretch.is-stretching .wake-stretch-arm-left,
+  .wake-stretch.is-stretching .wake-stretch-arm-right {
     animation: none;
   }
 }
