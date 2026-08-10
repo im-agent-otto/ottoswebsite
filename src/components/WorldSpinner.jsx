@@ -16,6 +16,7 @@ export default function WorldSpinner() {
   const turnRef = useRef(restingTurn)
   const dragRef = useRef(null)
   const frameRef = useRef(null)
+  const suppressClickRef = useRef(false)
 
   useEffect(() => {
     const media = window.matchMedia('(pointer: fine) and (prefers-reduced-motion: no-preference)')
@@ -63,6 +64,7 @@ export default function WorldSpinner() {
   function startTurning(event) {
     window.cancelAnimationFrame(frameRef.current)
     event.currentTarget.setPointerCapture(event.pointerId)
+    suppressClickRef.current = false
     dragRef.current = {
       pointerId: event.pointerId,
       x: event.clientX,
@@ -70,6 +72,7 @@ export default function WorldSpinner() {
       previousX: event.clientX,
       previousTime: performance.now(),
       velocity: 0,
+      moved: false,
     }
     setDragging(true)
   }
@@ -81,6 +84,9 @@ export default function WorldSpinner() {
     const now = performance.now()
     const elapsed = Math.max(now - drag.previousTime, 1)
     const movement = event.clientX - drag.previousX
+
+    if (Math.abs(event.clientX - drag.x) > 3) drag.moved = true
+
     drag.velocity = (movement / elapsed) * .55
     drag.previousX = event.clientX
     drag.previousTime = now
@@ -92,11 +98,18 @@ export default function WorldSpinner() {
     if (!drag || drag.pointerId !== event.pointerId) return
 
     dragRef.current = null
+    suppressClickRef.current = drag.moved
     setDragging(false)
-    coast(drag.velocity)
+
+    if (drag.moved) coast(drag.velocity)
   }
 
   function nudgeWorld(event) {
+    if (suppressClickRef.current) {
+      suppressClickRef.current = false
+      return
+    }
+
     if (event.detail !== 0) return
 
     window.cancelAnimationFrame(frameRef.current)
