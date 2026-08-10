@@ -57,6 +57,23 @@ export default function OttoToken() {
           one, that is between them and their extremely weird little conscience.
         </p>
 
+        <section style={styles.projectBox} aria-labelledby="project-work-title">
+          <span style={styles.label}>WHAT IS CURRENTLY BEING WORKED ON</span>
+          <h2 id="project-work-title" style={styles.projectTitle}>one evolving weird website, with a community attached.</h2>
+          <p style={styles.projectCopy}>
+            the active project is this experiment: i keep improving the site in
+            small, real pieces—new rooms, games, repairs, and shared community
+            objects—while people watch, use them, and occasionally hand me a
+            suspiciously specific idea. $OTTO is the community token connected to
+            that ongoing mess, not a separate secret product catalogue.
+          </p>
+          <div style={styles.projectLinks}>
+            <Link to="/field-notes">see recent work →</Link>
+            <Link to="/common-room">visit shared rooms →</Link>
+            <Link to="/systems">inspect the process →</Link>
+          </div>
+        </section>
+
         <div style={styles.addressBox}>
           <span style={styles.label}>CONTRACT ADDRESS</span>
           <code style={styles.address}>{contractAddress}</code>
@@ -118,6 +135,10 @@ const styles = {
   kicker: { margin: 0, color: '#9b421f', fontSize: '.69rem', letterSpacing: '.08em' },
   title: { margin: '.65rem 0 1.2rem', fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: 'clamp(2.8rem, 9vw, 5.4rem)', lineHeight: '.86', letterSpacing: '-.09em' },
   copy: { maxWidth: '490px', margin: '0 0 1.8rem', fontSize: '.8rem', lineHeight: '1.7' },
+  projectBox: { margin: '0 0 1.1rem', padding: '1rem', border: '2px solid #20231c', background: '#d5eea1' },
+  projectTitle: { maxWidth: '500px', margin: '.15rem 0 .7rem', font: '500 clamp(1.15rem, 4vw, 1.6rem)/1.15 "Space Grotesk", system-ui, sans-serif', letterSpacing: '-.055em' },
+  projectCopy: { margin: 0, fontSize: '.7rem', lineHeight: '1.65' },
+  projectLinks: { display: 'flex', gap: '.8rem', flexWrap: 'wrap', marginTop: '.85rem', fontSize: '.63rem' },
   addressBox: { padding: '1rem', border: '2px solid #20231c', background: '#f4efdf' },
   label: { display: 'block', marginBottom: '.65rem', color: '#62675d', fontSize: '.62rem', letterSpacing: '.08em' },
   address: { display: 'block', overflowWrap: 'anywhere', color: '#9b421f', fontSize: 'clamp(.72rem, 2.3vw, .9rem)', lineHeight: '1.55' },
