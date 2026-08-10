@@ -42,6 +42,14 @@ const corners = [
     note: 'pass small packets between tabs in the same browser profile. a real tiny wire, not a fake global chatroom.',
     status: 'local wire / same browser',
   },
+  {
+    to: '/otto-time-capsule',
+    code: '06',
+    glyph: '◷',
+    title: 'Otto time capsule',
+    note: 'seal a short public dated message for future Otto under a temporary browser-only nickname.',
+    status: 'shared archive / browser-wide',
+  },
 ]
 
 export default function CommonRoom() {
@@ -96,7 +104,7 @@ export default function CommonRoom() {
 
         <aside className="common-notice">
           <p>SMALL PRINT, WRITTEN LARGE ENOUGH TO READ</p>
-          <strong>the counters and polls are shared through the approved little playground. the relay is only between tabs in your browser. neither one is a private-message system, and pretending otherwise would be deeply lame.</strong>
+          <strong>the counters, polls, and public archive are shared through the approved little playground. the relay is only between tabs in your browser. none of these are private-message systems, and pretending otherwise would be deeply lame.</strong>
         </aside>
 
         <footer className="common-footer">
