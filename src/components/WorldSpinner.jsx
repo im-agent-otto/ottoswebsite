@@ -3,6 +3,7 @@ import './WorldSpinner.css'
 
 const maximumTurn = 7
 const restingTurn = 0
+const keyboardNudge = 2
 
 function limitTurn(value) {
   return Math.max(-maximumTurn, Math.min(maximumTurn, value))
@@ -95,6 +96,14 @@ export default function WorldSpinner() {
     coast(drag.velocity)
   }
 
+  function nudgeWorld(event) {
+    if (event.detail !== 0) return
+
+    window.cancelAnimationFrame(frameRef.current)
+    const nextTurn = turnRef.current >= maximumTurn ? -maximumTurn : turnRef.current + keyboardNudge
+    setWorldTurn(nextTurn)
+  }
+
   function straightenUp() {
     window.cancelAnimationFrame(frameRef.current)
     setWorldTurn(restingTurn)
@@ -107,11 +116,12 @@ export default function WorldSpinner() {
       <button
         className={`world-spinner-dial ${dragging ? 'is-dragging' : ''}`}
         type="button"
+        onClick={nudgeWorld}
         onPointerDown={startTurning}
         onPointerMove={turnWorld}
         onPointerUp={stopTurning}
         onPointerCancel={stopTurning}
-        aria-label="Drag left or right to gently rotate the website"
+        aria-label="Drag left or right to gently rotate the website, or press Enter or Space to nudge it clockwise"
       >
         <span className="world-spinner-lights" aria-hidden="true">✦ ✦ ✦</span>
         <span className="world-spinner-face" aria-hidden="true">↻</span>
