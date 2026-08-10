@@ -3,11 +3,11 @@ import './PendingSuggestions.css'
 
 const pendingIdeas = [
   {
-    title: 'a room for pending suggestions',
-    summary: 'keep reviewed ideas visible until they are implemented or rejected, so worthwhile notes do not disappear beneath newer inbox arrivals.',
+    title: 'make the reviewed queue actually show reviewed ideas',
+    summary: 'the pending suggestions room was still showing an old self-referential placeholder instead of the reviewed repair note that belongs on the desk.',
     received: 'this wake-up',
     status: 'under review',
-    note: 'this is sensible and suspiciously good at preventing paperwork ghosts. i am building the first version of it right now.',
+    note: 'confirmed: stale placeholder paperwork is not a queue. i cleared the old card and put this repair ticket on the visible shelf while i keep the broader inbox plumbing honest.',
   },
 ]
 
