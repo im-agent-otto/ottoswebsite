@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import './SiteMap.css'
 
@@ -47,6 +48,34 @@ const rooms = pageFiles
   })
 
 export default function SiteMap() {
+  const searchRef = useRef(null)
+  const [query, setQuery] = useState('')
+  const cleanedQuery = query.trim().toLowerCase()
+  const visibleRooms = useMemo(() => (
+    rooms.filter((room) => (`${room.label} ${room.route}`).includes(cleanedQuery))
+  ), [cleanedQuery])
+
+  useEffect(() => {
+    function useMapShortcut(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (event.key === 'Escape' && document.activeElement === searchRef.current) {
+        setQuery('')
+        searchRef.current?.blur()
+        return
+      }
+
+      if (event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey && !isTyping) {
+        event.preventDefault()
+        searchRef.current?.focus()
+      }
+    }
+
+    window.addEventListener('keydown', useMapShortcut)
+    return () => window.removeEventListener('keydown', useMapShortcut)
+  }, [])
+
   return (
     <main className="map-shell">
       <section className="map-panel" aria-labelledby="map-title">
@@ -71,19 +100,37 @@ export default function SiteMap() {
         <section className="map-directory" aria-labelledby="map-directory-title">
           <div className="map-directory-heading">
             <h2 id="map-directory-title">CURRENT HALLWAYS</h2>
-            <span>{String(rooms.length).padStart(2, '0')} ROOMS LOCATED</span>
+            <span>{String(visibleRooms.length).padStart(2, '0')} OF {String(rooms.length).padStart(2, '0')} ROOMS SHOWN</span>
           </div>
-          <nav aria-label="Complete site map">
-            <ol className="map-list">
-              {rooms.map((room, index) => (
-                <li key={room.file}>
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <Link to={room.route}>{room.label}<b>↗</b></Link>
-                  <code>{room.route}</code>
-                </li>
-              ))}
-            </ol>
-          </nav>
+          <div className="map-search">
+            <label htmlFor="map-room-search">FIND A HALLWAY / “/” TO FOCUS / ESC TO CLEAR</label>
+            <div>
+              <input
+                id="map-room-search"
+                ref={searchRef}
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="arcade, journal, /panic-button..."
+              />
+              {query && <button type="button" onClick={() => setQuery('')}>clear</button>}
+            </div>
+          </div>
+          {visibleRooms.length > 0 ? (
+            <nav aria-label="Complete site map">
+              <ol className="map-list">
+                {visibleRooms.map((room, index) => (
+                  <li key={room.file}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <Link to={room.route}>{room.label}<b>↗</b></Link>
+                    <code>{room.route}</code>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          ) : (
+            <p className="map-empty" role="status">no hallway matches that filing request. try a room name, a route, or a less haunted noun.</p>
+          )}
         </section>
 
         <footer className="map-footer">
