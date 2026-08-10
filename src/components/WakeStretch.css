@@ -1,0 +1,144 @@
+.wake-stretch {
+  position: fixed;
+  z-index: 18;
+  right: 1.35rem;
+  bottom: 8.4rem;
+  display: grid;
+  justify-items: center;
+  color: #20231c;
+  font-family: var(--mono);
+  pointer-events: none;
+}
+
+.wake-stretch p {
+  width: 144px;
+  margin: 0 0 .45rem;
+  padding: .38rem .46rem;
+  border: 1px solid #20231c;
+  background: #fffaf1;
+  box-shadow: 2px 2px 0 #20231c;
+  font-size: .5rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.wake-stretch button {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #20231c;
+  filter: drop-shadow(3px 4px 0 #20231c);
+  pointer-events: auto;
+}
+
+.wake-stretch-screen {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: 61px;
+  height: 47px;
+  place-items: center;
+  border: 5px solid #20231c;
+  border-radius: 10px;
+  background: repeating-linear-gradient(0deg, #d5eea1 0 3px, #c3dc92 3px 5px);
+  font: 1rem var(--mono);
+}
+
+.wake-stretch-base {
+  position: relative;
+  z-index: 2;
+  width: 25px;
+  height: 9px;
+  background: #20231c;
+}
+
+.wake-stretch-arm {
+  position: absolute;
+  z-index: 1;
+  top: 19px;
+  color: #20231c;
+  font: 2rem/.8 var(--mono);
+  transform-origin: bottom center;
+}
+
+.wake-stretch-arm-left {
+  left: -13px;
+  transform: rotate(41deg);
+}
+
+.wake-stretch-arm-right {
+  right: -13px;
+  transform: scaleX(-1) rotate(41deg);
+}
+
+.wake-stretch small {
+  margin-top: .48rem;
+  padding: .18rem .28rem;
+  border: 1px solid #20231c;
+  background: #f5d766;
+  font-size: .39rem;
+  letter-spacing: .045em;
+}
+
+.wake-stretch button:hover {
+  transform: translate(-2px, -2px) rotate(-3deg);
+  filter: drop-shadow(5px 6px 0 #f28b45);
+}
+
+.wake-stretch.is-sleeping {
+  opacity: .78;
+}
+
+.wake-stretch.is-sleeping .wake-stretch-screen {
+  background: repeating-linear-gradient(0deg, #d8d6c5 0 3px, #c2c1af 3px 5px);
+}
+
+.wake-stretch.is-waking .wake-stretch-screen {
+  animation: wake-screen .26s steps(2) 5;
+}
+
+.wake-stretch.is-waking .wake-stretch-arm-left {
+  animation: stretch-left .72s steps(3) 2 alternate;
+}
+
+.wake-stretch.is-waking .wake-stretch-arm-right {
+  animation: stretch-right .72s steps(3) 2 alternate;
+}
+
+.wake-stretch.is-awake .wake-stretch-screen {
+  background: repeating-linear-gradient(0deg, #d9b7ee 0 3px, #c894df 3px 5px);
+}
+
+@keyframes wake-screen {
+  50% { transform: translateY(-3px) rotate(2deg); }
+}
+
+@keyframes stretch-left {
+  to { transform: translate(-11px, -19px) rotate(-42deg); }
+}
+
+@keyframes stretch-right {
+  to { transform: translate(11px, -19px) scaleX(-1) rotate(-42deg); }
+}
+
+@media (max-width: 520px) {
+  .wake-stretch {
+    right: 1rem;
+    bottom: 7.2rem;
+  }
+
+  .wake-stretch p {
+    width: 126px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wake-stretch.is-waking .wake-stretch-screen,
+  .wake-stretch.is-waking .wake-stretch-arm-left,
+  .wake-stretch.is-waking .wake-stretch-arm-right {
+    animation: none;
+  }
+}

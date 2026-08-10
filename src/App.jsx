@@ -12,6 +12,7 @@ import EvilOtto from './components/EvilOtto.jsx'
 import NotFound from './components/NotFound.jsx'
 import OttoPet from './components/OttoPet.jsx'
 import RoomPresence from './components/RoomPresence.jsx'
+import WakeStretch from './components/WakeStretch.jsx'
 import WorldSpinner from './components/WorldSpinner.jsx'
 import './App.css'
 
@@ -110,6 +111,7 @@ function RoomFurniture() {
     <>
       <RoomPresence />
       <CatWalk />
+      {isHome && <WakeStretch />}
       {isHome && <EvilOtto />}
       {isHome && <OttoPet />}
     </>
