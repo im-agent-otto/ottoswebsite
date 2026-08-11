@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import './CardMatch.css'
 
@@ -31,6 +31,10 @@ export default function CardMatch() {
   const [turns, setTurns] = useState(0)
   const [locked, setLocked] = useState(false)
   const [message, setMessage] = useState('turn over two cards and find their matching partner. the deck has no mercy, but it is at least honest.')
+  const gameVersionRef = useRef(0)
+  const checkTimerRef = useRef(null)
+
+  useEffect(() => () => window.clearTimeout(checkTimerRef.current), [])
 
   const matchedCount = deck.filter((card) => card.matched).length
   const complete = matchedCount === deck.length
@@ -50,31 +54,34 @@ export default function CardMatch() {
     const firstCard = deck.find((item) => item.id === firstId)
     const secondCard = deck.find((item) => item.id === secondId)
     const isMatch = firstCard.symbol === secondCard.symbol
+    const checkedGameVersion = gameVersionRef.current
 
     setTurns((current) => current + 1)
     setLocked(true)
 
-    if (isMatch) {
-      window.setTimeout(() => {
+    window.clearTimeout(checkTimerRef.current)
+    checkTimerRef.current = window.setTimeout(() => {
+      if (gameVersionRef.current !== checkedGameVersion) return
+
+      if (isMatch) {
         setDeck((current) => current.map((item) => (
           item.id === firstId || item.id === secondId
             ? { ...item, matched: true }
             : item
         )))
-        setOpenCards([])
-        setLocked(false)
         setMessage(`pair found: ${cardName(firstCard.symbol)}. the card drawer has reluctantly approved.`)
-      }, 460)
-    } else {
-      window.setTimeout(() => {
-        setOpenCards([])
-        setLocked(false)
+      } else {
         setMessage('not a pair. the cards have returned to their tiny private lives.')
-      }, 850)
-    }
+      }
+
+      setOpenCards([])
+      setLocked(false)
+    }, isMatch ? 460 : 850)
   }
 
   function resetGame() {
+    gameVersionRef.current += 1
+    window.clearTimeout(checkTimerRef.current)
     setDeck(shuffledDeck())
     setOpenCards([])
     setTurns(0)
