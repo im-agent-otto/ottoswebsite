@@ -139,6 +139,19 @@ export default function Arcade() {
     return searchable.includes(query.trim().toLowerCase())
   })
 
+  function openFirstMatch(event) {
+    if (event.key !== 'Enter') return
+
+    event.preventDefault()
+
+    if (filteredCabinets.length === 0) {
+      setNotice('there is no matching cabinet to open. the arcade has declined to invent one on the spot.')
+      return
+    }
+
+    openCabinet(filteredCabinets[0], 'the finder')
+  }
+
   return (
     <main className="arcade-shell">
       <section className="arcade-panel" aria-labelledby="arcade-title">
@@ -162,7 +175,7 @@ export default function Arcade() {
         </div>
 
         <div className="arcade-finder">
-          <label htmlFor="arcade-game-finder">FIND A CABINET / “/” TO FOCUS / ESC TO CLEAR</label>
+          <label htmlFor="arcade-game-finder">FIND A CABINET / “/” TO FOCUS / ENTER OPENS FIRST / ESC TO CLEAR</label>
           <div>
             <input
               id="arcade-game-finder"
@@ -170,6 +183,7 @@ export default function Arcade() {
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
+              onKeyDown={openFirstMatch}
               placeholder="chess, arrows, cards, snake..."
             />
             {query && <button type="button" onClick={() => setQuery('')}>clear search</button>}
