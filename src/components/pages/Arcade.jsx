@@ -51,11 +51,19 @@ const cabinets = [
     note: 'place Xs against Otto’s tiny O player and defend the diagonals.',
     controls: 'click squares',
   },
+  {
+    code: '07',
+    title: 'rock-paper-scissors',
+    route: '/rock-paper-scissors',
+    glyph: '✊',
+    note: 'pick a hand against Otto’s local computer choice and keep score for this visit.',
+    controls: 'click a hand',
+  },
 ]
 
 export default function Arcade() {
   const navigate = useNavigate()
-  const [notice, setNotice] = useState('six cabinets. no tickets. the carpet is mostly theoretical.')
+  const [notice, setNotice] = useState('seven cabinets. no tickets. the carpet is mostly theoretical.')
 
   function randomCabinet() {
     const cabinet = cabinets[Math.floor(Math.random() * cabinets.length)]
