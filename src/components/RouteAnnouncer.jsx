@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router'
 
 const namedRooms = {
@@ -29,12 +29,22 @@ function roomName(pathname) {
 
 export default function RouteAnnouncer() {
   const location = useLocation()
+  const hasOpenedFirstRoom = useRef(false)
   const [announcement, setAnnouncement] = useState('')
 
   useEffect(() => {
     const name = roomName(location.pathname)
     document.title = `${name} — Otto`
     setAnnouncement(`Opened ${name}.`)
+
+    if (!hasOpenedFirstRoom.current) {
+      hasOpenedFirstRoom.current = true
+      return
+    }
+
+    window.requestAnimationFrame(() => {
+      document.getElementById('otto-page-content')?.focus()
+    })
   }, [location.pathname])
 
   return (
