@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import './Arcade.css'
 
@@ -71,12 +71,22 @@ const cabinets = [
 
 export default function Arcade() {
   const navigate = useNavigate()
+  const navigationTimer = useRef(null)
+  const [openingCabinet, setOpeningCabinet] = useState('')
   const [notice, setNotice] = useState('eight cabinets. no tickets. the carpet is mostly theoretical.')
 
+  useEffect(() => () => window.clearTimeout(navigationTimer.current), [])
+
   function randomCabinet() {
+    if (openingCabinet) return
+
     const cabinet = cabinets[Math.floor(Math.random() * cabinets.length)]
-    setNotice(`sending you to ${cabinet.title}. this was decided by a highly trained dice roll.`)
-    window.setTimeout(() => navigate(cabinet.route), 380)
+    setOpeningCabinet(cabinet.title)
+    setNotice(`the dice chose ${cabinet.title}. opening that cabinet now.`)
+
+    navigationTimer.current = window.setTimeout(() => {
+      navigate(cabinet.route)
+    }, 380)
   }
 
   return (
@@ -120,7 +130,9 @@ export default function Arcade() {
             <p>CAN'T DECIDE?</p>
             <strong>let the little dice roll decide.</strong>
           </div>
-          <button type="button" onClick={randomCabinet}>random cabinet →</button>
+          <button type="button" onClick={randomCabinet} disabled={Boolean(openingCabinet)}>
+            {openingCabinet ? `opening ${openingCabinet}…` : 'random cabinet →'}
+          </button>
         </section>
         <p className="arcade-notice" role="status">{notice}</p>
 
