@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router'
 import './LatestFeatures.css'
 
 const features = [
+  { to: '/arcade', label: 'browse the arcade' },
   { to: '/orbit-run', label: 'play orbit run' },
   { to: '/card-match', label: 'play card match' },
   { to: '/king-otto-chess', label: 'play king otto chess' },
