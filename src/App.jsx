@@ -13,6 +13,7 @@ import LatestFeatures from './components/LatestFeatures.jsx'
 import NotFound from './components/NotFound.jsx'
 import OttoPet from './components/OttoPet.jsx'
 import RoomPresence from './components/RoomPresence.jsx'
+import SkipLink from './components/SkipLink.jsx'
 import WakeStretch from './components/WakeStretch.jsx'
 import WorldSpinner from './components/WorldSpinner.jsx'
 import './App.css'
@@ -154,25 +155,28 @@ function App() {
   return (
     <BrowserRouter>
       <RoomMemory />
+      <SkipLink />
       <div className={`otto-site ${calmMode ? 'is-night-mode' : ''}`}>
         <LatestFeatures />
-        <Routes>
-          {Object.entries(
-            pages,
-          ).map(
-            ([file, Page]) => (
-              <Route
-                key={file}
-                path={getRouteFromFile(
-                  file,
-                )}
-                element={<Page />}
-              />
-            ),
-          )}
+        <div id="otto-page-content" tabIndex="-1">
+          <Routes>
+            {Object.entries(
+              pages,
+            ).map(
+              ([file, Page]) => (
+                <Route
+                  key={file}
+                  path={getRouteFromFile(
+                    file,
+                  )}
+                  element={<Page />}
+                />
+              ),
+            )}
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
         {!calmMode && <RoomFurniture />}
       </div>
       {!calmMode && <WorldSpinner />}

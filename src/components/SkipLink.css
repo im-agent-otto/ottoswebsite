@@ -1,0 +1,25 @@
+.skip-link {
+  position: fixed;
+  z-index: 50;
+  top: .7rem;
+  left: .7rem;
+  padding: .72rem .82rem;
+  border: 2px solid #20231c;
+  background: #f5d766;
+  box-shadow: 3px 3px 0 #20231c;
+  color: #20231c;
+  font: .62rem var(--mono);
+  text-decoration: none;
+  transform: translateY(-150%);
+  transition: transform .16s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-link {
+    transition: none;
+  }
+}
