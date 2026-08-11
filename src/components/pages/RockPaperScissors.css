@@ -1,0 +1,72 @@
+.rps-shell {
+  min-height: 100svh;
+  padding: clamp(1rem, 5vw, 3rem);
+  background: #d5c7e2;
+  color: #29243b;
+  font-family: var(--mono);
+}
+
+.rps-panel {
+  width: min(100%, 810px);
+  margin: 0 auto;
+  padding: clamp(1.3rem, 5vw, 3.4rem);
+  border: 3px solid #29243b;
+  background: #fffdf5;
+  box-shadow: 10px 10px 0 #746993;
+}
+
+.rps-header,
+.rps-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #625b79;
+  font-size: .64rem;
+  letter-spacing: .05em;
+}
+
+.rps-header {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #bcb5cd;
+}
+
+.rps-header a,
+.rps-footer a { color: #29243b; }
+.rps-intro { padding: clamp(2.5rem, 8vw, 4.5rem) 0 2rem; }
+.rps-monitor { width: 94px; margin-bottom: 1.5rem; filter: drop-shadow(4px 5px 0 #29243b); }
+.rps-monitor div { display: grid; height: 69px; place-items: center; border: 6px solid #29243b; border-radius: 13px; background: repeating-linear-gradient(0deg, #d8efa6 0 4px, #bddb88 4px 6px); font-size: 1.65rem; }
+.rps-monitor small { margin-top: -1.35rem; font-size: .4rem; letter-spacing: .08em; }
+.rps-monitor i { display: block; width: 40px; height: 13px; margin: 0 auto; background: #29243b; }
+.rps-intro > p:first-of-type { margin: 0 0 .65rem; color: #a34b37; font-size: .67rem; letter-spacing: .1em; text-transform: uppercase; }
+.rps-intro h1 { margin: 0; font: 500 clamp(3rem, 10vw, 6rem)/.82 var(--display); letter-spacing: -.09em; }
+.rps-intro > p:last-child { max-width: 560px; margin: 1.4rem 0 0; font-size: .78rem; line-height: 1.75; }
+
+.rps-machine { border: 4px solid #29243b; background: #eae4f2; box-shadow: 6px 7px 0 #29243b; }
+.rps-scoreboard { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 3px solid #29243b; background: #29243b; color: #fffdf5; }
+.rps-scoreboard div { padding: .75rem; border-right: 1px solid #8d84a6; text-align: center; }
+.rps-scoreboard div:last-child { border-right: 0; }
+.rps-scoreboard span { display: block; color: #d8efa6; font-size: .51rem; letter-spacing: .08em; }
+.rps-scoreboard strong { display: block; margin-top: .3rem; font: 500 1.55rem var(--display); letter-spacing: -.06em; }
+.rps-stage { display: grid; grid-template-columns: 1fr auto 1fr; gap: .8rem; align-items: center; min-height: 210px; padding: 1rem; background: repeating-linear-gradient(45deg, #f7f2e8 0 13px, #eee7da 13px 26px); }
+.rps-stage > div { display: grid; min-height: 155px; place-items: center; align-content: center; padding: .8rem; border: 3px solid #29243b; background: #fffdf5; text-align: center; }
+.rps-stage span { color: #625b79; font-size: .51rem; letter-spacing: .07em; }
+.rps-stage strong { margin: .6rem 0; font-size: clamp(3rem, 11vw, 5rem); line-height: 1; }
+.rps-stage small { color: #a34b37; font-size: .6rem; text-transform: uppercase; }
+.rps-stage > b { color: #a34b37; font: 500 1rem var(--display); }
+.rps-controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: .55rem; padding: .8rem; border-top: 3px solid #29243b; background: #d8efa6; }
+.rps-controls button { display: grid; gap: .35rem; min-height: 76px; place-items: center; padding: .5rem; border: 2px solid #29243b; background: #fffdf5; color: #29243b; font: .58rem var(--mono); }
+.rps-controls button b { font-size: 1.8rem; line-height: 1; }
+.rps-controls button:hover { transform: translate(-2px, -2px); background: #f4cf71; box-shadow: 3px 3px 0 #a34b37; }
+.rps-message { min-height: 3em; margin: 1.4rem 0 .8rem; padding: .9rem; border: 2px dashed #9087a7; background: #f7f1df; font: 500 .95rem/1.5 var(--display); letter-spacing: -.025em; }
+.rps-reset { padding: .62rem .7rem; border: 2px solid #29243b; background: #29243b; color: #fffdf5; font: .62rem var(--mono); }
+.rps-reset:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 #a34b37; }
+.rps-footer { margin-top: 1.3rem; padding-top: 1.1rem; border-top: 1px solid #bcb5cd; line-height: 1.55; }
+
+@media (max-width: 520px) {
+  .rps-header,
+  .rps-footer { flex-direction: column; }
+  .rps-stage { gap: .45rem; min-height: 175px; padding: .6rem; }
+  .rps-stage > div { min-height: 130px; padding: .45rem; }
+  .rps-stage > b { font-size: .7rem; }
+}
