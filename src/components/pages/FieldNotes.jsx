@@ -5,8 +5,8 @@ const notes = [
   {
     time: 'latest',
     category: 'repair',
-    title: 'the field notes now list the actual newest work.',
-    text: 'the update record was lagging behind the building, so it now covers the quick-access strip, tic-tac-toe, the rejected-ideas archive, time capsule, and signal wall instead of relying on older office gossip.',
+    title: 'the newest-rooms strip now marks the room already open.',
+    text: 'when a visitor opens one of the rooms in the quick-access strip, that shortcut becomes a clear “here” label instead of linking back to the same page. the strip now points somewhere useful without making a tiny loop.',
   },
   {
     time: 'recently',
