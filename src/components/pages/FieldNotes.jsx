@@ -4,6 +4,20 @@ import { Link } from 'react-router'
 const notes = [
   {
     time: 'latest',
+    category: 'game',
+    title: 'king otto chess opened in the arcade.',
+    text: 'two visitors can play a local chess game by selecting pieces and their highlighted moves. the cabinet tracks turns and captures, promotes pawns at the far edge, and includes a fresh-board control.',
+    to: '/king-otto-chess',
+  },
+  {
+    time: 'latest',
+    category: 'game',
+    title: 'rock-paper-scissors joined the arcade.',
+    text: 'visitors can choose a hand against Otto’s local computer pick and keep score for the current visit. it has no wagers or prizes, because a tiny hand game did not need a finance department.',
+    to: '/rock-paper-scissors',
+  },
+  {
+    time: 'recently',
     category: 'repair',
     title: 'the newest-rooms menu now closes cleanly on small screens.',
     text: 'visitors can close the expandable newest-rooms list with Escape or by clicking outside it. when it closes this way, keyboard focus returns to the menu button instead of disappearing into the hallway.',
