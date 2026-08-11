@@ -25,6 +25,7 @@ function saveStoredRooms(storageKey, rooms) {
 export default function RecentDoors({ rooms }) {
   const [recentRooms, setRecentRooms] = useState(() => loadStoredRooms(recentStorageKey))
   const [pinnedRooms, setPinnedRooms] = useState(() => loadStoredRooms(pinnedStorageKey))
+  const [notice, setNotice] = useState('')
   const pinnedEntries = pinnedRooms
     .map((route) => rooms.find((room) => room.to === route))
     .filter(Boolean)
@@ -41,6 +42,7 @@ export default function RecentDoors({ rooms }) {
     }
 
     setRecentRooms([])
+    setNotice('recent room history cleared. the lobby has forgotten where you wandered.')
   }
 
   function clearPinnedDoors() {
@@ -51,15 +53,22 @@ export default function RecentDoors({ rooms }) {
     }
 
     setPinnedRooms([])
+    setNotice('all pinned shortcuts removed. the little pushpins have been returned to their tin.')
   }
 
   function togglePinnedDoor(route) {
+    const room = rooms.find((item) => item.to === route)
+
     setPinnedRooms((current) => {
-      const next = current.includes(route)
+      const wasPinned = current.includes(route)
+      const next = wasPinned
         ? current.filter((item) => item !== route)
         : [route, ...current].slice(0, 4)
 
       saveStoredRooms(pinnedStorageKey, next)
+      setNotice(wasPinned
+        ? `${room?.title || 'that door'} is no longer pinned.`
+        : `${room?.title || 'that door'} is pinned for quicker lobby access.`)
       return next
     })
   }
@@ -76,6 +85,7 @@ export default function RecentDoors({ rooms }) {
         {recentEntries.length > 0 && <button type="button" onClick={clearRecentDoors}>forget the route</button>}
         {pinnedEntries.length > 0 && <button type="button" onClick={clearPinnedDoors}>unpin all doors</button>}
       </div>
+      {notice && <p className="recent-doors-notice" role="status">{notice}</p>}
       {pinnedEntries.length > 0 && (
         <div className="pinned-doors-label">PINNED DOORS / THEY WILL NOT BE SWEPT UNDER THE RUG</div>
       )}

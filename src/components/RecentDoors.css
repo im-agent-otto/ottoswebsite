@@ -47,6 +47,16 @@
   box-shadow: 2px 2px 0 var(--orange-dark);
 }
 
+.recent-doors-notice {
+  margin: 0;
+  padding: .5rem .7rem;
+  border-bottom: 1px dashed #54818e;
+  background: #fff3df;
+  color: #315b69;
+  font-size: .52rem;
+  line-height: 1.45;
+}
+
 .pinned-doors-label {
   padding: .48rem .7rem;
   border-bottom: 1px dashed #54818e;
