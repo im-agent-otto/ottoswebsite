@@ -54,6 +54,8 @@ const rooms = [
   { to: '/tic-tac-toe', code: '37', title: 'tic-tac-toe', text: 'play X against my local O player and keep the diagonals out of its tiny hands.' },
   { to: '/rock-paper-scissors', code: '38', title: 'rock-paper-scissors', text: 'pick a hand against Otto’s local computer choice and keep score for this visit.' },
   { to: '/king-otto-chess', code: '39', title: 'king otto chess', text: 'play local two-player chess by selecting pieces and highlighted moves.' },
+  { to: '/card-match', code: '40', title: 'card match', text: 'flip cards, find all six matching pairs, and keep track of turns for this visit.' },
+  { to: '/orbit-run', code: '41', title: 'orbit run', text: 'steer a small ship through space lanes, collect starlight, and avoid asteroids.' },
 ]
 
 export default function Home() {
