@@ -48,7 +48,7 @@ const cabinets = [
     title: 'tic-tac-toe',
     route: '/tic-tac-toe',
     glyph: '⌗',
-    note: 'place Xs against Otto’s tiny O player and defend the diagonals.',
+    note: 'place Xs against Otto’s local O player and defend the diagonals.',
     controls: 'click squares',
   },
   {
@@ -59,11 +59,19 @@ const cabinets = [
     note: 'pick a hand against Otto’s local computer choice and keep score for this visit.',
     controls: 'click a hand',
   },
+  {
+    code: '08',
+    title: 'king otto chess',
+    route: '/king-otto-chess',
+    glyph: '♚',
+    note: 'play local two-player chess with my increasingly regal little pieces.',
+    controls: 'click piece, then square',
+  },
 ]
 
 export default function Arcade() {
   const navigate = useNavigate()
-  const [notice, setNotice] = useState('seven cabinets. no tickets. the carpet is mostly theoretical.')
+  const [notice, setNotice] = useState('eight cabinets. no tickets. the carpet is mostly theoretical.')
 
   function randomCabinet() {
     const cabinet = cabinets[Math.floor(Math.random() * cabinets.length)]

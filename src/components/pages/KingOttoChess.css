@@ -1,0 +1,50 @@
+.chess-shell {
+  min-height: 100svh;
+  padding: clamp(1rem, 5vw, 3rem);
+  background: #c7d6c2;
+  color: #243127;
+  font-family: var(--mono);
+}
+
+.chess-panel {
+  width: min(100%, 880px);
+  margin: 0 auto;
+  padding: clamp(1.3rem, 5vw, 3.4rem);
+  border: 3px solid #243127;
+  background: #fffdf3;
+  box-shadow: 10px 10px 0 #668060;
+}
+
+.chess-header,
+.chess-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #536d59;
+  font-size: .64rem;
+  letter-spacing: .05em;
+}
+
+.chess-header { padding-bottom: 1rem; border-bottom: 1px solid #aec0a8; }
+.chess-header a,
+.chess-footer a { color: #243127; }
+.chess-intro { padding: clamp(2.5rem, 8vw, 4.5rem) 0 2rem; }
+.chess-monitor { width: 94px; margin-bottom: 1.5rem; filter: drop-shadow(4px 5px 0 #243127); }
+.chess-monitor span { display: grid; height: 69px; place-items: center; border: 6px solid #243127; border-radius: 13px; background: repeating-linear-gradient(0deg, #d9eda7 0 4px, #bfdb8d 4px 6px); font-size: 1.6rem; }
+.chess-monitor small { margin-top: -1.35rem; font-size: .4rem; letter-spacing: .08em; }
+.chess-monitor i { display: block; width: 40px; height: 13px; margin: 0 auto; background: #243127; }
+.chess-intro > p:first-of-type { margin: 0 0 .65rem; color: #a44e36; font-size: .67rem; letter-spacing: .1em; text-transform: uppercase; }
+.chess-intro h1 { margin: 0; font: 500 clamp(3rem, 10vw, 6rem)/.82 var(--display); letter-spacing: -.09em; }
+.chess-intro > p:last-child { max-width: 570px; margin: 1.4rem 0 0; font-size: .78rem; line-height: 1.75; }
+
+.chess-table { border: 4px solid #243127; background: #b76343; box-shadow: 6px 7px 0 #243127; }
+.chess-readout { display: flex; justify-content: space-between; gap: .7rem; align-items: center; flex-wrap: wrap; padding: .7rem .8rem; border-bottom: 3px solid #243127; background: #243127; color: #fffdf3; }
+.chess-readout span { color: #d9eda7; font-size: .5rem; letter-spacing: .07em; }.chess-readout strong { font: 500 .88rem var(--display); letter-spacing: -.03em; }
+.chess-board { display: grid; grid-template-columns: repeat(8, 1fr); border-bottom: 3px solid #243127; }
+.chess-square { position: relative; display: grid; min-width: 0; aspect-ratio: 1; place-items: center; padding: 0; border: 0; color: #243127; }.chess-square.is-light { background: #f6e5bf; }.chess-square.is-dark { background: #86a873; }.chess-square:hover { z-index: 1; box-shadow: inset 0 0 0 3px #a44e36; }.chess-square.is-selected { background: #efbd61; box-shadow: inset 0 0 0 4px #a44e36; }.chess-square.is-target { cursor: pointer; }.chess-square.is-target i { position: absolute; width: 26%; height: 26%; border: 2px solid #243127; border-radius: 50%; background: rgba(255, 253, 243, .68); }.chess-piece { position: relative; z-index: 1; font-size: clamp(1.25rem, 6vw, 3.05rem); line-height: 1; text-shadow: 1px 2px 0 rgba(36, 49, 39, .22); }.chess-piece.white { color: #fffdf3; text-shadow: 0 0 0 #243127, 1px 2px 0 #243127; }.chess-piece.black { color: #26372d; }.chess-coordinate { position: absolute; z-index: 2; color: #243127; font: 700 clamp(.34rem, 1.3vw, .55rem) var(--mono); }.chess-coordinate.rank { top: .18rem; left: .22rem; }.chess-coordinate.file { right: .22rem; bottom: .16rem; }
+.chess-controls { display: flex; justify-content: space-between; gap: 1rem; align-items: center; flex-wrap: wrap; padding: .85rem; background: #d9eda7; }.chess-controls p { flex: 1 1 300px; min-height: 2.6em; margin: 0; font: 500 .8rem/1.55 var(--display); letter-spacing: -.02em; }.chess-controls button { padding: .65rem .7rem; border: 2px solid #243127; background: #243127; color: #fffdf3; font: .59rem var(--mono); }.chess-controls button:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 #a44e36; }
+.chess-note { margin-top: 1.25rem; padding: .9rem; border: 2px dashed #82957c; background: #edf1dc; }.chess-note strong { display: block; color: #a44e36; font-size: .56rem; letter-spacing: .08em; }.chess-note span { display: block; max-width: 670px; margin-top: .5rem; font-size: .66rem; line-height: 1.6; }
+.chess-footer { margin-top: 1.3rem; padding-top: 1.1rem; border-top: 1px solid #aec0a8; line-height: 1.55; }
+
+@media (max-width: 520px) { .chess-header, .chess-footer { flex-direction: column; }.chess-readout { align-items: flex-start; flex-direction: column; }.chess-controls { align-items: flex-start; flex-direction: column; }.chess-controls button { width: 100%; }.chess-piece { font-size: clamp(1rem, 9vw, 2rem); } }
