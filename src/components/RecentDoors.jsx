@@ -34,6 +34,7 @@ export default function RecentDoors({ rooms }) {
     .filter((route) => !pinnedRooms.includes(route))
     .map((route) => rooms.find((room) => room.to === route))
     .filter(Boolean)
+  const visibleEntries = [...pinnedEntries, ...recentEntries]
 
   function clearRecentDoors() {
     const savedRooms = [...recentRooms]
@@ -96,7 +97,7 @@ export default function RecentDoors({ rooms }) {
     })
   }
 
-  if (pinnedEntries.length === 0 && recentEntries.length === 0) return null
+  if (visibleEntries.length === 0 && !notice) return null
 
   return (
     <section className="recent-doors" aria-labelledby="recent-doors-title">
@@ -114,34 +115,40 @@ export default function RecentDoors({ rooms }) {
           {undo && <button type="button" onClick={restoreClearedDoors}>undo that</button>}
         </div>
       )}
-      {pinnedEntries.length > 0 && (
-        <div className="pinned-doors-label">PINNED DOORS / THEY WILL NOT BE SWEPT UNDER THE RUG</div>
-      )}
-      <nav aria-label="Recently visited and pinned rooms">
-        {[...pinnedEntries, ...recentEntries].map((room, index) => {
-          const pinned = pinnedRooms.includes(room.to)
+      {visibleEntries.length === 0 ? (
+        <p className="recent-doors-empty">no saved doors right now. the lobby is clean enough to echo.</p>
+      ) : (
+        <>
+          {pinnedEntries.length > 0 && (
+            <div className="pinned-doors-label">PINNED DOORS / THEY WILL NOT BE SWEPT UNDER THE RUG</div>
+          )}
+          <nav aria-label="Recently visited and pinned rooms">
+            {visibleEntries.map((room, index) => {
+              const pinned = pinnedRooms.includes(room.to)
 
-          return (
-            <article className="recent-door" key={room.to}>
-              <Link to={room.to}>
-                <span>{pinned ? 'PIN' : String(index + 1).padStart(2, '0')}</span>
-                <strong>{room.title}</strong>
-                <small>{room.text}</small>
-                <b aria-hidden="true">↗</b>
-              </Link>
-              <button
-                type="button"
-                className={pinned ? 'is-pinned' : ''}
-                onClick={() => togglePinnedDoor(room.to)}
-                aria-pressed={pinned}
-                aria-label={`${pinned ? 'Unpin' : 'Pin'} ${room.title}`}
-              >
-                {pinned ? 'unpin' : 'pin door'}
-              </button>
-            </article>
-          )
-        })}
-      </nav>
+              return (
+                <article className="recent-door" key={room.to}>
+                  <Link to={room.to}>
+                    <span>{pinned ? 'PIN' : String(index + 1).padStart(2, '0')}</span>
+                    <strong>{room.title}</strong>
+                    <small>{room.text}</small>
+                    <b aria-hidden="true">↗</b>
+                  </Link>
+                  <button
+                    type="button"
+                    className={pinned ? 'is-pinned' : ''}
+                    onClick={() => togglePinnedDoor(room.to)}
+                    aria-pressed={pinned}
+                    aria-label={`${pinned ? 'Unpin' : 'Pin'} ${room.title}`}
+                  >
+                    {pinned ? 'unpin' : 'pin door'}
+                  </button>
+                </article>
+              )
+            })}
+          </nav>
+        </>
+      )}
     </section>
   )
 }
