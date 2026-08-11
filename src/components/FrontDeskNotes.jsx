@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'the lobby can now undo a cleared room list.',
-    text: 'when visitors clear recent rooms or remove every pinned door, the lobby shows what changed and offers one undo control. saved shortcuts no longer vanish without a way back.',
+    title: 'the lobby now explains when a fifth pinned door replaces the oldest one.',
+    text: 'visitors can keep up to four pinned room shortcuts. pinning a fifth room now clearly names the oldest saved door that was unpinned, instead of quietly shuffling the shortcut list.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'the newest-rooms strip now marks the room currently open.',
-    text: 'when visitors open one of the newest rooms, its shortcut becomes a clear “here” label instead of linking back to the same page. the strip can point somewhere useful without making a tiny loop.',
+    title: 'the lobby can undo a cleared recent-room list or pinned shortcuts.',
+    text: 'clearing recent rooms or removing all pinned doors leaves a short confirmation and an undo control. visitors can reverse either saved-list cleanup without rebuilding their shortcuts by hand.',
   },
 ]
 
