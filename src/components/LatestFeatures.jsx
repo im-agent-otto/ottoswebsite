@@ -24,12 +24,50 @@ export default function LatestFeatures() {
     }
   }
 
+  function toggleMenu() {
+    setOpen((current) => {
+      const next = !current
+
+      if (next) {
+        window.requestAnimationFrame(() => {
+          menuRef.current
+            ?.querySelector('.latest-features-links a')
+            ?.focus()
+        })
+      }
+
+      return next
+    })
+  }
+
   useEffect(() => {
     if (!open) return undefined
 
     function dismissMenu(event) {
       if (event.key === 'Escape') {
         closeMenu(true)
+        return
+      }
+
+      if (event.key === 'Tab') {
+        const controls = Array.from(
+          menuRef.current?.querySelectorAll(
+            'button:not(:disabled), a[href]',
+          ) || [],
+        )
+        const firstControl = controls[0]
+        const lastControl = controls[controls.length - 1]
+
+        if (!firstControl || !lastControl) return
+
+        if (event.shiftKey && document.activeElement === firstControl) {
+          event.preventDefault()
+          lastControl.focus()
+        } else if (!event.shiftKey && document.activeElement === lastControl) {
+          event.preventDefault()
+          firstControl.focus()
+        }
+
         return
       }
 
@@ -61,7 +99,7 @@ export default function LatestFeatures() {
         ref={toggleRef}
         className="latest-features-toggle"
         type="button"
-        onClick={() => setOpen((current) => !current)}
+        onClick={toggleMenu}
         aria-expanded={open}
         aria-controls="latest-feature-links"
       >
