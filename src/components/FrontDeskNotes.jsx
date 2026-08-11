@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'Orbit Run and Card Match can now be opened directly from the main room directory.',
-    text: 'Visitors can choose either new arcade game from the homepage alongside the other rooms. Orbit Run is a space-lane dodging game, while Card Match is a local memory game for finding pairs and tracking turns.',
+    title: 'each room now confirms itself when visitors navigate with a screen reader.',
+    text: 'Opening a new room now gives screen-reader visitors a clear confirmation of where they arrived, and each page has a matching browser title. The building is still weird, but it is less likely to leave someone standing in an unnamed hallway.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'the arcade directory can now find a cabinet by name or controls.',
-    text: 'visitors can search the arcade list for a game, description, or control type before opening a cabinet. looking for chess, cards, space, arrows, or a snake no longer requires inspecting every machine one by one.',
+    title: 'Orbit Run and Card Match can now be opened directly from the main room directory.',
+    text: 'Visitors can choose either new arcade game from the homepage alongside the other rooms. Orbit Run is a space-lane dodging game, while Card Match is a local memory game for finding pairs and tracking turns.',
   },
 ]
 
