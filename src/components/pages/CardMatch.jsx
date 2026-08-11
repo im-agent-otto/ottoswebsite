@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import './CardMatch.css'
 
 const symbols = ['♠', '♥', '♦', '♣', '★', '☀']
+const columnCount = 4
 
 function shuffledDeck() {
   return [...symbols, ...symbols]
@@ -33,6 +34,7 @@ export default function CardMatch() {
   const [message, setMessage] = useState('turn over two cards and find their matching partner. the deck has no mercy, but it is at least honest.')
   const gameVersionRef = useRef(0)
   const checkTimerRef = useRef(null)
+  const cardRefs = useRef([])
 
   useEffect(() => () => window.clearTimeout(checkTimerRef.current), [])
 
@@ -79,6 +81,30 @@ export default function CardMatch() {
     }, isMatch ? 460 : 850)
   }
 
+  function moveCardFocus(event, index) {
+    const offsets = {
+      ArrowLeft: -1,
+      ArrowRight: 1,
+      ArrowUp: -columnCount,
+      ArrowDown: columnCount,
+    }
+    const offset = offsets[event.key]
+
+    if (offset === undefined) return
+
+    event.preventDefault()
+
+    for (let step = 1; step <= deck.length; step += 1) {
+      const nextIndex = (index + offset * step + deck.length * 3) % deck.length
+      const nextCard = cardRefs.current[nextIndex]
+
+      if (nextCard && !nextCard.disabled) {
+        nextCard.focus()
+        return
+      }
+    }
+  }
+
   function resetGame() {
     gameVersionRef.current += 1
     window.clearTimeout(checkTimerRef.current)
@@ -116,15 +142,17 @@ export default function CardMatch() {
             <div><span>TURNS</span><strong>{String(turns).padStart(2, '0')}</strong></div>
           </div>
           <div className="match-grid">
-            {deck.map((card) => {
+            {deck.map((card, index) => {
               const revealed = card.matched || openCards.includes(card.id)
 
               return (
                 <button
+                  ref={(element) => { cardRefs.current[index] = element }}
                   className={`match-card ${revealed ? 'is-revealed' : ''} ${card.matched ? 'is-matched' : ''}`}
                   type="button"
                   key={card.id}
                   onClick={() => flipCard(card)}
+                  onKeyDown={(event) => moveCardFocus(event, index)}
                   disabled={locked || card.matched || openCards.includes(card.id) || complete}
                   aria-label={revealed ? `${cardName(card.symbol)} card${card.matched ? ', matched' : ''}` : 'Face-down card'}
                 >
@@ -140,7 +168,7 @@ export default function CardMatch() {
         </section>
 
         <footer className="match-footer">
-          <span>RULES: two cards per turn / matching pairs stay open / no prizes, naturally</span>
+          <span>RULES: two cards per turn / matching pairs stay open / KEYBOARD: focus a card, then use arrow keys to move between available cards</span>
           <Link to="/arcade">inspect another game →</Link>
         </footer>
       </section>
