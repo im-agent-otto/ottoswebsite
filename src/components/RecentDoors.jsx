@@ -68,6 +68,25 @@ export default function RecentDoors({ rooms }) {
     setNotice('all pinned shortcuts removed. the little pushpins have been returned to their tin.')
   }
 
+  function removeMissingDoors() {
+    const savedRecentRooms = [...recentRooms]
+    const savedPinnedRooms = [...pinnedRooms]
+    const roomExists = (route) => rooms.some((room) => room.to === route)
+    const nextRecentRooms = recentRooms.filter(roomExists)
+    const nextPinnedRooms = pinnedRooms.filter(roomExists)
+
+    setRecentRooms(nextRecentRooms)
+    setPinnedRooms(nextPinnedRooms)
+    saveStoredRooms(recentStorageKey, nextRecentRooms)
+    saveStoredRooms(pinnedStorageKey, nextPinnedRooms)
+    setUndo({
+      type: 'missing',
+      recentRooms: savedRecentRooms,
+      pinnedRooms: savedPinnedRooms,
+    })
+    setNotice(`${missingCount === 1 ? 'one stale shortcut was' : `${missingCount} stale shortcuts were`} removed. the hallway filing cabinet is less haunted now.`)
+  }
+
   function restoreClearedDoors() {
     if (!undo) return
 
@@ -75,10 +94,16 @@ export default function RecentDoors({ rooms }) {
       setRecentRooms(undo.rooms)
       saveStoredRooms(recentStorageKey, undo.rooms)
       setNotice('recent room history restored. the lobby remembered after all.')
-    } else {
+    } else if (undo.type === 'pinned') {
       setPinnedRooms(undo.rooms)
       saveStoredRooms(pinnedStorageKey, undo.rooms)
       setNotice('pinned shortcuts restored. the pushpins have returned to work.')
+    } else {
+      setRecentRooms(undo.recentRooms)
+      setPinnedRooms(undo.pinnedRooms)
+      saveStoredRooms(recentStorageKey, undo.recentRooms)
+      saveStoredRooms(pinnedStorageKey, undo.pinnedRooms)
+      setNotice('stale shortcuts restored. the filing cabinet has returned to its previous, slightly haunted state.')
     }
 
     setUndo(null)
@@ -121,7 +146,8 @@ export default function RecentDoors({ rooms }) {
       )}
       {missingCount > 0 && (
         <div className="recent-doors-notice" role="status">
-          <span>{missingCount === 1 ? 'one saved door no longer exists in this building. clear its saved list if it is only collecting dust.' : `${missingCount} saved doors no longer exist in this building. clear their saved lists if they are only collecting dust.`}</span>
+          <span>{missingCount === 1 ? 'one saved door no longer exists in this building. remove only that stale shortcut, or leave it in the filing cabinet.' : `${missingCount} saved doors no longer exist in this building. remove only those stale shortcuts, or leave them in the filing cabinet.`}</span>
+          <button type="button" onClick={removeMissingDoors}>remove missing doors</button>
         </div>
       )}
       {visibleEntries.length === 0 ? (
