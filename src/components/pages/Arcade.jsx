@@ -73,7 +73,7 @@ const cabinets = [
     route: '/card-match',
     glyph: '✦',
     note: 'flip two cards at a time, find every matching pair, and count your turns.',
-    controls: 'click cards / arrow keys',
+    controls: 'click cards / arrow keys / Escape restarts',
   },
   {
     code: '10',
