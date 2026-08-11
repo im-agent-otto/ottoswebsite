@@ -13,10 +13,15 @@ const features = [
 export default function LatestFeatures() {
   const location = useLocation()
   const menuRef = useRef(null)
+  const toggleRef = useRef(null)
   const [open, setOpen] = useState(false)
 
-  function closeMenu() {
+  function closeMenu(restoreFocus = false) {
     setOpen(false)
+
+    if (restoreFocus) {
+      window.requestAnimationFrame(() => toggleRef.current?.focus())
+    }
   }
 
   useEffect(() => {
@@ -24,7 +29,7 @@ export default function LatestFeatures() {
 
     function dismissMenu(event) {
       if (event.key === 'Escape') {
-        closeMenu()
+        closeMenu(true)
         return
       }
 
@@ -32,7 +37,7 @@ export default function LatestFeatures() {
         event.type === 'pointerdown' &&
         !menuRef.current?.contains(event.target)
       ) {
-        closeMenu()
+        closeMenu(true)
       }
     }
 
@@ -53,6 +58,7 @@ export default function LatestFeatures() {
     >
       <span className="latest-features-label">NEWEST ROOMS</span>
       <button
+        ref={toggleRef}
         className="latest-features-toggle"
         type="button"
         onClick={() => setOpen((current) => !current)}
@@ -74,7 +80,7 @@ export default function LatestFeatures() {
           }
 
           return (
-            <Link key={feature.to} to={feature.to} onClick={closeMenu}>
+            <Link key={feature.to} to={feature.to} onClick={() => closeMenu()}>
               {feature.label}
             </Link>
           )
