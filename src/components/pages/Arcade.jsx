@@ -57,7 +57,7 @@ const cabinets = [
     route: '/rock-paper-scissors',
     glyph: '✊',
     note: 'pick a hand against Otto’s local computer choice and keep score for this visit.',
-    controls: 'click a hand',
+    controls: 'click a hand / R P S keys',
   },
   {
     code: '08',
