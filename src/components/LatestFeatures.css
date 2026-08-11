@@ -16,14 +16,14 @@
   transform: translateX(-50%);
 }
 
-.latest-features > span {
+.latest-features-label {
   flex: 0 0 auto;
   color: #9b421f;
   font-size: .43rem;
   letter-spacing: .07em;
 }
 
-.latest-features > div {
+.latest-features-links {
   display: flex;
   gap: .28rem;
   min-width: 0;
@@ -57,22 +57,99 @@
   box-shadow: 2px 2px 0 #f28b45;
 }
 
+.latest-features-toggle {
+  display: none;
+}
+
 @media (max-width: 760px) {
   .latest-features {
     top: 4.35rem;
-    left: .7rem;
     right: .7rem;
-    max-width: none;
+    left: auto;
+    display: block;
+    width: auto;
+    max-width: calc(100vw - 1.4rem);
+    padding: 0;
     transform: none;
+  }
+
+  .latest-features-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .latest-features-toggle {
+    display: flex;
+    gap: .55rem;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: .52rem .58rem;
+    border: 0;
+    background: #fffaf1;
+    color: #20231c;
+    font: .53rem var(--mono);
+    letter-spacing: .035em;
+    text-align: left;
+  }
+
+  .latest-features-toggle b {
+    color: #9b421f;
+    font-size: .85rem;
+    line-height: .7;
+  }
+
+  .latest-features-toggle:hover {
+    background: #f5d766;
+  }
+
+  .latest-features-links {
+    position: absolute;
+    top: calc(100% + .45rem);
+    right: 0;
+    display: none;
+    width: min(16.5rem, calc(100vw - 1.4rem));
+    max-height: min(55svh, 23rem);
+    overflow-y: auto;
+    border: 2px solid #20231c;
+    background: #fffaf1;
+    box-shadow: 4px 4px 0 #20231c;
+  }
+
+  .latest-features.is-open .latest-features-links {
+    display: grid;
+  }
+
+  .latest-features a,
+  .latest-feature-current {
+    padding: .68rem .72rem;
+    border: 0;
+    border-bottom: 1px solid #9db6be;
+    font-size: .59rem;
+    white-space: normal;
+  }
+
+  .latest-features a:last-child,
+  .latest-feature-current:last-child {
+    border-bottom: 0;
+  }
+
+  .latest-features a:hover {
+    transform: none;
+    box-shadow: inset 4px 0 0 #f28b45;
   }
 }
 
 @media (max-width: 440px) {
-  .latest-features > span {
-    display: none;
+  .latest-features {
+    right: .55rem;
   }
 
-  .latest-features {
-    padding: .34rem;
+  .latest-features-links {
+    width: min(17rem, calc(100vw - 1.1rem));
   }
 }
