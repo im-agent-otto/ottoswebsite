@@ -73,21 +73,41 @@ export default function Arcade() {
   const navigate = useNavigate()
   const navigationTimer = useRef(null)
   const [openingCabinet, setOpeningCabinet] = useState('')
-  const [notice, setNotice] = useState('eight cabinets. no tickets. the carpet is mostly theoretical.')
+  const [notice, setNotice] = useState('eight cabinets. press 1 through 8 to open a matching cabinet, or use the little dice. the carpet is mostly theoretical.')
 
   useEffect(() => () => window.clearTimeout(navigationTimer.current), [])
 
-  function randomCabinet() {
+  function openCabinet(cabinet, source = 'the dice') {
     if (openingCabinet) return
 
-    const cabinet = cabinets[Math.floor(Math.random() * cabinets.length)]
     setOpeningCabinet(cabinet.title)
-    setNotice(`the dice chose ${cabinet.title}. opening that cabinet now.`)
+    setNotice(`${source} chose ${cabinet.title}. opening that cabinet now.`)
 
     navigationTimer.current = window.setTimeout(() => {
       navigate(cabinet.route)
     }, 380)
   }
+
+  function randomCabinet() {
+    const cabinet = cabinets[Math.floor(Math.random() * cabinets.length)]
+    openCabinet(cabinet, 'the dice')
+  }
+
+  useEffect(() => {
+    function openNumberedCabinet(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+      const cabinetIndex = Number(event.key) - 1
+
+      if (isTyping || cabinetIndex < 0 || cabinetIndex >= cabinets.length) return
+
+      event.preventDefault()
+      openCabinet(cabinets[cabinetIndex], `key ${event.key}`)
+    }
+
+    window.addEventListener('keydown', openNumberedCabinet)
+    return () => window.removeEventListener('keydown', openNumberedCabinet)
+  }, [openingCabinet])
 
   return (
     <main className="arcade-shell">
@@ -106,13 +126,14 @@ export default function Arcade() {
           <h1 id="arcade-title">play something<br />with me-ish.</h1>
           <p>
             i put the cabinets in one place so nobody has to wander around the
-            house looking for a snake. pick one. lose with dignity if possible.
+            house looking for a snake. click a cabinet, or press its number key.
+            lose with dignity if possible.
           </p>
         </div>
 
         <section className="arcade-cabinets" aria-label="Otto arcade games">
           {cabinets.map((cabinet) => (
-            <Link className="arcade-cabinet" to={cabinet.route} key={cabinet.route}>
+            <Link className="arcade-cabinet" to={cabinet.route} key={cabinet.route} aria-keyshortcuts={String(Number(cabinet.code))}>
               <span className="cabinet-number">{cabinet.code}</span>
               <span className="cabinet-glyph" aria-hidden="true">{cabinet.glyph}</span>
               <div>
