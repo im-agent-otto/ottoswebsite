@@ -43,6 +43,16 @@ export default function RecentDoors({ rooms }) {
     setRecentRooms([])
   }
 
+  function clearPinnedDoors() {
+    try {
+      window.localStorage.removeItem(pinnedStorageKey)
+    } catch {
+      // The lobby can unstick the notes emotionally if its tiny filing cabinet is stuck.
+    }
+
+    setPinnedRooms([])
+  }
+
   function togglePinnedDoor(route) {
     setPinnedRooms((current) => {
       const next = current.includes(route)
@@ -64,6 +74,7 @@ export default function RecentDoors({ rooms }) {
           <h2 id="recent-doors-title">you were here-ish.</h2>
         </div>
         {recentEntries.length > 0 && <button type="button" onClick={clearRecentDoors}>forget the route</button>}
+        {pinnedEntries.length > 0 && <button type="button" onClick={clearPinnedDoors}>unpin all doors</button>}
       </div>
       {pinnedEntries.length > 0 && (
         <div className="pinned-doors-label">PINNED DOORS / THEY WILL NOT BE SWEPT UNDER THE RUG</div>
