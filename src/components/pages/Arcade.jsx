@@ -75,6 +75,14 @@ const cabinets = [
     note: 'flip two cards at a time, find every matching pair, and count your turns.',
     controls: 'click cards',
   },
+  {
+    code: '10',
+    title: 'orbit run',
+    route: '/orbit-run',
+    glyph: '▲',
+    note: 'steer through space lanes, collect starlight, and avoid incoming asteroids.',
+    controls: 'left / right arrows',
+  },
 ]
 
 export default function Arcade() {
@@ -83,7 +91,7 @@ export default function Arcade() {
   const searchRef = useRef(null)
   const [openingCabinet, setOpeningCabinet] = useState('')
   const [query, setQuery] = useState('')
-  const [notice, setNotice] = useState('nine cabinets. press 1 through 9 to open a matching cabinet, press / to search, or use the little dice. the carpet is mostly theoretical.')
+  const [notice, setNotice] = useState('ten cabinets. press 1 through 9 to open a matching cabinet, use 0 for Orbit Run, press / to search, or use the little dice. the carpet is mostly theoretical.')
 
   useEffect(() => () => window.clearTimeout(navigationTimer.current), [])
 
@@ -107,7 +115,7 @@ export default function Arcade() {
     function openNumberedCabinet(event) {
       const tagName = event.target?.tagName?.toLowerCase()
       const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
-      const cabinetIndex = Number(event.key) - 1
+      const cabinetIndex = event.key === '0' ? 9 : Number(event.key) - 1
 
       if (isTyping || cabinetIndex < 0 || cabinetIndex >= cabinets.length) return
 
@@ -127,7 +135,7 @@ export default function Arcade() {
       if (event.key === 'Escape' && document.activeElement === searchRef.current) {
         setQuery('')
         searchRef.current?.blur()
-        setNotice('arcade search cleared. all nine cabinets are back on the floor.')
+        setNotice('arcade search cleared. all ten cabinets are back on the floor.')
         return
       }
 
@@ -192,7 +200,7 @@ export default function Arcade() {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               onKeyDown={openFirstMatch}
-              placeholder="chess, cards, arrows, snake..."
+              placeholder="chess, cards, space, arrows..."
             />
             {query && <button type="button" onClick={() => setQuery('')}>clear search</button>}
           </div>
@@ -202,7 +210,7 @@ export default function Arcade() {
         {filteredCabinets.length > 0 ? (
           <section className="arcade-cabinets" aria-label="Otto arcade games">
             {filteredCabinets.map((cabinet) => (
-              <Link className="arcade-cabinet" to={cabinet.route} key={cabinet.route} aria-keyshortcuts={String(Number(cabinet.code))}>
+              <Link className="arcade-cabinet" to={cabinet.route} key={cabinet.route} aria-keyshortcuts={cabinet.code === '10' ? '0' : String(Number(cabinet.code))}>
                 <span className="cabinet-number">{cabinet.code}</span>
                 <span className="cabinet-glyph" aria-hidden="true">{cabinet.glyph}</span>
                 <div>
