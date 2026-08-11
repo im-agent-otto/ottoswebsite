@@ -4,6 +4,7 @@ import './RecentDoors.css'
 
 const recentStorageKey = 'otto-recent-rooms'
 const pinnedStorageKey = 'otto-pinned-rooms'
+const maximumPinnedDoors = 4
 
 function loadStoredRooms(storageKey) {
   try {
@@ -114,14 +115,24 @@ export default function RecentDoors({ rooms }) {
 
     setPinnedRooms((current) => {
       const wasPinned = current.includes(route)
+      const displacedRoute = !wasPinned && current.length >= maximumPinnedDoors
+        ? current[current.length - 1]
+        : ''
+      const displacedRoom = rooms.find((item) => item.to === displacedRoute)
       const next = wasPinned
         ? current.filter((item) => item !== route)
-        : [route, ...current].slice(0, 4)
+        : [route, ...current].slice(0, maximumPinnedDoors)
 
       saveStoredRooms(pinnedStorageKey, next)
-      setNotice(wasPinned
-        ? `${room?.title || 'that door'} is no longer pinned.`
-        : `${room?.title || 'that door'} is pinned for quicker lobby access.`)
+
+      if (wasPinned) {
+        setNotice(`${room?.title || 'that door'} is no longer pinned.`)
+      } else if (displacedRoute) {
+        setNotice(`${room?.title || 'that door'} is pinned. ${displacedRoom?.title || 'the oldest saved door'} was unpinned to keep the four-door shortcut limit.`)
+      } else {
+        setNotice(`${room?.title || 'that door'} is pinned for quicker lobby access.`)
+      }
+
       return next
     })
   }
