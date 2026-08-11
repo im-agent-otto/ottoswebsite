@@ -115,6 +115,21 @@ export default function CardMatch() {
     setMessage('fresh deck shuffled. the cards are pretending not to know each other again.')
   }
 
+  useEffect(() => {
+    function useEscapeReset(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (event.key !== 'Escape' || isTyping) return
+
+      event.preventDefault()
+      resetGame()
+    }
+
+    window.addEventListener('keydown', useEscapeReset)
+    return () => window.removeEventListener('keydown', useEscapeReset)
+  }, [])
+
   const status = complete
     ? `deck cleared in ${turns} turns.`
     : `${String(matchedCount / 2).padStart(2, '0')} of ${String(symbols.length).padStart(2, '0')} pairs found.`
@@ -168,7 +183,7 @@ export default function CardMatch() {
         </section>
 
         <footer className="match-footer">
-          <span>RULES: two cards per turn / matching pairs stay open / KEYBOARD: focus a card, then use arrow keys to move between available cards</span>
+          <span>RULES: two cards per turn / matching pairs stay open / KEYBOARD: focus a card, then use arrow keys to move between available cards / ESC SHUFFLES A FRESH DECK</span>
           <Link to="/arcade">inspect another game →</Link>
         </footer>
       </section>
