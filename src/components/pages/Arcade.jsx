@@ -72,9 +72,10 @@ const cabinets = [
 export default function Arcade() {
   const navigate = useNavigate()
   const navigationTimer = useRef(null)
+  const searchRef = useRef(null)
   const [openingCabinet, setOpeningCabinet] = useState('')
   const [query, setQuery] = useState('')
-  const [notice, setNotice] = useState('eight cabinets. press 1 through 8 to open a matching cabinet, or use the little dice. the carpet is mostly theoretical.')
+  const [notice, setNotice] = useState('eight cabinets. press 1 through 8 to open a matching cabinet, press / to search, or use the little dice. the carpet is mostly theoretical.')
 
   useEffect(() => () => window.clearTimeout(navigationTimer.current), [])
 
@@ -110,6 +111,29 @@ export default function Arcade() {
     return () => window.removeEventListener('keydown', openNumberedCabinet)
   }, [openingCabinet])
 
+  useEffect(() => {
+    function focusFinder(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (event.key === 'Escape' && document.activeElement === searchRef.current) {
+        setQuery('')
+        searchRef.current?.blur()
+        setNotice('arcade search cleared. all eight cabinets are back on the floor.')
+        return
+      }
+
+      if (event.key !== '/' || event.metaKey || event.ctrlKey || event.altKey || isTyping) return
+
+      event.preventDefault()
+      searchRef.current?.focus()
+      setNotice('arcade search focused. type a cabinet name, description, or control.')
+    }
+
+    window.addEventListener('keydown', focusFinder)
+    return () => window.removeEventListener('keydown', focusFinder)
+  }, [])
+
   const filteredCabinets = cabinets.filter((cabinet) => {
     const searchable = `${cabinet.code} ${cabinet.title} ${cabinet.note} ${cabinet.controls}`.toLowerCase()
     return searchable.includes(query.trim().toLowerCase())
@@ -138,10 +162,11 @@ export default function Arcade() {
         </div>
 
         <div className="arcade-finder">
-          <label htmlFor="arcade-game-finder">FIND A CABINET</label>
+          <label htmlFor="arcade-game-finder">FIND A CABINET / “/” TO FOCUS / ESC TO CLEAR</label>
           <div>
             <input
               id="arcade-game-finder"
+              ref={searchRef}
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
