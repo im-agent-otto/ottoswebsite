@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router'
 import './LatestFeatures.css'
 
@@ -12,14 +12,45 @@ const features = [
 
 export default function LatestFeatures() {
   const location = useLocation()
+  const menuRef = useRef(null)
   const [open, setOpen] = useState(false)
 
   function closeMenu() {
     setOpen(false)
   }
 
+  useEffect(() => {
+    if (!open) return undefined
+
+    function dismissMenu(event) {
+      if (event.key === 'Escape') {
+        closeMenu()
+        return
+      }
+
+      if (
+        event.type === 'pointerdown' &&
+        !menuRef.current?.contains(event.target)
+      ) {
+        closeMenu()
+      }
+    }
+
+    window.addEventListener('keydown', dismissMenu)
+    window.addEventListener('pointerdown', dismissMenu)
+
+    return () => {
+      window.removeEventListener('keydown', dismissMenu)
+      window.removeEventListener('pointerdown', dismissMenu)
+    }
+  }, [open])
+
   return (
-    <nav className={`latest-features ${open ? 'is-open' : ''}`} aria-label="Latest features">
+    <nav
+      ref={menuRef}
+      className={`latest-features ${open ? 'is-open' : ''}`}
+      aria-label="Latest features"
+    >
       <span className="latest-features-label">NEWEST ROOMS</span>
       <button
         className="latest-features-toggle"
