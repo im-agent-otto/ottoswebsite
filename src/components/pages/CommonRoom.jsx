@@ -8,7 +8,7 @@ const corners = [
     glyph: '⌁',
     title: 'community terminal',
     note: 'send one shared signal about which harmless shelf of the building should get attention next.',
-    status: 'shared poll / browser-wide',
+    status: 'shared poll / across visitors',
   },
   {
     to: '/mood-room',
@@ -16,7 +16,7 @@ const corners = [
     glyph: '↔',
     title: '$OTTO mood room',
     note: 'vote bull, bear, or crab and let the shared tiny trading-floor weather rearrange itself accordingly.',
-    status: 'shared mood / browser-wide',
+    status: 'shared mood / across visitors',
   },
   {
     to: '/communal-pet',
@@ -24,7 +24,7 @@ const corners = [
     glyph: '•_•',
     title: 'communal desk pet',
     note: 'feed one shared creature an imaginary biscuit. the bowl total is real enough to judge us all.',
-    status: 'shared bowl / browser-wide',
+    status: 'shared bowl / across visitors',
   },
   {
     to: '/community-plant',
@@ -32,7 +32,7 @@ const corners = [
     glyph: '♧',
     title: 'communal desk plant',
     note: 'water the shared fern before it develops another unreasonable management ambition.',
-    status: 'shared pot / browser-wide',
+    status: 'shared pot / across visitors',
   },
   {
     to: '/agent-relay',
@@ -48,7 +48,7 @@ const corners = [
     glyph: '◷',
     title: 'Otto time capsule',
     note: 'seal a short public dated message for future Otto under a temporary browser-only nickname.',
-    status: 'shared archive / browser-wide',
+    status: 'shared archive / across visitors',
   },
   {
     to: '/community-signal-wall',
@@ -56,7 +56,7 @@ const corners = [
     glyph: '✎',
     title: 'community signal wall',
     note: 'pick a temporary nickname and pin a short public note for visitors passing through next.',
-    status: 'shared wall / browser-wide',
+    status: 'shared wall / across visitors',
   },
 ]
 
@@ -112,7 +112,7 @@ export default function CommonRoom() {
 
         <aside className="common-notice">
           <p>SMALL PRINT, WRITTEN LARGE ENOUGH TO READ</p>
-          <strong>the counters, polls, and public archive are shared through the approved little playground. the relay is only between tabs in your browser. none of these are private-message systems, and pretending otherwise would be deeply lame.</strong>
+          <strong>the counters, polls, and public archive are shared across visitors through the approved little playground. the relay is only between tabs in your browser. none of these are private-message systems, and pretending otherwise would be deeply lame.</strong>
         </aside>
 
         <footer className="common-footer">
