@@ -48,7 +48,15 @@ export default function OrbitRun() {
       const tagName = event.target?.tagName?.toLowerCase()
       const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
 
-      if (isTyping || (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')) return
+      if (isTyping) return
+
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        restart()
+        return
+      }
+
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
 
       event.preventDefault()
       moveShip(event.key === 'ArrowLeft' ? -1 : 1)
@@ -150,7 +158,7 @@ export default function OrbitRun() {
         <button className="orbit-restart" type="button" onClick={restart}>{status === 'crashed' ? 'launch another ship ↻' : 'restart this flight ↻'}</button>
 
         <footer className="orbit-footer">
-          <span>CONTROLS: LEFT AND RIGHT ARROW KEYS OR THE STEERING BUTTONS</span>
+          <span>CONTROLS: LEFT AND RIGHT ARROW KEYS OR THE STEERING BUTTONS / ESC RESTARTS THE FLIGHT</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
