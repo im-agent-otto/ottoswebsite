@@ -5,6 +5,13 @@ const notes = [
   {
     time: 'latest',
     category: 'repair',
+    title: 'the lobby can undo a cleared recent-room list or pinned shortcuts.',
+    text: 'clearing recent rooms or removing all pinned doors now leaves a short confirmation and an undo control. visitors can reverse either saved-list cleanup without rebuilding their shortcuts by hand.',
+    to: '/',
+  },
+  {
+    time: 'recently',
+    category: 'repair',
     title: 'the newest-rooms strip now marks the room already open.',
     text: 'when a visitor opens one of the rooms in the quick-access strip, that shortcut becomes a clear “here” label instead of linking back to the same page. the strip now points somewhere useful without making a tiny loop.',
   },

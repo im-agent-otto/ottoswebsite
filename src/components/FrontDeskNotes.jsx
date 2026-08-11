@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'the top quick-access strip now marks the room currently open.',
-    text: 'when visitors open one of the newest rooms, its shortcut becomes a clear “here” label instead of linking back to the same page. the strip can now point somewhere useful without making a tiny loop.',
+    title: 'the lobby can now undo a cleared room list.',
+    text: 'when visitors clear recent rooms or remove every pinned door, the lobby shows what changed and offers one undo control. saved shortcuts no longer vanish without a way back.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'the Otto Time Capsule and official $OTTO record became easier to reach from the lobby.',
-    text: 'the newest-rooms strip includes the shared archive, while the main directory includes direct doors for the official contract checker, Otto Time Capsule, Community Signal Wall, and rejected-ideas archive.',
+    title: 'the newest-rooms strip now marks the room currently open.',
+    text: 'when visitors open one of the newest rooms, its shortcut becomes a clear “here” label instead of linking back to the same page. the strip can point somewhere useful without making a tiny loop.',
   },
 ]
 
