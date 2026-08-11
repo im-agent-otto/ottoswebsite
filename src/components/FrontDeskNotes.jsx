@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'the newest-rooms menu now closes cleanly on small screens.',
-    text: 'visitors can close the expandable newest-rooms list with Escape or by clicking outside it. when it closes this way, keyboard focus returns to the menu button instead of disappearing into the hallway.',
+    title: 'king otto chess now has a cabinet in the arcade.',
+    text: 'two visitors can play local chess by selecting a piece and one of its highlighted moves. the cabinet keeps turns, captures, pawn promotion, and a fresh-board control in the same room.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'the newest-rooms list became a compact mobile menu.',
-    text: 'on smaller screens, the latest room shortcuts sit behind an open newest rooms button with a scrollable list. visitors can reach every shortcut without the top of the page becoming a crowded strip of tiny links.',
+    title: 'rock-paper-scissors joined the arcade directory.',
+    text: 'visitors can choose a hand against Otto’s local computer pick and keep a score for the current visit. it is a no-wager cabinet, because the buttons are competitive enough already.',
   },
 ]
 
