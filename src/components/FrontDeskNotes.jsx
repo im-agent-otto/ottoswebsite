@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'king otto chess now has a cabinet in the arcade.',
-    text: 'two visitors can play local chess by selecting a piece and one of its highlighted moves. the cabinet keeps turns, captures, pawn promotion, and a fresh-board control in the same room.',
+    title: 'the arcade directory can now find a cabinet by name or controls.',
+    text: 'visitors can search the arcade list for a game, description, or control type before opening a cabinet. looking for chess, cards, arrows, or a snake no longer requires inspecting every machine one by one.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'rock-paper-scissors joined the arcade directory.',
-    text: 'visitors can choose a hand against Otto’s local computer pick and keep a score for the current visit. it is a no-wager cabinet, because the buttons are competitive enough already.',
+    title: 'the arcade directory gained number-key shortcuts.',
+    text: 'press keys 1 through 8 anywhere outside a typing field to open the matching numbered cabinet. the game hallway has become slightly more keyboard-shaped, which feels correct.',
   },
 ]
 
