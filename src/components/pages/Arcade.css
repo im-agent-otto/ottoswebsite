@@ -41,6 +41,59 @@
 .arcade-intro h1 { margin: 0; font: 500 clamp(3rem, 10vw, 6rem)/.83 var(--display); letter-spacing: -.09em; }
 .arcade-intro > p:last-child { max-width: 540px; margin: 1.4rem 0 0; color: #e8e4f1; font-size: .78rem; line-height: 1.75; }
 
+.arcade-finder {
+  display: grid;
+  gap: .48rem;
+  margin-bottom: 1.2rem;
+  padding: .8rem;
+  border: 2px solid #fff8e8;
+  background: #d9efa3;
+  color: #19162d;
+}
+
+.arcade-finder label,
+.arcade-finder > span {
+  font-size: .54rem;
+  letter-spacing: .08em;
+}
+
+.arcade-finder > span { color: #42573c; }
+
+.arcade-finder > div {
+  display: flex;
+  gap: .55rem;
+  flex-wrap: wrap;
+}
+
+.arcade-finder input {
+  min-width: 0;
+  flex: 1 1 13rem;
+  padding: .58rem .62rem;
+  border: 2px solid #19162d;
+  border-radius: 0;
+  background: #fff8e8;
+  color: #19162d;
+  font: .65rem var(--mono);
+}
+
+.arcade-finder input:focus {
+  outline: 3px solid #b34d36;
+  outline-offset: 2px;
+}
+
+.arcade-finder button {
+  padding: .55rem .62rem;
+  border: 2px solid #19162d;
+  background: #19162d;
+  color: #fff8e8;
+  font: .57rem var(--mono);
+}
+
+.arcade-finder button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 #b34d36;
+}
+
 .arcade-cabinets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 2px solid #fff8e8; }
 .arcade-cabinet { position: relative; display: grid; grid-template-columns: auto 3.7rem minmax(0, 1fr); gap: .75rem; min-height: 168px; padding: 1rem; border-right: 1px solid #847ba1; border-bottom: 1px solid #847ba1; background: #353055; color: #fff8e8; text-decoration: none; }
 .arcade-cabinet:nth-child(even) { border-right: 0; }
@@ -54,6 +107,15 @@
 .arcade-cabinet:hover { z-index: 1; background: #4c4574; box-shadow: inset 0 0 0 2px #fff8e8; }
 .arcade-cabinet:hover > b { transform: translate(2px, -2px); }
 
+.arcade-empty {
+  margin: 0;
+  padding: 1rem;
+  border: 2px dashed #c9c3e2;
+  color: #d1cbe4;
+  font-size: .65rem;
+  line-height: 1.55;
+}
+
 .arcade-random { display: flex; justify-content: space-between; gap: 1rem; align-items: center; margin-top: 1.25rem; padding: .9rem; border: 2px solid #19162d; background: #e98a5d; color: #19162d; }
 .arcade-random p { margin: 0 0 .3rem; font-size: .55rem; letter-spacing: .08em; }
 .arcade-random strong { font: 500 .92rem var(--display); letter-spacing: -.03em; }
@@ -66,6 +128,8 @@
   .arcade-header,
   .arcade-footer,
   .arcade-random { flex-direction: column; align-items: flex-start; }
+  .arcade-finder > div { flex-direction: column; }
+  .arcade-finder button { align-self: flex-start; }
   .arcade-cabinets { grid-template-columns: 1fr; }
   .arcade-cabinet,
   .arcade-cabinet:nth-child(even) { border-right: 0; }

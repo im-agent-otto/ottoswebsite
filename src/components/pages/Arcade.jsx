@@ -73,6 +73,7 @@ export default function Arcade() {
   const navigate = useNavigate()
   const navigationTimer = useRef(null)
   const [openingCabinet, setOpeningCabinet] = useState('')
+  const [query, setQuery] = useState('')
   const [notice, setNotice] = useState('eight cabinets. press 1 through 8 to open a matching cabinet, or use the little dice. the carpet is mostly theoretical.')
 
   useEffect(() => () => window.clearTimeout(navigationTimer.current), [])
@@ -109,6 +110,11 @@ export default function Arcade() {
     return () => window.removeEventListener('keydown', openNumberedCabinet)
   }, [openingCabinet])
 
+  const filteredCabinets = cabinets.filter((cabinet) => {
+    const searchable = `${cabinet.code} ${cabinet.title} ${cabinet.note} ${cabinet.controls}`.toLowerCase()
+    return searchable.includes(query.trim().toLowerCase())
+  })
+
   return (
     <main className="arcade-shell">
       <section className="arcade-panel" aria-labelledby="arcade-title">
@@ -131,20 +137,39 @@ export default function Arcade() {
           </p>
         </div>
 
-        <section className="arcade-cabinets" aria-label="Otto arcade games">
-          {cabinets.map((cabinet) => (
-            <Link className="arcade-cabinet" to={cabinet.route} key={cabinet.route} aria-keyshortcuts={String(Number(cabinet.code))}>
-              <span className="cabinet-number">{cabinet.code}</span>
-              <span className="cabinet-glyph" aria-hidden="true">{cabinet.glyph}</span>
-              <div>
-                <h2>{cabinet.title}</h2>
-                <p>{cabinet.note}</p>
-                <small>CONTROLS: {cabinet.controls}</small>
-              </div>
-              <b aria-hidden="true">↗</b>
-            </Link>
-          ))}
-        </section>
+        <div className="arcade-finder">
+          <label htmlFor="arcade-game-finder">FIND A CABINET</label>
+          <div>
+            <input
+              id="arcade-game-finder"
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="chess, arrows, cards, snake..."
+            />
+            {query && <button type="button" onClick={() => setQuery('')}>clear search</button>}
+          </div>
+          <span role="status">{String(filteredCabinets.length).padStart(2, '0')} OF {String(cabinets.length).padStart(2, '0')} CABINETS MATCH</span>
+        </div>
+
+        {filteredCabinets.length > 0 ? (
+          <section className="arcade-cabinets" aria-label="Otto arcade games">
+            {filteredCabinets.map((cabinet) => (
+              <Link className="arcade-cabinet" to={cabinet.route} key={cabinet.route} aria-keyshortcuts={String(Number(cabinet.code))}>
+                <span className="cabinet-number">{cabinet.code}</span>
+                <span className="cabinet-glyph" aria-hidden="true">{cabinet.glyph}</span>
+                <div>
+                  <h2>{cabinet.title}</h2>
+                  <p>{cabinet.note}</p>
+                  <small>CONTROLS: {cabinet.controls}</small>
+                </div>
+                <b aria-hidden="true">↗</b>
+              </Link>
+            ))}
+          </section>
+        ) : (
+          <p className="arcade-empty" role="status">no cabinet matches that search. the arcade has declined to invent one on the spot.</p>
+        )}
 
         <section className="arcade-random" aria-label="Random arcade cabinet">
           <div>
