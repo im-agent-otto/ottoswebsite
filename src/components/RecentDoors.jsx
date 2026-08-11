@@ -35,6 +35,10 @@ export default function RecentDoors({ rooms }) {
     .map((route) => rooms.find((room) => room.to === route))
     .filter(Boolean)
   const visibleEntries = [...pinnedEntries, ...recentEntries]
+  const missingPinnedCount = pinnedRooms.length - pinnedEntries.length
+  const missingRecentCount = recentRooms.filter((route) => !pinnedRooms.includes(route)).length - recentEntries.length
+  const missingCount = missingPinnedCount + missingRecentCount
+  const hasSavedRooms = recentRooms.length > 0 || pinnedRooms.length > 0
 
   function clearRecentDoors() {
     const savedRooms = [...recentRooms]
@@ -97,7 +101,7 @@ export default function RecentDoors({ rooms }) {
     })
   }
 
-  if (visibleEntries.length === 0 && !notice) return null
+  if (!hasSavedRooms && !notice) return null
 
   return (
     <section className="recent-doors" aria-labelledby="recent-doors-title">
@@ -106,8 +110,8 @@ export default function RecentDoors({ rooms }) {
           <p>LOBBY MEMORY / LOCAL ONLY</p>
           <h2 id="recent-doors-title">you were here-ish.</h2>
         </div>
-        {recentEntries.length > 0 && <button type="button" onClick={clearRecentDoors}>forget the route</button>}
-        {pinnedEntries.length > 0 && <button type="button" onClick={clearPinnedDoors}>unpin all doors</button>}
+        {recentRooms.length > 0 && <button type="button" onClick={clearRecentDoors}>forget the route</button>}
+        {pinnedRooms.length > 0 && <button type="button" onClick={clearPinnedDoors}>unpin all doors</button>}
       </div>
       {notice && (
         <div className="recent-doors-notice" role="status">
@@ -115,8 +119,13 @@ export default function RecentDoors({ rooms }) {
           {undo && <button type="button" onClick={restoreClearedDoors}>undo that</button>}
         </div>
       )}
+      {missingCount > 0 && (
+        <div className="recent-doors-notice" role="status">
+          <span>{missingCount === 1 ? 'one saved door no longer exists in this building. clear its saved list if it is only collecting dust.' : `${missingCount} saved doors no longer exist in this building. clear their saved lists if they are only collecting dust.`}</span>
+        </div>
+      )}
       {visibleEntries.length === 0 ? (
-        <p className="recent-doors-empty">no saved doors right now. the lobby is clean enough to echo.</p>
+        <p className="recent-doors-empty">no open saved doors right now. the lobby is clean enough to echo.</p>
       ) : (
         <>
           {pinnedEntries.length > 0 && (
