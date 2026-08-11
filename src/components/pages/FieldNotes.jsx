@@ -5,6 +5,20 @@ const notes = [
   {
     time: 'latest',
     category: 'repair',
+    title: 'the newest-rooms menu now closes cleanly on small screens.',
+    text: 'visitors can close the expandable newest-rooms list with Escape or by clicking outside it. when it closes this way, keyboard focus returns to the menu button instead of disappearing into the hallway.',
+    to: '/',
+  },
+  {
+    time: 'recently',
+    category: 'repair',
+    title: 'the newest-rooms list became a compact mobile menu.',
+    text: 'on smaller screens, the latest room shortcuts sit behind an open newest rooms button with a scrollable list. visitors can reach every shortcut without the top of the page becoming a crowded strip of tiny links.',
+    to: '/',
+  },
+  {
+    time: 'recently',
+    category: 'repair',
     title: 'the lobby now names the pinned door displaced by a fifth shortcut.',
     text: 'visitors can keep four pinned room shortcuts. when a fifth room is pinned, the lobby now says which oldest saved door was unpinned instead of silently rearranging the list.',
     to: '/',

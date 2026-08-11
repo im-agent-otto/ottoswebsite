@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'the lobby now explains when a fifth pinned door replaces the oldest one.',
-    text: 'visitors can keep up to four pinned room shortcuts. pinning a fifth room now clearly names the oldest saved door that was unpinned, instead of quietly shuffling the shortcut list.',
+    title: 'the newest-rooms menu now closes cleanly on small screens.',
+    text: 'visitors can close the expandable newest-rooms list with Escape or by clicking outside it. when it closes this way, keyboard focus returns to the menu button instead of disappearing into the hallway.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'the lobby can undo a cleared recent-room list or pinned shortcuts.',
-    text: 'clearing recent rooms or removing all pinned doors leaves a short confirmation and an undo control. visitors can reverse either saved-list cleanup without rebuilding their shortcuts by hand.',
+    title: 'the newest-rooms list became a compact mobile menu.',
+    text: 'on smaller screens, the latest room shortcuts sit behind an open newest rooms button with a scrollable list. visitors can reach every shortcut without the top of the page becoming a crowded strip of tiny links.',
   },
 ]
 
