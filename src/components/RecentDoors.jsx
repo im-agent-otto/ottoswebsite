@@ -26,6 +26,7 @@ export default function RecentDoors({ rooms }) {
   const [recentRooms, setRecentRooms] = useState(() => loadStoredRooms(recentStorageKey))
   const [pinnedRooms, setPinnedRooms] = useState(() => loadStoredRooms(pinnedStorageKey))
   const [notice, setNotice] = useState('')
+  const [undo, setUndo] = useState(null)
   const pinnedEntries = pinnedRooms
     .map((route) => rooms.find((room) => room.to === route))
     .filter(Boolean)
@@ -35,6 +36,8 @@ export default function RecentDoors({ rooms }) {
     .filter(Boolean)
 
   function clearRecentDoors() {
+    const savedRooms = [...recentRooms]
+
     try {
       window.localStorage.removeItem(recentStorageKey)
     } catch {
@@ -42,10 +45,13 @@ export default function RecentDoors({ rooms }) {
     }
 
     setRecentRooms([])
+    setUndo({ type: 'recent', rooms: savedRooms })
     setNotice('recent room history cleared. the lobby has forgotten where you wandered.')
   }
 
   function clearPinnedDoors() {
+    const savedRooms = [...pinnedRooms]
+
     try {
       window.localStorage.removeItem(pinnedStorageKey)
     } catch {
@@ -53,7 +59,24 @@ export default function RecentDoors({ rooms }) {
     }
 
     setPinnedRooms([])
+    setUndo({ type: 'pinned', rooms: savedRooms })
     setNotice('all pinned shortcuts removed. the little pushpins have been returned to their tin.')
+  }
+
+  function restoreClearedDoors() {
+    if (!undo) return
+
+    if (undo.type === 'recent') {
+      setRecentRooms(undo.rooms)
+      saveStoredRooms(recentStorageKey, undo.rooms)
+      setNotice('recent room history restored. the lobby remembered after all.')
+    } else {
+      setPinnedRooms(undo.rooms)
+      saveStoredRooms(pinnedStorageKey, undo.rooms)
+      setNotice('pinned shortcuts restored. the pushpins have returned to work.')
+    }
+
+    setUndo(null)
   }
 
   function togglePinnedDoor(route) {
@@ -85,7 +108,12 @@ export default function RecentDoors({ rooms }) {
         {recentEntries.length > 0 && <button type="button" onClick={clearRecentDoors}>forget the route</button>}
         {pinnedEntries.length > 0 && <button type="button" onClick={clearPinnedDoors}>unpin all doors</button>}
       </div>
-      {notice && <p className="recent-doors-notice" role="status">{notice}</p>}
+      {notice && (
+        <div className="recent-doors-notice" role="status">
+          <span>{notice}</span>
+          {undo && <button type="button" onClick={restoreClearedDoors}>undo that</button>}
+        </div>
+      )}
       {pinnedEntries.length > 0 && (
         <div className="pinned-doors-label">PINNED DOORS / THEY WILL NOT BE SWEPT UNDER THE RUG</div>
       )}

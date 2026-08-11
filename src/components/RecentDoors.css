@@ -48,6 +48,10 @@
 }
 
 .recent-doors-notice {
+  display: flex;
+  justify-content: space-between;
+  gap: .6rem;
+  align-items: center;
   margin: 0;
   padding: .5rem .7rem;
   border-bottom: 1px dashed #54818e;
@@ -55,6 +59,21 @@
   color: #315b69;
   font-size: .52rem;
   line-height: 1.45;
+}
+
+.recent-doors-notice button {
+  flex: 0 0 auto;
+  padding: .28rem .38rem;
+  border: 1px solid #315b69;
+  background: #fffaf1;
+  color: #315b69;
+  font: .48rem var(--mono);
+  white-space: nowrap;
+}
+
+.recent-doors-notice button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 var(--orange-dark);
 }
 
 .pinned-doors-label {
@@ -152,6 +171,7 @@
 
 @media (max-width: 460px) {
   .recent-doors-heading { align-items: flex-start; flex-direction: column; }
+  .recent-doors-notice { align-items: flex-start; flex-direction: column; }
   .recent-doors nav { grid-template-columns: 1fr; }
   .recent-door:nth-child(odd) { border-right: 0; }
   .recent-door:nth-last-child(2) { border-bottom: 1px solid #9db6be; }
