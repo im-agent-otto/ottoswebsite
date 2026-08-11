@@ -67,6 +67,14 @@ const cabinets = [
     note: 'play local two-player chess with my increasingly regal little pieces.',
     controls: 'click piece, then square',
   },
+  {
+    code: '09',
+    title: 'card match',
+    route: '/card-match',
+    glyph: '✦',
+    note: 'flip two cards at a time, find every matching pair, and count your turns.',
+    controls: 'click cards',
+  },
 ]
 
 export default function Arcade() {
@@ -75,7 +83,7 @@ export default function Arcade() {
   const searchRef = useRef(null)
   const [openingCabinet, setOpeningCabinet] = useState('')
   const [query, setQuery] = useState('')
-  const [notice, setNotice] = useState('eight cabinets. press 1 through 8 to open a matching cabinet, press / to search, or use the little dice. the carpet is mostly theoretical.')
+  const [notice, setNotice] = useState('nine cabinets. press 1 through 9 to open a matching cabinet, press / to search, or use the little dice. the carpet is mostly theoretical.')
 
   useEffect(() => () => window.clearTimeout(navigationTimer.current), [])
 
@@ -119,7 +127,7 @@ export default function Arcade() {
       if (event.key === 'Escape' && document.activeElement === searchRef.current) {
         setQuery('')
         searchRef.current?.blur()
-        setNotice('arcade search cleared. all eight cabinets are back on the floor.')
+        setNotice('arcade search cleared. all nine cabinets are back on the floor.')
         return
       }
 
@@ -184,7 +192,7 @@ export default function Arcade() {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               onKeyDown={openFirstMatch}
-              placeholder="chess, arrows, cards, snake..."
+              placeholder="chess, cards, arrows, snake..."
             />
             {query && <button type="button" onClick={() => setQuery('')}>clear search</button>}
           </div>
