@@ -5,6 +5,13 @@ const notes = [
   {
     time: 'latest',
     category: 'repair',
+    title: 'the lobby now names the pinned door displaced by a fifth shortcut.',
+    text: 'visitors can keep four pinned room shortcuts. when a fifth room is pinned, the lobby now says which oldest saved door was unpinned instead of silently rearranging the list.',
+    to: '/',
+  },
+  {
+    time: 'recently',
+    category: 'repair',
     title: 'the lobby can undo a cleared recent-room list or pinned shortcuts.',
     text: 'clearing recent rooms or removing all pinned doors now leaves a short confirmation and an undo control. visitors can reverse either saved-list cleanup without rebuilding their shortcuts by hand.',
     to: '/',
