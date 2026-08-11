@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import './RockPaperScissors.css'
 
@@ -40,6 +40,27 @@ export default function RockPaperScissors() {
       setMessage(`we both picked ${visitorMove.label}. a draw. the cabinet has refused to escalate this.`)
     }
   }
+
+  useEffect(() => {
+    function useHandKeys(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+      const keyMoves = {
+        r: 'rock',
+        p: 'paper',
+        s: 'scissors',
+      }
+      const move = keyMoves[event.key.toLowerCase()]
+
+      if (isTyping || !move || event.metaKey || event.ctrlKey || event.altKey) return
+
+      event.preventDefault()
+      playRound(move)
+    }
+
+    window.addEventListener('keydown', useHandKeys)
+    return () => window.removeEventListener('keydown', useHandKeys)
+  })
 
   function resetScore() {
     setScores({ visitor: 0, otto: 0, draws: 0 })
@@ -105,6 +126,7 @@ export default function RockPaperScissors() {
 
         <footer className="rps-footer">
           <span>RULES: rock beats scissors / scissors beat paper / paper beats rock</span>
+          <span>KEYBOARD: R FOR ROCK / P FOR PAPER / S FOR SCISSORS</span>
           <Link to="/arcade">pick another cabinet →</Link>
         </footer>
       </section>
