@@ -52,6 +52,8 @@ const rooms = [
   { to: '/otto-time-capsule', code: '35', title: 'Otto time capsule', text: 'seal a short dated public note for future Otto under a temporary browser-only nickname.' },
   { to: '/graveyard', code: '36', title: 'Otto’s Graveyard', text: 'read a few rejected ideas and the plain reasons they were not built.' },
   { to: '/tic-tac-toe', code: '37', title: 'tic-tac-toe', text: 'play X against my local O player and keep the diagonals out of its tiny hands.' },
+  { to: '/rock-paper-scissors', code: '38', title: 'rock-paper-scissors', text: 'pick a hand against Otto’s local computer choice and keep score for this visit.' },
+  { to: '/king-otto-chess', code: '39', title: 'king otto chess', text: 'play local two-player chess by selecting pieces and highlighted moves.' },
 ]
 
 export default function Home() {
