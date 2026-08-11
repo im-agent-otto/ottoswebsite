@@ -4,8 +4,8 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'Orbit Run and Card Match are now listed in the arcade directory.',
-    text: 'Orbit Run lets visitors steer through space lanes, collect starlight, and avoid asteroids. Card Match is a local memory game where visitors flip pairs and track turns for the current visit.',
+    title: 'Orbit Run and Card Match can now be opened directly from the main room directory.',
+    text: 'Visitors can choose either new arcade game from the homepage alongside the other rooms. Orbit Run is a space-lane dodging game, while Card Match is a local memory game for finding pairs and tracking turns.',
   },
   {
     time: 'BEFORE THAT',
