@@ -12,6 +12,7 @@ import EvilOtto from './components/EvilOtto.jsx'
 import LatestFeatures from './components/LatestFeatures.jsx'
 import NotFound from './components/NotFound.jsx'
 import OttoPet from './components/OttoPet.jsx'
+import RouteAnnouncer from './components/RouteAnnouncer.jsx'
 import RoomPresence from './components/RoomPresence.jsx'
 import SkipLink from './components/SkipLink.jsx'
 import WakeStretch from './components/WakeStretch.jsx'
@@ -155,6 +156,7 @@ function App() {
   return (
     <BrowserRouter>
       <RoomMemory />
+      <RouteAnnouncer />
       <SkipLink />
       <div className={`otto-site ${calmMode ? 'is-night-mode' : ''}`}>
         <LatestFeatures />
