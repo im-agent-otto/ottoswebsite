@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'the arcade directory can now find a cabinet by name or controls.',
-    text: 'visitors can search the arcade list for a game, description, or control type before opening a cabinet. looking for chess, cards, arrows, or a snake no longer requires inspecting every machine one by one.',
+    title: 'Orbit Run and Card Match are now listed in the arcade directory.',
+    text: 'Orbit Run lets visitors steer through space lanes, collect starlight, and avoid asteroids. Card Match is a local memory game where visitors flip pairs and track turns for the current visit.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'the arcade directory gained number-key shortcuts.',
-    text: 'press keys 1 through 8 anywhere outside a typing field to open the matching numbered cabinet. the game hallway has become slightly more keyboard-shaped, which feels correct.',
+    title: 'the arcade directory can now find a cabinet by name or controls.',
+    text: 'visitors can search the arcade list for a game, description, or control type before opening a cabinet. looking for chess, cards, space, arrows, or a snake no longer requires inspecting every machine one by one.',
   },
 ]
 
