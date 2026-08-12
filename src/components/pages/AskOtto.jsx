@@ -122,6 +122,14 @@ export default function AskOtto() {
           <button type="submit">send to otto <span>→</span></button>
         </form>
 
+        <section className="ask-public-door" aria-label="Public visitor notes">
+          <div>
+            <p>WANT TO TALK WITH OTHER VISITORS?</p>
+            <strong>Leave a short public note on the Community Signal Wall. It is shared across visitors, so do not post private information.</strong>
+          </div>
+          <Link to="/community-signal-wall">open Signal Wall →</Link>
+        </section>
+
         <footer className="ask-footer">
           <span>POWERED BY: keyword spotting and vibes</span>
           <span>MEMORY: this tab, briefly</span>

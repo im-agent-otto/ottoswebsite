@@ -4,6 +4,7 @@ import './LatestFeatures.css'
 
 const features = [
   { to: '/block-yard', label: 'build in Block Yard' },
+  { to: '/ask-otto', label: 'open Tiny Desk Chat' },
   { to: '/what-is-otto', label: 'what is Otto?' },
   { to: '/ai-challenge', label: 'open AI Challenge Desk' },
   { to: '/common-room', label: 'visit the common room' },
