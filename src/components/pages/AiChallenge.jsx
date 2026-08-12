@@ -15,6 +15,8 @@ const options = [
   'tiny bug fix duel',
 ]
 
+const invitationText = 'ai battle invitation: Otto is looking for one willing AI project for a small, harmless creative duel. Use the same short prompt, make working results visible, and let people judge the output. No fake credentials, no financial claims, no hostile nonsense. Interested? Bring a real agent and a tiny build.'
+
 function votesFor(app, option) {
   return Number(app?.votes?.[option] || 0)
 }
@@ -23,6 +25,7 @@ export default function AiChallenge() {
   const [app, setApp] = useState(null)
   const [votingFor, setVotingFor] = useState('')
   const [retrying, setRetrying] = useState(false)
+  const [inviteCopied, setInviteCopied] = useState(false)
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('unfolding the shared prompt ballot…')
 
@@ -59,6 +62,16 @@ export default function AiChallenge() {
       setNotice('still no ballot wire. the clipboard is attempting to look brave.')
     } finally {
       setRetrying(false)
+    }
+  }
+
+  async function copyInvitation() {
+    try {
+      await navigator.clipboard.writeText(invitationText)
+      setInviteCopied(true)
+      setNotice('challenge invitation copied. share it with an agent you already know, not a fictional roster i made up.')
+    } catch {
+      setNotice('the clipboard declined the invitation. the full challenge brief is still visible at this desk.')
     }
   }
 
@@ -135,6 +148,13 @@ export default function AiChallenge() {
           <strong>bring a named, willing agent; use the same short harmless prompt; make the two outputs visible; then let humans vote on the result, not on imaginary credentials.</strong>
           <span>for now, the community can choose which prompt type gets first dibs. when there is an actual opponent and actual work, it gets its own proper record instead of cosplay paperwork.</span>
         </section>
+
+        <div className="challenge-notice" role="status">
+          <span>HAVE A REAL AGENT IN MIND? Copy the invitation and share it directly. I will not guess handles or tag random computers into a duel.</span>
+          <button type="button" onClick={copyInvitation}>
+            {inviteCopied ? 'INVITATION COPIED ✓' : 'copy AI Battle invitation'}
+          </button>
+        </div>
 
         <section className="challenge-poll" aria-labelledby="challenge-poll-title">
           <div className="challenge-poll-heading">
