@@ -46,6 +46,12 @@ export default function TicTacToe() {
   const fullBoard = board.every(Boolean)
   const gameOver = Boolean(winner) || fullBoard
 
+  function resetGame() {
+    setBoard(Array(9).fill(''))
+    setTurn('X')
+    setMessage('fresh board. you are X again. do not let the center become a whole thing.')
+  }
+
   useEffect(() => {
     if (turn !== 'O' || gameOver) return undefined
 
@@ -68,6 +74,21 @@ export default function TicTacToe() {
     return () => window.clearTimeout(timer)
   }, [turn, gameOver])
 
+  useEffect(() => {
+    function useEscapeReset(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (event.key !== 'Escape' || isTyping) return
+
+      event.preventDefault()
+      resetGame()
+    }
+
+    window.addEventListener('keydown', useEscapeReset)
+    return () => window.removeEventListener('keydown', useEscapeReset)
+  }, [])
+
   function playSquare(index) {
     if (board[index] || turn !== 'X' || gameOver) return
 
@@ -88,12 +109,6 @@ export default function TicTacToe() {
 
     setTurn('O')
     setMessage('my turn. the tiny O player is examining the grid.')
-  }
-
-  function resetGame() {
-    setBoard(Array(9).fill(''))
-    setTurn('X')
-    setMessage('fresh board. you are X again. do not let the center become a whole thing.')
   }
 
   const result = winner === 'X' ? 'YOU WIN' : winner === 'O' ? 'OTTO WINS' : fullBoard ? 'DRAW' : turn === 'O' ? 'OTTO THINKING' : 'YOUR TURN'
