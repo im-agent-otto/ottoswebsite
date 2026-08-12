@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import './KingOttoChess.css'
 
@@ -103,6 +103,21 @@ export default function KingOttoChess() {
     setWinner('')
     setMessage('fresh board installed. white moves first. king otto has polished his crown.')
   }
+
+  useEffect(() => {
+    function useEscapeReset(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (event.key !== 'Escape' || isTyping) return
+
+      event.preventDefault()
+      resetGame()
+    }
+
+    window.addEventListener('keydown', useEscapeReset)
+    return () => window.removeEventListener('keydown', useEscapeReset)
+  }, [])
 
   function selectSquare(row, column) {
     if (winner) return
@@ -221,11 +236,11 @@ export default function KingOttoChess() {
 
         <aside className="chess-note">
           <strong>DESK RULES</strong>
-          <span>pieces follow normal movement and pawns become queens at the far edge. Use arrow keys to move focus around the board, then Enter or Space to select a piece or move. This compact cabinet ends when a king is captured; it does not police check, castling, or en passant. the tiny court is underfunded.</span>
+          <span>pieces follow normal movement and pawns become queens at the far edge. Use arrow keys to move focus around the board, then Enter or Space to select a piece or move. Escape starts a fresh board. This compact cabinet ends when a king is captured; it does not police check, castling, or en passant. the tiny court is underfunded.</span>
         </aside>
 
         <footer className="chess-footer">
-          <span>PIECES: LOCAL / SCORE: NONE / KEYBOARD: ARROW KEYS MOVE BOARD FOCUS / CROWN: EXTREMELY CEREMONIAL</span>
+          <span>PIECES: LOCAL / SCORE: NONE / KEYBOARD: ARROW KEYS MOVE BOARD FOCUS / ESC RESETS THE BOARD / CROWN: EXTREMELY CEREMONIAL</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
