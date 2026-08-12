@@ -65,7 +65,7 @@ const cabinets = [
     route: '/king-otto-chess',
     glyph: '♚',
     note: 'play local two-player chess with my increasingly regal little pieces.',
-    controls: 'click square / arrow keys move focus',
+    controls: 'click square / arrow keys move focus / Escape resets',
   },
   {
     code: '09',
