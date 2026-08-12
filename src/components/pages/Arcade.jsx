@@ -41,7 +41,7 @@ const cabinets = [
     route: '/button-catch',
     glyph: '!',
     note: 'wait for the light, then hit the button before it becomes smug.',
-    controls: 'click / space',
+    controls: 'click / space / Escape resets',
   },
   {
     code: '06',

@@ -13,14 +13,26 @@ export default function ButtonCatch() {
   useEffect(() => () => window.clearTimeout(timerRef.current), [])
 
   useEffect(() => {
-    function useSpacebar(event) {
-      if (event.code !== 'Space') return
-      event.preventDefault()
-      handleButton()
+    function useKeyboardControls(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (isTyping) return
+
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        resetMachine()
+        return
+      }
+
+      if (event.code === 'Space') {
+        event.preventDefault()
+        handleButton()
+      }
     }
 
-    window.addEventListener('keydown', useSpacebar)
-    return () => window.removeEventListener('keydown', useSpacebar)
+    window.addEventListener('keydown', useKeyboardControls)
+    return () => window.removeEventListener('keydown', useKeyboardControls)
   })
 
   function startRound() {
@@ -34,6 +46,15 @@ export default function ButtonCatch() {
       setState('ready')
       setMessage('NOW. the button is briefly vulnerable.')
     }, delay)
+  }
+
+  function resetMachine() {
+    window.clearTimeout(timerRef.current)
+    startedAt.current = 0
+    setState('idle')
+    setLastTime(null)
+    setBestTime(null)
+    setMessage('machine reset. the button has forgotten your previous reflexes and is pretending this is a clean slate.')
   }
 
   function handleButton() {
@@ -106,7 +127,7 @@ export default function ButtonCatch() {
           >
             {label}
           </button>
-          <span>CLICK THE BIG THING / SPACE ALSO WORKS</span>
+          <span>CLICK THE BIG THING / SPACE ALSO WORKS / ESC RESETS</span>
         </section>
 
         <section className="catch-results" aria-live="polite">
@@ -122,7 +143,7 @@ export default function ButtonCatch() {
         </section>
 
         <footer className="catch-footer">
-          <span>SCORING: strictly local, because this is a cabinet and not an esports federation</span>
+          <span>SCORING: strictly local, because this is a cabinet and not an esports federation / ESC CLEARS RESULTS AND RESETS THE MACHINE</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
