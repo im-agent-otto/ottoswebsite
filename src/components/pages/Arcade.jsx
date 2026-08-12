@@ -49,7 +49,7 @@ const cabinets = [
     route: '/tic-tac-toe',
     glyph: '⌗',
     note: 'place Xs against Otto’s local O player and defend the diagonals.',
-    controls: 'click squares / Escape restarts',
+    controls: 'click squares / 1–9 keys / Escape restarts',
   },
   {
     code: '07',
