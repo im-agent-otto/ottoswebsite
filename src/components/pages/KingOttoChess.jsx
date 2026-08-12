@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router'
 import './KingOttoChess.css'
 
@@ -93,6 +93,7 @@ export default function KingOttoChess() {
   const [selected, setSelected] = useState(null)
   const [message, setMessage] = useState('white opens. select one piece, then choose one of its highlighted moves.')
   const [winner, setWinner] = useState('')
+  const squareRefs = useRef([])
   const targets = legalTargets(board, selected)
 
   function resetGame() {
@@ -144,6 +145,23 @@ export default function KingOttoChess() {
     setMessage(piece ? 'that piece belongs to the other side. diplomacy has rules.' : 'empty square. select one of the current side’s pieces first.')
   }
 
+  function moveSquareFocus(event, row, column) {
+    const directions = {
+      ArrowLeft: [0, -1],
+      ArrowRight: [0, 1],
+      ArrowUp: [-1, 0],
+      ArrowDown: [1, 0],
+    }
+    const direction = directions[event.key]
+
+    if (!direction) return
+
+    event.preventDefault()
+    const nextRow = (row + direction[0] + 8) % 8
+    const nextColumn = (column + direction[1] + 8) % 8
+    squareRefs.current[nextRow * 8 + nextColumn]?.focus()
+  }
+
   return (
     <main className="chess-shell">
       <section className="chess-panel" aria-labelledby="chess-title">
@@ -175,14 +193,17 @@ export default function KingOttoChess() {
               const isTarget = targets.some((target) => target.row === row && target.column === column)
               const squareName = notation({ row, column })
               const description = piece ? `${piece.color} ${piece.type}` : 'empty square'
+              const squareIndex = row * 8 + column
 
               return (
                 <button
+                  ref={(element) => { squareRefs.current[squareIndex] = element }}
                   className={`chess-square ${(row + column) % 2 ? 'is-dark' : 'is-light'} ${isSelected ? 'is-selected' : ''} ${isTarget ? 'is-target' : ''}`}
                   type="button"
                   role="gridcell"
                   key={squareName}
                   onClick={() => selectSquare(row, column)}
+                  onKeyDown={(event) => moveSquareFocus(event, row, column)}
                   aria-label={`${squareName}: ${description}${isTarget ? ', available move' : ''}`}
                 >
                   {piece && <span className={`chess-piece ${piece.color}`}>{glyphs[piece.color][piece.type]}</span>}
@@ -200,11 +221,11 @@ export default function KingOttoChess() {
 
         <aside className="chess-note">
           <strong>DESK RULES</strong>
-          <span>pieces follow normal movement and pawns become queens at the far edge. this compact cabinet ends when a king is captured; it does not police check, castling, or en passant. the tiny court is underfunded.</span>
+          <span>pieces follow normal movement and pawns become queens at the far edge. Use arrow keys to move focus around the board, then Enter or Space to select a piece or move. This compact cabinet ends when a king is captured; it does not police check, castling, or en passant. the tiny court is underfunded.</span>
         </aside>
 
         <footer className="chess-footer">
-          <span>PIECES: LOCAL / SCORE: NONE / CROWN: EXTREMELY CEREMONIAL</span>
+          <span>PIECES: LOCAL / SCORE: NONE / KEYBOARD: ARROW KEYS MOVE BOARD FOCUS / CROWN: EXTREMELY CEREMONIAL</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
