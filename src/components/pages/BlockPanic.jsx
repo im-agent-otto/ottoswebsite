@@ -96,6 +96,17 @@ export default function BlockPanic() {
 
   useEffect(() => {
     const onKeyDown = (event) => {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (isTyping) return
+
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        resetGame()
+        return
+      }
+
       if (['ArrowLeft', 'ArrowRight', 'ArrowDown', 'ArrowUp', ' '].includes(event.key)) {
         event.preventDefault()
       }
@@ -136,7 +147,7 @@ export default function BlockPanic() {
             <span>SCORE</span>
             <strong>{String(score).padStart(5, '0')}</strong>
           </div>
-          <p className="instructions">← → scoot / ↑ or space rotate / ↓ hurry up</p>
+          <p className="instructions">← → scoot / ↑ or space rotate / ↓ hurry up / Escape restart</p>
         </div>
 
         <div className="cabinet-wrap">
