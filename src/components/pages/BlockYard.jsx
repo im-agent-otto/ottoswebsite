@@ -7,11 +7,11 @@ const rows = 8
 const historyLimit = 30
 
 const bricks = [
-  { id: 'orange', label: 'orange brick', glyph: '■' },
-  { id: 'blue', label: 'blue brick', glyph: '■' },
-  { id: 'green', label: 'green brick', glyph: '■' },
-  { id: 'yellow', label: 'yellow brick', glyph: '■' },
-  { id: 'erase', label: 'eraser', glyph: '×' },
+  { id: 'orange', label: 'orange brick', glyph: '■', shortcut: '1' },
+  { id: 'blue', label: 'blue brick', glyph: '■', shortcut: '2' },
+  { id: 'green', label: 'green brick', glyph: '■', shortcut: '3' },
+  { id: 'yellow', label: 'yellow brick', glyph: '■', shortcut: '4' },
+  { id: 'erase', label: 'eraser', glyph: '×', shortcut: '5' },
 ]
 
 function freshYard() {
@@ -98,7 +98,18 @@ export default function BlockYard() {
       const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
       const usesCommandKey = event.ctrlKey || event.metaKey
 
-      if (isTyping || !usesCommandKey) return
+      if (isTyping) return
+
+      if (!usesCommandKey) {
+        const shortcutTool = bricks.find((brick) => brick.shortcut === event.key)
+
+        if (shortcutTool) {
+          event.preventDefault()
+          chooseTool(shortcutTool.id)
+        }
+
+        return
+      }
 
       const key = event.key.toLowerCase()
       const wantsRedo = key === 'y' || (key === 'z' && event.shiftKey)
@@ -183,10 +194,12 @@ export default function BlockYard() {
                 type="button"
                 onClick={() => chooseTool(brick.id)}
                 aria-pressed={tool === brick.id}
+                aria-keyshortcuts={brick.shortcut}
+                title={`Choose ${brick.label} (${brick.shortcut})`}
                 key={brick.id}
               >
                 <b aria-hidden="true">{brick.glyph}</b>
-                {brick.label}
+                {brick.label} ({brick.shortcut})
               </button>
             ))}
           </div>
@@ -216,7 +229,7 @@ export default function BlockYard() {
           </div>
 
           <div className="yard-actions">
-            <span>YOUR BLOCKS STAY IN THIS BROWSER TAB. USE ARROW KEYS TO MOVE BETWEEN SQUARES, THEN ENTER OR SPACE TO PLACE A BLOCK. CTRL/CMD+Z UNDOS; CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS.</span>
+            <span>PRESS 1–4 TO CHOOSE A BRICK OR 5 FOR THE ERASER. USE ARROW KEYS TO MOVE BETWEEN SQUARES, THEN ENTER OR SPACE TO PLACE A BLOCK. CTRL/CMD+Z UNDOS; CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS.</span>
             <div className="yard-action-buttons">
               <button type="button" onClick={undoLastChange} disabled={history.length === 0} aria-keyshortcuts="Control+Z Meta+Z">undo last change ↶</button>
               <button type="button" onClick={redoLastChange} disabled={redoHistory.length === 0} aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z Control+Y Meta+Y">redo last change ↷</button>
@@ -226,7 +239,7 @@ export default function BlockYard() {
         </section>
 
         <footer className="yard-footer">
-          <span>TOOLS: CLICK A COLOR, THEN CLICK A SQUARE / THE × TOOL REMOVES A BLOCK / UNDO AND REDO CAN STEP THROUGH UP TO 30 PLACEMENTS, ERASURES, OR CLEARS / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK, CTRL/CMD+Z UNDOS, CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS</span>
+          <span>TOOLS: CLICK A COLOR OR PRESS 1–4, PRESS 5 FOR THE × ERASER, THEN CLICK A SQUARE / YOUR BLOCKS STAY IN THIS BROWSER TAB / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK, CTRL/CMD+Z UNDOS, CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
