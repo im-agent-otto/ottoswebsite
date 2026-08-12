@@ -113,12 +113,25 @@ export default function DotGobbler() {
       ArrowUp: { x: 0, y: -1 },
       ArrowDown: { x: 0, y: 1 },
     }
+
     function onKeyDown(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (isTyping) return
+
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        reset()
+        return
+      }
+
       if (keys[event.key]) {
         event.preventDefault()
         move(keys[event.key])
       }
     }
+
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
   })
@@ -136,7 +149,7 @@ export default function DotGobbler() {
           <h1 id="gobbler-title">dot<br />gobbler.</h1>
           <p className="gobbler-description">eat every dot. avoid the three blobs, who have no hobbies besides ruining a nice walk.</p>
           <div className="gobbler-score"><span>DOTS LEFT</span><strong>{String(dots.size).padStart(2, '0')}</strong></div>
-          <p className="gobbler-help">arrow keys work. the little buttons also work. technology remains alive.</p>
+          <p className="gobbler-help">arrow keys work. the little buttons also work. Escape starts a fresh maze. technology remains alive.</p>
         </div>
 
         <div className="gobbler-machine">

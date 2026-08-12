@@ -17,7 +17,7 @@ const cabinets = [
     route: '/dot-gobbler',
     glyph: '◖',
     note: 'eat every dot while three blobs conduct a hostile walking audit.',
-    controls: 'arrow keys',
+    controls: 'arrow keys / Escape restarts',
   },
   {
     code: '03',
