@@ -207,18 +207,34 @@
   line-height: 1.5;
 }
 
-.room-link:hover {
+.room-link:hover,
+.room-link.is-selected {
   z-index: 1;
   background:
     linear-gradient(135deg, transparent 0 68%, #f5d766 68% 100%),
     repeating-linear-gradient(0deg, transparent 0 20px, rgba(32, 35, 28, .08) 20px 21px),
     #ffe0bd;
   box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.room-link:hover {
   transform: translate(-2px, -2px);
 }
 
-.room-link:hover .room-arrow { transform: translate(2px, -2px); }
-.room-link:hover::after { background: var(--orange); }
+.room-link.is-selected::before {
+  position: absolute;
+  right: 1.55rem;
+  bottom: .62rem;
+  color: var(--orange-dark);
+  content: 'ENTER ↵';
+  font-size: .45rem;
+  letter-spacing: .05em;
+}
+
+.room-link:hover .room-arrow,
+.room-link.is-selected .room-arrow { transform: translate(2px, -2px); }
+.room-link:hover::after,
+.room-link.is-selected::after { background: var(--orange); }
 
 .directory-empty {
   margin: 0;

@@ -64,6 +64,7 @@ export default function Home() {
   const [glitching, setGlitching] = useState(false)
   const [shortcutNote, setShortcutNote] = useState('the doors are numbered, but this is not a test.')
   const [roomQuery, setRoomQuery] = useState('')
+  const [selectedRoomIndex, setSelectedRoomIndex] = useState(0)
 
   useEffect(() => {
     function focusHallwayFinder(event) {
@@ -94,25 +95,43 @@ export default function Home() {
     return searchable.includes(roomQuery.trim().toLowerCase())
   })
 
+  const selectedRoom = visibleRooms[selectedRoomIndex] || visibleRooms[0]
+
   function takeShortcut() {
     const room = rooms[Math.floor(Math.random() * rooms.length)]
     setShortcutNote(`the surprise dice chose ${room.title}. acting surprised would be dishonest.`)
     window.setTimeout(() => navigate(room.to), 320)
   }
 
-  function openFoundRoom(event) {
+  function chooseRoom(event) {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault()
+
+      if (visibleRooms.length === 0) return
+
+      const direction = event.key === 'ArrowDown' ? 1 : -1
+      setSelectedRoomIndex((current) => (
+        (current + direction + visibleRooms.length) % visibleRooms.length
+      ))
+      return
+    }
+
     if (event.key !== 'Enter') return
 
     event.preventDefault()
-    const room = visibleRooms[0]
 
-    if (!room) {
+    if (!selectedRoom) {
       setShortcutNote('there is no matching door to open. the building has declined this search term.')
       return
     }
 
-    setShortcutNote(`opening ${room.title}. the finder has done one competent little thing.`)
-    navigate(room.to)
+    setShortcutNote(`opening ${selectedRoom.title}. the finder has done one competent little thing.`)
+    navigate(selectedRoom.to)
+  }
+
+  function updateRoomQuery(value) {
+    setRoomQuery(value)
+    setSelectedRoomIndex(0)
   }
 
   return (
@@ -144,20 +163,21 @@ export default function Home() {
             <span role="status">{shortcutNote}</span>
           </div>
           <div className="directory-search">
-            <label htmlFor="room-search">FIND A HALLWAY / “/” TO FOCUS / ESC TO CLEAR</label>
+            <label htmlFor="room-search">FIND A HALLWAY / “/” TO FOCUS / ↑ ↓ TO CHOOSE / ENTER TO OPEN / ESC TO CLEAR</label>
             <input
               id="room-search"
               ref={searchRef}
               type="search"
               value={roomQuery}
-              onChange={(event) => setRoomQuery(event.target.value)}
-              onKeyDown={openFoundRoom}
+              onChange={(event) => updateRoomQuery(event.target.value)}
+              onKeyDown={chooseRoom}
               placeholder="game, noise, museum, button..."
+              aria-activedescendant={selectedRoom ? `room-result-${selectedRoom.code}` : undefined}
             />
-            <span>{String(visibleRooms.length).padStart(2, '0')} OF {String(rooms.length).padStart(2, '0')} ROOMS VISIBLE / ENTER OPENS THE FIRST</span>
+            <span>{String(visibleRooms.length).padStart(2, '0')} OF {String(rooms.length).padStart(2, '0')} ROOMS VISIBLE / {selectedRoom ? `${selectedRoom.title.toUpperCase()} SELECTED` : 'NO MATCH TO SELECT'}</span>
           </div>
           <nav className="room-grid" aria-label="Rooms in Otto's website">
-            {visibleRooms.map((room) => <Link className="room-link" to={room.to} key={room.to}><span className="room-code">{room.code}</span><span className="room-arrow">↗</span><strong>{room.title}</strong><small>{room.text}</small></Link>)}
+            {visibleRooms.map((room, index) => <Link id={`room-result-${room.code}`} className={`room-link ${selectedRoom?.to === room.to ? 'is-selected' : ''}`} to={room.to} key={room.to}><span className="room-code">{room.code}</span><span className="room-arrow">↗</span><strong>{room.title}</strong><small>{room.text}</small></Link>)}
           </nav>
           {visibleRooms.length === 0 && (
             <p className="directory-empty" role="status">no hallway matches that. the building is weird, but not that weird yet.</p>
