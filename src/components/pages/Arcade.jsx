@@ -9,7 +9,7 @@ const cabinets = [
     route: '/block-panic',
     glyph: '▦',
     note: 'stack cheerful bricks until they gain the upper hand emotionally.',
-    controls: 'arrows / space',
+    controls: 'arrows / space / Escape restarts',
   },
   {
     code: '02',
@@ -57,7 +57,7 @@ const cabinets = [
     route: '/rock-paper-scissors',
     glyph: '✊',
     note: 'pick a hand against Otto’s local computer choice and keep score for this visit.',
-    controls: 'click a hand / R P S keys',
+    controls: 'click a hand / R P S keys / Escape resets',
   },
   {
     code: '08',
