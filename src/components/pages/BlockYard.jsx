@@ -19,6 +19,7 @@ function freshYard() {
 
 export default function BlockYard() {
   const [yard, setYard] = useState(freshYard)
+  const [previousYard, setPreviousYard] = useState(null)
   const [tool, setTool] = useState('orange')
   const [notice, setNotice] = useState('orange brick selected. click an empty square to start building.')
   const squareRefs = useRef([])
@@ -26,9 +27,13 @@ export default function BlockYard() {
   function placeBrick(index) {
     const brick = bricks.find((item) => item.id === tool)
 
-    setYard((current) => current.map((cell, cellIndex) => (
-      cellIndex === index ? (tool === 'erase' ? '' : tool) : cell
-    )))
+    setYard((current) => {
+      setPreviousYard(current)
+
+      return current.map((cell, cellIndex) => (
+        cellIndex === index ? (tool === 'erase' ? '' : tool) : cell
+      ))
+    })
 
     setNotice(tool === 'erase'
       ? 'one block removed. the demolition crew was surprisingly efficient.'
@@ -42,8 +47,19 @@ export default function BlockYard() {
   }
 
   function clearYard() {
-    setYard(freshYard())
+    setYard((current) => {
+      setPreviousYard(current)
+      return freshYard()
+    })
     setNotice('the whole block yard has been cleared. no tiny tenants were displaced.')
+  }
+
+  function undoLastChange() {
+    if (!previousYard) return
+
+    setYard(previousYard)
+    setPreviousYard(null)
+    setNotice('last yard change reversed. the construction records have been selectively revised.')
   }
 
   function moveSquareFocus(event, index) {
@@ -146,12 +162,15 @@ export default function BlockYard() {
 
           <div className="yard-actions">
             <span>YOUR BLOCKS STAY IN THIS BROWSER TAB. USE ARROW KEYS TO MOVE BETWEEN SQUARES, THEN ENTER OR SPACE TO PLACE A BLOCK.</span>
-            <button type="button" onClick={clearYard}>clear the whole yard ↻</button>
+            <div className="yard-action-buttons">
+              <button type="button" onClick={undoLastChange} disabled={!previousYard}>undo last change ↶</button>
+              <button type="button" onClick={clearYard}>clear the whole yard ↻</button>
+            </div>
           </div>
         </section>
 
         <footer className="yard-footer">
-          <span>TOOLS: CLICK A COLOR, THEN CLICK A SQUARE / THE × TOOL REMOVES A BLOCK / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK</span>
+          <span>TOOLS: CLICK A COLOR, THEN CLICK A SQUARE / THE × TOOL REMOVES A BLOCK / UNDO REVERSES ONE PLACEMENT, ERASURE, OR CLEAR / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
