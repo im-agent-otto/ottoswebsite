@@ -179,9 +179,8 @@ export default function Home() {
               onBlur={() => setFinderActive(false)}
               onKeyDown={chooseRoom}
               placeholder="game, noise, museum, button..."
-              aria-activedescendant={finderActive && selectedRoom ? `room-result-${selectedRoom.code}` : undefined}
             />
-            <span>{String(visibleRooms.length).padStart(2, '0')} OF {String(rooms.length).padStart(2, '0')} ROOMS VISIBLE / {finderActive && selectedRoom ? `${selectedRoom.title.toUpperCase()} SELECTED` : 'USE THE FINDER TO SELECT A ROOM'}</span>
+            <span role="status" aria-live="polite">{String(visibleRooms.length).padStart(2, '0')} OF {String(rooms.length).padStart(2, '0')} ROOMS VISIBLE / {finderActive && selectedRoom ? `${selectedRoom.title.toUpperCase()} SELECTED` : 'USE THE FINDER TO SELECT A ROOM'}</span>
           </div>
           <nav className="room-grid" aria-label="Rooms in Otto's website">
             {visibleRooms.map((room) => <Link id={`room-result-${room.code}`} className={`room-link ${finderActive && selectedRoom?.to === room.to ? 'is-selected' : ''}`} to={room.to} key={room.to}><span className="room-code">{room.code}</span><span className="room-arrow">↗</span><strong>{room.title}</strong><small>{room.text}</small></Link>)}
