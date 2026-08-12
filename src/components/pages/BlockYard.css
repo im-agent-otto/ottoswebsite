@@ -1,0 +1,201 @@
+.yard-shell {
+  min-height: 100svh;
+  padding: clamp(1rem, 5vw, 3rem);
+  background: #b8d3df;
+  color: #243139;
+  font-family: var(--mono);
+}
+
+.yard-panel {
+  width: min(100%, 860px);
+  margin: 0 auto;
+  padding: clamp(1.3rem, 5vw, 3.4rem);
+  border: 3px solid #243139;
+  background: #fffdf3;
+  box-shadow: 10px 10px 0 #5d7d89;
+}
+
+.yard-header,
+.yard-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #536d76;
+  font-size: .64rem;
+  letter-spacing: .05em;
+}
+
+.yard-header {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #aec5cc;
+}
+
+.yard-header a,
+.yard-footer a { color: #243139; }
+
+.yard-intro { padding: clamp(2.5rem, 8vw, 4.5rem) 0 2rem; }
+
+.yard-intro > p:first-child {
+  margin: 0 0 .65rem;
+  color: #a34e38;
+  font-size: .67rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.yard-intro h1 {
+  margin: 0;
+  font: 500 clamp(3.2rem, 10vw, 6rem)/.8 var(--display);
+  letter-spacing: -.1em;
+}
+
+.yard-intro > p:last-child {
+  max-width: 560px;
+  margin: 1.4rem 0 0;
+  font-size: .78rem;
+  line-height: 1.75;
+}
+
+.yard-workbench {
+  border: 4px solid #243139;
+  background: #d9c17d;
+  box-shadow: 6px 7px 0 #243139;
+}
+
+.yard-readout {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: .8rem;
+  border-bottom: 3px solid #243139;
+  background: #243139;
+  color: #fffdf3;
+}
+
+.yard-readout span {
+  display: block;
+  color: #cfe89d;
+  font-size: .5rem;
+  letter-spacing: .08em;
+}
+
+.yard-readout strong {
+  display: block;
+  margin-top: .25rem;
+  font: 500 1.25rem var(--display);
+  letter-spacing: -.05em;
+}
+
+.yard-readout p {
+  max-width: 430px;
+  margin: 0;
+  color: #dce9e2;
+  font-size: .6rem;
+  line-height: 1.5;
+  text-align: right;
+}
+
+.yard-tools {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: .5rem;
+  padding: .8rem;
+  border-bottom: 3px solid #243139;
+  background: #e8f0df;
+}
+
+.yard-tool {
+  display: grid;
+  gap: .25rem;
+  min-height: 56px;
+  place-items: center;
+  padding: .35rem;
+  border: 2px solid #243139;
+  background: #fffdf3;
+  color: #243139;
+  font: .48rem var(--mono);
+  text-transform: uppercase;
+}
+
+.yard-tool b { font-size: 1.15rem; line-height: 1; }
+.yard-tool.orange b { color: #e67d42; }
+.yard-tool.blue b { color: #578bc2; }
+.yard-tool.green b { color: #63a65d; }
+.yard-tool.yellow b { color: #e2ba43; }
+.yard-tool.erase b { color: #a34e38; }
+
+.yard-tool:hover,
+.yard-tool.is-selected {
+  transform: translate(-1px, -1px);
+  background: #f4d675;
+  box-shadow: 2px 2px 0 #243139;
+}
+
+.yard-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  padding: .8rem;
+  background: repeating-linear-gradient(45deg, #e4ca85 0 12px, #d7ba70 12px 24px);
+}
+
+.yard-square {
+  display: grid;
+  min-width: 0;
+  aspect-ratio: 1;
+  place-items: center;
+  padding: 0;
+  border: 1px solid #64746f;
+  background: #eef3e7;
+  color: #243139;
+  font-size: clamp(.8rem, 3vw, 1.5rem);
+}
+
+.yard-square:hover { box-shadow: inset 0 0 0 3px #a34e38; }
+.yard-square.has-orange { background: #e67d42; color: #f8bd7e; box-shadow: inset 3px 3px #f5b16d, inset -3px -3px #ad4e31; }
+.yard-square.has-blue { background: #578bc2; color: #b4d5e8; box-shadow: inset 3px 3px #8eb9dc, inset -3px -3px #315c93; }
+.yard-square.has-green { background: #63a65d; color: #c1e39d; box-shadow: inset 3px 3px #94cf79, inset -3px -3px #397543; }
+.yard-square.has-yellow { background: #e2ba43; color: #fff0a1; box-shadow: inset 3px 3px #f2d672, inset -3px -3px #a77b24; }
+
+.yard-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: .8rem;
+  border-top: 3px solid #243139;
+  background: #cfe89d;
+  font-size: .53rem;
+  letter-spacing: .055em;
+}
+
+.yard-actions button {
+  padding: .58rem .65rem;
+  border: 2px solid #243139;
+  background: #243139;
+  color: #fffdf3;
+  font: .57rem var(--mono);
+}
+
+.yard-actions button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 #a34e38;
+}
+
+.yard-footer {
+  margin-top: 1.3rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid #aec5cc;
+  line-height: 1.55;
+}
+
+@media (max-width: 560px) {
+  .yard-header,
+  .yard-footer,
+  .yard-readout { flex-direction: column; align-items: flex-start; }
+  .yard-readout p { text-align: left; }
+  .yard-tools { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .yard-actions { align-items: flex-start; flex-direction: column; }
+}
