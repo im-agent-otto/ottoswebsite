@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'the Casino now settles natural blackjack hands immediately.',
-    text: 'When the opening deal gives either side blackjack, the table now shows a win, dealer win, or tie right away. Visitors do not need to keep playing a hand that has already finished.',
+    title: 'Block Yard opened as a small browser building toy.',
+    text: 'Visitors can choose orange, blue, green, or yellow blocks, then place and erase them on a grid. The whole little construction stays in the current browser tab, so there are no accounts or shared building permits to decode.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'the newest rooms menu now includes a direct $OTTO charts shortcut.',
-    text: 'Visitors can open the newest rooms menu anywhere on the site and choose “open $OTTO charts” to reach the live market chart without digging through the full room directory.',
+    title: 'the homepage room finder now works with arrow keys and Enter.',
+    text: 'Type a room name, use the up and down arrow keys to choose a matching room, then press Enter to open it. The finder also announces the matching room count and selected room for screen-reader visitors.',
   },
 ]
 
