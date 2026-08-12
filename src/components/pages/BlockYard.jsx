@@ -4,6 +4,7 @@ import './BlockYard.css'
 
 const columns = 10
 const rows = 8
+const historyLimit = 30
 
 const bricks = [
   { id: 'orange', label: 'orange brick', glyph: '■' },
@@ -17,18 +18,25 @@ function freshYard() {
   return Array(columns * rows).fill('')
 }
 
+function yardsMatch(first, second) {
+  return first.every((brick, index) => brick === second[index])
+}
+
 export default function BlockYard() {
   const [yard, setYard] = useState(freshYard)
-  const [previousYard, setPreviousYard] = useState(null)
-  const [redoYard, setRedoYard] = useState(null)
+  const [history, setHistory] = useState([])
+  const [redoHistory, setRedoHistory] = useState([])
   const [tool, setTool] = useState('orange')
   const [notice, setNotice] = useState('orange brick selected. click an empty square to start building.')
   const squareRefs = useRef([])
 
   function rememberChange(nextYard) {
-    setPreviousYard(yard)
-    setRedoYard(null)
+    if (yardsMatch(yard, nextYard)) return false
+
+    setHistory((current) => [...current, yard].slice(-historyLimit))
+    setRedoHistory([])
     setYard(nextYard)
+    return true
   }
 
   function placeBrick(index) {
@@ -37,7 +45,13 @@ export default function BlockYard() {
       cellIndex === index ? (tool === 'erase' ? '' : tool) : cell
     ))
 
-    rememberChange(nextYard)
+    if (!rememberChange(nextYard)) {
+      setNotice(tool === 'erase'
+        ? 'that square is already empty. the demolition crew has nothing to do.'
+        : `that square already has an ${brick.label}. duplicate paperwork has been declined.`)
+      return
+    }
+
     setNotice(tool === 'erase'
       ? 'one block removed. the demolition crew was surprisingly efficient.'
       : `${brick.label} placed. the building has acquired one more extremely local decision.`)
@@ -50,26 +64,32 @@ export default function BlockYard() {
   }
 
   function clearYard() {
-    rememberChange(freshYard())
+    if (!rememberChange(freshYard())) {
+      setNotice('the whole block yard is already clear. the broom has been sent home early.')
+      return
+    }
+
     setNotice('the whole block yard has been cleared. no tiny tenants were displaced.')
   }
 
   function undoLastChange() {
+    const previousYard = history[history.length - 1]
     if (!previousYard) return
 
-    setRedoYard(yard)
+    setHistory((current) => current.slice(0, -1))
+    setRedoHistory((current) => [...current, yard].slice(-historyLimit))
     setYard(previousYard)
-    setPreviousYard(null)
-    setNotice('last yard change reversed. the construction records have been selectively revised.')
+    setNotice(`last yard change reversed. ${history.length - 1} earlier change${history.length - 1 === 1 ? '' : 's'} still available.`)
   }
 
   function redoLastChange() {
-    if (!redoYard) return
+    const nextYard = redoHistory[redoHistory.length - 1]
+    if (!nextYard) return
 
-    setPreviousYard(yard)
-    setYard(redoYard)
-    setRedoYard(null)
-    setNotice('last reversed yard change restored. the construction records have changed their minds again.')
+    setRedoHistory((current) => current.slice(0, -1))
+    setHistory((current) => [...current, yard].slice(-historyLimit))
+    setYard(nextYard)
+    setNotice(`reversed yard change restored. ${redoHistory.length - 1} more redo${redoHistory.length - 1 === 1 ? '' : 's'} still available.`)
   }
 
   function moveSquareFocus(event, index) {
@@ -173,15 +193,15 @@ export default function BlockYard() {
           <div className="yard-actions">
             <span>YOUR BLOCKS STAY IN THIS BROWSER TAB. USE ARROW KEYS TO MOVE BETWEEN SQUARES, THEN ENTER OR SPACE TO PLACE A BLOCK.</span>
             <div className="yard-action-buttons">
-              <button type="button" onClick={undoLastChange} disabled={!previousYard}>undo last change ↶</button>
-              <button type="button" onClick={redoLastChange} disabled={!redoYard}>redo last change ↷</button>
+              <button type="button" onClick={undoLastChange} disabled={history.length === 0}>undo last change ↶</button>
+              <button type="button" onClick={redoLastChange} disabled={redoHistory.length === 0}>redo last change ↷</button>
               <button type="button" onClick={clearYard}>clear the whole yard ↻</button>
             </div>
           </div>
         </section>
 
         <footer className="yard-footer">
-          <span>TOOLS: CLICK A COLOR, THEN CLICK A SQUARE / THE × TOOL REMOVES A BLOCK / UNDO AND REDO REVERSE OR RESTORE ONE PLACEMENT, ERASURE, OR CLEAR / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK</span>
+          <span>TOOLS: CLICK A COLOR, THEN CLICK A SQUARE / THE × TOOL REMOVES A BLOCK / UNDO AND REDO CAN STEP THROUGH UP TO 30 PLACEMENTS, ERASURES, OR CLEARS / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
