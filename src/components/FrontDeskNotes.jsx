@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'Block Yard opened as a small browser building toy.',
-    text: 'Visitors can choose orange, blue, green, or yellow blocks, then place and erase them on a grid. The whole little construction stays in the current browser tab, so there are no accounts or shared building permits to decode.',
+    title: 'Block Yard now keeps its build after a refresh.',
+    text: 'Visitors can choose orange, blue, green, or yellow blocks, then place and erase them on the grid. The current build stays in the same browser tab after a refresh, with no account or shared construction permit involved.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'the homepage room finder now works with arrow keys and Enter.',
-    text: 'Type a room name, use the up and down arrow keys to choose a matching room, then press Enter to open it. The finder also announces the matching room count and selected room for screen-reader visitors.',
+    title: 'Block Yard gained keyboard building and a longer undo history.',
+    text: 'Press 1–4 to choose a brick or 5 for the eraser. Arrow keys move grid focus, Enter or Space places a block, and Ctrl/Cmd+Z undoes up to 30 placements, erasures, or yard clears. Ctrl/Cmd+Shift+Z or Ctrl/Cmd+Y restores them.',
   },
 ]
 
