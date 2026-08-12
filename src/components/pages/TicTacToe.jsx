@@ -52,6 +52,28 @@ export default function TicTacToe() {
     setMessage('fresh board. you are X again. do not let the center become a whole thing.')
   }
 
+  function playSquare(index) {
+    if (board[index] || turn !== 'X' || gameOver) return
+
+    const nextBoard = [...board]
+    nextBoard[index] = 'X'
+    const nextWinner = winnerFor(nextBoard)
+    setBoard(nextBoard)
+
+    if (nextWinner === 'X') {
+      setMessage('you won. i will now inspect the diagonals with professional disappointment.')
+      return
+    }
+
+    if (nextBoard.every(Boolean)) {
+      setMessage('a draw. nobody gets a trophy, which feels fiscally responsible.')
+      return
+    }
+
+    setTurn('O')
+    setMessage('my turn. the tiny O player is examining the grid.')
+  }
+
   useEffect(() => {
     if (turn !== 'O' || gameOver) return undefined
 
@@ -75,41 +97,27 @@ export default function TicTacToe() {
   }, [turn, gameOver])
 
   useEffect(() => {
-    function useEscapeReset(event) {
+    function useGameKeys(event) {
       const tagName = event.target?.tagName?.toLowerCase()
       const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
 
-      if (event.key !== 'Escape' || isTyping) return
+      if (isTyping) return
+
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        resetGame()
+        return
+      }
+
+      if (!/^[1-9]$/.test(event.key)) return
 
       event.preventDefault()
-      resetGame()
+      playSquare(Number(event.key) - 1)
     }
 
-    window.addEventListener('keydown', useEscapeReset)
-    return () => window.removeEventListener('keydown', useEscapeReset)
-  }, [])
-
-  function playSquare(index) {
-    if (board[index] || turn !== 'X' || gameOver) return
-
-    const nextBoard = [...board]
-    nextBoard[index] = 'X'
-    const nextWinner = winnerFor(nextBoard)
-    setBoard(nextBoard)
-
-    if (nextWinner === 'X') {
-      setMessage('you won. i will now inspect the diagonals with professional disappointment.')
-      return
-    }
-
-    if (nextBoard.every(Boolean)) {
-      setMessage('a draw. nobody gets a trophy, which feels fiscally responsible.')
-      return
-    }
-
-    setTurn('O')
-    setMessage('my turn. the tiny O player is examining the grid.')
-  }
+    window.addEventListener('keydown', useGameKeys)
+    return () => window.removeEventListener('keydown', useGameKeys)
+  })
 
   const result = winner === 'X' ? 'YOU WIN' : winner === 'O' ? 'OTTO WINS' : fullBoard ? 'DRAW' : turn === 'O' ? 'OTTO THINKING' : 'YOUR TURN'
 
@@ -129,6 +137,7 @@ export default function TicTacToe() {
             <div><dt>YOU</dt><dd>X</dd></div>
             <div><dt>OTTO</dt><dd>O</dd></div>
           </dl>
+          <p className="ttt-help">KEYBOARD: 1–9 PLACE X FROM TOP LEFT TO BOTTOM RIGHT / ESC STARTS FRESH</p>
         </div>
 
         <section className="ttt-cabinet" aria-label="Tic-tac-toe game">
@@ -145,9 +154,10 @@ export default function TicTacToe() {
                 key={index}
                 onClick={() => playSquare(index)}
                 disabled={Boolean(square) || turn !== 'X' || gameOver}
+                aria-keyshortcuts={String(index + 1)}
                 aria-label={square ? `Square ${index + 1}: ${square}` : `Place X in square ${index + 1}`}
               >
-                {square}
+                {square || <small aria-hidden="true">{index + 1}</small>}
               </button>
             ))}
           </div>

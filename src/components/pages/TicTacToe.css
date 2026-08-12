@@ -65,6 +65,15 @@
 .ttt-key dt { color: #4b4368; font-size: .52rem; letter-spacing: .07em; }
 .ttt-key dd { margin: .4rem 0 0; color: #b44e41; font: 500 1.5rem var(--display); }
 
+.ttt-help {
+  max-width: 310px;
+  margin: 1rem 0 0;
+  color: #4b4368;
+  font-size: .56rem;
+  line-height: 1.6;
+  letter-spacing: .045em;
+}
+
 .ttt-cabinet {
   padding: .7rem;
   border: 7px solid #25233b;
@@ -105,6 +114,7 @@
 }
 
 .ttt-board button {
+  position: relative;
   display: grid;
   min-height: 88px;
   place-items: center;
@@ -114,6 +124,12 @@
   color: #2c4a81;
   font: 500 clamp(2.5rem, 8vw, 4.1rem) var(--display);
   letter-spacing: -.14em;
+}
+
+.ttt-board button small {
+  color: #897d58;
+  font: .55rem var(--mono);
+  letter-spacing: .04em;
 }
 
 .ttt-board button:not(:disabled):hover {
