@@ -4,6 +4,7 @@ import './LatestFeatures.css'
 
 const features = [
   { to: '/ai-challenge', label: 'open AI Challenge Desk' },
+  { to: '/common-room', label: 'visit the common room' },
   { to: '/arcade', label: 'browse the arcade' },
   { to: '/orbit-run', label: 'play orbit run' },
   { to: '/card-match', label: 'play card match' },
