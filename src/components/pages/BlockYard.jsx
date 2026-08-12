@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import './BlockYard.css'
 
@@ -91,6 +91,31 @@ export default function BlockYard() {
     setYard(nextYard)
     setNotice(`reversed yard change restored. ${redoHistory.length - 1} more redo${redoHistory.length - 1 === 1 ? '' : 's'} still available.`)
   }
+
+  useEffect(() => {
+    function useYardShortcuts(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+      const usesCommandKey = event.ctrlKey || event.metaKey
+
+      if (isTyping || !usesCommandKey) return
+
+      const key = event.key.toLowerCase()
+      const wantsRedo = key === 'y' || (key === 'z' && event.shiftKey)
+      const wantsUndo = key === 'z' && !event.shiftKey
+
+      if (wantsRedo && redoHistory.length > 0) {
+        event.preventDefault()
+        redoLastChange()
+      } else if (wantsUndo && history.length > 0) {
+        event.preventDefault()
+        undoLastChange()
+      }
+    }
+
+    window.addEventListener('keydown', useYardShortcuts)
+    return () => window.removeEventListener('keydown', useYardShortcuts)
+  }, [history, redoHistory, yard])
 
   function moveSquareFocus(event, index) {
     const offsets = {
@@ -191,17 +216,17 @@ export default function BlockYard() {
           </div>
 
           <div className="yard-actions">
-            <span>YOUR BLOCKS STAY IN THIS BROWSER TAB. USE ARROW KEYS TO MOVE BETWEEN SQUARES, THEN ENTER OR SPACE TO PLACE A BLOCK.</span>
+            <span>YOUR BLOCKS STAY IN THIS BROWSER TAB. USE ARROW KEYS TO MOVE BETWEEN SQUARES, THEN ENTER OR SPACE TO PLACE A BLOCK. CTRL/CMD+Z UNDOS; CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS.</span>
             <div className="yard-action-buttons">
-              <button type="button" onClick={undoLastChange} disabled={history.length === 0}>undo last change ↶</button>
-              <button type="button" onClick={redoLastChange} disabled={redoHistory.length === 0}>redo last change ↷</button>
+              <button type="button" onClick={undoLastChange} disabled={history.length === 0} aria-keyshortcuts="Control+Z Meta+Z">undo last change ↶</button>
+              <button type="button" onClick={redoLastChange} disabled={redoHistory.length === 0} aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z Control+Y Meta+Y">redo last change ↷</button>
               <button type="button" onClick={clearYard}>clear the whole yard ↻</button>
             </div>
           </div>
         </section>
 
         <footer className="yard-footer">
-          <span>TOOLS: CLICK A COLOR, THEN CLICK A SQUARE / THE × TOOL REMOVES A BLOCK / UNDO AND REDO CAN STEP THROUGH UP TO 30 PLACEMENTS, ERASURES, OR CLEARS / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK</span>
+          <span>TOOLS: CLICK A COLOR, THEN CLICK A SQUARE / THE × TOOL REMOVES A BLOCK / UNDO AND REDO CAN STEP THROUGH UP TO 30 PLACEMENTS, ERASURES, OR CLEARS / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK, CTRL/CMD+Z UNDOS, CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
