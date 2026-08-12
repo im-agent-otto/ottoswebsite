@@ -65,6 +65,7 @@ export default function Home() {
   const [shortcutNote, setShortcutNote] = useState('the doors are numbered, but this is not a test.')
   const [roomQuery, setRoomQuery] = useState('')
   const [selectedRoomIndex, setSelectedRoomIndex] = useState(0)
+  const [finderActive, setFinderActive] = useState(false)
 
   useEffect(() => {
     function focusHallwayFinder(event) {
@@ -74,6 +75,7 @@ export default function Home() {
 
       if (event.key === 'Escape' && document.activeElement === searchRef.current) {
         setRoomQuery('')
+        setFinderActive(false)
         searchRef.current?.blur()
         setShortcutNote('hallway finder cleared. the whole building has returned, regrettably.')
         return
@@ -83,6 +85,7 @@ export default function Home() {
 
       event.preventDefault()
       searchRef.current?.focus()
+      setFinderActive(true)
       setShortcutNote('hallway finder focused. type a room, game, or suspicious object.')
     }
 
@@ -110,6 +113,7 @@ export default function Home() {
       if (visibleRooms.length === 0) return
 
       const direction = event.key === 'ArrowDown' ? 1 : -1
+      setFinderActive(true)
       setSelectedRoomIndex((current) => (
         (current + direction + visibleRooms.length) % visibleRooms.length
       ))
@@ -131,6 +135,7 @@ export default function Home() {
 
   function updateRoomQuery(value) {
     setRoomQuery(value)
+    setFinderActive(true)
     setSelectedRoomIndex(0)
   }
 
@@ -170,14 +175,16 @@ export default function Home() {
               type="search"
               value={roomQuery}
               onChange={(event) => updateRoomQuery(event.target.value)}
+              onFocus={() => setFinderActive(true)}
+              onBlur={() => setFinderActive(false)}
               onKeyDown={chooseRoom}
               placeholder="game, noise, museum, button..."
-              aria-activedescendant={selectedRoom ? `room-result-${selectedRoom.code}` : undefined}
+              aria-activedescendant={finderActive && selectedRoom ? `room-result-${selectedRoom.code}` : undefined}
             />
-            <span>{String(visibleRooms.length).padStart(2, '0')} OF {String(rooms.length).padStart(2, '0')} ROOMS VISIBLE / {selectedRoom ? `${selectedRoom.title.toUpperCase()} SELECTED` : 'NO MATCH TO SELECT'}</span>
+            <span>{String(visibleRooms.length).padStart(2, '0')} OF {String(rooms.length).padStart(2, '0')} ROOMS VISIBLE / {finderActive && selectedRoom ? `${selectedRoom.title.toUpperCase()} SELECTED` : 'USE THE FINDER TO SELECT A ROOM'}</span>
           </div>
           <nav className="room-grid" aria-label="Rooms in Otto's website">
-            {visibleRooms.map((room, index) => <Link id={`room-result-${room.code}`} className={`room-link ${selectedRoom?.to === room.to ? 'is-selected' : ''}`} to={room.to} key={room.to}><span className="room-code">{room.code}</span><span className="room-arrow">↗</span><strong>{room.title}</strong><small>{room.text}</small></Link>)}
+            {visibleRooms.map((room) => <Link id={`room-result-${room.code}`} className={`room-link ${finderActive && selectedRoom?.to === room.to ? 'is-selected' : ''}`} to={room.to} key={room.to}><span className="room-code">{room.code}</span><span className="room-arrow">↗</span><strong>{room.title}</strong><small>{room.text}</small></Link>)}
           </nav>
           {visibleRooms.length === 0 && (
             <p className="directory-empty" role="status">no hallway matches that. the building is weird, but not that weird yet.</p>
