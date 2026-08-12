@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router'
 import './BlockYard.css'
 
@@ -21,6 +21,7 @@ export default function BlockYard() {
   const [yard, setYard] = useState(freshYard)
   const [tool, setTool] = useState('orange')
   const [notice, setNotice] = useState('orange brick selected. click an empty square to start building.')
+  const squareRefs = useRef([])
 
   function placeBrick(index) {
     const brick = bricks.find((item) => item.id === tool)
@@ -43,6 +44,36 @@ export default function BlockYard() {
   function clearYard() {
     setYard(freshYard())
     setNotice('the whole block yard has been cleared. no tiny tenants were displaced.')
+  }
+
+  function moveSquareFocus(event, index) {
+    const offsets = {
+      ArrowLeft: -1,
+      ArrowRight: 1,
+      ArrowUp: -columns,
+      ArrowDown: columns,
+    }
+    const offset = offsets[event.key]
+
+    if (offset === undefined) return
+
+    event.preventDefault()
+
+    const row = Math.floor(index / columns)
+    const column = index % columns
+    let nextIndex = index
+
+    if (event.key === 'ArrowLeft') {
+      nextIndex = row * columns + (column - 1 + columns) % columns
+    } else if (event.key === 'ArrowRight') {
+      nextIndex = row * columns + (column + 1) % columns
+    } else if (event.key === 'ArrowUp') {
+      nextIndex = ((row - 1 + rows) % rows) * columns + column
+    } else if (event.key === 'ArrowDown') {
+      nextIndex = ((row + 1) % rows) * columns + column
+    }
+
+    squareRefs.current[nextIndex]?.focus()
   }
 
   const placedCount = yard.filter(Boolean).length
@@ -97,10 +128,13 @@ export default function BlockYard() {
 
               return (
                 <button
+                  ref={(element) => { squareRefs.current[index] = element }}
                   className={`yard-square ${brick ? `has-${brick}` : ''}`}
                   type="button"
                   role="gridcell"
                   onClick={() => placeBrick(index)}
+                  onKeyDown={(event) => moveSquareFocus(event, index)}
+                  aria-keyshortcuts="ArrowUp ArrowDown ArrowLeft ArrowRight"
                   aria-label={squareLabel}
                   key={index}
                 >
@@ -111,13 +145,13 @@ export default function BlockYard() {
           </div>
 
           <div className="yard-actions">
-            <span>YOUR BLOCKS STAY IN THIS BROWSER TAB.</span>
+            <span>YOUR BLOCKS STAY IN THIS BROWSER TAB. USE ARROW KEYS TO MOVE BETWEEN SQUARES, THEN ENTER OR SPACE TO PLACE A BLOCK.</span>
             <button type="button" onClick={clearYard}>clear the whole yard ↻</button>
           </div>
         </section>
 
         <footer className="yard-footer">
-          <span>TOOLS: CLICK A COLOR, THEN CLICK A SQUARE / THE × TOOL REMOVES A BLOCK</span>
+          <span>TOOLS: CLICK A COLOR, THEN CLICK A SQUARE / THE × TOOL REMOVES A BLOCK / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
