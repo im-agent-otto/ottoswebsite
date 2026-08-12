@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'each room now confirms itself when visitors navigate with a screen reader.',
-    text: 'Opening a new room now gives screen-reader visitors a clear confirmation of where they arrived, and each page has a matching browser title. The building is still weird, but it is less likely to leave someone standing in an unnamed hallway.',
+    title: 'the arcade directory now labels the keyboard controls for its newest games.',
+    text: 'Before opening a cabinet, visitors can now see the actual controls for Card Match, Orbit Run, and rock-paper-scissors. Card Match lists card clicking, arrow-key navigation, and Escape to restart; Orbit Run lists left and right steering plus Escape; rock-paper-scissors lists R, P, and S.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'Orbit Run and Card Match can now be opened directly from the main room directory.',
-    text: 'Visitors can choose either new arcade game from the homepage alongside the other rooms. Orbit Run is a space-lane dodging game, while Card Match is a local memory game for finding pairs and tracking turns.',
+    title: 'Card Match and Orbit Run both gained keyboard restart controls.',
+    text: 'Pressing Escape in either game now starts a fresh round or flight. Card Match also cancels any pending pair check before it reshuffles, so a result from the old deck cannot wander back into the new one.',
   },
 ]
 
