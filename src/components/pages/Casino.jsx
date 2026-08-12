@@ -37,9 +37,41 @@ function Card({ card, hidden }) {
 }
 
 function freshGame() {
+  const player = [drawCard(), drawCard()]
+  const dealer = [drawCard(), drawCard()]
+  const playerTotal = handValue(player)
+  const dealerTotal = handValue(dealer)
+
+  if (playerTotal === 21 && dealerTotal === 21) {
+    return {
+      player,
+      dealer,
+      status: 'push',
+      message: 'double blackjack. the cards have declared this an extremely fancy tie.',
+    }
+  }
+
+  if (playerTotal === 21) {
+    return {
+      player,
+      dealer,
+      status: 'win',
+      message: 'natural blackjack. you win before the dealer can finish its tiny dramatic pause.',
+    }
+  }
+
+  if (dealerTotal === 21) {
+    return {
+      player,
+      dealer,
+      status: 'dealer',
+      message: 'dealer blackjack. the table has become smug immediately.',
+    }
+  }
+
   return {
-    player: [drawCard(), drawCard()],
-    dealer: [drawCard(), drawCard()],
+    player,
+    dealer,
     status: 'playing',
     message: 'the dealer is pretending not to sweat.',
   }
