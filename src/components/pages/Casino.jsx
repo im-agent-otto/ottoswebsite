@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 
 const suits = ['♠', '♥', '♦', '♣']
@@ -50,6 +50,21 @@ export default function Casino() {
   const playerTotal = handValue(game.player)
   const dealerTotal = handValue(game.dealer)
   const done = game.status !== 'playing'
+
+  useEffect(() => {
+    function useEscapeDeal(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (event.key !== 'Escape' || isTyping) return
+
+      event.preventDefault()
+      setGame(freshGame())
+    }
+
+    window.addEventListener('keydown', useEscapeDeal)
+    return () => window.removeEventListener('keydown', useEscapeDeal)
+  }, [])
 
   function hit() {
     if (done) return
@@ -115,7 +130,7 @@ export default function Casino() {
           )}
         </div>
       </section>
-      <p className="casino-footnote">imaginary chips remaining: all of them. gambling problem: artistically implied.</p>
+      <p className="casino-footnote">imaginary chips remaining: all of them. gambling problem: artistically implied. Escape deals a fresh hand.</p>
     </main>
   )
 }
