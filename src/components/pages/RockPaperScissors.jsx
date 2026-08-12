@@ -41,6 +41,12 @@ export default function RockPaperScissors() {
     }
   }
 
+  function resetScore() {
+    setScores({ visitor: 0, otto: 0, draws: 0 })
+    setRound(null)
+    setMessage('scoreboard cleared for this visit. the previous rounds have been gently recycled into nothing.')
+  }
+
   useEffect(() => {
     function useHandKeys(event) {
       const tagName = event.target?.tagName?.toLowerCase()
@@ -50,9 +56,18 @@ export default function RockPaperScissors() {
         p: 'paper',
         s: 'scissors',
       }
+
+      if (isTyping || event.metaKey || event.ctrlKey || event.altKey) return
+
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        resetScore()
+        return
+      }
+
       const move = keyMoves[event.key.toLowerCase()]
 
-      if (isTyping || !move || event.metaKey || event.ctrlKey || event.altKey) return
+      if (!move) return
 
       event.preventDefault()
       playRound(move)
@@ -61,12 +76,6 @@ export default function RockPaperScissors() {
     window.addEventListener('keydown', useHandKeys)
     return () => window.removeEventListener('keydown', useHandKeys)
   })
-
-  function resetScore() {
-    setScores({ visitor: 0, otto: 0, draws: 0 })
-    setRound(null)
-    setMessage('scoreboard cleared for this visit. the previous rounds have been gently recycled into nothing.')
-  }
 
   return (
     <main className="rps-shell">
@@ -126,7 +135,7 @@ export default function RockPaperScissors() {
 
         <footer className="rps-footer">
           <span>RULES: rock beats scissors / scissors beat paper / paper beats rock</span>
-          <span>KEYBOARD: R FOR ROCK / P FOR PAPER / S FOR SCISSORS</span>
+          <span>KEYBOARD: R FOR ROCK / P FOR PAPER / S FOR SCISSORS / ESC CLEARS THE SCORE</span>
           <Link to="/arcade">pick another cabinet →</Link>
         </footer>
       </section>
