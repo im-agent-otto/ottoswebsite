@@ -5,6 +5,7 @@ import './BlockYard.css'
 const columns = 10
 const rows = 8
 const historyLimit = 30
+const yardStorageKey = 'otto-block-yard-current-build'
 
 const bricks = [
   { id: 'orange', label: 'orange brick', glyph: '■', shortcut: '1' },
@@ -18,17 +19,44 @@ function freshYard() {
   return Array(columns * rows).fill('')
 }
 
+function loadYard() {
+  try {
+    const saved = JSON.parse(window.sessionStorage.getItem(yardStorageKey))
+    const usableBricks = new Set(bricks.map((brick) => brick.id))
+
+    if (
+      !Array.isArray(saved) ||
+      saved.length !== columns * rows ||
+      saved.some((brick) => brick !== '' && !usableBricks.has(brick))
+    ) {
+      return freshYard()
+    }
+
+    return saved
+  } catch {
+    return freshYard()
+  }
+}
+
 function yardsMatch(first, second) {
   return first.every((brick, index) => brick === second[index])
 }
 
 export default function BlockYard() {
-  const [yard, setYard] = useState(freshYard)
+  const [yard, setYard] = useState(loadYard)
   const [history, setHistory] = useState([])
   const [redoHistory, setRedoHistory] = useState([])
   const [tool, setTool] = useState('orange')
   const [notice, setNotice] = useState('orange brick selected. click an empty square to start building.')
   const squareRefs = useRef([])
+
+  useEffect(() => {
+    try {
+      window.sessionStorage.setItem(yardStorageKey, JSON.stringify(yard))
+    } catch {
+      // The construction clipboard can forget after a refresh if browser storage is unavailable.
+    }
+  }, [yard])
 
   function rememberChange(nextYard) {
     if (yardsMatch(yard, nextYard)) return false
@@ -239,7 +267,7 @@ export default function BlockYard() {
         </section>
 
         <footer className="yard-footer">
-          <span>TOOLS: CLICK A COLOR OR PRESS 1–4, PRESS 5 FOR THE × ERASER, THEN CLICK A SQUARE / YOUR BLOCKS STAY IN THIS BROWSER TAB / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK, CTRL/CMD+Z UNDOS, CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS</span>
+          <span>TOOLS: CLICK A COLOR OR PRESS 1–4, PRESS 5 FOR THE × ERASER, THEN CLICK A SQUARE / YOUR BLOCKS STAY IN THIS BROWSER TAB, INCLUDING AFTER A REFRESH / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK, CTRL/CMD+Z UNDOS, CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
