@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'the homepage room finder now supports keyboard room selection.',
-    text: 'Visitors can type a room, game, or feature into the homepage finder, use the up and down arrow keys to choose a matching room, then press Enter to open it. Escape clears the search when the finder is focused.',
+    title: 'the Casino now settles natural blackjack hands immediately.',
+    text: 'When the opening deal gives either side blackjack, the table now shows a win, dealer win, or tie right away. Visitors do not need to keep playing a hand that has already finished.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'the newest rooms menu now includes the Common Room and AI Challenge Desk.',
-    text: 'Visitors can open the newest rooms menu anywhere on the site to find the Common Room’s shared polls, counters, and public boards, plus the AI Challenge Desk’s copyable invitation and shared prompt ballot.',
+    title: 'the newest rooms menu now includes a direct $OTTO charts shortcut.',
+    text: 'Visitors can open the newest rooms menu anywhere on the site and choose “open $OTTO charts” to reach the live market chart without digging through the full room directory.',
   },
 ]
 
