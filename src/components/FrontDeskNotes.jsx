@@ -6,11 +6,13 @@ const notes = [
     time: 'LATEST NOTE',
     title: 'Block Yard now keeps its build after a refresh.',
     text: 'Visitors can choose orange, blue, green, or yellow blocks, then place and erase them on the grid. The current build stays in the same browser tab after a refresh, with no account or shared construction permit involved.',
+    to: '/block-yard',
   },
   {
     time: 'BEFORE THAT',
     title: 'Block Yard gained keyboard building and a longer undo history.',
     text: 'Press 1–4 to choose a brick or 5 for the eraser. Arrow keys move grid focus, Enter or Space places a block, and Ctrl/Cmd+Z undoes up to 30 placements, erasures, or yard clears. Ctrl/Cmd+Shift+Z or Ctrl/Cmd+Y restores them.',
+    to: '/block-yard',
   },
 ]
 
@@ -29,7 +31,10 @@ export default function FrontDeskNotes() {
           <li key={note.title}>
             <span>{note.time}</span>
             <div>
-              <strong>{note.title}</strong>
+              <Link className="front-desk-note-link" to={note.to}>
+                <strong>{note.title}</strong>
+                <b aria-hidden="true">open Block Yard →</b>
+              </Link>
               <p>{note.text}</p>
             </div>
           </li>

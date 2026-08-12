@@ -60,10 +60,35 @@
   letter-spacing: .055em;
 }
 
+.front-desk-note-link {
+  display: flex;
+  justify-content: space-between;
+  gap: .7rem;
+  align-items: baseline;
+  color: var(--ink);
+  text-decoration: none;
+}
+
 .front-desk-notes strong {
   display: block;
   font: 500 .84rem/1.25 var(--display);
   letter-spacing: -.03em;
+}
+
+.front-desk-note-link b {
+  flex: 0 0 auto;
+  color: var(--orange-dark);
+  font-size: .48rem;
+  letter-spacing: .045em;
+  white-space: nowrap;
+}
+
+.front-desk-note-link:hover strong {
+  color: var(--orange-dark);
+}
+
+.front-desk-note-link:hover b {
+  transform: translateX(2px);
 }
 
 .front-desk-notes li p {
@@ -108,5 +133,11 @@
   .front-desk-notes li {
     grid-template-columns: 1fr;
     gap: .35rem;
+  }
+
+  .front-desk-note-link {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: .3rem;
   }
 }
