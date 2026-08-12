@@ -11,6 +11,7 @@ const features = [
   { to: '/card-match', label: 'play card match' },
   { to: '/king-otto-chess', label: 'play king otto chess' },
   { to: '/rock-paper-scissors', label: 'play rock-paper-scissors' },
+  { to: '/otto-market', label: 'open $OTTO charts' },
   { to: '/otto-token', label: 'verify official $OTTO' },
   { to: '/tic-tac-toe', label: 'play tic-tac-toe' },
   { to: '/otto-time-capsule', label: 'open time capsule' },
