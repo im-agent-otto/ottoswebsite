@@ -48,11 +48,21 @@ export default function SnakeShift() {
 
   useEffect(() => {
     function onKeyDown(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
       const keys = {
         ArrowUp: { x: 0, y: -1 },
         ArrowDown: { x: 0, y: 1 },
         ArrowLeft: { x: -1, y: 0 },
         ArrowRight: { x: 1, y: 0 },
+      }
+
+      if (isTyping) return
+
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        reset()
+        return
       }
 
       if (keys[event.key]) {
@@ -121,7 +131,7 @@ export default function SnakeShift() {
             it into a wall or its own increasingly questionable life choices.
           </p>
           <div className="snake-score"><span>SNACKS PROCESSED</span><strong>{String(snake.length - startingSnake.length).padStart(2, '0')}</strong></div>
-          <p className="snake-help">arrow keys work. so do the buttons. the snake is doing its best.</p>
+          <p className="snake-help">arrow keys work. so do the buttons. Escape starts a fresh shift. the snake is doing its best.</p>
         </div>
 
         <div className="snake-machine">
