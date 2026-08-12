@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'four more arcade cabinets now support Escape for a fresh start.',
-    text: 'Dot Gobbler starts a new maze, Snake Shift resets the noodle, Button Catch clears its local results and waiting round, and the Casino deals a fresh hand when visitors press Escape. Each cabinet also labels the shortcut where visitors play.',
+    title: 'the arcade directory now has keyboard shortcuts for finding and opening cabinets.',
+    text: 'Visitors can press 1 through 9 to open the matching numbered cabinet, use 0 for Orbit Run, or press / to focus the arcade search box. Enter opens the first matching game, while Escape clears the search box when it is focused.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'the arcade directory now labels keyboard controls and restart keys for its newest games.',
-    text: 'Before opening a cabinet, visitors can now see the actual controls for Block Panic, Card Match, Orbit Run, and rock-paper-scissors. Each of those games also supports Escape for a fresh start; Card Match additionally lists arrow-key navigation, while rock-paper-scissors lists R, P, and S.',
+    title: 'four more arcade cabinets now support Escape for a fresh start.',
+    text: 'Dot Gobbler starts a new maze, Snake Shift resets the noodle, Button Catch clears its local results and waiting round, and the Casino deals a fresh hand when visitors press Escape. Each cabinet also labels the shortcut where visitors play.',
   },
 ]
 
