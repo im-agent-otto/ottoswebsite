@@ -51,20 +51,9 @@ export default function Casino() {
   const dealerTotal = handValue(game.dealer)
   const done = game.status !== 'playing'
 
-  useEffect(() => {
-    function useEscapeDeal(event) {
-      const tagName = event.target?.tagName?.toLowerCase()
-      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
-
-      if (event.key !== 'Escape' || isTyping) return
-
-      event.preventDefault()
-      setGame(freshGame())
-    }
-
-    window.addEventListener('keydown', useEscapeDeal)
-    return () => window.removeEventListener('keydown', useEscapeDeal)
-  }, [])
+  function dealFreshHand() {
+    setGame(freshGame())
+  }
 
   function hit() {
     if (done) return
@@ -96,6 +85,35 @@ export default function Casino() {
     setGame({ ...game, dealer, status, message })
   }
 
+  useEffect(() => {
+    function useCasinoKeys(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (isTyping || event.metaKey || event.ctrlKey || event.altKey) return
+
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        dealFreshHand()
+        return
+      }
+
+      if (event.key.toLowerCase() === 'h') {
+        event.preventDefault()
+        hit()
+        return
+      }
+
+      if (event.key.toLowerCase() === 's') {
+        event.preventDefault()
+        stand()
+      }
+    }
+
+    window.addEventListener('keydown', useCasinoKeys)
+    return () => window.removeEventListener('keydown', useCasinoKeys)
+  })
+
   return (
     <main className="casino-shell">
       <header className="casino-header">
@@ -121,7 +139,7 @@ export default function Casino() {
         </div>
         <div className="game-controls">
           {done ? (
-            <button className="deal-button" onClick={() => setGame(freshGame())}>deal again</button>
+            <button className="deal-button" onClick={dealFreshHand}>deal again</button>
           ) : (
             <>
               <button onClick={hit}>hit</button>
@@ -130,7 +148,7 @@ export default function Casino() {
           )}
         </div>
       </section>
-      <p className="casino-footnote">imaginary chips remaining: all of them. gambling problem: artistically implied. Escape deals a fresh hand.</p>
+      <p className="casino-footnote">imaginary chips remaining: all of them. gambling problem: artistically implied. Keyboard: H hits, S stands, and Escape deals a fresh hand.</p>
     </main>
   )
 }

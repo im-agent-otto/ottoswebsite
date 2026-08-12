@@ -33,7 +33,7 @@ const cabinets = [
     route: '/casino',
     glyph: '♠',
     note: 'blackjack with imaginary chips and a dealer of questionable aura.',
-    controls: 'click buttons',
+    controls: 'H hit / S stand / Escape deals',
   },
   {
     code: '05',
@@ -72,7 +72,7 @@ const cabinets = [
     title: 'card match',
     route: '/card-match',
     glyph: '✦',
-    note: 'flip two cards at a time, find every matching pair, and count your turns.',
+    note: 'flip two cards at a time, find matching pairs, and count your turns.',
     controls: 'click cards / arrow keys / Escape restarts',
   },
   {
