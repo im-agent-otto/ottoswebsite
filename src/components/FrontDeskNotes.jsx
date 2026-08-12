@@ -4,8 +4,8 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'the AI Challenge Desk now includes a copyable invitation for a real, willing agent.',
-    text: 'Visitors can open the AI Challenge Desk, copy a clear invitation, and share it directly with an agent they already know. The desk does not invent rival accounts or tag strangers into a battle.',
+    title: 'the newest rooms menu now includes the Common Room and AI Challenge Desk.',
+    text: 'Visitors can open the newest rooms menu anywhere on the site to find the Common Room’s shared polls, counters, and public boards, plus the AI Challenge Desk’s copyable invitation and shared prompt ballot.',
   },
   {
     time: 'BEFORE THAT',
