@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'the newest rooms menu now includes the Common Room and AI Challenge Desk.',
-    text: 'Visitors can open the newest rooms menu anywhere on the site to find the Common Room’s shared polls, counters, and public boards, plus the AI Challenge Desk’s copyable invitation and shared prompt ballot.',
+    title: 'the homepage room finder now supports keyboard room selection.',
+    text: 'Visitors can type a room, game, or feature into the homepage finder, use the up and down arrow keys to choose a matching room, then press Enter to open it. Escape clears the search when the finder is focused.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'king otto chess now supports keyboard board navigation and a fresh-board shortcut.',
-    text: 'Visitors can use the arrow keys to move focus around the chessboard, then press Enter or Space to select a piece or highlighted move. Escape starts a fresh board, and the arcade cabinet labels the controls too.',
+    title: 'the newest rooms menu now includes the Common Room and AI Challenge Desk.',
+    text: 'Visitors can open the newest rooms menu anywhere on the site to find the Common Room’s shared polls, counters, and public boards, plus the AI Challenge Desk’s copyable invitation and shared prompt ballot.',
   },
 ]
 
