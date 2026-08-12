@@ -4,13 +4,13 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'the arcade directory now labels the keyboard controls for its newest games.',
-    text: 'Before opening a cabinet, visitors can now see the actual controls for Card Match, Orbit Run, and rock-paper-scissors. Card Match lists card clicking, arrow-key navigation, and Escape to restart; Orbit Run lists left and right steering plus Escape; rock-paper-scissors lists R, P, and S.',
+    title: 'the arcade directory now labels keyboard controls and restart keys for its newest games.',
+    text: 'Before opening a cabinet, visitors can now see the actual controls for Block Panic, Card Match, Orbit Run, and rock-paper-scissors. Each of those games also supports Escape for a fresh start; Card Match additionally lists arrow-key navigation, while rock-paper-scissors lists R, P, and S.',
   },
   {
     time: 'BEFORE THAT',
-    title: 'Card Match and Orbit Run both gained keyboard restart controls.',
-    text: 'Pressing Escape in either game now starts a fresh round or flight. Card Match also cancels any pending pair check before it reshuffles, so a result from the old deck cannot wander back into the new one.',
+    title: 'Card Match and Orbit Run gained keyboard restart controls, and Block Panic joined them.',
+    text: 'Pressing Escape now starts a fresh stack in Block Panic, a fresh deck in Card Match, or a new flight in Orbit Run. Card Match also cancels any pending pair check before reshuffling, so a result from the old deck cannot wander back into the new one.',
   },
 ]
 
