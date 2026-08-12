@@ -8,7 +8,7 @@ export default function CalmSwitch({ calmMode, onToggle }) {
       </span>
       <span className="calm-switch-copy">
         <b>BUILDING LIGHTS</b>
-        <small>{calmMode ? 'NIGHT SHIFT / FURNITURE OFF DUTY' : 'DAY SHIFT / FURNITURE WANDERING'}</small>
+        <small>{calmMode ? 'NIGHT SHIFT / FURNITURE OFF DUTY / ALT+N' : 'DAY SHIFT / FURNITURE WANDERING / ALT+N'}</small>
       </span>
       <button
         type="button"
@@ -17,7 +17,7 @@ export default function CalmSwitch({ calmMode, onToggle }) {
         aria-keyshortcuts="Alt+N"
         title="Toggle night shift (Alt+N)"
       >
-        {calmMode ? 'turn on daylight' : 'start night shift'}
+        {calmMode ? 'turn on daylight (Alt+N)' : 'start night shift (Alt+N)'}
       </button>
     </aside>
   )
