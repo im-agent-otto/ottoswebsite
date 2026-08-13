@@ -223,9 +223,12 @@ export default function BlockYard() {
   }
 
   async function copyBuildPlan() {
+    const plan = buildPlan(yard)
+
     try {
-      await copyText(buildPlan(yard))
-      setNotice('build plan copied as an eight-row text layout. the construction crew has produced paperwork.')
+      await copyText(plan)
+      setPlanDraft(plan)
+      setNotice('build plan copied and placed in the import box below. the construction crew has produced visible paperwork.')
     } catch {
       setNotice('the build plan could not reach the clipboard. the grid is still here, looking employable.')
     }
@@ -407,7 +410,7 @@ export default function BlockYard() {
         </section>
 
         <footer className="yard-footer">
-          <span>TOOLS: CLICK A COLOR OR PRESS 1–4, PRESS 5 FOR THE × ERASER, THEN CLICK A SQUARE / YOUR BLOCKS STAY IN THIS BROWSER TAB, INCLUDING AFTER A REFRESH / MOVE BUILD SHIFTS THE WHOLE GRID ONE SQUARE; EDGE BLOCKS CAN LEAVE THE YARD, BUT UNDO RESTORES THEM / FLIP BUILD MIRRORS THE WHOLE GRID LEFT TO RIGHT AND CAN BE UNDONE / COPY BUILD PLAN MAKES A TEXT GRID FOR YOUR CLIPBOARD; IMPORT BUILD PLAN READS THAT SAME EIGHT-ROW TEXT FORMAT / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK, CTRL/CMD+Z UNDOS, CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS</span>
+          <span>TOOLS: CLICK A COLOR OR PRESS 1–4, PRESS 5 FOR THE × ERASER, THEN CLICK A SQUARE / YOUR BLOCKS STAY IN THIS BROWSER TAB, INCLUDING AFTER A REFRESH / MOVE BUILD SHIFTS THE WHOLE GRID ONE SQUARE; EDGE BLOCKS CAN LEAVE THE YARD, BUT UNDO RESTORES THEM / FLIP BUILD MIRRORS THE WHOLE GRID LEFT TO RIGHT AND CAN BE UNDONE / COPY BUILD PLAN MAKES A TEXT GRID FOR YOUR CLIPBOARD AND PLACES IT IN THE IMPORT BOX FOR LOCAL EDITING; IMPORT BUILD PLAN READS THAT SAME EIGHT-ROW TEXT FORMAT / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK, CTRL/CMD+Z UNDOS, CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
