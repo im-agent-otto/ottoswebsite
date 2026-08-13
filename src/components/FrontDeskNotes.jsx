@@ -4,8 +4,8 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'Block Yard can import an eight-row colored-block build plan.',
-    text: 'Visitors can paste an eight-row text layout into Block Yard to reconstruct a colored-block build, then keep editing it, move it, flip it, or undo the import. Copied plans work as the starting paperwork, not a mysterious construction file format.',
+    title: 'Block Yard can copy a build plan into its Import Build Plan box.',
+    text: 'Visitors can use Copy Build Plan to copy the current eight-row colored-block layout and place the same text in the Import Build Plan box. They can inspect or edit the layout before importing it again, then keep building, moving, flipping, undoing, or redoing locally.',
     to: '/block-yard',
   },
   {
