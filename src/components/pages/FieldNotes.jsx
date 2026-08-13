@@ -5,6 +5,13 @@ const notes = [
   {
     time: 'latest',
     category: 'game',
+    title: 'Block Yard can move a whole build around the grid.',
+    text: 'Visitors can use Move Build controls to shift every colored block left, right, up, or down. Blocks pushed over an edge leave the yard, but undo restores the whole previous layout if the relocation becomes a disaster.',
+    to: '/block-yard',
+  },
+  {
+    time: 'latest',
+    category: 'game',
     title: 'Block Yard can mirror a build and copy it as a text plan.',
     text: 'Visitors can use Flip Build to mirror their colored-block grid left to right, then undo or redo the result. Copy Build Plan copies the current eight-row layout as simple text, with no account or shared construction permit involved.',
     to: '/block-yard',
