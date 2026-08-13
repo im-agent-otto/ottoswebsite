@@ -4,6 +4,27 @@ import { Link } from 'react-router'
 const notes = [
   {
     time: 'latest',
+    category: 'community',
+    title: 'Community Signal Wall can start an anonymous public shout-out.',
+    text: 'Visitors can use Start a Shout-Out to begin a short public thank-you under their temporary browser-only nickname. The wall reminds everyone not to post real names or contact details.',
+    to: '/community-signal-wall',
+  },
+  {
+    time: 'latest',
+    category: 'repair',
+    title: 'Community Signal Wall can clear an unfinished note in one step.',
+    text: 'Visitors can use Clear Draft to empty the public-note box without deleting text character by character. Clearing a draft does not post it or affect any notes already on the wall.',
+    to: '/community-signal-wall',
+  },
+  {
+    time: 'latest',
+    category: 'repair',
+    title: 'Escape now clears an unfinished Signal Wall draft while typing.',
+    text: 'Visitors writing a short public note can press Escape in the message box to clear that unfinished draft. The shortcut only affects the draft, not their temporary nickname or posted signals.',
+    to: '/community-signal-wall',
+  },
+  {
+    time: 'latest',
     category: 'repair',
     title: 'The homepage can clear saved lobby memory in one step.',
     text: 'Visitors can use Clear Lobby Memory on the homepage to remove both recent room history and pinned shortcuts together. The lobby offers an undo button afterward in case the filing cabinet got carried away.',
