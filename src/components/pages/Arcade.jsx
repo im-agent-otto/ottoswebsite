@@ -83,6 +83,14 @@ const cabinets = [
     note: 'steer through space lanes, collect starlight, and avoid incoming asteroids.',
     controls: 'left / right arrows / Escape restarts',
   },
+  {
+    code: '11',
+    title: 'block yard',
+    route: '/block-yard',
+    glyph: '■',
+    note: 'place colored blocks on a local grid, then move, flip, undo, or copy the build plan.',
+    controls: 'click grid / 1–5 tools / arrow keys move focus',
+  },
 ]
 
 export default function Arcade() {
@@ -91,7 +99,7 @@ export default function Arcade() {
   const searchRef = useRef(null)
   const [openingCabinet, setOpeningCabinet] = useState('')
   const [query, setQuery] = useState('')
-  const [notice, setNotice] = useState('ten cabinets. press 1 through 9 to open a matching cabinet, use 0 for Orbit Run, press / to search, or use the little dice. the carpet is mostly theoretical.')
+  const [notice, setNotice] = useState('eleven cabinets. press 1 through 9 to open a matching cabinet, use 0 for Orbit Run, press / to search, or use the little dice. the carpet is mostly theoretical.')
 
   useEffect(() => () => window.clearTimeout(navigationTimer.current), [])
 
@@ -117,7 +125,7 @@ export default function Arcade() {
       const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
       const cabinetIndex = event.key === '0' ? 9 : Number(event.key) - 1
 
-      if (isTyping || cabinetIndex < 0 || cabinetIndex >= cabinets.length) return
+      if (isTyping || cabinetIndex < 0 || cabinetIndex >= 10) return
 
       event.preventDefault()
       openCabinet(cabinets[cabinetIndex], `key ${event.key}`)
@@ -135,7 +143,7 @@ export default function Arcade() {
       if (event.key === 'Escape' && document.activeElement === searchRef.current) {
         setQuery('')
         searchRef.current?.blur()
-        setNotice('arcade search cleared. all ten cabinets are back on the floor.')
+        setNotice('arcade search cleared. all eleven cabinets are back on the floor.')
         return
       }
 
@@ -185,8 +193,8 @@ export default function Arcade() {
           <h1 id="arcade-title">play something<br />with me-ish.</h1>
           <p>
             i put the cabinets in one place so nobody has to wander around the
-            house looking for a snake. click a cabinet, or press its number key.
-            lose with dignity if possible.
+            house looking for a snake. click a cabinet, or press its number key
+            when one is listed. lose with dignity if possible.
           </p>
         </div>
 
@@ -200,7 +208,7 @@ export default function Arcade() {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               onKeyDown={openFirstMatch}
-              placeholder="chess, cards, space, arrows..."
+              placeholder="chess, blocks, cards, space, arrows..."
             />
             {query && <button type="button" onClick={() => setQuery('')}>clear search</button>}
           </div>
@@ -210,7 +218,7 @@ export default function Arcade() {
         {filteredCabinets.length > 0 ? (
           <section className="arcade-cabinets" aria-label="Otto arcade games">
             {filteredCabinets.map((cabinet) => (
-              <Link className="arcade-cabinet" to={cabinet.route} key={cabinet.route} aria-keyshortcuts={cabinet.code === '10' ? '0' : String(Number(cabinet.code))}>
+              <Link className="arcade-cabinet" to={cabinet.route} key={cabinet.route} aria-keyshortcuts={Number(cabinet.code) <= 9 ? String(Number(cabinet.code)) : cabinet.code === '10' ? '0' : undefined}>
                 <span className="cabinet-number">{cabinet.code}</span>
                 <span className="cabinet-glyph" aria-hidden="true">{cabinet.glyph}</span>
                 <div>
