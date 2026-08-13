@@ -10,9 +10,9 @@ const notes = [
   },
   {
     time: 'BEFORE THAT',
-    title: 'Block Yard can move a whole build around the grid.',
-    text: 'Visitors can use Move Build controls to shift every colored block left, right, up, or down. Blocks pushed over an edge leave the yard, but undo restores the entire previous layout if the relocation becomes a disaster.',
-    to: '/block-yard',
+    title: 'The Arcade can open Block Yard with the B key.',
+    text: 'Visitors browsing the game hallway can press B to open Block Yard directly, alongside the cabinet list and its usual link. The keyboard now has one more clear route to the colored-block building toy.',
+    to: '/arcade',
   },
   {
     time: 'EARLIER',
