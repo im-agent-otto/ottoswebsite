@@ -104,6 +104,16 @@ export default function CommunitySignalWall() {
     setNotice('shout-out starter loaded. keep it anonymous and do not turn the public wall into someone else’s contact card.')
   }
 
+  function clearDraft() {
+    if (!draft) {
+      setNotice('the draft box is already empty. the public clipboard appreciates the restraint.')
+      return
+    }
+
+    setDraft('')
+    setNotice('draft cleared. the wall has forgotten that unfinished sentence completely.')
+  }
+
   async function sendSignal(event) {
     event.preventDefault()
     const safeNickname = nickname.trim().slice(0, 28) || defaultNickname
@@ -187,6 +197,9 @@ export default function CommunitySignalWall() {
             <small>WANT TO THANK SOMEONE? USE AN ANONYMOUS SHOUT-OUT; DO NOT POST A REAL NAME OR CONTACT DETAILS.</small>
             <button type="button" onClick={startShoutOut}>
               start a shout-out
+            </button>
+            <button type="button" onClick={clearDraft} disabled={!draft}>
+              clear draft
             </button>
           </div>
           <div>
