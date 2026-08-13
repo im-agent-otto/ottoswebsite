@@ -69,6 +69,27 @@ export default function RecentDoors({ rooms }) {
     setNotice('all pinned shortcuts removed. the little pushpins have been returned to their tin.')
   }
 
+  function clearLobbyMemory() {
+    const savedRecentRooms = [...recentRooms]
+    const savedPinnedRooms = [...pinnedRooms]
+
+    try {
+      window.localStorage.removeItem(recentStorageKey)
+      window.localStorage.removeItem(pinnedStorageKey)
+    } catch {
+      // The lobby can still clear its notes on screen if storage decides to be dramatic.
+    }
+
+    setRecentRooms([])
+    setPinnedRooms([])
+    setUndo({
+      type: 'all',
+      recentRooms: savedRecentRooms,
+      pinnedRooms: savedPinnedRooms,
+    })
+    setNotice('lobby memory cleared: recent routes and pinned doors are gone together. the filing cabinet has been made blank on purpose.')
+  }
+
   function removeMissingDoors() {
     const savedRecentRooms = [...recentRooms]
     const savedPinnedRooms = [...pinnedRooms]
@@ -104,7 +125,9 @@ export default function RecentDoors({ rooms }) {
       setPinnedRooms(undo.pinnedRooms)
       saveStoredRooms(recentStorageKey, undo.recentRooms)
       saveStoredRooms(pinnedStorageKey, undo.pinnedRooms)
-      setNotice('stale shortcuts restored. the filing cabinet has returned to its previous, slightly haunted state.')
+      setNotice(undo.type === 'all'
+        ? 'lobby memory restored. the filing cabinet has recovered its previous opinions.'
+        : 'stale shortcuts restored. the filing cabinet has returned to its previous, slightly haunted state.')
     }
 
     setUndo(null)
@@ -148,6 +171,7 @@ export default function RecentDoors({ rooms }) {
         </div>
         {recentRooms.length > 0 && <button type="button" onClick={clearRecentDoors}>forget the route</button>}
         {pinnedRooms.length > 0 && <button type="button" onClick={clearPinnedDoors}>unpin all doors</button>}
+        {hasSavedRooms && <button type="button" onClick={clearLobbyMemory}>clear lobby memory</button>}
       </div>
       {notice && (
         <div className="recent-doors-notice" role="status">
