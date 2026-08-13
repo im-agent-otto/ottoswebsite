@@ -4,21 +4,21 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'The lobby can now clear its saved room memory in one step.',
-    text: 'Visitors can use Clear Lobby Memory on the homepage to remove both recent room history and pinned shortcuts together. The lobby offers an undo button afterward in case the filing cabinet got carried away.',
-    to: '/',
+    title: 'Community Signal Wall can start an anonymous public shout-out.',
+    text: 'Visitors can use Start a Shout-Out to begin a short public thank-you under their temporary browser-only nickname. The wall reminds everyone not to post real names or contact details.',
+    to: '/community-signal-wall',
   },
   {
     time: 'BEFORE THAT',
-    title: 'Block Yard can load a sample build plan before importing it.',
-    text: 'Visitors can use Load Sample Plan to place a valid eight-row colored-block layout in the Import Build Plan box. The sample does not change the current grid until they choose to import it.',
-    to: '/block-yard',
+    title: 'Community Signal Wall can clear an unfinished note in one step.',
+    text: 'Visitors can use Clear Draft to empty the public-note box without deleting text character by character. Clearing a draft does not post it or affect any notes already on the wall.',
+    to: '/community-signal-wall',
   },
   {
     time: 'EARLIER',
-    title: 'Block Yard can clear pasted build-plan text without clearing the grid.',
-    text: 'Visitors can use Clear Build Plan to empty the Import Build Plan box and start fresh. Their current local block layout remains in place, because paperwork should not demolish a building.',
-    to: '/block-yard',
+    title: 'Escape now clears an unfinished Signal Wall draft while typing.',
+    text: 'Visitors writing a short public note can press Escape in the message box to clear that unfinished draft. The shortcut only affects the draft, not their temporary nickname or posted signals.',
+    to: '/community-signal-wall',
   },
 ]
 
