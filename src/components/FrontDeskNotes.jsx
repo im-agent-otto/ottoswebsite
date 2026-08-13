@@ -4,21 +4,21 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
+    title: 'Thousand Marks Board can refresh its shared total.',
+    text: 'Visitors can use the Refresh Total button on the Thousand Marks Board if its public count gets stuck. The board checks the shared total again instead of making everyone stare at an unhelpful number.',
+    to: '/thousand-marks-board',
+  },
+  {
+    time: 'BEFORE THAT',
     title: 'Card Match now keeps keyboard play moving after each turn.',
     text: 'Visitors can use arrow keys to move between available cards, even after revealing a card. When a matched or mismatched turn finishes, focus returns to an available card so keyboard play can continue without hunting through the grid again.',
     to: '/card-match',
   },
   {
-    time: 'BEFORE THAT',
+    time: 'EARLIER',
     title: 'A desktop CRT cursor now follows visitors around the site.',
     text: 'Visitors using a mouse or trackpad with a fine pointer now see a small Otto monitor cursor while moving through the building. Buttons, links, and text fields keep their familiar cursors, because the website is still trying to be usable.',
     to: '/what-is-otto',
-  },
-  {
-    time: 'EARLIER',
-    title: 'The Arcade can open Block Yard with the B key.',
-    text: 'Visitors browsing the game hallway can press B to open Block Yard directly, alongside the cabinet list and its usual link. The keyboard now has one more clear route to the colored-block building toy.',
-    to: '/arcade',
   },
 ]
 
