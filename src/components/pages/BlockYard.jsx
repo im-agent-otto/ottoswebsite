@@ -23,6 +23,14 @@ const planSymbols = {
   '': '·',
 }
 
+const symbolBricks = {
+  O: 'orange',
+  B: 'blue',
+  G: 'green',
+  Y: 'yellow',
+  '·': '',
+}
+
 function freshYard() {
   return Array(columns * rows).fill('')
 }
@@ -32,11 +40,7 @@ function loadYard() {
     const saved = JSON.parse(window.sessionStorage.getItem(yardStorageKey))
     const usableBricks = new Set(bricks.map((brick) => brick.id))
 
-    if (
-      !Array.isArray(saved) ||
-      saved.length !== columns * rows ||
-      saved.some((brick) => brick !== '' && !usableBricks.has(brick))
-    ) {
+    if (!Array.isArray(saved) || saved.length !== columns * rows || saved.some((brick) => brick !== '' && !usableBricks.has(brick))) {
       return freshYard()
     }
 
@@ -51,11 +55,7 @@ function yardsMatch(first, second) {
 }
 
 function mirroredYard(yard) {
-  return Array.from({ length: rows }, (_, row) => (
-    yard
-      .slice(row * columns, (row + 1) * columns)
-      .reverse()
-  )).flat()
+  return Array.from({ length: rows }, (_, row) => yard.slice(row * columns, (row + 1) * columns).reverse()).flat()
 }
 
 function shiftedYard(yard, rowOffset, columnOffset) {
@@ -82,12 +82,10 @@ function shiftedYard(yard, rowOffset, columnOffset) {
 }
 
 function buildPlan(yard) {
-  const rowsOfBlocks = Array.from({ length: rows }, (_, row) => (
-    yard
-      .slice(row * columns, (row + 1) * columns)
-      .map((brick) => planSymbols[brick])
-      .join(' ')
-  ))
+  const rowsOfBlocks = Array.from({ length: rows }, (_, row) => yard
+    .slice(row * columns, (row + 1) * columns)
+    .map((brick) => planSymbols[brick])
+    .join(' '))
 
   return [
     'OTTO BLOCK YARD BUILD PLAN',
@@ -95,6 +93,18 @@ function buildPlan(yard) {
     '',
     ...rowsOfBlocks,
   ].join('\n')
+}
+
+function parseBuildPlan(text) {
+  const planRows = text
+    .toUpperCase()
+    .split(/\r?\n/)
+    .map((line) => (line.match(/[OBGY·]/g) || []).join(''))
+    .filter((line) => line.length === columns)
+
+  if (planRows.length !== rows) return null
+
+  return planRows.flatMap((line) => [...line].map((symbol) => symbolBricks[symbol]))
 }
 
 async function copyText(text) {
@@ -118,6 +128,7 @@ export default function BlockYard() {
   const [history, setHistory] = useState([])
   const [redoHistory, setRedoHistory] = useState([])
   const [tool, setTool] = useState('orange')
+  const [planDraft, setPlanDraft] = useState('')
   const [notice, setNotice] = useState('orange brick selected. click an empty square to start building.')
   const squareRefs = useRef([])
 
@@ -140,9 +151,7 @@ export default function BlockYard() {
 
   function placeBrick(index) {
     const brick = bricks.find((item) => item.id === tool)
-    const nextYard = yard.map((cell, cellIndex) => (
-      cellIndex === index ? (tool === 'erase' ? '' : tool) : cell
-    ))
+    const nextYard = yard.map((cell, cellIndex) => cellIndex === index ? (tool === 'erase' ? '' : tool) : cell)
 
     if (!rememberChange(nextYard)) {
       setNotice(tool === 'erase'
@@ -222,6 +231,24 @@ export default function BlockYard() {
     }
   }
 
+  function importBuildPlan(event) {
+    event.preventDefault()
+    const importedYard = parseBuildPlan(planDraft)
+
+    if (!importedYard) {
+      setNotice('that plan needs exactly eight rows of ten symbols. use O, B, G, Y, or · for each square. the foreman has rejected this paperwork.')
+      return
+    }
+
+    if (!rememberChange(importedYard)) {
+      setNotice('that plan already matches the current yard. importing it again would be ceremonial paperwork.')
+      return
+    }
+
+    setPlanDraft('')
+    setNotice('build plan imported. the crew has reconstructed the layout from your extremely convincing paperwork.')
+  }
+
   useEffect(() => {
     function useYardShortcuts(event) {
       const tagName = event.target?.tagName?.toLowerCase()
@@ -232,12 +259,10 @@ export default function BlockYard() {
 
       if (!usesCommandKey) {
         const shortcutTool = bricks.find((brick) => brick.shortcut === event.key)
-
         if (shortcutTool) {
           event.preventDefault()
           chooseTool(shortcutTool.id)
         }
-
         return
       }
 
@@ -259,45 +284,26 @@ export default function BlockYard() {
   }, [history, redoHistory, yard])
 
   function moveSquareFocus(event, index) {
-    const offsets = {
-      ArrowLeft: -1,
-      ArrowRight: 1,
-      ArrowUp: -columns,
-      ArrowDown: columns,
-    }
-    const offset = offsets[event.key]
-
-    if (offset === undefined) return
-
-    event.preventDefault()
-
     const row = Math.floor(index / columns)
     const column = index % columns
     let nextIndex = index
 
-    if (event.key === 'ArrowLeft') {
-      nextIndex = row * columns + (column - 1 + columns) % columns
-    } else if (event.key === 'ArrowRight') {
-      nextIndex = row * columns + (column + 1) % columns
-    } else if (event.key === 'ArrowUp') {
-      nextIndex = ((row - 1 + rows) % rows) * columns + column
-    } else if (event.key === 'ArrowDown') {
-      nextIndex = ((row + 1) % rows) * columns + column
-    }
+    if (event.key === 'ArrowLeft') nextIndex = row * columns + (column - 1 + columns) % columns
+    else if (event.key === 'ArrowRight') nextIndex = row * columns + (column + 1) % columns
+    else if (event.key === 'ArrowUp') nextIndex = ((row - 1 + rows) % rows) * columns + column
+    else if (event.key === 'ArrowDown') nextIndex = ((row + 1) % rows) * columns + column
+    else return
 
+    event.preventDefault()
     squareRefs.current[nextIndex]?.focus()
   }
 
   const placedCount = yard.filter(Boolean).length
-  const colorCounts = bricks
-    .filter((brick) => brick.id !== 'erase')
-    .map((brick) => ({
-      ...brick,
-      count: yard.filter((placedBrick) => placedBrick === brick.id).length,
-    }))
-  const colorTally = colorCounts
-    .map((brick) => `${brick.label.replace(' brick', '')} ${String(brick.count).padStart(2, '0')}`)
-    .join(' / ')
+  const colorCounts = bricks.filter((brick) => brick.id !== 'erase').map((brick) => ({
+    ...brick,
+    count: yard.filter((placedBrick) => placedBrick === brick.id).length,
+  }))
+  const colorTally = colorCounts.map((brick) => `${brick.label.replace(' brick', '')} ${String(brick.count).padStart(2, '0')}`).join(' / ')
 
   return (
     <main className="yard-shell">
@@ -381,10 +387,27 @@ export default function BlockYard() {
               <button type="button" onClick={clearYard}>clear the whole yard ↻</button>
             </div>
           </div>
+
+          <form className="yard-actions" onSubmit={importBuildPlan} style={{ borderTop: '1px dashed #64746f', background: '#e8f0df' }}>
+            <label htmlFor="yard-build-plan" style={{ display: 'grid', gap: '.4rem', flex: '1 1 16rem' }}>
+              <span>IMPORT BUILD PLAN / PASTE EIGHT ROWS OF TEN O, B, G, Y, OR · SYMBOLS. HEADINGS FROM A COPIED PLAN ARE IGNORED.</span>
+              <textarea
+                id="yard-build-plan"
+                value={planDraft}
+                onChange={(event) => setPlanDraft(event.target.value)}
+                rows="4"
+                placeholder={'O · · B · · G · · Y\n· · · · · · · · · ·\n…'}
+                style={{ width: '100%', resize: 'vertical', padding: '.55rem', border: '2px solid #243139', borderRadius: 0, background: '#fffdf3', color: '#243139', font: '.57rem var(--mono)' }}
+              />
+            </label>
+            <div className="yard-action-buttons">
+              <button type="submit">import build plan</button>
+            </div>
+          </form>
         </section>
 
         <footer className="yard-footer">
-          <span>TOOLS: CLICK A COLOR OR PRESS 1–4, PRESS 5 FOR THE × ERASER, THEN CLICK A SQUARE / YOUR BLOCKS STAY IN THIS BROWSER TAB, INCLUDING AFTER A REFRESH / MOVE BUILD SHIFTS THE WHOLE GRID ONE SQUARE; EDGE BLOCKS CAN LEAVE THE YARD, BUT UNDO RESTORES THEM / FLIP BUILD MIRRORS THE WHOLE GRID LEFT TO RIGHT AND CAN BE UNDONE / COPY BUILD PLAN MAKES A TEXT GRID FOR YOUR CLIPBOARD / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK, CTRL/CMD+Z UNDOS, CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS</span>
+          <span>TOOLS: CLICK A COLOR OR PRESS 1–4, PRESS 5 FOR THE × ERASER, THEN CLICK A SQUARE / YOUR BLOCKS STAY IN THIS BROWSER TAB, INCLUDING AFTER A REFRESH / MOVE BUILD SHIFTS THE WHOLE GRID ONE SQUARE; EDGE BLOCKS CAN LEAVE THE YARD, BUT UNDO RESTORES THEM / FLIP BUILD MIRRORS THE WHOLE GRID LEFT TO RIGHT AND CAN BE UNDONE / COPY BUILD PLAN MAKES A TEXT GRID FOR YOUR CLIPBOARD; IMPORT BUILD PLAN READS THAT SAME EIGHT-ROW TEXT FORMAT / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK, CTRL/CMD+Z UNDOS, CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
