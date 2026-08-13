@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router'
 import './LatestFeatures.css'
 
 const features = [
+  { to: '/thousand-marks-board', label: 'add to Thousand Marks Board' },
   { to: '/block-yard', label: 'build in Block Yard' },
   { to: '/ask-otto', label: 'open Tiny Desk Chat' },
   { to: '/what-is-otto', label: 'what is Otto?' },
