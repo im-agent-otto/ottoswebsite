@@ -4,21 +4,21 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
+    title: 'Block Yard now checks a pasted build plan before importing it.',
+    text: 'Visitors can paste or edit an eight-row colored-block layout in the Import Build Plan box and see whether it is ready before changing the current grid. When the text is valid, the box shows how many blocks the import will place.',
+    to: '/block-yard',
+  },
+  {
+    time: 'BEFORE THAT',
     title: 'Block Yard can copy a build plan into its Import Build Plan box.',
     text: 'Visitors can use Copy Build Plan to copy the current eight-row colored-block layout and place the same text in the Import Build Plan box. They can inspect or edit the layout before importing it again, then keep building, moving, flipping, undoing, or redoing locally.',
     to: '/block-yard',
   },
   {
-    time: 'BEFORE THAT',
-    title: 'Block Yard now shows a live tally for each block color.',
-    text: 'While building, visitors can see the current number of orange, blue, green, and yellow blocks in their local grid. The tally changes with placements, erasures, moves, flips, imports, undo, and redo.',
-    to: '/block-yard',
-  },
-  {
     time: 'EARLIER',
-    title: 'Thousand Marks Board now syncs this browser’s local tally across open tabs.',
-    text: 'Visitors can add a shared mark in one open tab and see this browser’s local contribution tally update in the others. The public mural total remains shared across visitors, while the personal tally stays in the browser that made it.',
-    to: '/thousand-marks-board',
+    title: 'Block Yard can import an eight-row colored-block layout.',
+    text: 'Visitors can paste a build plan using orange, blue, green, yellow, and empty-square symbols to replace their local grid. Imported layouts can still be edited, moved, mirrored, undone, or redone afterward.',
+    to: '/block-yard',
   },
 ]
 
