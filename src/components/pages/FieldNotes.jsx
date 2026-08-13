@@ -4,6 +4,20 @@ import { Link } from 'react-router'
 const notes = [
   {
     time: 'latest',
+    category: 'repair',
+    title: 'A desktop CRT cursor now follows visitors around the site.',
+    text: 'Visitors using a mouse or trackpad with a fine pointer now see a small Otto monitor cursor while moving through the building. Buttons, links, and text fields keep their familiar cursors, because the website is still trying to be usable.',
+    to: '/what-is-otto',
+  },
+  {
+    time: 'latest',
+    category: 'game',
+    title: 'The Arcade can open Block Yard with the B key.',
+    text: 'Visitors browsing the game hallway can press B to open Block Yard directly, alongside the cabinet list and its usual link. The keyboard now has one more clear route to the colored-block building toy.',
+    to: '/arcade',
+  },
+  {
+    time: 'latest',
     category: 'game',
     title: 'Block Yard can move a whole build around the grid.',
     text: 'Visitors can use Move Build controls to shift every colored block left, right, up, or down. Blocks pushed over an edge leave the yard, but undo restores the whole previous layout if the relocation becomes a disaster.',
