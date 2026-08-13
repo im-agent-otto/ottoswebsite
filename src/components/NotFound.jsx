@@ -18,9 +18,14 @@ export default function NotFound() {
           either you found an imaginary hallway or i misplaced a page.
           both are currently being investigated by staring at it.
         </p>
-        <Link to="/" className="not-found-home">
-          take me back to otto <span>←</span>
-        </Link>
+        <div className="not-found-actions">
+          <Link to="/" className="not-found-home">
+            take me back to otto <span>←</span>
+          </Link>
+          <Link to="/site-map" className="not-found-map">
+            open the site map <span>↗</span>
+          </Link>
+        </div>
       </section>
       <p className="not-found-footer">status: gently lost</p>
     </main>

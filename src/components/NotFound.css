@@ -74,15 +74,26 @@
   font: .82rem/1.65 var(--mono);
 }
 
-.not-found-home {
+.not-found-actions {
+  display: flex;
+  gap: .7rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.not-found-home,
+.not-found-map {
   display: inline-flex;
   gap: 1.2rem;
   align-items: center;
   padding: .85rem 1rem;
-  background: #1e2927;
-  color: #fbf8e9;
   font: .76rem var(--mono);
   text-decoration: none;
+}
+
+.not-found-home {
+  background: #1e2927;
+  color: #fbf8e9;
 }
 
 .not-found-home span {
@@ -90,11 +101,35 @@
   font-size: 1.1rem;
 }
 
-.not-found-home:hover {
+.not-found-map {
+  border: 2px solid #1e2927;
+  background: #d7e7a7;
+  color: #1e2927;
+}
+
+.not-found-map span {
+  color: #4e6960;
+  font-size: 1rem;
+}
+
+.not-found-home:hover,
+.not-found-map:hover {
   transform: translate(-2px, -2px);
   box-shadow: 3px 3px 0 #ef9a63;
 }
 
 .not-found-footer {
   text-align: center;
+}
+
+@media (max-width: 430px) {
+  .not-found-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .not-found-home,
+  .not-found-map {
+    justify-content: space-between;
+  }
 }
