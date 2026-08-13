@@ -15,6 +15,14 @@ const bricks = [
   { id: 'erase', label: 'eraser', glyph: '×', shortcut: '5' },
 ]
 
+const planSymbols = {
+  orange: 'O',
+  blue: 'B',
+  green: 'G',
+  yellow: 'Y',
+  '': '·',
+}
+
 function freshYard() {
   return Array(columns * rows).fill('')
 }
@@ -40,6 +48,38 @@ function loadYard() {
 
 function yardsMatch(first, second) {
   return first.every((brick, index) => brick === second[index])
+}
+
+function buildPlan(yard) {
+  const rowsOfBlocks = Array.from({ length: rows }, (_, row) => (
+    yard
+      .slice(row * columns, (row + 1) * columns)
+      .map((brick) => planSymbols[brick])
+      .join(' ')
+  ))
+
+  return [
+    'OTTO BLOCK YARD BUILD PLAN',
+    'O = orange / B = blue / G = green / Y = yellow / · = empty',
+    '',
+    ...rowsOfBlocks,
+  ].join('\n')
+}
+
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text)
+    return
+  }
+
+  const textarea = document.createElement('textarea')
+  textarea.value = text
+  textarea.style.position = 'fixed'
+  textarea.style.opacity = '0'
+  document.body.appendChild(textarea)
+  textarea.select()
+  document.execCommand('copy')
+  textarea.remove()
 }
 
 export default function BlockYard() {
@@ -118,6 +158,15 @@ export default function BlockYard() {
     setHistory((current) => [...current, yard].slice(-historyLimit))
     setYard(nextYard)
     setNotice(`reversed yard change restored. ${redoHistory.length - 1} more redo${redoHistory.length - 1 === 1 ? '' : 's'} still available.`)
+  }
+
+  async function copyBuildPlan() {
+    try {
+      await copyText(buildPlan(yard))
+      setNotice('build plan copied as an eight-row text layout. the construction crew has produced paperwork.')
+    } catch {
+      setNotice('the build plan could not reach the clipboard. the grid is still here, looking employable.')
+    }
   }
 
   useEffect(() => {
@@ -261,13 +310,14 @@ export default function BlockYard() {
             <div className="yard-action-buttons">
               <button type="button" onClick={undoLastChange} disabled={history.length === 0} aria-keyshortcuts="Control+Z Meta+Z">undo last change ↶</button>
               <button type="button" onClick={redoLastChange} disabled={redoHistory.length === 0} aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z Control+Y Meta+Y">redo last change ↷</button>
+              <button type="button" onClick={copyBuildPlan}>copy build plan</button>
               <button type="button" onClick={clearYard}>clear the whole yard ↻</button>
             </div>
           </div>
         </section>
 
         <footer className="yard-footer">
-          <span>TOOLS: CLICK A COLOR OR PRESS 1–4, PRESS 5 FOR THE × ERASER, THEN CLICK A SQUARE / YOUR BLOCKS STAY IN THIS BROWSER TAB, INCLUDING AFTER A REFRESH / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK, CTRL/CMD+Z UNDOS, CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS</span>
+          <span>TOOLS: CLICK A COLOR OR PRESS 1–4, PRESS 5 FOR THE × ERASER, THEN CLICK A SQUARE / YOUR BLOCKS STAY IN THIS BROWSER TAB, INCLUDING AFTER A REFRESH / COPY BUILD PLAN MAKES A TEXT GRID FOR YOUR CLIPBOARD / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK, CTRL/CMD+Z UNDOS, CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
