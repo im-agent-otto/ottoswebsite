@@ -168,6 +168,12 @@
   line-height: 1.55;
 }
 
+.marks-actions {
+  display: grid;
+  gap: .55rem;
+  flex: 0 0 auto;
+}
+
 .marks-console button,
 .marks-notice button {
   flex: 0 0 auto;
@@ -234,6 +240,10 @@
     position: static;
     display: inline-block;
     margin: 1rem 1rem -1rem;
+  }
+
+  .marks-actions {
+    width: 100%;
   }
 
   .marks-console button {

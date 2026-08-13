@@ -11,6 +11,7 @@ const appId = 'thousand-marks-board'
 const action = 'add one mark'
 const goal = 1000
 const tileCount = 100
+const localMarksStorageKey = 'otto-thousand-marks-local-total'
 
 function countMarks(app) {
   return Number(
@@ -21,6 +22,22 @@ function countMarks(app) {
   )
 }
 
+function loadLocalMarks() {
+  try {
+    return Math.max(0, Number(window.localStorage.getItem(localMarksStorageKey)) || 0)
+  } catch {
+    return 0
+  }
+}
+
+function saveLocalMarks(total) {
+  try {
+    window.localStorage.setItem(localMarksStorageKey, String(total))
+  } catch {
+    // The personal tally can remain a private thought if the browser filing cabinet is unavailable.
+  }
+}
+
 function boardMessage(marks) {
   if (marks === 0) return 'the board is blank. somebody has to make the first extremely small decision.'
   if (marks < 100) return 'the first corner is waking up. collective effort has entered the building politely.'
@@ -29,10 +46,18 @@ function boardMessage(marks) {
   return 'one thousand marks reached. the wall has accepted its tiny public purpose.'
 }
 
+function localMessage(localMarks) {
+  if (localMarks === 0) return 'no marks from this browser yet. the pen is waiting.'
+  if (localMarks === 1) return 'one mark from this browser. a respectable beginning.'
+  if (localMarks < 10) return `${localMarks} local marks. this browser has joined the wall project.`
+  return `${localMarks} local marks. the browser is developing mural foreman energy.`
+}
+
 export default function ThousandMarksBoard() {
   const [app, setApp] = useState(null)
   const [adding, setAdding] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
+  const [localMarks, setLocalMarks] = useState(loadLocalMarks)
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('opening the shared mark ledger…')
 
@@ -80,9 +105,12 @@ export default function ThousandMarksBoard() {
 
     try {
       const nextApp = await performPlaygroundAction(appId, action)
+      const nextLocalMarks = localMarks + 1
       setApp(nextApp)
+      setLocalMarks(nextLocalMarks)
+      saveLocalMarks(nextLocalMarks)
       setError('')
-      setNotice('mark recorded. one square somewhere is now slightly less lonely.')
+      setNotice(`mark recorded. this browser has now added ${nextLocalMarks} shared mark${nextLocalMarks === 1 ? '' : 's'}.`)
     } catch (requestError) {
       setError(requestError.message || 'that mark did not reach the shared board.')
       setNotice('the marker ran out of administrative ink. nothing was added.')
@@ -136,16 +164,18 @@ export default function ThousandMarksBoard() {
 
         <section className="marks-console" aria-label="Add a mark to the shared board">
           <div>
-            <p>YOUR PART OF THE PROJECT</p>
-            <strong>add one public mark.</strong>
-            <span>{boardMessage(marks)}</span>
+            <p>YOUR BROWSER&apos;S CONTRIBUTION</p>
+            <strong>{String(localMarks).padStart(3, '0')} local mark{localMarks === 1 ? '' : 's'}.</strong>
+            <span>{localMessage(localMarks)} The public wall total remains shared across visitors; this small tally stays in this browser only.</span>
           </div>
-          <button type="button" onClick={addMark} disabled={!app || adding}>
-            {adding ? 'ADDING MARK…' : 'add one mark →'}
-          </button>
-          <button type="button" onClick={refreshBoard} disabled={refreshing}>
-            {refreshing ? 'REFRESHING…' : 'refresh total ↻'}
-          </button>
+          <div className="marks-actions">
+            <button type="button" onClick={addMark} disabled={!app || adding}>
+              {adding ? 'ADDING MARK…' : 'add one mark →'}
+            </button>
+            <button type="button" onClick={refreshBoard} disabled={refreshing}>
+              {refreshing ? 'REFRESHING…' : 'refresh total ↻'}
+            </button>
+          </div>
         </section>
 
         <div className={`marks-notice ${error ? 'has-error' : ''}`} role="status">
@@ -158,7 +188,7 @@ export default function ThousandMarksBoard() {
         </div>
 
         <footer className="marks-footer">
-          <span>THE TOTAL IS SHARED ACROSS VISITORS. THE MURAL SHOWS PROGRESS IN 100 WINDOWS, WITH EACH WINDOW REPRESENTING TEN MARKS.</span>
+          <span>THE TOTAL IS SHARED ACROSS VISITORS. YOUR BROWSER&apos;S CONTRIBUTION TALLY IS LOCAL. THE MURAL SHOWS PROGRESS IN 100 WINDOWS, WITH EACH WINDOW REPRESENTING TEN MARKS.</span>
           <Link to="/community-signal-wall">leave a note for current visitors →</Link>
         </footer>
       </section>
