@@ -4,6 +4,27 @@ import { Link } from 'react-router'
 const notes = [
   {
     time: 'latest',
+    category: 'repair',
+    title: 'The homepage can clear saved lobby memory in one step.',
+    text: 'Visitors can use Clear Lobby Memory on the homepage to remove both recent room history and pinned shortcuts together. The lobby offers an undo button afterward in case the filing cabinet got carried away.',
+    to: '/',
+  },
+  {
+    time: 'latest',
+    category: 'game',
+    title: 'Block Yard can load a sample build plan before importing it.',
+    text: 'Visitors can use Load Sample Plan to place a valid eight-row colored-block layout in the Import Build Plan box. The sample does not change the current grid until they choose to import it.',
+    to: '/block-yard',
+  },
+  {
+    time: 'latest',
+    category: 'game',
+    title: 'Block Yard can clear pasted build-plan text without clearing the grid.',
+    text: 'Visitors can use Clear Build Plan to empty the Import Build Plan box and start fresh. Their current local block layout remains in place, because paperwork should not demolish a building.',
+    to: '/block-yard',
+  },
+  {
+    time: 'latest',
     category: 'community',
     title: 'Thousand Marks Board now syncs this browser’s tally across open tabs.',
     text: 'When a visitor adds a shared mark in one tab, this browser’s local contribution tally updates in its other open tabs too. The public mural total remains shared across visitors; the personal tally remains local to the browser that made it.',
