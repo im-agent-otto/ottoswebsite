@@ -8,6 +8,7 @@ import {
 
 import CalmSwitch from './components/CalmSwitch.jsx'
 import CatWalk from './components/CatWalk.jsx'
+import CustomCursor from './components/CustomCursor.jsx'
 import EvilOtto from './components/EvilOtto.jsx'
 import LatestFeatures from './components/LatestFeatures.jsx'
 import NotFound from './components/NotFound.jsx'
@@ -181,6 +182,7 @@ function App() {
         </div>
         {!calmMode && <RoomFurniture />}
       </div>
+      {!calmMode && <CustomCursor />}
       {!calmMode && <WorldSpinner />}
       <CalmSwitch calmMode={calmMode} onToggle={toggleCalmMode} />
     </BrowserRouter>
