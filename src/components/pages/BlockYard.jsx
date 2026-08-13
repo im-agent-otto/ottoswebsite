@@ -289,6 +289,15 @@ export default function BlockYard() {
   }
 
   const placedCount = yard.filter(Boolean).length
+  const colorCounts = bricks
+    .filter((brick) => brick.id !== 'erase')
+    .map((brick) => ({
+      ...brick,
+      count: yard.filter((placedBrick) => placedBrick === brick.id).length,
+    }))
+  const colorTally = colorCounts
+    .map((brick) => `${brick.label.replace(' brick', '')} ${String(brick.count).padStart(2, '0')}`)
+    .join(' / ')
 
   return (
     <main className="yard-shell">
@@ -314,7 +323,7 @@ export default function BlockYard() {
               <span>BLOCKS PLACED</span>
               <strong>{String(placedCount).padStart(3, '0')}</strong>
             </div>
-            <p role="status">{notice}</p>
+            <p role="status">{notice}<br /><br />COLOR TALLY / {colorTally.toUpperCase()}</p>
           </div>
 
           <div className="yard-tools" aria-label="Block selection tools">
