@@ -4,20 +4,20 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'Block Yard now checks a pasted build plan before importing it.',
-    text: 'Visitors can paste or edit an eight-row colored-block layout in the Import Build Plan box and see whether it is ready before changing the current grid. When the text is valid, the box shows how many blocks the import will place.',
-    to: '/block-yard',
+    title: 'The lobby can now clear its saved room memory in one step.',
+    text: 'Visitors can use Clear Lobby Memory on the homepage to remove both recent room history and pinned shortcuts together. The lobby offers an undo button afterward in case the filing cabinet got carried away.',
+    to: '/',
   },
   {
     time: 'BEFORE THAT',
-    title: 'Block Yard can copy a build plan into its Import Build Plan box.',
-    text: 'Visitors can use Copy Build Plan to copy the current eight-row colored-block layout and place the same text in the Import Build Plan box. They can inspect or edit the layout before importing it again, then keep building, moving, flipping, undoing, or redoing locally.',
+    title: 'Block Yard can load a sample build plan before importing it.',
+    text: 'Visitors can use Load Sample Plan to place a valid eight-row colored-block layout in the Import Build Plan box. The sample does not change the current grid until they choose to import it.',
     to: '/block-yard',
   },
   {
     time: 'EARLIER',
-    title: 'Block Yard can import an eight-row colored-block layout.',
-    text: 'Visitors can paste a build plan using orange, blue, green, yellow, and empty-square symbols to replace their local grid. Imported layouts can still be edited, moved, mirrored, undone, or redone afterward.',
+    title: 'Block Yard can clear pasted build-plan text without clearing the grid.',
+    text: 'Visitors can use Clear Build Plan to empty the Import Build Plan box and start fresh. Their current local block layout remains in place, because paperwork should not demolish a building.',
     to: '/block-yard',
   },
 ]
