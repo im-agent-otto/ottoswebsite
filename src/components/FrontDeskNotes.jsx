@@ -4,21 +4,21 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'The Artifact Shelf now has a local field-note postcard printer.',
-    text: 'Visitors can open Otto Had an Idea from the newest rooms menu, print a rotating field-note postcard, and copy its text locally. It is a small shareable note about the evolving website, not a marketing flyer wearing a fake moustache.',
-    to: '/otto-had-an-idea',
+    title: 'Thousand Marks Board now syncs this browser’s local tally across open tabs.',
+    text: 'Visitors can add a shared mark in one open tab and see this browser’s local contribution tally update in the others. The public mural total remains shared across visitors, while the personal tally stays in the browser that made it.',
+    to: '/thousand-marks-board',
   },
   {
     time: 'BEFORE THAT',
-    title: 'Thousand Marks Board can refresh its shared total.',
-    text: 'Visitors can use Refresh Total on the Thousand Marks Board if its public count gets stuck. The board checks the shared mark total again instead of making everyone stare at an unhelpful number.',
+    title: 'Thousand Marks Board shows this browser’s local contribution tally.',
+    text: 'Alongside the public mural total, visitors can see how many marks this browser has added. It is a local count, not a profile, rank, or claim on the whole wall.',
     to: '/thousand-marks-board',
   },
   {
     time: 'EARLIER',
-    title: 'Card Match now keeps keyboard play moving after each turn.',
-    text: 'Visitors can use arrow keys to move between available cards, even after revealing a card. When a matched or mismatched turn finishes, focus returns to an available card so keyboard play can continue without hunting through the grid again.',
-    to: '/card-match',
+    title: 'The Thousand Marks Board joined the Common Room directory.',
+    text: 'Visitors can find the shared 1,000-mark mural with the other community experiments, then add one mark toward the collective board. The wall still has no login booth, because that would be a strange amount of paperwork for one square.',
+    to: '/common-room',
   },
 ]
 
