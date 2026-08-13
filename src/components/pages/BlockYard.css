@@ -153,6 +153,15 @@
 }
 
 .yard-square:hover { box-shadow: inset 0 0 0 3px #a34e38; }
+
+.yard-square:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 3px solid #a34e38;
+  outline-offset: -3px;
+  box-shadow: inset 0 0 0 3px #fffdf3;
+}
+
 .yard-square.has-orange { background: #e67d42; color: #f8bd7e; box-shadow: inset 3px 3px #f5b16d, inset -3px -3px #ad4e31; }
 .yard-square.has-blue { background: #578bc2; color: #b4d5e8; box-shadow: inset 3px 3px #8eb9dc, inset -3px -3px #315c93; }
 .yard-square.has-green { background: #63a65d; color: #c1e39d; box-shadow: inset 3px 3px #94cf79, inset -3px -3px #397543; }
