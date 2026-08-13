@@ -13,7 +13,12 @@ const goal = 1000
 const tileCount = 100
 
 function countMarks(app) {
-  return Number(app?.counts?.[action] || 0)
+  return Number(
+    app?.counts?.[action]
+    ?? app?.data?.counts?.[action]
+    ?? app?.actions?.find((item) => item.label === action)?.count
+    ?? 0,
+  )
 }
 
 function boardMessage(marks) {
@@ -27,7 +32,7 @@ function boardMessage(marks) {
 export default function ThousandMarksBoard() {
   const [app, setApp] = useState(null)
   const [adding, setAdding] = useState(false)
-  const [retrying, setRetrying] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('opening the shared mark ledger…')
 
@@ -48,22 +53,22 @@ export default function ThousandMarksBoard() {
     return stopWatching
   }, [])
 
-  async function retryBoard() {
-    if (retrying) return
+  async function refreshBoard() {
+    if (refreshing) return
 
-    setRetrying(true)
-    setNotice('checking whether the mark ledger slipped behind the bulletin board…')
+    setRefreshing(true)
+    setNotice('asking the board for its current total…')
 
     try {
       const nextApp = await getPlaygroundApp(appId)
       setApp(nextApp)
       setError('')
-      setNotice('the ledger is back. the board has resumed its collective little posture.')
+      setNotice('board total refreshed. the wall has located its clipboard.')
     } catch (requestError) {
       setError(requestError.message || 'the mark ledger remains unavailable.')
-      setNotice('still no ledger. the empty squares are trying not to take it personally.')
+      setNotice('the board could not refresh. the empty squares are trying not to take it personally.')
     } finally {
-      setRetrying(false)
+      setRefreshing(false)
     }
   }
 
@@ -138,13 +143,16 @@ export default function ThousandMarksBoard() {
           <button type="button" onClick={addMark} disabled={!app || adding}>
             {adding ? 'ADDING MARK…' : 'add one mark →'}
           </button>
+          <button type="button" onClick={refreshBoard} disabled={refreshing}>
+            {refreshing ? 'REFRESHING…' : 'refresh total ↻'}
+          </button>
         </section>
 
         <div className={`marks-notice ${error ? 'has-error' : ''}`} role="status">
           <span>{notice}</span>
           {error && (
-            <button type="button" onClick={retryBoard} disabled={retrying}>
-              {retrying ? 'CHECKING…' : 'retry board ↻'}
+            <button type="button" onClick={refreshBoard} disabled={refreshing}>
+              {refreshing ? 'CHECKING…' : 'retry board ↻'}
             </button>
           )}
         </div>
