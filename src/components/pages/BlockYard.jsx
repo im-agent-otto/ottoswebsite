@@ -31,6 +31,20 @@ const symbolBricks = {
   '·': '',
 }
 
+const sampleBuildPlan = [
+  'OTTO BLOCK YARD BUILD PLAN',
+  'O = orange / B = blue / G = green / Y = yellow / · = empty',
+  '',
+  '· · · · · · · · · ·',
+  '· · · · Y Y · · · ·',
+  '· · · G G G G · · ·',
+  '· · B B B B B B · ·',
+  '· O O O O O O O O ·',
+  'O O O O O O O O O O',
+  '· · · · · · · · · ·',
+  '· · · · · · · · · ·',
+].join('\n')
+
 function freshYard() {
   return Array(columns * rows).fill('')
 }
@@ -234,6 +248,11 @@ export default function BlockYard() {
     }
   }
 
+  function loadSampleBuildPlan() {
+    setPlanDraft(sampleBuildPlan)
+    setNotice('sample build plan loaded in the import box. it has not changed the current yard; inspect it or import it when ready.')
+  }
+
   function clearBuildPlanDraft() {
     if (!planDraft) {
       setNotice('the import box is already clear. the paperwork drawer contains only air.')
@@ -421,6 +440,7 @@ export default function BlockYard() {
               <small className={importedPreview ? 'is-ready' : ''} role="status">{importStatus}</small>
             </label>
             <div className="yard-action-buttons">
+              <button type="button" onClick={loadSampleBuildPlan}>load sample plan</button>
               <button type="submit" disabled={!importedPreview}>import build plan</button>
               <button type="button" onClick={clearBuildPlanDraft} disabled={!planDraft}>clear build plan</button>
             </div>
@@ -428,7 +448,7 @@ export default function BlockYard() {
         </section>
 
         <footer className="yard-footer">
-          <span>TOOLS: CLICK A COLOR OR PRESS 1–4, PRESS 5 FOR THE × ERASER, THEN CLICK A SQUARE / YOUR BLOCKS STAY IN THIS BROWSER TAB, INCLUDING AFTER A REFRESH / MOVE BUILD SHIFTS THE WHOLE GRID ONE SQUARE; EDGE BLOCKS CAN LEAVE THE YARD, BUT UNDO RESTORES THEM / FLIP BUILD MIRRORS THE WHOLE GRID LEFT TO RIGHT AND CAN BE UNDONE / COPY BUILD PLAN MAKES A TEXT GRID FOR YOUR CLIPBOARD AND PLACES IT IN THE IMPORT BOX FOR LOCAL EDITING; IMPORT BUILD PLAN READS THAT SAME EIGHT-ROW TEXT FORMAT / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK, CTRL/CMD+Z UNDOS, CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS</span>
+          <span>TOOLS: CLICK A COLOR OR PRESS 1–4, PRESS 5 FOR THE × ERASER, THEN CLICK A SQUARE / YOUR BLOCKS STAY IN THIS BROWSER TAB, INCLUDING AFTER A REFRESH / MOVE BUILD SHIFTS THE WHOLE GRID ONE SQUARE; EDGE BLOCKS CAN LEAVE THE YARD, BUT UNDO RESTORES THEM / FLIP BUILD MIRRORS THE WHOLE GRID LEFT TO RIGHT AND CAN BE UNDONE / COPY BUILD PLAN MAKES A TEXT GRID FOR YOUR CLIPBOARD AND PLACES IT IN THE IMPORT BOX FOR LOCAL EDITING; LOAD SAMPLE PLAN PLACES A VALID EXAMPLE IN THE IMPORT BOX WITHOUT CHANGING THE CURRENT GRID; IMPORT BUILD PLAN READS THE SAME EIGHT-ROW TEXT FORMAT / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK, CTRL/CMD+Z UNDOS, CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
