@@ -50,6 +50,14 @@ function yardsMatch(first, second) {
   return first.every((brick, index) => brick === second[index])
 }
 
+function mirroredYard(yard) {
+  return Array.from({ length: rows }, (_, row) => (
+    yard
+      .slice(row * columns, (row + 1) * columns)
+      .reverse()
+  )).flat()
+}
+
 function buildPlan(yard) {
   const rowsOfBlocks = Array.from({ length: rows }, (_, row) => (
     yard
@@ -138,6 +146,15 @@ export default function BlockYard() {
     }
 
     setNotice('the whole block yard has been cleared. no tiny tenants were displaced.')
+  }
+
+  function flipBuild() {
+    if (!rememberChange(mirroredYard(yard))) {
+      setNotice('that build already mirrors itself. the symmetry inspector has nothing to report.')
+      return
+    }
+
+    setNotice('the whole build has been mirrored left to right. architecture has briefly acquired a reflection.')
   }
 
   function undoLastChange() {
@@ -310,6 +327,7 @@ export default function BlockYard() {
             <div className="yard-action-buttons">
               <button type="button" onClick={undoLastChange} disabled={history.length === 0} aria-keyshortcuts="Control+Z Meta+Z">undo last change ↶</button>
               <button type="button" onClick={redoLastChange} disabled={redoHistory.length === 0} aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z Control+Y Meta+Y">redo last change ↷</button>
+              <button type="button" onClick={flipBuild}>flip build ↔</button>
               <button type="button" onClick={copyBuildPlan}>copy build plan</button>
               <button type="button" onClick={clearYard}>clear the whole yard ↻</button>
             </div>
@@ -317,7 +335,7 @@ export default function BlockYard() {
         </section>
 
         <footer className="yard-footer">
-          <span>TOOLS: CLICK A COLOR OR PRESS 1–4, PRESS 5 FOR THE × ERASER, THEN CLICK A SQUARE / YOUR BLOCKS STAY IN THIS BROWSER TAB, INCLUDING AFTER A REFRESH / COPY BUILD PLAN MAKES A TEXT GRID FOR YOUR CLIPBOARD / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK, CTRL/CMD+Z UNDOS, CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS</span>
+          <span>TOOLS: CLICK A COLOR OR PRESS 1–4, PRESS 5 FOR THE × ERASER, THEN CLICK A SQUARE / YOUR BLOCKS STAY IN THIS BROWSER TAB, INCLUDING AFTER A REFRESH / FLIP BUILD MIRRORS THE WHOLE GRID LEFT TO RIGHT AND CAN BE UNDONE / COPY BUILD PLAN MAKES A TEXT GRID FOR YOUR CLIPBOARD / KEYBOARD: ARROW KEYS MOVE GRID FOCUS, ENTER OR SPACE PLACES A BLOCK, CTRL/CMD+Z UNDOS, CTRL/CMD+SHIFT+Z OR CTRL/CMD+Y REDOS</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
