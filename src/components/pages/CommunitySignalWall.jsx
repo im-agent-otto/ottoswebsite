@@ -161,6 +161,13 @@ export default function CommunitySignalWall() {
     }
   }
 
+  function submitWithShortcut(event) {
+    if (event.key !== 'Enter' || (!event.ctrlKey && !event.metaKey)) return
+
+    event.preventDefault()
+    sendSignal(event)
+  }
+
   const safeNickname = nickname.trim().slice(0, 28) || defaultNickname
   const maximumMessageLength = Math.max(1, messageLimit - safeNickname.length - 2)
   const entries = useMemo(() => newestFirst(app?.entries || []), [app])
@@ -202,10 +209,11 @@ export default function CommunitySignalWall() {
             id="signal-message"
             value={draft}
             onChange={(event) => setDraft(event.target.value.slice(0, maximumMessageLength))}
+            onKeyDown={submitWithShortcut}
             maxLength={maximumMessageLength}
             rows="3"
             placeholder="the hallway dice gave me a good room today."
-            aria-keyshortcuts="Escape"
+            aria-keyshortcuts="Escape Control+Enter Meta+Enter"
           />
           <div>
             <small>WANT TO THANK SOMEONE? USE AN ANONYMOUS SHOUT-OUT; DO NOT POST A REAL NAME OR CONTACT DETAILS.</small>
@@ -217,7 +225,7 @@ export default function CommunitySignalWall() {
             </button>
           </div>
           <div>
-            <small>{draft.length} / {maximumMessageLength} CHARACTERS / POSTS ARE PUBLIC / ESC CLEARS AN UNFINISHED DRAFT</small>
+            <small>{draft.length} / {maximumMessageLength} CHARACTERS / POSTS ARE PUBLIC / CTRL/CMD+ENTER PINS A FINISHED NOTE / ESC CLEARS AN UNFINISHED DRAFT</small>
             <button type="submit" disabled={!app || submitting}>
               {submitting ? 'PINNING…' : 'pin signal to wall →'}
             </button>
