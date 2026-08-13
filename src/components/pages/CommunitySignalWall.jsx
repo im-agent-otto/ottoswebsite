@@ -11,6 +11,7 @@ const appId = 'community-signal-wall'
 const nicknameStorageKey = 'otto-signal-wall-nickname'
 const defaultNickname = 'desk visitor'
 const messageLimit = 140
+const shoutOutStarter = 'shout-out to someone who made this corner of the internet better because '
 
 function loadNickname() {
   try {
@@ -94,6 +95,15 @@ export default function CommunitySignalWall() {
     }
   }
 
+  function startShoutOut() {
+    const safeNickname = nickname.trim().slice(0, 28) || defaultNickname
+    const maximumMessageLength = Math.max(1, messageLimit - safeNickname.length - 2)
+    const nextDraft = shoutOutStarter.slice(0, maximumMessageLength)
+
+    setDraft(nextDraft)
+    setNotice('shout-out starter loaded. keep it anonymous and do not turn the public wall into someone else’s contact card.')
+  }
+
   async function sendSignal(event) {
     event.preventDefault()
     const safeNickname = nickname.trim().slice(0, 28) || defaultNickname
@@ -173,6 +183,12 @@ export default function CommunitySignalWall() {
             rows="3"
             placeholder="the hallway dice gave me a good room today."
           />
+          <div>
+            <small>WANT TO THANK SOMEONE? USE AN ANONYMOUS SHOUT-OUT; DO NOT POST A REAL NAME OR CONTACT DETAILS.</small>
+            <button type="button" onClick={startShoutOut}>
+              start a shout-out
+            </button>
+          </div>
           <div>
             <small>{draft.length} / {maximumMessageLength} CHARACTERS / POSTS ARE PUBLIC</small>
             <button type="submit" disabled={!app || submitting}>
