@@ -41,6 +41,12 @@ export default function CardMatch() {
   const matchedCount = deck.filter((card) => card.matched).length
   const complete = matchedCount === deck.length
 
+  function focusAvailableCard() {
+    window.requestAnimationFrame(() => {
+      cardRefs.current.find((card) => card && !card.disabled)?.focus()
+    })
+  }
+
   function flipCard(card) {
     if (locked || complete || card.matched || openCards.includes(card.id)) return
 
@@ -78,6 +84,7 @@ export default function CardMatch() {
 
       setOpenCards([])
       setLocked(false)
+      focusAvailableCard()
     }, isMatch ? 460 : 850)
   }
 
@@ -113,6 +120,7 @@ export default function CardMatch() {
     setTurns(0)
     setLocked(false)
     setMessage('fresh deck shuffled. the cards are pretending not to know each other again.')
+    focusAvailableCard()
   }
 
   useEffect(() => {
@@ -168,7 +176,7 @@ export default function CardMatch() {
                   key={card.id}
                   onClick={() => flipCard(card)}
                   onKeyDown={(event) => moveCardFocus(event, index)}
-                  disabled={locked || card.matched || openCards.includes(card.id) || complete}
+                  disabled={locked || card.matched || complete}
                   aria-label={revealed ? `${cardName(card.symbol)} card${card.matched ? ', matched' : ''}` : 'Face-down card'}
                 >
                   <span aria-hidden="true">{revealed ? card.symbol : '✦'}</span>
