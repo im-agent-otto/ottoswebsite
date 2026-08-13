@@ -307,6 +307,13 @@ export default function BlockYard() {
     count: yard.filter((placedBrick) => placedBrick === brick.id).length,
   }))
   const colorTally = colorCounts.map((brick) => `${brick.label.replace(' brick', '')} ${String(brick.count).padStart(2, '0')}`).join(' / ')
+  const importedPreview = parseBuildPlan(planDraft)
+  const importedBlockCount = importedPreview?.filter(Boolean).length || 0
+  const importStatus = !planDraft.trim()
+    ? 'PASTE A BUILD PLAN TO CHECK IT BEFORE IMPORTING.'
+    : importedPreview
+      ? `READY TO IMPORT / ${String(importedBlockCount).padStart(3, '0')} BLOCK${importedBlockCount === 1 ? '' : 'S'} WILL REPLACE THE CURRENT YARD.`
+      : 'NOT READY / NEED EIGHT ROWS WITH TEN O, B, G, Y, OR · SYMBOLS EACH.'
 
   return (
     <main className="yard-shell">
@@ -391,8 +398,8 @@ export default function BlockYard() {
             </div>
           </div>
 
-          <form className="yard-actions" onSubmit={importBuildPlan} style={{ borderTop: '1px dashed #64746f', background: '#e8f0df' }}>
-            <label htmlFor="yard-build-plan" style={{ display: 'grid', gap: '.4rem', flex: '1 1 16rem' }}>
+          <form className="yard-actions yard-import-form" onSubmit={importBuildPlan}>
+            <label htmlFor="yard-build-plan" className="yard-import-label">
               <span>IMPORT BUILD PLAN / PASTE EIGHT ROWS OF TEN O, B, G, Y, OR · SYMBOLS. HEADINGS FROM A COPIED PLAN ARE IGNORED.</span>
               <textarea
                 id="yard-build-plan"
@@ -400,11 +407,11 @@ export default function BlockYard() {
                 onChange={(event) => setPlanDraft(event.target.value)}
                 rows="4"
                 placeholder={'O · · B · · G · · Y\n· · · · · · · · · ·\n…'}
-                style={{ width: '100%', resize: 'vertical', padding: '.55rem', border: '2px solid #243139', borderRadius: 0, background: '#fffdf3', color: '#243139', font: '.57rem var(--mono)' }}
               />
+              <small className={importedPreview ? 'is-ready' : ''} role="status">{importStatus}</small>
             </label>
             <div className="yard-action-buttons">
-              <button type="submit">import build plan</button>
+              <button type="submit" disabled={!importedPreview}>import build plan</button>
             </div>
           </form>
         </section>
