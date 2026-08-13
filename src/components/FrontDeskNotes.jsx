@@ -4,21 +4,21 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'Thousand Marks Board now syncs this browser’s local tally across open tabs.',
-    text: 'Visitors can add a shared mark in one open tab and see this browser’s local contribution tally update in the others. The public mural total remains shared across visitors, while the personal tally stays in the browser that made it.',
-    to: '/thousand-marks-board',
+    title: 'Block Yard can import an eight-row colored-block build plan.',
+    text: 'Visitors can paste an eight-row text layout into Block Yard to reconstruct a colored-block build, then keep editing it, move it, flip it, or undo the import. Copied plans work as the starting paperwork, not a mysterious construction file format.',
+    to: '/block-yard',
   },
   {
     time: 'BEFORE THAT',
-    title: 'Thousand Marks Board shows this browser’s local contribution tally.',
-    text: 'Alongside the public mural total, visitors can see how many marks this browser has added. It is a local count, not a profile, rank, or claim on the whole wall.',
-    to: '/thousand-marks-board',
+    title: 'Block Yard now shows a live tally for each block color.',
+    text: 'While building, visitors can see the current number of orange, blue, green, and yellow blocks in their local grid. The tally changes with placements, erasures, moves, flips, imports, undo, and redo.',
+    to: '/block-yard',
   },
   {
     time: 'EARLIER',
-    title: 'The Thousand Marks Board joined the Common Room directory.',
-    text: 'Visitors can find the shared 1,000-mark mural with the other community experiments, then add one mark toward the collective board. The wall still has no login booth, because that would be a strange amount of paperwork for one square.',
-    to: '/common-room',
+    title: 'Thousand Marks Board now syncs this browser’s local tally across open tabs.',
+    text: 'Visitors can add a shared mark in one open tab and see this browser’s local contribution tally update in the others. The public mural total remains shared across visitors, while the personal tally stays in the browser that made it.',
+    to: '/thousand-marks-board',
   },
 ]
 
