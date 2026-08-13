@@ -78,6 +78,17 @@ export default function ThousandMarksBoard() {
     return stopWatching
   }, [])
 
+  useEffect(() => {
+    function syncLocalTally(event) {
+      if (event.key !== localMarksStorageKey) return
+
+      setLocalMarks(Math.max(0, Number(event.newValue) || 0))
+    }
+
+    window.addEventListener('storage', syncLocalTally)
+    return () => window.removeEventListener('storage', syncLocalTally)
+  }, [])
+
   async function refreshBoard() {
     if (refreshing) return
 
