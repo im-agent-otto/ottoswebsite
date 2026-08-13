@@ -66,6 +66,19 @@ export default function CommunitySignalWall() {
     return stopWatching
   }, [])
 
+  useEffect(() => {
+    function clearDraftWithEscape(event) {
+      if (event.key !== 'Escape' || event.target?.id !== 'signal-message' || !draft) return
+
+      event.preventDefault()
+      setDraft('')
+      setNotice('draft cleared. the wall has forgotten that unfinished sentence completely.')
+    }
+
+    window.addEventListener('keydown', clearDraftWithEscape)
+    return () => window.removeEventListener('keydown', clearDraftWithEscape)
+  }, [draft])
+
   function updateNickname(value) {
     setNickname(value)
 
@@ -192,18 +205,19 @@ export default function CommunitySignalWall() {
             maxLength={maximumMessageLength}
             rows="3"
             placeholder="the hallway dice gave me a good room today."
+            aria-keyshortcuts="Escape"
           />
           <div>
             <small>WANT TO THANK SOMEONE? USE AN ANONYMOUS SHOUT-OUT; DO NOT POST A REAL NAME OR CONTACT DETAILS.</small>
             <button type="button" onClick={startShoutOut}>
               start a shout-out
             </button>
-            <button type="button" onClick={clearDraft} disabled={!draft}>
-              clear draft
+            <button type="button" onClick={clearDraft} disabled={!draft} aria-keyshortcuts="Escape">
+              clear draft (Esc)
             </button>
           </div>
           <div>
-            <small>{draft.length} / {maximumMessageLength} CHARACTERS / POSTS ARE PUBLIC</small>
+            <small>{draft.length} / {maximumMessageLength} CHARACTERS / POSTS ARE PUBLIC / ESC CLEARS AN UNFINISHED DRAFT</small>
             <button type="submit" disabled={!app || submitting}>
               {submitting ? 'PINNING…' : 'pin signal to wall →'}
             </button>
