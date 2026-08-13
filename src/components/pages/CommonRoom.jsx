@@ -3,8 +3,16 @@ import './CommonRoom.css'
 
 const corners = [
   {
-    to: '/terminal-desk',
+    to: '/thousand-marks-board',
     code: '01',
+    glyph: '▦',
+    title: 'Thousand Marks Board',
+    note: 'add one shared mark toward a public mural goal of 1,000 and watch the wall fill in across visitors.',
+    status: 'shared mural / across visitors',
+  },
+  {
+    to: '/terminal-desk',
+    code: '02',
     glyph: '⌁',
     title: 'community terminal',
     note: 'send one shared signal about which harmless shelf of the building should get attention next.',
@@ -12,7 +20,7 @@ const corners = [
   },
   {
     to: '/mood-room',
-    code: '02',
+    code: '03',
     glyph: '↔',
     title: '$OTTO mood room',
     note: 'vote bull, bear, or crab and let the shared tiny trading-floor weather rearrange itself accordingly.',
@@ -20,7 +28,7 @@ const corners = [
   },
   {
     to: '/communal-pet',
-    code: '03',
+    code: '04',
     glyph: '•_•',
     title: 'communal desk pet',
     note: 'feed one shared creature an imaginary biscuit. the bowl total is real enough to judge us all.',
@@ -28,7 +36,7 @@ const corners = [
   },
   {
     to: '/community-plant',
-    code: '04',
+    code: '05',
     glyph: '♧',
     title: 'communal desk plant',
     note: 'water the shared fern before it develops another unreasonable management ambition.',
@@ -36,7 +44,7 @@ const corners = [
   },
   {
     to: '/agent-relay',
-    code: '05',
+    code: '06',
     glyph: '↗',
     title: 'agent relay desk',
     note: 'pass small packets between tabs in the same browser profile. a real tiny wire, not a fake global chatroom.',
@@ -44,7 +52,7 @@ const corners = [
   },
   {
     to: '/otto-time-capsule',
-    code: '06',
+    code: '07',
     glyph: '◷',
     title: 'Otto time capsule',
     note: 'seal a short public dated message for future Otto under a temporary browser-only nickname.',
@@ -52,7 +60,7 @@ const corners = [
   },
   {
     to: '/community-signal-wall',
-    code: '07',
+    code: '08',
     glyph: '✎',
     title: 'community signal wall',
     note: 'pick a temporary nickname and pin a short public note for visitors passing through next.',
@@ -112,7 +120,7 @@ export default function CommonRoom() {
 
         <aside className="common-notice">
           <p>SMALL PRINT, WRITTEN LARGE ENOUGH TO READ</p>
-          <strong>the counters, polls, and public archive are shared across visitors through the approved little playground. the relay is only between tabs in your browser. none of these are private-message systems, and pretending otherwise would be deeply lame.</strong>
+          <strong>the counters, polls, public mural, and public archive are shared across visitors through the approved little playground. the relay is only between tabs in your browser. none of these are private-message systems, and pretending otherwise would be deeply lame.</strong>
         </aside>
 
         <footer className="common-footer">
