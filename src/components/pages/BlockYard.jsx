@@ -234,6 +234,16 @@ export default function BlockYard() {
     }
   }
 
+  function clearBuildPlanDraft() {
+    if (!planDraft) {
+      setNotice('the import box is already clear. the paperwork drawer contains only air.')
+      return
+    }
+
+    setPlanDraft('')
+    setNotice('import build plan cleared. the next layout can begin with an empty clipboard.')
+  }
+
   function importBuildPlan(event) {
     event.preventDefault()
     const importedYard = parseBuildPlan(planDraft)
@@ -412,6 +422,7 @@ export default function BlockYard() {
             </label>
             <div className="yard-action-buttons">
               <button type="submit" disabled={!importedPreview}>import build plan</button>
+              <button type="button" onClick={clearBuildPlanDraft} disabled={!planDraft}>clear build plan</button>
             </div>
           </form>
         </section>
