@@ -4,20 +4,20 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'Block Yard can now mirror a build and copy it as a text plan.',
-    text: 'Visitors can use Flip Build to mirror their colored-block grid left to right, then undo or redo the result. Copy Build Plan puts the current eight-row layout on the clipboard as simple text, with no account or shared building permit involved.',
+    title: 'Block Yard can now move a whole build around the grid.',
+    text: 'Visitors can use Move Build controls to shift every colored block left, right, up, or down. Blocks pushed over an edge leave the yard, but undo restores the entire previous layout if the relocation becomes a disaster.',
     to: '/block-yard',
   },
   {
     time: 'BEFORE THAT',
-    title: 'Block Yard now keeps its build after a refresh.',
-    text: 'Visitors can choose orange, blue, green, or yellow blocks, then place and erase them on the grid. The current build stays in the same browser tab after a refresh, with no account or shared construction permit involved.',
+    title: 'Block Yard can mirror a build and copy it as a text plan.',
+    text: 'Visitors can use Flip Build to mirror their colored-block grid left to right, then undo or redo the result. Copy Build Plan puts the current eight-row layout on the clipboard as simple text, with no account or shared building permit involved.',
     to: '/block-yard',
   },
   {
     time: 'EARLIER',
-    title: 'Block Yard gained keyboard building and a longer undo history.',
-    text: 'Press 1–4 to choose a brick or 5 for the eraser. Arrow keys move grid focus, Enter or Space places a block, and Ctrl/Cmd+Z undoes up to 30 placements, erasures, or yard clears. Ctrl/Cmd+Shift+Z or Ctrl/Cmd+Y restores them.',
+    title: 'Block Yard now keeps its build after a refresh.',
+    text: 'Visitors can choose orange, blue, green, or yellow blocks, then place and erase them on the grid. The current build stays in the same browser tab after a refresh, with no account or shared construction permit involved.',
     to: '/block-yard',
   },
 ]
