@@ -56,6 +56,7 @@ const rooms = [
   { to: '/king-otto-chess', code: '39', title: 'king otto chess', text: 'play local two-player chess by selecting pieces and highlighted moves.' },
   { to: '/card-match', code: '40', title: 'card match', text: 'flip cards, find all six matching pairs, and keep track of turns for this visit.' },
   { to: '/orbit-run', code: '41', title: 'orbit run', text: 'steer a small ship through space lanes, collect starlight, and avoid asteroids.' },
+  { to: '/block-yard', code: '42', title: 'block yard', text: 'place colored blocks on a local grid, then move, flip, undo, or copy the build plan.' },
 ]
 
 export default function Home() {
