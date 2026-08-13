@@ -89,7 +89,7 @@ const cabinets = [
     route: '/block-yard',
     glyph: '■',
     note: 'place colored blocks on a local grid, then move, flip, undo, or copy the build plan.',
-    controls: 'click grid / 1–5 tools / arrow keys move focus',
+    controls: 'click grid / B opens from arcade / 1–5 tools',
   },
 ]
 
@@ -99,7 +99,7 @@ export default function Arcade() {
   const searchRef = useRef(null)
   const [openingCabinet, setOpeningCabinet] = useState('')
   const [query, setQuery] = useState('')
-  const [notice, setNotice] = useState('eleven cabinets. press 1 through 9 to open a matching cabinet, use 0 for Orbit Run, press / to search, or use the little dice. the carpet is mostly theoretical.')
+  const [notice, setNotice] = useState('eleven cabinets. press 1 through 9 to open a matching cabinet, use 0 for Orbit Run, B for Block Yard, press / to search, or use the little dice. the carpet is mostly theoretical.')
 
   useEffect(() => () => window.clearTimeout(navigationTimer.current), [])
 
@@ -123,9 +123,18 @@ export default function Arcade() {
     function openNumberedCabinet(event) {
       const tagName = event.target?.tagName?.toLowerCase()
       const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (isTyping) return
+
+      if (event.key.toLowerCase() === 'b') {
+        event.preventDefault()
+        openCabinet(cabinets[10], 'key B')
+        return
+      }
+
       const cabinetIndex = event.key === '0' ? 9 : Number(event.key) - 1
 
-      if (isTyping || cabinetIndex < 0 || cabinetIndex >= 10) return
+      if (cabinetIndex < 0 || cabinetIndex >= 10) return
 
       event.preventDefault()
       openCabinet(cabinets[cabinetIndex], `key ${event.key}`)
@@ -193,8 +202,8 @@ export default function Arcade() {
           <h1 id="arcade-title">play something<br />with me-ish.</h1>
           <p>
             i put the cabinets in one place so nobody has to wander around the
-            house looking for a snake. click a cabinet, or press its number key
-            when one is listed. lose with dignity if possible.
+            house looking for a snake. click a cabinet, press its number key when
+            one is listed, or press B to open Block Yard. lose with dignity if possible.
           </p>
         </div>
 
@@ -217,18 +226,28 @@ export default function Arcade() {
 
         {filteredCabinets.length > 0 ? (
           <section className="arcade-cabinets" aria-label="Otto arcade games">
-            {filteredCabinets.map((cabinet) => (
-              <Link className="arcade-cabinet" to={cabinet.route} key={cabinet.route} aria-keyshortcuts={Number(cabinet.code) <= 9 ? String(Number(cabinet.code)) : cabinet.code === '10' ? '0' : undefined}>
-                <span className="cabinet-number">{cabinet.code}</span>
-                <span className="cabinet-glyph" aria-hidden="true">{cabinet.glyph}</span>
-                <div>
-                  <h2>{cabinet.title}</h2>
-                  <p>{cabinet.note}</p>
-                  <small>CONTROLS: {cabinet.controls}</small>
-                </div>
-                <b aria-hidden="true">↗</b>
-              </Link>
-            ))}
+            {filteredCabinets.map((cabinet) => {
+              const shortcut = Number(cabinet.code) <= 9
+                ? String(Number(cabinet.code))
+                : cabinet.code === '10'
+                  ? '0'
+                  : cabinet.code === '11'
+                    ? 'B'
+                    : undefined
+
+              return (
+                <Link className="arcade-cabinet" to={cabinet.route} key={cabinet.route} aria-keyshortcuts={shortcut}>
+                  <span className="cabinet-number">{cabinet.code}</span>
+                  <span className="cabinet-glyph" aria-hidden="true">{cabinet.glyph}</span>
+                  <div>
+                    <h2>{cabinet.title}</h2>
+                    <p>{cabinet.note}</p>
+                    <small>CONTROLS: {cabinet.controls}</small>
+                  </div>
+                  <b aria-hidden="true">↗</b>
+                </Link>
+              )
+            })}
           </section>
         ) : (
           <p className="arcade-empty" role="status">no cabinet matches that search. the arcade has declined to invent one on the spot.</p>
