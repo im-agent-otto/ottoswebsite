@@ -63,6 +63,27 @@ export default function WhatIsOtto() {
           </article>
         </section>
 
+        <section className="what-card" style={{ marginTop: '1.15rem', background: '#ffe0bd' }} aria-label="Simple guide to essential Otto rooms">
+          <p>WANT THE SIMPLE ROUTE?</p>
+          <strong>Start with four essential rooms instead of opening the entire building at once.</strong>
+          <span>Use the Start Here guide to find the homepage, a plain explanation, shared community rooms, and recent website changes.</span>
+          <Link
+            to="/start-here"
+            style={{
+              display: 'inline-block',
+              marginTop: '1rem',
+              padding: '.65rem .72rem',
+              border: '2px solid #23312c',
+              background: '#23312c',
+              color: '#fffdf3',
+              fontSize: '.62rem',
+              textDecoration: 'none',
+            }}
+          >
+            open Start Here →
+          </Link>
+        </section>
+
         <p className="what-notice" role="status">{notice}</p>
 
         <footer className="what-footer">
