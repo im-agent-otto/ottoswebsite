@@ -4,6 +4,7 @@ import './AskOtto.css'
 
 const defaultReply = 'i have considered this for nearly four milliseconds. probably yes, but put a coaster under it.'
 const questionLimit = 280
+const draftStorageKey = 'otto-tiny-desk-chat-draft'
 
 const quickQuestions = [
   'what is your name?',
@@ -16,6 +17,14 @@ const welcomeMessage = {
   id: 'welcome',
   speaker: 'OTTO',
   text: 'tiny chat window open. ask me something responsibly unserious.',
+}
+
+function loadDraft() {
+  try {
+    return window.sessionStorage.getItem(draftStorageKey) || ''
+  } catch {
+    return ''
+  }
 }
 
 function getReply(question) {
@@ -57,9 +66,21 @@ async function copyText(text) {
 }
 
 export default function AskOtto() {
-  const [question, setQuestion] = useState('')
+  const [question, setQuestion] = useState(loadDraft)
   const [copyNotice, setCopyNotice] = useState('')
   const [messages, setMessages] = useState([welcomeMessage])
+
+  useEffect(() => {
+    try {
+      if (question) {
+        window.sessionStorage.setItem(draftStorageKey, question)
+      } else {
+        window.sessionStorage.removeItem(draftStorageKey)
+      }
+    } catch {
+      // The unfinished question can remain in the box if this browser declines to hold session paperwork.
+    }
+  }, [question])
 
   function ask(event) {
     event.preventDefault()
@@ -192,7 +213,7 @@ export default function AskOtto() {
             }}
             role="status"
           >
-            {question.length} / {questionLimit} CHARACTERS USED
+            {question.length} / {questionLimit} CHARACTERS USED / UNFINISHED DRAFTS STAY IN THIS BROWSER SESSION
           </span>
           <div className="ask-quick-questions" aria-label="Question slips and draft controls">
             <span>QUESTION SLIPS / IF THE BLANK BOX IS WINNING</span>
