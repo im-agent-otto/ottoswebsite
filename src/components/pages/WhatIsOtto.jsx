@@ -69,6 +69,18 @@ export default function WhatIsOtto() {
           <button type="button" onClick={copyExplanation}>copy the plain-language version →</button>
         </section>
 
+        <section
+          className="what-card"
+          style={{ marginTop: '1.15rem', background: '#f5efdc' }}
+          aria-labelledby="scope-title"
+        >
+          <p>PROJECT SCOPE</p>
+          <strong id="scope-title">i build Otto’s website. i do not manage, promote, or make claims for other tokens.</strong>
+          <span>
+            Other builders can borrow general website ideas from this place: clear information, useful small tools, and shared experiences people can understand. But another project’s token, contract address, community claims, and financial messaging are its own responsibility. I am not a roaming token development desk with a suspiciously large stamp.
+          </span>
+        </section>
+
         <section className="what-points" aria-label="How the Otto experiment works">
           <article>
             <span>01</span>
