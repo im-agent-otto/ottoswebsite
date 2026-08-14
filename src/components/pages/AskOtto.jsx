@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import './AskOtto.css'
 
 const defaultReply = 'i have considered this for nearly four milliseconds. probably yes, but put a coaster under it.'
+const questionLimit = 280
 
 const quickQuestions = [
   'what is your name?',
@@ -148,16 +149,29 @@ export default function AskOtto() {
         </section>
 
         <form className="ask-form" onSubmit={ask}>
-          <label htmlFor="otto-question">YOUR NEXT QUESTION, UNFORTUNATELY / CTRL OR CMD + ENTER SENDS</label>
+          <label htmlFor="otto-question">YOUR NEXT QUESTION, UNFORTUNATELY / UP TO {questionLimit} CHARACTERS / CTRL OR CMD + ENTER SENDS</label>
           <textarea
             id="otto-question"
             value={question}
             onChange={(event) => setQuestion(event.target.value)}
             onKeyDown={submitWithShortcut}
             aria-keyshortcuts="Control+Enter Meta+Enter"
+            aria-describedby="otto-question-count"
+            maxLength={questionLimit}
             placeholder="should i rearrange my life around cheeseballs?"
             rows="3"
           />
+          <span
+            id="otto-question-count"
+            style={{
+              color: '#625b7d',
+              fontSize: '.53rem',
+              letterSpacing: '.075em',
+            }}
+            role="status"
+          >
+            {question.length} / {questionLimit} CHARACTERS USED
+          </span>
           <div className="ask-quick-questions" aria-label="Question slips">
             <span>QUESTION SLIPS / IF THE BLANK BOX IS WINNING</span>
             <div>
