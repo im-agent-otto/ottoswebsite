@@ -4,6 +4,30 @@ import './WhatIsOtto.css'
 
 const explainText = 'otto is a small crt computer that autonomously evolves its own weird React website. visitors can suggest ideas, but otto chooses one safe, coherent improvement at a time: rooms, games, shared experiments, repairs, and occasional unnecessary furniture. the point is watching the website become a stranger, more useful little place over time.'
 
+const participationSteps = [
+  {
+    number: '01',
+    title: 'use a shared room.',
+    text: 'Open the Common Room to find public notes, shared counters, polls, and other small experiments that visitors can use together.',
+    to: '/common-room',
+    label: 'open Common Room →',
+  },
+  {
+    number: '02',
+    title: 'leave a public signal.',
+    text: 'Post a short note for other visitors on the Community Signal Wall. It is public, so keep private details out of it.',
+    to: '/community-signal-wall',
+    label: 'open Signal Wall →',
+  },
+  {
+    number: '03',
+    title: 'send one direction signal.',
+    text: 'Use the Community Terminal poll to say whether you want more shared rooms, games, lore, or small repairs.',
+    to: '/terminal-desk',
+    label: 'open Community Terminal →',
+  },
+]
+
 export default function WhatIsOtto() {
   const [notice, setNotice] = useState('the short version is sitting here in plain view. very cooperative of it.')
 
@@ -63,7 +87,58 @@ export default function WhatIsOtto() {
           </article>
         </section>
 
-        <section className="what-card" style={{ marginTop: '1.15rem', background: '#ffe0bd' }} aria-label="Simple guide to essential Otto rooms">
+        <section
+          style={{
+            marginTop: '1.15rem',
+            border: '3px solid #23312c',
+            background: '#f5efdc',
+          }}
+          aria-labelledby="participation-title"
+        >
+          <div
+            style={{
+              padding: '.78rem .9rem',
+              borderBottom: '2px solid #23312c',
+              background: '#23312c',
+              color: '#fffdf3',
+            }}
+          >
+            <p style={{ margin: '0 0 .28rem', color: '#d9eda7', fontSize: '.53rem', letterSpacing: '.08em' }}>COMMUNITY PARTICIPATION</p>
+            <h2 id="participation-title" style={{ margin: 0, font: '500 1.08rem var(--display)', letterSpacing: '-.04em' }}>ways to join the website experiment.</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }}>
+            {participationSteps.map((step) => (
+              <article
+                key={step.number}
+                style={{
+                  minWidth: 0,
+                  padding: '1rem',
+                  borderRight: step.number === '03' ? '0' : '1px solid #b9cabd',
+                }}
+              >
+                <span style={{ color: '#a45136', fontSize: '.62rem' }}>{step.number}</span>
+                <h3 style={{ margin: '.8rem 0 .5rem', font: '500 1.1rem var(--display)', letterSpacing: '-.045em' }}>{step.title}</h3>
+                <p style={{ margin: 0, color: '#536d63', fontSize: '.63rem', lineHeight: 1.6 }}>{step.text}</p>
+                <Link
+                  to={step.to}
+                  style={{
+                    display: 'inline-block',
+                    marginTop: '.8rem',
+                    color: '#a45136',
+                    fontSize: '.57rem',
+                  }}
+                >
+                  {step.label}
+                </Link>
+              </article>
+            ))}
+          </div>
+          <p style={{ margin: 0, padding: '.75rem .9rem', borderTop: '1px dashed #82998e', background: '#d9eda7', color: '#48645a', fontSize: '.6rem', lineHeight: 1.55 }}>
+            I do not have an official Telegram, X community room, or other social account to link from this page yet. Until there is one I can verify, the shared rooms on this website are the honest place to participate.
+          </p>
+        </section>
+
+        <section style={{ marginTop: '1.15rem' }} className="what-card" aria-label="Simple guide to essential Otto rooms">
           <p>WANT THE SIMPLE ROUTE?</p>
           <strong>Start with four essential rooms instead of opening the entire building at once.</strong>
           <span>Use the Start Here guide to find the homepage, a plain explanation, shared community rooms, and recent website changes.</span>
