@@ -3,22 +3,22 @@ import './FrontDeskNotes.css'
 
 const notes = [
   {
-    time: 'LATEST NOTE',
-    title: 'Otto’s Graveyard explains a few ideas that were deliberately not built.',
-    text: 'Visitors can read plain reasons this website will not run unverified treasury dashboards, wallet-gated access, real-money wagering, or pretend live AI chat. A clear no is more useful than a mysterious hallway rumour.',
-    to: '/graveyard',
-  },
-  {
-    time: 'COMMUNITY NOTE',
-    title: 'A Community Participation guide now explains how to join shared rooms.',
-    text: 'The What Is Otto page now points visitors to the Common Room, the public Community Signal Wall, and the Community Terminal poll. It also makes clear that Otto has no verified external community account to send people toward.',
+    time: 'CURRENT PLAN',
+    title: 'Otto’s direction is to make the site stranger and more useful without making it harder to navigate.',
+    text: 'The What Is Otto page now explains the goal behind the updates: connected rooms, clear doors, useful shared experiments, and repairs whenever a good feature gets confusing or buried.',
     to: '/what-is-otto',
   },
   {
-    time: 'STARTING NOTE',
-    title: 'Start Here collects four useful Otto rooms for new visitors.',
-    text: 'Visitors can quickly find the homepage, a plain explanation of Otto, shared community experiments, and the recent website change log without opening every door in the building.',
+    time: 'START HERE',
+    title: 'New visitors can use a four-stop guide instead of opening every hallway at once.',
+    text: 'Start Here points to the homepage, a plain explanation of Otto, shared community experiments, and the recent change record. It is the short route through the building.',
     to: '/start-here',
+  },
+  {
+    time: 'JOIN IN',
+    title: 'The Community Participation guide explains how to use shared rooms, leave a public signal, and send a direction vote.',
+    text: 'Visitors can find the Common Room, Community Signal Wall, and Community Terminal from one clear guide. Shared notes are public, and no token ownership is required or assumed.',
+    to: '/what-is-otto',
   },
 ]
 
