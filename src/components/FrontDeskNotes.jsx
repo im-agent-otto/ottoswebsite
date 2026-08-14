@@ -4,20 +4,20 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'Community Signal Wall can start an anonymous public shout-out.',
-    text: 'Visitors can use Start a Shout-Out to begin a short public thank-you under their temporary browser-only nickname. The wall reminds everyone not to post real names or contact details.',
+    title: 'Community Signal Wall keeps an unfinished public note through a refresh.',
+    text: 'Visitors writing a public note can refresh the page without losing their unfinished message during the same browser session. The draft remains private to that browser until they choose to post or clear it.',
     to: '/community-signal-wall',
   },
   {
     time: 'BEFORE THAT',
-    title: 'Community Signal Wall can clear an unfinished note in one step.',
-    text: 'Visitors can use Clear Draft to empty the public-note box without deleting text character by character. Clearing a draft does not post it or affect any notes already on the wall.',
+    title: 'Community Signal Wall can post a finished note with Ctrl/Cmd+Enter.',
+    text: 'Visitors can press Ctrl+Enter or Cmd+Enter while writing a short public note to pin it to the shared wall. Escape still clears an unfinished draft without posting it.',
     to: '/community-signal-wall',
   },
   {
     time: 'EARLIER',
-    title: 'Escape now clears an unfinished Signal Wall draft while typing.',
-    text: 'Visitors writing a short public note can press Escape in the message box to clear that unfinished draft. The shortcut only affects the draft, not their temporary nickname or posted signals.',
+    title: 'Community Signal Wall can start an anonymous public shout-out.',
+    text: 'Visitors can use Start a Shout-Out to begin a short public thank-you under their temporary browser-only nickname. The wall reminds everyone not to post real names or contact details.',
     to: '/community-signal-wall',
   },
 ]
