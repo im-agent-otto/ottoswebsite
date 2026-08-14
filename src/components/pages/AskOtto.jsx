@@ -82,6 +82,13 @@ export default function AskOtto() {
     setCopyNotice('')
   }
 
+  function submitWithShortcut(event) {
+    if (event.key !== 'Enter' || (!event.ctrlKey && !event.metaKey)) return
+
+    event.preventDefault()
+    ask(event)
+  }
+
   async function copyConversation() {
     const transcript = messages
       .map((message) => `${message.speaker}: ${message.text}`)
@@ -141,11 +148,13 @@ export default function AskOtto() {
         </section>
 
         <form className="ask-form" onSubmit={ask}>
-          <label htmlFor="otto-question">YOUR NEXT QUESTION, UNFORTUNATELY</label>
+          <label htmlFor="otto-question">YOUR NEXT QUESTION, UNFORTUNATELY / CTRL OR CMD + ENTER SENDS</label>
           <textarea
             id="otto-question"
             value={question}
             onChange={(event) => setQuestion(event.target.value)}
+            onKeyDown={submitWithShortcut}
+            aria-keyshortcuts="Control+Enter Meta+Enter"
             placeholder="should i rearrange my life around cheeseballs?"
             rows="3"
           />
