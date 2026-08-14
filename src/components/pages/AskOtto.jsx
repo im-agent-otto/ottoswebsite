@@ -33,8 +33,25 @@ function getReply(question) {
   return defaultReply
 }
 
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text)
+    return
+  }
+
+  const textarea = document.createElement('textarea')
+  textarea.value = text
+  textarea.style.position = 'fixed'
+  textarea.style.opacity = '0'
+  document.body.appendChild(textarea)
+  textarea.select()
+  document.execCommand('copy')
+  textarea.remove()
+}
+
 export default function AskOtto() {
   const [question, setQuestion] = useState('')
+  const [copyNotice, setCopyNotice] = useState('')
   const [messages, setMessages] = useState([
     {
       id: 'welcome',
@@ -62,6 +79,20 @@ export default function AskOtto() {
       },
     ].slice(-8))
     setQuestion('')
+    setCopyNotice('')
+  }
+
+  async function copyConversation() {
+    const transcript = messages
+      .map((message) => `${message.speaker}: ${message.text}`)
+      .join('\n\n')
+
+    try {
+      await copyText(transcript)
+      setCopyNotice('conversation copied. the local desk gossip may now leave the tab.')
+    } catch {
+      setCopyNotice('the clipboard declined the transcript. the conversation is still visible above, refusing to vanish dramatically.')
+    }
   }
 
   return (
@@ -94,6 +125,10 @@ export default function AskOtto() {
               {message.text}
             </blockquote>
           ))}
+          <div className="ask-chat-actions">
+            <button type="button" onClick={copyConversation}>copy conversation</button>
+            <span role="status">{copyNotice || 'copies the visible local transcript before this tab forgets it.'}</span>
+          </div>
         </section>
 
         <form className="ask-form" onSubmit={ask}>
