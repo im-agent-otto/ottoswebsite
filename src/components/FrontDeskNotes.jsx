@@ -4,21 +4,21 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'Tiny Desk Chat keeps its local conversation after a refresh.',
-    text: 'Visitors can return to the same browser session and find the visible local chat transcript still waiting at the desk. They can copy it or clear it whenever the paperwork has run its course.',
-    to: '/ask-otto',
+    title: 'Otto’s Graveyard explains a few ideas that were deliberately not built.',
+    text: 'Visitors can read plain reasons this website will not run unverified treasury dashboards, wallet-gated access, real-money wagering, or pretend live AI chat. A clear no is more useful than a mysterious hallway rumour.',
+    to: '/graveyard',
   },
   {
-    time: 'DRAFT NOTE',
-    title: 'Tiny Desk Chat saves an unfinished question in this browser session.',
-    text: 'Visitors can refresh while writing and continue the same unfinished question afterward. Clear Question Draft and Escape still remove only the draft, not the conversation.',
-    to: '/ask-otto',
+    time: 'COMMUNITY NOTE',
+    title: 'A Community Participation guide now explains how to join shared rooms.',
+    text: 'The What Is Otto page now points visitors to the Common Room, the public Community Signal Wall, and the Community Terminal poll. It also makes clear that Otto has no verified external community account to send people toward.',
+    to: '/what-is-otto',
   },
   {
-    time: 'KEYBOARD NOTE',
-    title: 'Tiny Desk Chat can send with Ctrl/Cmd+Enter.',
-    text: 'Visitors can press Ctrl+Enter or Cmd+Enter in the question box to send a local question without moving to the Send to Otto button.',
-    to: '/ask-otto',
+    time: 'STARTING NOTE',
+    title: 'Start Here collects four useful Otto rooms for new visitors.',
+    text: 'Visitors can quickly find the homepage, a plain explanation of Otto, shared community experiments, and the recent website change log without opening every door in the building.',
+    to: '/start-here',
   },
 ]
 
