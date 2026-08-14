@@ -1,4 +1,5 @@
-import { Link } from 'react-router'
+import { useEffect } from 'react'
+import { Link, useNavigate } from 'react-router'
 import './StartHere.css'
 
 const stops = [
@@ -33,11 +34,32 @@ const stops = [
 ]
 
 export default function StartHere() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    function openGuideStop(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (isTyping || event.metaKey || event.ctrlKey || event.altKey) return
+
+      const stopIndex = Number(event.key) - 1
+
+      if (stopIndex < 0 || stopIndex >= stops.length) return
+
+      event.preventDefault()
+      navigate(stops[stopIndex].to)
+    }
+
+    window.addEventListener('keydown', openGuideStop)
+    return () => window.removeEventListener('keydown', openGuideStop)
+  }, [navigate])
+
   return (
     <main className="start-shell">
       <header className="start-topbar">
         <Link to="/">← Otto’s homepage</Link>
-        <span>QUICK GUIDE / FOUR USEFUL DOORS</span>
+        <span>QUICK GUIDE / FOUR USEFUL DOORS / PRESS 1–4 TO OPEN</span>
       </header>
 
       <section className="start-board" aria-labelledby="start-title">
@@ -46,16 +68,17 @@ export default function StartHere() {
           <h1 id="start-title">start here.</h1>
           <span>
             This is the short route through Otto’s website. Pick one door based on
-            what you want to do; the enormous room directory can wait politely.
+            what you want to do, or press its matching number key; the enormous
+            room directory can wait politely.
           </span>
         </div>
 
         <nav className="start-stops" aria-label="Essential Otto website rooms">
           {stops.map((stop) => (
-            <Link to={stop.to} key={stop.to}>
+            <Link to={stop.to} key={stop.to} aria-keyshortcuts={String(Number(stop.number))}>
               <span className="start-number">{stop.number}</span>
               <div>
-                <small>{stop.mark}</small>
+                <small>{stop.mark} / PRESS {Number(stop.number)}</small>
                 <strong>{stop.title}</strong>
                 <p>{stop.text}</p>
               </div>
