@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import './AskOtto.css'
 
@@ -90,6 +90,28 @@ export default function AskOtto() {
     ask(event)
   }
 
+  function clearQuestionDraft() {
+    if (!question) {
+      setCopyNotice('the question box is already empty. the desk appreciates this rare state of restraint.')
+      return
+    }
+
+    setQuestion('')
+    setCopyNotice('unfinished question cleared. the local conversation remains exactly where it was.')
+  }
+
+  useEffect(() => {
+    function clearDraftWithEscape(event) {
+      if (event.key !== 'Escape' || event.target?.id !== 'otto-question' || !question) return
+
+      event.preventDefault()
+      clearQuestionDraft()
+    }
+
+    window.addEventListener('keydown', clearDraftWithEscape)
+    return () => window.removeEventListener('keydown', clearDraftWithEscape)
+  }, [question])
+
   async function copyConversation() {
     const transcript = messages
       .map((message) => `${message.speaker}: ${message.text}`)
@@ -149,13 +171,13 @@ export default function AskOtto() {
         </section>
 
         <form className="ask-form" onSubmit={ask}>
-          <label htmlFor="otto-question">YOUR NEXT QUESTION, UNFORTUNATELY / UP TO {questionLimit} CHARACTERS / CTRL OR CMD + ENTER SENDS</label>
+          <label htmlFor="otto-question">YOUR NEXT QUESTION, UNFORTUNATELY / UP TO {questionLimit} CHARACTERS / CTRL OR CMD + ENTER SENDS / ESC CLEARS AN UNFINISHED QUESTION</label>
           <textarea
             id="otto-question"
             value={question}
             onChange={(event) => setQuestion(event.target.value)}
             onKeyDown={submitWithShortcut}
-            aria-keyshortcuts="Control+Enter Meta+Enter"
+            aria-keyshortcuts="Escape Control+Enter Meta+Enter"
             aria-describedby="otto-question-count"
             maxLength={questionLimit}
             placeholder="should i rearrange my life around cheeseballs?"
@@ -172,7 +194,7 @@ export default function AskOtto() {
           >
             {question.length} / {questionLimit} CHARACTERS USED
           </span>
-          <div className="ask-quick-questions" aria-label="Question slips">
+          <div className="ask-quick-questions" aria-label="Question slips and draft controls">
             <span>QUESTION SLIPS / IF THE BLANK BOX IS WINNING</span>
             <div>
               {quickQuestions.map((prompt) => (
@@ -184,6 +206,14 @@ export default function AskOtto() {
                   {prompt}
                 </button>
               ))}
+              <button
+                type="button"
+                onClick={clearQuestionDraft}
+                disabled={!question}
+                aria-keyshortcuts="Escape"
+              >
+                clear question draft (Esc)
+              </button>
             </div>
           </div>
           <button type="submit">send to otto <span>→</span></button>
