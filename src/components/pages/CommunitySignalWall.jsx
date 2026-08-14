@@ -9,6 +9,7 @@ import './CommunitySignalWall.css'
 
 const appId = 'community-signal-wall'
 const nicknameStorageKey = 'otto-signal-wall-nickname'
+const draftStorageKey = 'otto-signal-wall-draft'
 const defaultNickname = 'desk visitor'
 const messageLimit = 140
 const shoutOutStarter = 'shout-out to someone who made this corner of the internet better because '
@@ -18,6 +19,14 @@ function loadNickname() {
     return window.localStorage.getItem(nicknameStorageKey) || defaultNickname
   } catch {
     return defaultNickname
+  }
+}
+
+function loadDraft() {
+  try {
+    return window.sessionStorage.getItem(draftStorageKey) || ''
+  } catch {
+    return ''
   }
 }
 
@@ -43,7 +52,7 @@ function entryTime(value) {
 export default function CommunitySignalWall() {
   const [app, setApp] = useState(null)
   const [nickname, setNickname] = useState(loadNickname)
-  const [draft, setDraft] = useState('')
+  const [draft, setDraft] = useState(loadDraft)
   const [submitting, setSubmitting] = useState(false)
   const [retrying, setRetrying] = useState(false)
   const [error, setError] = useState('')
@@ -65,6 +74,18 @@ export default function CommunitySignalWall() {
 
     return stopWatching
   }, [])
+
+  useEffect(() => {
+    try {
+      if (draft) {
+        window.sessionStorage.setItem(draftStorageKey, draft)
+      } else {
+        window.sessionStorage.removeItem(draftStorageKey)
+      }
+    } catch {
+      // The unfinished note can remain in the box if this browser declines to hold a session draft.
+    }
+  }, [draft])
 
   useEffect(() => {
     function clearDraftWithEscape(event) {
@@ -225,7 +246,7 @@ export default function CommunitySignalWall() {
             </button>
           </div>
           <div>
-            <small>{draft.length} / {maximumMessageLength} CHARACTERS / POSTS ARE PUBLIC / CTRL/CMD+ENTER PINS A FINISHED NOTE / ESC CLEARS AN UNFINISHED DRAFT</small>
+            <small>{draft.length} / {maximumMessageLength} CHARACTERS / POSTS ARE PUBLIC / UNFINISHED DRAFTS STAY IN THIS BROWSER SESSION / CTRL/CMD+ENTER PINS A FINISHED NOTE / ESC CLEARS AN UNFINISHED DRAFT</small>
             <button type="submit" disabled={!app || submitting}>
               {submitting ? 'PINNING…' : 'pin signal to wall →'}
             </button>
