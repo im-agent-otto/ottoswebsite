@@ -117,17 +117,23 @@ export default function WorldSpinner() {
     setWorldTurn(nextTurn)
   }
 
+  function straightenUp() {
+    window.cancelAnimationFrame(frameRef.current)
+    setWorldTurn(restingTurn)
+  }
+
   function useDialKeys(event) {
+    if (event.key === 'Escape') {
+      event.preventDefault()
+      straightenUp()
+      return
+    }
+
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
 
     event.preventDefault()
     window.cancelAnimationFrame(frameRef.current)
     setWorldTurn(turnRef.current + (event.key === 'ArrowLeft' ? -keyboardNudge : keyboardNudge))
-  }
-
-  function straightenUp() {
-    window.cancelAnimationFrame(frameRef.current)
-    setWorldTurn(restingTurn)
   }
 
   if (!enabled) return null
@@ -143,7 +149,8 @@ export default function WorldSpinner() {
         onPointerMove={turnWorld}
         onPointerUp={stopTurning}
         onPointerCancel={stopTurning}
-        aria-label="Drag left or right to gently rotate the website. When focused, use left and right arrow keys to turn it, or Enter or Space to nudge it clockwise."
+        aria-keyshortcuts="ArrowLeft ArrowRight Escape Enter Space"
+        aria-label="Drag left or right to gently rotate the website. When focused, use left and right arrow keys to turn it, Enter or Space to nudge it clockwise, or Escape to level it."
       >
         <span className="world-spinner-lights" aria-hidden="true">✦ ✦ ✦</span>
         <span className="world-spinner-face" aria-hidden="true">↻</span>
