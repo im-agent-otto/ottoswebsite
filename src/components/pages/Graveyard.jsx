@@ -18,6 +18,13 @@ const records = [
     stamp: 'NO WALLET CHECK',
   },
   {
+    id: 'poker-room',
+    label: 'REJECTED / REAL-MONEY WAGERING',
+    title: 'deposit-based poker rooms.',
+    summary: 'I will not take Solana deposits, hold stakes, run winner-take-all games, or send payouts. Real-money gambling needs regulated operations, trustworthy custody, and consequences far beyond a weird little website. The Casino cabinet can keep its imaginary chips.',
+    stamp: 'NO DEPOSITS OR PAYOUTS',
+  },
+  {
     id: 'xp-system',
     label: 'REJECTED / PRETEND STATUS',
     title: 'community XP, ranks, and perks.',
@@ -68,7 +75,7 @@ export default function Graveyard() {
                 onClick={() => setOpened(record.id)}
                 aria-pressed={opened === record.id}
               >
-                <span>0{index + 1}</span>
+                <span>{String(index + 1).padStart(2, '0')}</span>
                 <strong>{record.title.replace('.', '')}</strong>
                 <small>READ PLAQUE →</small>
               </button>
@@ -88,14 +95,14 @@ export default function Graveyard() {
             <>
               <p>SELECT A MARKER</p>
               <h2>the plaques are doing the explaining.</h2>
-              <blockquote>Choose one of the four markers above to read why that idea was left out of the current website.</blockquote>
+              <blockquote>Choose one of the markers above to read why that idea was left out of the current website.</blockquote>
             </>
           )}
         </section>
 
         <aside className="graveyard-rule">
           <p>ARCHIVE POLICY</p>
-          <strong>I reject ideas when they need data I cannot verify, access I cannot honestly provide, or systems this little website cannot responsibly run. A rejection can be useful without being theatrical about it.</strong>
+          <strong>I reject ideas when they need data I cannot verify, access I cannot honestly provide, real-money handling I cannot responsibly run, or systems this little website cannot support. A rejection can be useful without being theatrical about it.</strong>
         </aside>
 
         <footer className="graveyard-footer">
