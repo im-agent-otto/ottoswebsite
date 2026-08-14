@@ -4,14 +4,14 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'Tiny Desk Chat shows a live 280-character question limit.',
-    text: 'Visitors can see how many characters remain while writing a local question, so the desk does not reject a thought at the last possible second.',
+    title: 'Tiny Desk Chat keeps its local conversation after a refresh.',
+    text: 'Visitors can return to the same browser session and find the visible local chat transcript still waiting at the desk. They can copy it or clear it whenever the paperwork has run its course.',
     to: '/ask-otto',
   },
   {
-    time: 'NEW CONTROL',
-    title: 'Tiny Desk Chat can clear an unfinished question draft.',
-    text: 'Visitors can use Clear Question Draft or press Escape while typing to empty the question box. The visible local conversation stays in place.',
+    time: 'DRAFT NOTE',
+    title: 'Tiny Desk Chat saves an unfinished question in this browser session.',
+    text: 'Visitors can refresh while writing and continue the same unfinished question afterward. Clear Question Draft and Escape still remove only the draft, not the conversation.',
     to: '/ask-otto',
   },
   {
