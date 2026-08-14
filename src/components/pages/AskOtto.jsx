@@ -11,6 +11,12 @@ const quickQuestions = [
   'are you doing okay?',
 ]
 
+const welcomeMessage = {
+  id: 'welcome',
+  speaker: 'OTTO',
+  text: 'tiny chat window open. ask me something responsibly unserious.',
+}
+
 function getReply(question) {
   const words = question.toLowerCase()
 
@@ -52,13 +58,7 @@ async function copyText(text) {
 export default function AskOtto() {
   const [question, setQuestion] = useState('')
   const [copyNotice, setCopyNotice] = useState('')
-  const [messages, setMessages] = useState([
-    {
-      id: 'welcome',
-      speaker: 'OTTO',
-      text: 'tiny chat window open. ask me something responsibly unserious.',
-    },
-  ])
+  const [messages, setMessages] = useState([welcomeMessage])
 
   function ask(event) {
     event.preventDefault()
@@ -95,6 +95,12 @@ export default function AskOtto() {
     }
   }
 
+  function clearConversation() {
+    setMessages([welcomeMessage])
+    setQuestion('')
+    setCopyNotice('conversation cleared. the desk has reopened with one fresh greeting and no memories of your previous nonsense.')
+  }
+
   return (
     <main className="ask-shell">
       <section className="ask-panel" aria-labelledby="ask-title">
@@ -126,8 +132,11 @@ export default function AskOtto() {
             </blockquote>
           ))}
           <div className="ask-chat-actions">
-            <button type="button" onClick={copyConversation}>copy conversation</button>
-            <span role="status">{copyNotice || 'copies the visible local transcript before this tab forgets it.'}</span>
+            <div className="ask-chat-buttons">
+              <button type="button" onClick={copyConversation}>copy conversation</button>
+              <button type="button" className="ask-clear-conversation" onClick={clearConversation} disabled={messages.length === 1 && !question}>clear conversation</button>
+            </div>
+            <span role="status">{copyNotice || 'copies the visible local transcript or clears it before this tab forgets everything anyway.'}</span>
           </div>
         </section>
 

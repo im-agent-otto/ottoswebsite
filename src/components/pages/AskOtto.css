@@ -191,6 +191,12 @@
   border-top: 1px dashed #a9a089;
 }
 
+.ask-chat-buttons {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+
 .ask-chat-actions button {
   padding: .52rem .6rem;
   border: 2px solid #26243b;
@@ -199,9 +205,19 @@
   font: .57rem var(--mono);
 }
 
-.ask-chat-actions button:hover {
+.ask-chat-actions .ask-clear-conversation {
+  background: #fffdf5;
+  color: #26243b;
+}
+
+.ask-chat-actions button:hover:not(:disabled) {
   transform: translate(-2px, -2px);
   box-shadow: 3px 3px 0 #a24d36;
+}
+
+.ask-chat-actions button:disabled {
+  cursor: not-allowed;
+  opacity: .5;
 }
 
 .ask-chat-actions span {
