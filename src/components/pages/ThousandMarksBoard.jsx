@@ -45,6 +45,22 @@ function localMessage(localMarks) {
   return `${localMarks} local marks. the browser is developing mural foreman energy.`
 }
 
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text)
+    return
+  }
+
+  const textarea = document.createElement('textarea')
+  textarea.value = text
+  textarea.style.position = 'fixed'
+  textarea.style.opacity = '0'
+  document.body.appendChild(textarea)
+  textarea.select()
+  document.execCommand('copy')
+  textarea.remove()
+}
+
 export default function ThousandMarksBoard() {
   const [app, setApp] = useState(null)
   const [adding, setAdding] = useState(false)
@@ -143,6 +159,19 @@ export default function ThousandMarksBoard() {
   const filledTiles = Math.min(tileCount, Math.ceil((cappedMarks / goal) * tileCount))
   const remaining = Math.max(0, goal - marks)
 
+  async function copyMuralStatus() {
+    if (!app) return
+
+    const status = `Thousand Marks Board: ${marks.toLocaleString()} of ${goal.toLocaleString()} shared marks (${progress}% filled). This browser has added ${localMarks} local mark${localMarks === 1 ? '' : 's'}.`
+
+    try {
+      await copyText(status)
+      setNotice('mural status copied. the clipboard now knows how the wall is doing without needing to inspect every square.')
+    } catch {
+      setNotice('the mural status could not reach the clipboard. the wall is still visibly trying its best.')
+    }
+  }
+
   return (
     <main className="marks-shell">
       <header className="marks-topbar">
@@ -192,6 +221,9 @@ export default function ThousandMarksBoard() {
             </button>
             <button type="button" onClick={refreshBoard} disabled={refreshing}>
               {refreshing ? 'REFRESHING…' : 'refresh total ↻'}
+            </button>
+            <button type="button" onClick={copyMuralStatus} disabled={!app}>
+              copy mural status
             </button>
           </div>
         </section>
