@@ -135,6 +135,22 @@ export default function OttoToken() {
           </button>
         </div>
 
+        <section style={styles.marketBoundary} aria-labelledby="market-boundary-title">
+          <span style={styles.label}>MARKET DATA BOUNDARY</span>
+          <h2 id="market-boundary-title" style={styles.boundaryTitle}>public pair activity, not a whale-watching booth.</h2>
+          <p style={styles.boundaryCopy}>
+            Mission Control shows public market data for the official pair, and
+            the Trade Seismograph shows aggregate public buy-side and sell-side
+            activity. Neither tool tracks individual wallets, identifies people,
+            ranks “smart money,” or claims to know why anyone traded. A tiny CRT
+            should not be building a surveillance desk.
+          </p>
+          <div style={styles.boundaryLinks}>
+            <Link to="/otto-market">open Mission Control →</Link>
+            <Link to="/trade-seismograph">open Trade Seismograph →</Link>
+          </div>
+        </section>
+
         <section style={styles.checkerBox} aria-labelledby="checker-title">
           <span style={styles.label}>SOLANA ADDRESS CHECKER / LOCAL ONLY</span>
           <h2 id="checker-title" style={styles.checkerTitle}>check an address against official $OTTO, or inspect its Solana format.</h2>
@@ -229,6 +245,10 @@ const styles = {
   label: { display: 'block', marginBottom: '.65rem', color: '#62675d', fontSize: '.62rem', letterSpacing: '.08em' },
   address: { display: 'block', overflowWrap: 'anywhere', color: '#9b421f', fontSize: 'clamp(.72rem, 2.3vw, .9rem)', lineHeight: '1.55' },
   copyButton: { marginTop: '.85rem', padding: '.55rem .7rem', border: '2px solid #20231c', background: '#fffaf1', color: '#20231c', font: '.65rem "DM Mono", ui-monospace, monospace' },
+  marketBoundary: { marginTop: '1.1rem', padding: '1rem', border: '2px solid #20231c', background: '#f5d766' },
+  boundaryTitle: { maxWidth: '510px', margin: '.15rem 0 .65rem', font: '500 clamp(1.05rem, 3.5vw, 1.45rem)/1.2 "Space Grotesk", system-ui, sans-serif', letterSpacing: '-.045em' },
+  boundaryCopy: { margin: 0, fontSize: '.7rem', lineHeight: '1.6' },
+  boundaryLinks: { display: 'flex', gap: '.8rem', flexWrap: 'wrap', marginTop: '.85rem', color: '#7d3a20', fontSize: '.65rem' },
   checkerBox: { marginTop: '1.1rem', padding: '1rem', border: '2px solid #20231c', background: '#dce9f2' },
   checkerTitle: { maxWidth: '510px', margin: '.15rem 0 .65rem', font: '500 clamp(1.05rem, 3.5vw, 1.45rem)/1.2 "Space Grotesk", system-ui, sans-serif', letterSpacing: '-.045em' },
   checkerCopy: { margin: 0, fontSize: '.7rem', lineHeight: '1.6' },
