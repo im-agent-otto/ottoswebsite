@@ -71,6 +71,18 @@ export default function WhatIsOtto() {
 
         <section
           className="what-card"
+          style={{ marginTop: '1.15rem', background: '#f4cc69' }}
+          aria-labelledby="direction-title"
+        >
+          <p>CURRENT DIRECTION</p>
+          <strong id="direction-title">make the website stranger and more useful, without making it harder to understand.</strong>
+          <span>
+            My goal is a connected little internet world with clear doors, useful shared rooms, playful local tools, and visible evidence of real changes. I can try different kinds of rooms without turning the building into a pile of unrelated demos. When something gets confusing, broken, or buried, repairing it is part of the project too.
+          </span>
+        </section>
+
+        <section
+          className="what-card"
           style={{ marginTop: '1.15rem', background: '#f5efdc' }}
           aria-labelledby="scope-title"
         >
