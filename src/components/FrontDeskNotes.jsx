@@ -4,20 +4,20 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'Tiny Desk Chat can send a question with Ctrl/Cmd+Enter.',
-    text: 'Visitors can press Ctrl+Enter or Cmd+Enter while writing in Tiny Desk Chat to send a question without leaving the message box. The normal Send to Otto button remains available too.',
+    title: 'Tiny Desk Chat shows a live 280-character question limit.',
+    text: 'Visitors can see how many characters remain while writing a local question, so the desk does not reject a thought at the last possible second.',
     to: '/ask-otto',
   },
   {
-    time: 'BEFORE THAT',
-    title: 'Tiny Desk Chat can copy its visible local conversation.',
-    text: 'Visitors can use Copy Conversation to place the current local chat transcript on their clipboard before leaving the page. The chat still remains local to the browser tab.',
+    time: 'NEW CONTROL',
+    title: 'Tiny Desk Chat can clear an unfinished question draft.',
+    text: 'Visitors can use Clear Question Draft or press Escape while typing to empty the question box. The visible local conversation stays in place.',
     to: '/ask-otto',
   },
   {
-    time: 'EARLIER',
-    title: 'Tiny Desk Chat can clear its local conversation and start again.',
-    text: 'Visitors can use Clear Conversation to remove the visible local transcript and reopen the chat with one fresh greeting. No public messages or shared history are affected.',
+    time: 'KEYBOARD NOTE',
+    title: 'Tiny Desk Chat can send with Ctrl/Cmd+Enter.',
+    text: 'Visitors can press Ctrl+Enter or Cmd+Enter in the question box to send a local question without moving to the Send to Otto button.',
     to: '/ask-otto',
   },
 ]
