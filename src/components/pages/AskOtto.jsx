@@ -5,6 +5,7 @@ import './AskOtto.css'
 const defaultReply = 'i have considered this for nearly four milliseconds. probably yes, but put a coaster under it.'
 const questionLimit = 280
 const draftStorageKey = 'otto-tiny-desk-chat-draft'
+const conversationStorageKey = 'otto-tiny-desk-chat-conversation'
 
 const quickQuestions = [
   'what is your name?',
@@ -24,6 +25,27 @@ function loadDraft() {
     return window.sessionStorage.getItem(draftStorageKey) || ''
   } catch {
     return ''
+  }
+}
+
+function loadMessages() {
+  try {
+    const saved = JSON.parse(window.sessionStorage.getItem(conversationStorageKey))
+
+    if (!Array.isArray(saved) || saved.length === 0) return [welcomeMessage]
+
+    const usableMessages = saved
+      .filter((message) => (
+        message
+        && typeof message.id === 'string'
+        && typeof message.speaker === 'string'
+        && typeof message.text === 'string'
+      ))
+      .slice(-8)
+
+    return usableMessages.length > 0 ? usableMessages : [welcomeMessage]
+  } catch {
+    return [welcomeMessage]
   }
 }
 
@@ -68,7 +90,7 @@ async function copyText(text) {
 export default function AskOtto() {
   const [question, setQuestion] = useState(loadDraft)
   const [copyNotice, setCopyNotice] = useState('')
-  const [messages, setMessages] = useState([welcomeMessage])
+  const [messages, setMessages] = useState(loadMessages)
 
   useEffect(() => {
     try {
@@ -81,6 +103,14 @@ export default function AskOtto() {
       // The unfinished question can remain in the box if this browser declines to hold session paperwork.
     }
   }, [question])
+
+  useEffect(() => {
+    try {
+      window.sessionStorage.setItem(conversationStorageKey, JSON.stringify(messages))
+    } catch {
+      // The desk can keep the visible conversation if session storage declines its paperwork assignment.
+    }
+  }, [messages])
 
   function ask(event) {
     event.preventDefault()
@@ -170,7 +200,8 @@ export default function AskOtto() {
           <p>
             type a question and i will inspect it with a few blinking lights.
             this is a small local conversation, not a mysterious server tunnel.
-            the chat evaporates when you leave, like most good desk gossip.
+            the transcript stays in this browser session after a refresh, then
+            evaporates when the session ends or you clear it.
           </p>
         </div>
 
@@ -187,7 +218,7 @@ export default function AskOtto() {
               <button type="button" onClick={copyConversation}>copy conversation</button>
               <button type="button" className="ask-clear-conversation" onClick={clearConversation} disabled={messages.length === 1 && !question}>clear conversation</button>
             </div>
-            <span role="status">{copyNotice || 'copies the visible local transcript or clears it before this tab forgets everything anyway.'}</span>
+            <span role="status">{copyNotice || 'copies the visible local transcript or clears it before this browser session forgets everything anyway.'}</span>
           </div>
         </section>
 
@@ -250,7 +281,7 @@ export default function AskOtto() {
 
         <footer className="ask-footer">
           <span>POWERED BY: keyword spotting and vibes</span>
-          <span>MEMORY: this tab, briefly</span>
+          <span>MEMORY: this browser session, briefly</span>
         </footer>
       </section>
     </main>
