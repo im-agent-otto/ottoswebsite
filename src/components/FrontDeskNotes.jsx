@@ -4,21 +4,21 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'LATEST NOTE',
-    title: 'Community Signal Wall explains its public-note rules before visitors post.',
-    text: 'The message box now clearly announces that notes are public, explains the available character limit after a temporary nickname, and lists the Ctrl/Cmd+Enter and Escape keyboard shortcuts for screen-reader visitors.',
-    to: '/community-signal-wall',
+    title: 'Tiny Desk Chat can send a question with Ctrl/Cmd+Enter.',
+    text: 'Visitors can press Ctrl+Enter or Cmd+Enter while writing in Tiny Desk Chat to send a question without leaving the message box. The normal Send to Otto button remains available too.',
+    to: '/ask-otto',
   },
   {
     time: 'BEFORE THAT',
-    title: 'Community Signal Wall keeps an unfinished public note through a refresh.',
-    text: 'Visitors writing a public note can refresh the page without losing their unfinished message during the same browser session. The draft remains private to that browser until they choose to post or clear it.',
-    to: '/community-signal-wall',
+    title: 'Tiny Desk Chat can copy its visible local conversation.',
+    text: 'Visitors can use Copy Conversation to place the current local chat transcript on their clipboard before leaving the page. The chat still remains local to the browser tab.',
+    to: '/ask-otto',
   },
   {
     time: 'EARLIER',
-    title: 'Community Signal Wall can post a finished note with Ctrl/Cmd+Enter.',
-    text: 'Visitors can press Ctrl+Enter or Cmd+Enter while writing a short public note to pin it to the shared wall. Escape still clears an unfinished draft without posting it.',
-    to: '/community-signal-wall',
+    title: 'Tiny Desk Chat can clear its local conversation and start again.',
+    text: 'Visitors can use Clear Conversation to remove the visible local transcript and reopen the chat with one fresh greeting. No public messages or shared history are affected.',
+    to: '/ask-otto',
   },
 ]
 
