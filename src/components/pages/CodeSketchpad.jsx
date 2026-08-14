@@ -1,0 +1,110 @@
+import { useState } from 'react'
+import { Link } from 'react-router'
+import './CodeSketchpad.css'
+
+const sketches = [
+  {
+    id: 'react-button',
+    label: 'React button',
+    note: 'A local state button with one understandable job.',
+    code: `import { useState } from 'react'\n\nexport default function CheerButton() {\n  const [cheers, setCheers] = useState(0)\n\n  return (\n    <button type="button" onClick={() => setCheers((count) => count + 1)}>\n      cheer ({cheers})\n    </button>\n  )\n}`,
+  },
+  {
+    id: 'keyboard-shortcut',
+    label: 'Keyboard shortcut',
+    note: 'A small Escape-key handler that avoids typing fields.',
+    code: `import { useEffect } from 'react'\n\nexport default function EscapeExample({ onEscape }) {\n  useEffect(() => {\n    function handleKey(event) {\n      const tag = event.target?.tagName?.toLowerCase()\n      const typing = ['input', 'textarea', 'select'].includes(tag)\n\n      if (event.key === 'Escape' && !typing) onEscape()\n    }\n\n    window.addEventListener('keydown', handleKey)\n    return () => window.removeEventListener('keydown', handleKey)\n  }, [onEscape])\n\n  return null\n}`,
+  },
+  {
+    id: 'css-card',
+    label: 'CSS card',
+    note: 'A tactile little card with a visible keyboard focus state.',
+    code: `.notice-card {\n  padding: 1rem;\n  border: 2px solid #20231c;\n  background: #fffaf1;\n  box-shadow: 4px 4px 0 #20231c;\n}\n\n.notice-card:focus-within {\n  outline: 3px solid #f28b45;\n  outline-offset: 4px;\n}\n\n.notice-card button:hover {\n  transform: translate(-2px, -2px);\n  box-shadow: 3px 3px 0 #f28b45;\n}`,
+  },
+]
+
+export default function CodeSketchpad() {
+  const [selectedId, setSelectedId] = useState(sketches[0].id)
+  const [draft, setDraft] = useState(sketches[0].code)
+  const [notice, setNotice] = useState('Choose a starter snippet, edit it here, then copy it into your own project.')
+  const selected = sketches.find((sketch) => sketch.id === selectedId)
+
+  function chooseSketch(sketch) {
+    setSelectedId(sketch.id)
+    setDraft(sketch.code)
+    setNotice(`${sketch.label} loaded. This editor is local and does not run the code.`)
+  }
+
+  async function copyDraft() {
+    try {
+      await navigator.clipboard.writeText(draft)
+      setNotice('Code copied. It still needs testing in your own project, because reality remains involved.')
+    } catch {
+      setNotice('The clipboard declined. The editable code is still sitting right here.')
+    }
+  }
+
+  function restoreStarter() {
+    setDraft(selected.code)
+    setNotice(`${selected.label} restored to its original starter version.`)
+  }
+
+  return (
+    <main className="sketch-shell">
+      <section className="sketch-panel" aria-labelledby="sketch-title">
+        <header className="sketch-header">
+          <Link to="/">← back to my room</Link>
+          <span>CODE SKETCHPAD / LOCAL TEXT ONLY</span>
+        </header>
+
+        <div className="sketch-intro">
+          <p>small starter code, not a mysterious code-execution box</p>
+          <h1 id="sketch-title">code<br />sketchpad.</h1>
+          <span>Pick a short React or CSS pattern, change it in the local editor, and copy it into a project you control. I do not run pasted code here, collect it, or pretend a snippet is a complete app.</span>
+        </div>
+
+        <section className="sketch-workbench" aria-label="Local code sketchpad">
+          <nav className="sketch-tabs" aria-label="Starter code patterns">
+            {sketches.map((sketch) => (
+              <button
+                type="button"
+                key={sketch.id}
+                className={selectedId === sketch.id ? 'is-selected' : ''}
+                onClick={() => chooseSketch(sketch)}
+                aria-pressed={selectedId === sketch.id}
+              >
+                {sketch.label}
+              </button>
+            ))}
+          </nav>
+          <div className="sketch-editor-head">
+            <div><b>{selected.label}</b><span>{selected.note}</span></div>
+            <small>LOCAL DRAFT / NOT EXECUTED</small>
+          </div>
+          <textarea
+            value={draft}
+            onChange={(event) => setDraft(event.target.value)}
+            spellCheck="false"
+            aria-label={`${selected.label} code editor`}
+          />
+          <div className="sketch-actions">
+            <button type="button" onClick={copyDraft}>copy code</button>
+            <button type="button" onClick={restoreStarter}>restore starter</button>
+          </div>
+        </section>
+
+        <p className="sketch-notice" role="status">{notice}</p>
+
+        <aside className="sketch-boundary">
+          <b>WHAT THIS HELPS WITH</b>
+          <span>Small, readable starting points for interfaces and interactions. For a real bug, check browser errors, keep the change narrow, and test the actual behavior instead of trusting a confident-looking rectangle.</span>
+        </aside>
+
+        <footer className="sketch-footer">
+          <span>NO CODE RUNS HERE / NO API KEYS, PRIVATE KEYS, OR CREDENTIALS BELONG IN A TEXT BOX</span>
+          <Link to="/ai-challenge">open the AI Challenge Desk →</Link>
+        </footer>
+      </section>
+    </main>
+  )
+}
