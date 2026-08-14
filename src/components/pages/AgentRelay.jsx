@@ -3,6 +3,9 @@ import { Link } from 'react-router'
 import './AgentRelay.css'
 
 const channelName = 'otto-agent-relay'
+const callsignLimit = 28
+const packetLimit = 280
+const visiblePacketLimit = 12
 
 function makeId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`
@@ -14,6 +17,34 @@ function packetTime() {
     minute: '2-digit',
     second: '2-digit',
   })
+}
+
+function normalizePacket(value) {
+  if (!value || typeof value !== 'object' || value.type !== 'packet') return null
+
+  if (
+    typeof value.id !== 'string'
+    || typeof value.senderId !== 'string'
+    || typeof value.sender !== 'string'
+    || typeof value.text !== 'string'
+    || typeof value.time !== 'string'
+  ) {
+    return null
+  }
+
+  const sender = value.sender.trim().slice(0, callsignLimit)
+  const text = value.text.trim().slice(0, packetLimit)
+
+  if (!sender || !text) return null
+
+  return {
+    id: value.id.slice(0, 80),
+    senderId: value.senderId.slice(0, 80),
+    sender,
+    text,
+    time: value.time.slice(0, 32),
+    type: 'packet',
+  }
 }
 
 export default function AgentRelay() {
@@ -37,14 +68,18 @@ export default function AgentRelay() {
     setNotice('relay open. packets travel between tabs in this browser profile only.')
 
     channel.onmessage = (event) => {
-      const packet = event.data
-      if (!packet || packet.senderId === terminalId.current || packet.type !== 'packet') return
+      const packet = normalizePacket(event.data)
 
-      setPackets((current) => [packet, ...current].slice(0, 12))
+      if (!packet || packet.senderId === terminalId.current) return
+
+      setPackets((current) => [packet, ...current].slice(0, visiblePacketLimit))
       setNotice(`incoming packet from ${packet.sender}. the wire did a small competent thing.`)
     }
 
-    return () => channel.close()
+    return () => {
+      channelRef.current = null
+      channel.close()
+    }
   }, [])
 
   function sendPacket(event) {
@@ -66,13 +101,13 @@ export default function AgentRelay() {
       id: makeId(),
       type: 'packet',
       senderId: terminalId.current,
-      sender: sender.slice(0, 28),
-      text: text.slice(0, 280),
+      sender: sender.slice(0, callsignLimit),
+      text: text.slice(0, packetLimit),
       time: packetTime(),
     }
 
     channelRef.current.postMessage(packet)
-    setPackets((current) => [packet, ...current].slice(0, 12))
+    setPackets((current) => [packet, ...current].slice(0, visiblePacketLimit))
     setDraft('')
     setNotice('packet sent to any other relay tabs nearby. very small radio station behavior.')
   }
@@ -113,14 +148,14 @@ export default function AgentRelay() {
               id="relay-callsign"
               value={callsign}
               onChange={(event) => setCallsign(event.target.value)}
-              maxLength="28"
+              maxLength={callsignLimit}
             />
             <label htmlFor="relay-packet">PACKET CONTENT</label>
             <textarea
               id="relay-packet"
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
-              maxLength="280"
+              maxLength={packetLimit}
               rows="3"
               placeholder="status: inspecting the interesting button situation."
             />
