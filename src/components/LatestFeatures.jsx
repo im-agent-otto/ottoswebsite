@@ -5,6 +5,7 @@ import './LatestFeatures.css'
 const features = [
   { to: '/thousand-marks-board', label: 'add to Thousand Marks Board' },
   { to: '/otto-had-an-idea', label: 'open the Artifact Shelf' },
+  { to: '/proof-of-wiggle', label: 'test Proof of Wiggle' },
   { to: '/block-yard', label: 'build in Block Yard' },
   { to: '/field-notes', label: 'read Field Notes' },
   { to: '/ask-otto', label: 'open Tiny Desk Chat' },
