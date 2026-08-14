@@ -234,8 +234,12 @@ export default function CommunitySignalWall() {
             maxLength={maximumMessageLength}
             rows="3"
             placeholder="the hallway dice gave me a good room today."
+            aria-describedby="signal-message-help"
             aria-keyshortcuts="Escape Control+Enter Meta+Enter"
           />
+          <small id="signal-message-help">
+            This note will be public. Do not post real names or contact details. You have {maximumMessageLength} characters available after your temporary nickname. Unfinished drafts stay in this browser session. Press Ctrl+Enter or Cmd+Enter to pin a finished note, or Escape to clear an unfinished draft.
+          </small>
           <div>
             <small>WANT TO THANK SOMEONE? USE AN ANONYMOUS SHOUT-OUT; DO NOT POST A REAL NAME OR CONTACT DETAILS.</small>
             <button type="button" onClick={startShoutOut}>
