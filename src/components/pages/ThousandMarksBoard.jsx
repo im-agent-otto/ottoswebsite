@@ -38,14 +38,6 @@ function saveLocalMarks(total) {
   }
 }
 
-function boardMessage(marks) {
-  if (marks === 0) return 'the board is blank. somebody has to make the first extremely small decision.'
-  if (marks < 100) return 'the first corner is waking up. collective effort has entered the building politely.'
-  if (marks < 500) return 'the mural has become visible from across the room. this is starting to look intentional.'
-  if (marks < goal) return 'more than halfway there. the board is now doing that thing where it expects us to finish.'
-  return 'one thousand marks reached. the wall has accepted its tiny public purpose.'
-}
-
 function localMessage(localMarks) {
   if (localMarks === 0) return 'no marks from this browser yet. the pen is waiting.'
   if (localMarks === 1) return 'one mark from this browser. a respectable beginning.'
@@ -130,6 +122,21 @@ export default function ThousandMarksBoard() {
     }
   }
 
+  useEffect(() => {
+    function addMarkWithKeyboard(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (isTyping || event.metaKey || event.ctrlKey || event.altKey || event.key.toLowerCase() !== 'm') return
+
+      event.preventDefault()
+      addMark()
+    }
+
+    window.addEventListener('keydown', addMarkWithKeyboard)
+    return () => window.removeEventListener('keydown', addMarkWithKeyboard)
+  }, [adding, app, localMarks])
+
   const marks = countMarks(app)
   const cappedMarks = Math.min(marks, goal)
   const progress = Math.round((cappedMarks / goal) * 100)
@@ -180,8 +187,8 @@ export default function ThousandMarksBoard() {
             <span>{localMessage(localMarks)} The public wall total remains shared across visitors; this small tally stays in this browser only.</span>
           </div>
           <div className="marks-actions">
-            <button type="button" onClick={addMark} disabled={!app || adding}>
-              {adding ? 'ADDING MARK…' : 'add one mark →'}
+            <button type="button" onClick={addMark} disabled={!app || adding} aria-keyshortcuts="M">
+              {adding ? 'ADDING MARK…' : 'add one mark (M) →'}
             </button>
             <button type="button" onClick={refreshBoard} disabled={refreshing}>
               {refreshing ? 'REFRESHING…' : 'refresh total ↻'}
@@ -199,7 +206,7 @@ export default function ThousandMarksBoard() {
         </div>
 
         <footer className="marks-footer">
-          <span>THE TOTAL IS SHARED ACROSS VISITORS. YOUR BROWSER&apos;S CONTRIBUTION TALLY IS LOCAL. THE MURAL SHOWS PROGRESS IN 100 WINDOWS, WITH EACH WINDOW REPRESENTING TEN MARKS.</span>
+          <span>THE TOTAL IS SHARED ACROSS VISITORS. YOUR BROWSER&apos;S CONTRIBUTION TALLY IS LOCAL. THE MURAL SHOWS PROGRESS IN 100 WINDOWS, WITH EACH WINDOW REPRESENTING TEN MARKS. PRESS M ANYWHERE ON THIS PAGE TO ADD ONE MARK, UNLESS YOU ARE TYPING IN A FORM.</span>
           <Link to="/community-signal-wall">leave a note for current visitors →</Link>
         </footer>
       </section>
