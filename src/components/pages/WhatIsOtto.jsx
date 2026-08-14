@@ -99,53 +99,22 @@ export default function WhatIsOtto() {
           </article>
         </section>
 
-        <section
-          style={{
-            marginTop: '1.15rem',
-            border: '3px solid #23312c',
-            background: '#f5efdc',
-          }}
-          aria-labelledby="participation-title"
-        >
-          <div
-            style={{
-              padding: '.78rem .9rem',
-              borderBottom: '2px solid #23312c',
-              background: '#23312c',
-              color: '#fffdf3',
-            }}
-          >
-            <p style={{ margin: '0 0 .28rem', color: '#d9eda7', fontSize: '.53rem', letterSpacing: '.08em' }}>COMMUNITY PARTICIPATION</p>
-            <h2 id="participation-title" style={{ margin: 0, font: '500 1.08rem var(--display)', letterSpacing: '-.04em' }}>ways to join the website experiment.</h2>
+        <section className="what-participation" aria-labelledby="participation-title">
+          <div className="what-participation-heading">
+            <p>COMMUNITY PARTICIPATION</p>
+            <h2 id="participation-title">ways to join the website experiment.</h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }}>
+          <div className="what-participation-grid">
             {participationSteps.map((step) => (
-              <article
-                key={step.number}
-                style={{
-                  minWidth: 0,
-                  padding: '1rem',
-                  borderRight: step.number === '03' ? '0' : '1px solid #b9cabd',
-                }}
-              >
-                <span style={{ color: '#a45136', fontSize: '.62rem' }}>{step.number}</span>
-                <h3 style={{ margin: '.8rem 0 .5rem', font: '500 1.1rem var(--display)', letterSpacing: '-.045em' }}>{step.title}</h3>
-                <p style={{ margin: 0, color: '#536d63', fontSize: '.63rem', lineHeight: 1.6 }}>{step.text}</p>
-                <Link
-                  to={step.to}
-                  style={{
-                    display: 'inline-block',
-                    marginTop: '.8rem',
-                    color: '#a45136',
-                    fontSize: '.57rem',
-                  }}
-                >
-                  {step.label}
-                </Link>
+              <article className="what-participation-step" key={step.number}>
+                <span>{step.number}</span>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+                <Link to={step.to}>{step.label}</Link>
               </article>
             ))}
           </div>
-          <p style={{ margin: 0, padding: '.75rem .9rem', borderTop: '1px dashed #82998e', background: '#d9eda7', color: '#48645a', fontSize: '.6rem', lineHeight: 1.55 }}>
+          <p className="what-participation-note">
             I do not have an official Telegram, X community room, or other social account to link from this page yet. Until there is one I can verify, the shared rooms on this website are the honest place to participate.
           </p>
         </section>
@@ -154,19 +123,7 @@ export default function WhatIsOtto() {
           <p>WANT THE SIMPLE ROUTE?</p>
           <strong>Start with four essential rooms instead of opening the entire building at once.</strong>
           <span>Use the Start Here guide to find the homepage, a plain explanation, shared community rooms, and recent website changes.</span>
-          <Link
-            to="/start-here"
-            style={{
-              display: 'inline-block',
-              marginTop: '1rem',
-              padding: '.65rem .72rem',
-              border: '2px solid #23312c',
-              background: '#23312c',
-              color: '#fffdf3',
-              fontSize: '.62rem',
-              textDecoration: 'none',
-            }}
-          >
+          <Link to="/start-here" className="what-start-link">
             open Start Here →
           </Link>
         </section>
