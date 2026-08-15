@@ -22,6 +22,7 @@ const ghostStarts = [
   { x: 6, y: 5, color: 'blue' },
   { x: 8, y: 5, color: 'pink' },
 ]
+const bestScoreStorageKey = 'otto-dot-gobbler-best-score'
 
 function dotKeys() {
   const dots = new Set()
@@ -30,6 +31,8 @@ function dotKeys() {
   }))
   return dots
 }
+
+const totalDots = dotKeys().size
 
 function canGo(point) {
   return maze[point.y]?.[point.x] && maze[point.y][point.x] !== '#'
@@ -46,13 +49,23 @@ const directions = [
   { x: 0, y: -1 },
 ]
 
+function loadBestScore() {
+  try {
+    return Math.max(0, Number(window.sessionStorage.getItem(bestScoreStorageKey)) || 0)
+  } catch {
+    return 0
+  }
+}
+
 export default function DotGobbler() {
   const [player, setPlayer] = useState(start)
   const [ghosts, setGhosts] = useState(ghostStarts)
   const [dots, setDots] = useState(dotKeys)
   const [status, setStatus] = useState('playing')
   const [paused, setPaused] = useState(false)
+  const [bestScore, setBestScore] = useState(loadBestScore)
   const [message, setMessage] = useState('the dots are free. suspiciously free.')
+  const score = totalDots - dots.size
 
   function reset() {
     setPlayer(start)
@@ -94,6 +107,20 @@ export default function DotGobbler() {
     return caught
   }
 
+  function recordBestScore(nextScore) {
+    setBestScore((currentBest) => {
+      if (nextScore <= currentBest) return currentBest
+
+      try {
+        window.sessionStorage.setItem(bestScoreStorageKey, String(nextScore))
+      } catch {
+        // The cabinet can still celebrate the visible session best if its filing drawer is unavailable.
+      }
+
+      return nextScore
+    })
+  }
+
   function move(direction) {
     if (status !== 'playing' || paused) return
     const next = nextPoint(player, direction)
@@ -104,10 +131,13 @@ export default function DotGobbler() {
 
     const key = `${next.x}-${next.y}`
     const remaining = new Set(dots)
-    remaining.delete(key)
+    const ateDot = remaining.delete(key)
+    const nextScore = totalDots - remaining.size
     const walkedIntoGhost = ghosts.some((ghost) => ghost.x === next.x && ghost.y === next.y)
     setPlayer(next)
     setDots(remaining)
+
+    if (ateDot) recordBestScore(nextScore)
 
     if (walkedIntoGhost || moveGhosts(next)) {
       setStatus('lost')
@@ -193,7 +223,16 @@ export default function DotGobbler() {
           <p>otto's legally distinct maze situation</p>
           <h1 id="gobbler-title">dot<br />gobbler.</h1>
           <p className="gobbler-description">eat every dot. avoid the three blobs, who have no hobbies besides ruining a nice walk.</p>
-          <div className="gobbler-score"><span>DOTS LEFT</span><strong>{String(dots.size).padStart(2, '0')}</strong></div>
+          <div className="gobbler-score">
+            <div>
+              <span>DOTS CLEARED</span>
+              <strong>{String(score).padStart(2, '0')}</strong>
+            </div>
+            <div>
+              <span>SESSION BEST</span>
+              <strong>{String(bestScore).padStart(2, '0')}</strong>
+            </div>
+          </div>
           <p className="gobbler-help">arrow keys work. the little buttons also work. P pauses or resumes the maze. Escape starts a fresh maze. technology remains alive.</p>
         </div>
 

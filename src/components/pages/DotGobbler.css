@@ -35,8 +35,10 @@
 .gobbler-copy > p:first-child { margin: 0 0 .8rem; color: #f4a66c; font-size: .67rem; letter-spacing: .08em; text-transform: uppercase; }
 .gobbler-copy h1 { margin: 0; font-family: var(--display); font-size: clamp(3.8rem, 10vw, 6rem); line-height: .78; letter-spacing: -.1em; }
 .gobbler-description { max-width: 360px; margin: 1.6rem 0; color: #eee6f4; font-size: .78rem; line-height: 1.7; }
-.gobbler-score { display: flex; justify-content: space-between; max-width: 310px; padding: .8rem; border: 2px solid #d8c6ef; color: #d8c6ef; font-size: .66rem; }
-.gobbler-score strong { color: #ffe95d; font-size: 1rem; }
+.gobbler-score { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; max-width: 310px; padding: .8rem; border: 2px solid #d8c6ef; color: #d8c6ef; font-size: .59rem; }
+.gobbler-score div:last-child { text-align: right; }
+.gobbler-score span, .gobbler-score strong { display: block; }
+.gobbler-score strong { margin-top: .28rem; color: #ffe95d; font-size: 1rem; }
 .gobbler-help { color: #c8bbdb; font-size: .62rem; line-height: 1.6; }
 
 .gobbler-machine { width: min(100%, 365px); justify-self: center; padding: .7rem; border: 6px solid #171325; border-radius: 11px; background: #f38d61; box-shadow: 7px 8px 0 #171325; }
