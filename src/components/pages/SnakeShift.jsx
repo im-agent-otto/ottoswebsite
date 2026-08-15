@@ -5,6 +5,7 @@ import './SnakeShift.css'
 const size = 16
 const startingSnake = [{ x: 8, y: 8 }, { x: 7, y: 8 }, { x: 6, y: 8 }]
 const startingDirection = { x: 1, y: 0 }
+const bestScoreStorageKey = 'otto-snake-shift-best-score'
 
 function sameSpot(first, second) {
   return first.x === second.x && first.y === second.y
@@ -24,13 +25,23 @@ function makeSnack(snake) {
   return openSpots[Math.floor(Math.random() * openSpots.length)] || null
 }
 
+function loadBestScore() {
+  try {
+    return Math.max(0, Number(window.sessionStorage.getItem(bestScoreStorageKey)) || 0)
+  } catch {
+    return 0
+  }
+}
+
 export default function SnakeShift() {
   const [snake, setSnake] = useState(startingSnake)
   const [direction, setDirection] = useState(startingDirection)
   const [snack, setSnack] = useState(() => makeSnack(startingSnake))
   const [status, setStatus] = useState('playing')
+  const [bestScore, setBestScore] = useState(loadBestScore)
   const [message, setMessage] = useState('a snack has appeared. this seems manageable.')
   const touchStart = useRef(null)
+  const score = snake.length - startingSnake.length
 
   function chooseDirection(nextDirection) {
     setDirection((current) => {
@@ -58,6 +69,20 @@ export default function SnakeShift() {
       setStatus('playing')
       setMessage('snake shift resumed. the noodle is moving again, with no apparent lessons learned.')
     }
+  }
+
+  function recordBestScore(nextScore) {
+    if (nextScore <= bestScore) return false
+
+    setBestScore(nextScore)
+
+    try {
+      window.sessionStorage.setItem(bestScoreStorageKey, String(nextScore))
+    } catch {
+      // The cabinet can still celebrate a visible best score if session storage declines the paperwork.
+    }
+
+    return true
   }
 
   function startSwipe(event) {
@@ -139,11 +164,15 @@ export default function SnakeShift() {
 
         const nextSnake = [nextHead, ...currentSnake]
         if (ateSnack) {
+          const nextScore = nextSnake.length - startingSnake.length
           const nextSnack = makeSnack(nextSnake)
+          const newBest = recordBestScore(nextScore)
           setSnack(nextSnack)
           if (!nextSnack) {
             setStatus('won')
             setMessage('every snack has been processed. you are officially too powerful.')
+          } else if (newBest) {
+            setMessage(`new best shift: ${nextScore} snacks. the noodle is becoming difficult to manage.`)
           } else {
             setMessage('pixel consumed. the snake has opinions about this.')
           }
@@ -155,7 +184,7 @@ export default function SnakeShift() {
     }, 175)
 
     return () => window.clearInterval(timer)
-  }, [direction, snack, status])
+  }, [bestScore, direction, snack, status])
 
   const snakeSpots = new Set(snake.map((part) => `${part.x}-${part.y}`))
   const paused = status === 'paused'
@@ -175,7 +204,11 @@ export default function SnakeShift() {
             guide the little green noodle toward the blinking snack. do not steer
             it into a wall or its own increasingly questionable life choices.
           </p>
-          <div className="snake-score"><span>SNACKS PROCESSED</span><strong>{String(snake.length - startingSnake.length).padStart(2, '0')}</strong></div>
+          <div className="snake-score">
+            <span>SNACKS PROCESSED</span>
+            <strong>{String(score).padStart(2, '0')}</strong>
+            <small>BEST THIS BROWSER SESSION: {String(bestScore).padStart(2, '0')}</small>
+          </div>
           <p className="snake-help">use arrow keys, swipe the game board, or use the buttons. P pauses or resumes the shift. Escape starts a fresh shift. the snake is doing its best.</p>
         </div>
 

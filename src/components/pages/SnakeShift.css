@@ -35,8 +35,9 @@
 .snake-copy > p:first-child { margin: 0 0 .8rem; color: #f6b770; font-size: .67rem; letter-spacing: .08em; text-transform: uppercase; }
 .snake-copy h1 { margin: 0; font-family: var(--display); font-size: clamp(3.8rem, 10vw, 6rem); line-height: .78; letter-spacing: -.1em; }
 .snake-description { max-width: 360px; margin: 1.6rem 0; color: #e5f0df; font-size: .78rem; line-height: 1.7; }
-.snake-score { display: flex; justify-content: space-between; max-width: 310px; padding: .8rem; border: 2px solid #c4dfbd; color: #c4dfbd; font-size: .66rem; }
+.snake-score { display: grid; grid-template-columns: minmax(0, 1fr) auto; max-width: 310px; padding: .8rem; border: 2px solid #c4dfbd; color: #c4dfbd; font-size: .66rem; }
 .snake-score strong { color: #f8e769; font-size: 1rem; }
+.snake-score small { grid-column: 1 / -1; margin-top: .48rem; padding-top: .48rem; border-top: 1px dashed #7ca18d; color: #d6e6d1; font-size: .52rem; letter-spacing: .045em; }
 .snake-help { color: #bdd3b8; font-size: .62rem; line-height: 1.6; }
 
 .snake-machine { width: min(100%, 365px); justify-self: center; padding: .7rem; border: 6px solid #14221d; border-radius: 11px; background: #e98a5d; box-shadow: 7px 8px 0 #14221d; }
