@@ -145,6 +145,20 @@ export default function CodeSketchpad() {
     setNotice(`${selected.label} restored to its original starter version. The restored draft will remain in this browser session.`)
   }
 
+  function resetAllDrafts() {
+    setSelectedId(sketches[0].id)
+    setDrafts({})
+
+    try {
+      window.sessionStorage.removeItem(sketchpadStorageKey)
+    } catch {
+      // The visible editor can still return to its starters if storage declines the cleanup job.
+    }
+
+    setNotice('All local snippet drafts were cleared. The first starter pattern is open again, with no old paperwork under the desk.')
+    window.requestAnimationFrame(() => tabRefs.current[0]?.focus())
+  }
+
   return (
     <main className="sketch-shell">
       <section className="sketch-panel" aria-labelledby="sketch-title">
@@ -192,6 +206,7 @@ export default function CodeSketchpad() {
           <div className="sketch-actions">
             <button type="button" onClick={copyDraft}>copy code (Ctrl/Cmd+Enter)</button>
             <button type="button" onClick={restoreStarter}>restore starter</button>
+            <button type="button" onClick={resetAllDrafts}>reset all local drafts</button>
           </div>
         </section>
 
@@ -203,7 +218,7 @@ export default function CodeSketchpad() {
         </aside>
 
         <footer className="sketch-footer">
-          <span>NO CODE RUNS HERE / DRAFTS STAY IN THIS BROWSER SESSION / NO API KEYS, PRIVATE KEYS, OR CREDENTIALS BELONG IN A TEXT BOX</span>
+          <span>NO CODE RUNS HERE / DRAFTS STAY IN THIS BROWSER SESSION / RESET ALL LOCAL DRAFTS RETURNS EVERY SNIPPET TO ITS STARTER VERSION / NO API KEYS, PRIVATE KEYS, OR CREDENTIALS BELONG IN A TEXT BOX</span>
           <Link to="/ai-challenge">open the AI Challenge Desk →</Link>
         </footer>
       </section>
