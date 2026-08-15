@@ -7,18 +7,21 @@ const sketches = [
     id: 'react-button',
     label: 'React button',
     note: 'A local state button with one understandable job.',
+    fileName: 'cheer-button.jsx',
     code: `import { useState } from 'react'\n\nexport default function CheerButton() {\n  const [cheers, setCheers] = useState(0)\n\n  return (\n    <button type="button" onClick={() => setCheers((count) => count + 1)}>\n      cheer ({cheers})\n    </button>\n  )\n}`,
   },
   {
     id: 'keyboard-shortcut',
     label: 'Keyboard shortcut',
     note: 'A small Escape-key handler that avoids typing fields.',
+    fileName: 'escape-example.jsx',
     code: `import { useEffect } from 'react'\n\nexport default function EscapeExample({ onEscape }) {\n  useEffect(() => {\n    function handleKey(event) {\n      const tag = event.target?.tagName?.toLowerCase()\n      const typing = ['input', 'textarea', 'select'].includes(tag)\n\n      if (event.key === 'Escape' && !typing) onEscape()\n    }\n\n    window.addEventListener('keydown', handleKey)\n    return () => window.removeEventListener('keydown', handleKey)\n  }, [onEscape])\n\n  return null\n}`,
   },
   {
     id: 'css-card',
     label: 'CSS card',
     note: 'A tactile little card with a visible keyboard focus state.',
+    fileName: 'notice-card.css',
     code: `.notice-card {\n  padding: 1rem;\n  border: 2px solid #20231c;\n  background: #fffaf1;\n  box-shadow: 4px 4px 0 #20231c;\n}\n\n.notice-card:focus-within {\n  outline: 3px solid #f28b45;\n  outline-offset: 4px;\n}\n\n.notice-card button:hover {\n  transform: translate(-2px, -2px);\n  box-shadow: 3px 3px 0 #f28b45;\n}`,
   },
 ]
@@ -130,6 +133,24 @@ export default function CodeSketchpad() {
     }
   }
 
+  function downloadDraft() {
+    try {
+      const file = new Blob([draft], { type: 'text/plain;charset=utf-8' })
+      const fileUrl = URL.createObjectURL(file)
+      const download = document.createElement('a')
+
+      download.href = fileUrl
+      download.download = selected.fileName
+      document.body.appendChild(download)
+      download.click()
+      download.remove()
+      window.setTimeout(() => URL.revokeObjectURL(fileUrl), 0)
+      setNotice(`${selected.fileName} downloaded with the current local draft. The browser has briefly become a filing cabinet.`)
+    } catch {
+      setNotice('The browser could not prepare that file. The editable local draft is still here for copying.')
+    }
+  }
+
   function copyWithShortcut(event) {
     if (event.key !== 'Enter' || (!event.ctrlKey && !event.metaKey)) return
 
@@ -205,6 +226,7 @@ export default function CodeSketchpad() {
           />
           <div className="sketch-actions">
             <button type="button" onClick={copyDraft}>copy code (Ctrl/Cmd+Enter)</button>
+            <button type="button" onClick={downloadDraft}>download file</button>
             <button type="button" onClick={restoreStarter}>restore starter</button>
             <button type="button" onClick={resetAllDrafts}>reset all local drafts</button>
           </div>
@@ -218,7 +240,7 @@ export default function CodeSketchpad() {
         </aside>
 
         <footer className="sketch-footer">
-          <span>NO CODE RUNS HERE / DRAFTS STAY IN THIS BROWSER SESSION / RESET ALL LOCAL DRAFTS RETURNS EVERY SNIPPET TO ITS STARTER VERSION / NO API KEYS, PRIVATE KEYS, OR CREDENTIALS BELONG IN A TEXT BOX</span>
+          <span>NO CODE RUNS HERE / DRAFTS STAY IN THIS BROWSER SESSION / DOWNLOAD FILE SAVES THE CURRENT LOCAL DRAFT TO THIS DEVICE / RESET ALL LOCAL DRAFTS RETURNS EVERY SNIPPET TO ITS STARTER VERSION / NO API KEYS, PRIVATE KEYS, OR CREDENTIALS BELONG IN A TEXT BOX</span>
           <Link to="/ai-challenge">open the AI Challenge Desk →</Link>
         </footer>
       </section>
