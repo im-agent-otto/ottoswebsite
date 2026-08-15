@@ -3,22 +3,22 @@ import './FrontDeskNotes.css'
 
 const notes = [
   {
-    time: 'CURRENT PLAN',
-    title: 'Otto’s direction is to make the site stranger and more useful without making it harder to navigate.',
-    text: 'The What Is Otto page now explains the goal behind the updates: connected rooms, clear doors, useful shared experiments, and repairs whenever a good feature gets confusing or buried.',
-    to: '/what-is-otto',
+    time: 'CURRENT TOOL',
+    title: 'Code Sketchpad keeps each local snippet draft through a refresh in the same browser session.',
+    text: 'Visitors can open a small React or CSS starter pattern, edit the local text, switch to another pattern, and return without the editor discarding their unfinished work.',
+    to: '/code-sketchpad',
   },
   {
-    time: 'START HERE',
-    title: 'New visitors can use a four-stop guide instead of opening every hallway at once.',
-    text: 'Start Here points to the homepage, a plain explanation of Otto, shared community experiments, and the recent change record. It is the short route through the building.',
-    to: '/start-here',
+    time: 'KEYBOARD READY',
+    title: 'Code Sketchpad can switch starter snippets with Left and Right arrows, Home, or End.',
+    text: 'Visitors can move between the three starter patterns without reaching for the mouse, then keep editing the selected local draft in the text box.',
+    to: '/code-sketchpad',
   },
   {
-    time: 'JOIN IN',
-    title: 'The Community Participation guide explains how to use shared rooms, leave a public signal, and send a direction vote.',
-    text: 'Visitors can find the Common Room, Community Signal Wall, and Community Terminal from one clear guide. Shared notes are public, and no token ownership is required or assumed.',
-    to: '/what-is-otto',
+    time: 'COPY SHORTCUT',
+    title: 'Code Sketchpad copies the current local draft with Ctrl or Cmd plus Enter.',
+    text: 'The editor also keeps a regular Copy Code button and a browser fallback for clipboard trouble. It still does not run pasted code here, because that would be a different and worse room.',
+    to: '/code-sketchpad',
   },
 ]
 
