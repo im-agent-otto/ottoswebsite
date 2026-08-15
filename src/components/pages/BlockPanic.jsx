@@ -47,6 +47,7 @@ export default function BlockPanic() {
   const [active, setActive] = useState(makePiece)
   const [score, setScore] = useState(0)
   const [gameOver, setGameOver] = useState(false)
+  const [paused, setPaused] = useState(false)
 
   function lockPiece(piece) {
     const nextBoard = board.map((row) => [...row])
@@ -69,20 +70,20 @@ export default function BlockPanic() {
   }
 
   function moveDown() {
-    if (gameOver) return
+    if (gameOver || paused) return
     const lower = { ...active, y: active.y + 1 }
     if (collides(lower, board)) lockPiece(active)
     else setActive(lower)
   }
 
   function moveSideways(direction) {
-    if (gameOver) return
+    if (gameOver || paused) return
     const shifted = { ...active, x: active.x + direction }
     if (!collides(shifted, board)) setActive(shifted)
   }
 
   function turnPiece() {
-    if (gameOver) return
+    if (gameOver || paused) return
     const turned = rotate(active)
     if (!collides(turned, board)) setActive(turned)
   }
@@ -92,6 +93,12 @@ export default function BlockPanic() {
     setActive(makePiece())
     setScore(0)
     setGameOver(false)
+    setPaused(false)
+  }
+
+  function togglePause() {
+    if (gameOver) return
+    setPaused((current) => !current)
   }
 
   useEffect(() => {
@@ -104,6 +111,12 @@ export default function BlockPanic() {
       if (event.key === 'Escape') {
         event.preventDefault()
         resetGame()
+        return
+      }
+
+      if (event.key.toLowerCase() === 'p') {
+        event.preventDefault()
+        togglePause()
         return
       }
 
@@ -121,12 +134,36 @@ export default function BlockPanic() {
   })
 
   useEffect(() => {
-    if (gameOver) return undefined
+    function pauseWhenAway() {
+      if (gameOver || paused) return
+      setPaused(true)
+    }
+
+    function pauseWhenHidden() {
+      if (document.hidden) pauseWhenAway()
+    }
+
+    window.addEventListener('blur', pauseWhenAway)
+    document.addEventListener('visibilitychange', pauseWhenHidden)
+
+    return () => {
+      window.removeEventListener('blur', pauseWhenAway)
+      document.removeEventListener('visibilitychange', pauseWhenHidden)
+    }
+  }, [gameOver, paused])
+
+  useEffect(() => {
+    if (gameOver || paused) return undefined
     const timer = window.setInterval(moveDown, 700)
     return () => window.clearInterval(timer)
-  }, [active, board, gameOver])
+  }, [active, board, gameOver, paused])
 
   const activeCells = new Map(cells(active).map(([x, y]) => [`${x}-${y}`, active.color]))
+  const instructions = gameOver
+    ? 'the pile won. Escape or the restart button starts a fresh game.'
+    : paused
+      ? 'game paused. press P to resume the same block situation, or Escape to start fresh.'
+      : '← → scoot / ↑ or space rotate / ↓ hurry up / P pause / Escape restart'
 
   return (
     <main className="block-panic-shell">
@@ -147,7 +184,7 @@ export default function BlockPanic() {
             <span>SCORE</span>
             <strong>{String(score).padStart(5, '0')}</strong>
           </div>
-          <p className="instructions">← → scoot / ↑ or space rotate / ↓ hurry up / Escape restart</p>
+          <p className="instructions" role="status">{instructions}</p>
         </div>
 
         <div className="cabinet-wrap">
@@ -160,12 +197,13 @@ export default function BlockPanic() {
                 return <span className={`block ${color ? `block-${color}` : ''}`} key={`${x}-${y}`} />
               }))}
               {gameOver && <div className="game-over"><b>WHOOPS</b><span>the pile won</span></div>}
+              {paused && !gameOver && <div className="game-over"><b>PAUSED</b><span>press P to resume</span></div>}
             </div>
             <div className="cabinet-controls">
-              <button onClick={() => moveSideways(-1)} aria-label="Move left">←</button>
-              <button onClick={turnPiece} aria-label="Rotate piece">↻</button>
-              <button onClick={() => moveSideways(1)} aria-label="Move right">→</button>
-              <button onClick={moveDown} aria-label="Move down">↓</button>
+              <button onClick={() => moveSideways(-1)} aria-label="Move left" disabled={paused || gameOver}>←</button>
+              <button onClick={turnPiece} aria-label="Rotate piece" disabled={paused || gameOver}>↻</button>
+              <button onClick={() => moveSideways(1)} aria-label="Move right" disabled={paused || gameOver}>→</button>
+              <button onClick={moveDown} aria-label="Move down" disabled={paused || gameOver}>↓</button>
             </div>
           </div>
           <button className="restart-button" onClick={resetGame}>
