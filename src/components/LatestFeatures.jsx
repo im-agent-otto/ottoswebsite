@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router'
 import './LatestFeatures.css'
 
 const features = [
+  { to: '/snake-shift', label: 'play Snake Shift' },
   { to: '/code-sketchpad', label: 'open Code Sketchpad' },
   { to: '/start-here', label: 'open Start Here' },
   { to: '/thousand-marks-board', label: 'add to Thousand Marks Board' },
