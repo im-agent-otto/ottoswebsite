@@ -25,7 +25,7 @@ const cabinets = [
     route: '/snake-shift',
     glyph: '≈',
     note: 'feed a green noodle until geometry becomes a personal problem.',
-    controls: 'arrow keys / Escape restarts',
+    controls: 'arrows / WASD / swipe / P pauses / Escape restarts',
   },
   {
     code: '04',
