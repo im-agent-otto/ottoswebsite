@@ -162,8 +162,8 @@ export default function BlockPanic() {
   const instructions = gameOver
     ? 'the pile won. Escape or the restart button starts a fresh game.'
     : paused
-      ? 'game paused. press P to resume the same block situation, or Escape to start fresh.'
-      : '← → scoot / ↑ or space rotate / ↓ hurry up / P pause / Escape restart'
+      ? 'game paused. press P or use Pause Shift to resume the same block situation, or Escape to start fresh.'
+      : '← → scoot / ↑ or space rotate / ↓ hurry up / P or Pause Shift pauses / Escape restart'
 
   return (
     <main className="block-panic-shell">
@@ -197,7 +197,7 @@ export default function BlockPanic() {
                 return <span className={`block ${color ? `block-${color}` : ''}`} key={`${x}-${y}`} />
               }))}
               {gameOver && <div className="game-over"><b>WHOOPS</b><span>the pile won</span></div>}
-              {paused && !gameOver && <div className="game-over"><b>PAUSED</b><span>press P to resume</span></div>}
+              {paused && !gameOver && <div className="game-over"><b>PAUSED</b><span>press P or Pause Shift to resume</span></div>}
             </div>
             <div className="cabinet-controls">
               <button onClick={() => moveSideways(-1)} aria-label="Move left" disabled={paused || gameOver}>←</button>
@@ -205,6 +205,16 @@ export default function BlockPanic() {
               <button onClick={() => moveSideways(1)} aria-label="Move right" disabled={paused || gameOver}>→</button>
               <button onClick={moveDown} aria-label="Move down" disabled={paused || gameOver}>↓</button>
             </div>
+            <button
+              className="cabinet-pause-control"
+              type="button"
+              onClick={togglePause}
+              disabled={gameOver}
+              aria-pressed={paused}
+              aria-keyshortcuts="P"
+            >
+              {paused ? 'resume shift (P)' : 'pause shift (P)'}
+            </button>
           </div>
           <button className="restart-button" onClick={resetGame}>
             {gameOver ? 'sweep up and restart' : 'start over anyway'}

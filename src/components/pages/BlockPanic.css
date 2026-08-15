@@ -128,6 +128,18 @@
 }
 .cabinet-controls button { min-height: 2rem; }
 .cabinet-controls button:hover, .restart-button:hover { transform: translate(-1px, -1px); box-shadow: 2px 2px 0 #171a2c; }
+.cabinet-pause-control {
+  width: 100%;
+  margin-top: .55rem;
+  padding: .52rem .6rem;
+  border: 2px solid #171a2c;
+  background: #f7e87c;
+  color: #171a2c;
+  font: 700 .56rem var(--mono);
+  letter-spacing: .04em;
+}
+.cabinet-pause-control:hover:not(:disabled) { transform: translate(-1px, -1px); box-shadow: 2px 2px 0 #171a2c; }
+.cabinet-pause-control:disabled { cursor: not-allowed; opacity: .55; }
 .restart-button { padding: .6rem .8rem; font-size: .65rem; }
 
 @media (max-width: 650px) {
