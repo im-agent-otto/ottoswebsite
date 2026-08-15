@@ -51,6 +51,7 @@ export default function DotGobbler() {
   const [ghosts, setGhosts] = useState(ghostStarts)
   const [dots, setDots] = useState(dotKeys)
   const [status, setStatus] = useState('playing')
+  const [paused, setPaused] = useState(false)
   const [message, setMessage] = useState('the dots are free. suspiciously free.')
 
   function reset() {
@@ -58,7 +59,20 @@ export default function DotGobbler() {
     setGhosts(ghostStarts)
     setDots(dotKeys())
     setStatus('playing')
+    setPaused(false)
     setMessage('new maze. same deeply avoidable peril.')
+  }
+
+  function togglePause() {
+    if (status !== 'playing') return
+
+    setPaused((current) => {
+      const next = !current
+      setMessage(next
+        ? 'maze paused. the blobs have been asked to stop conducting their walking audit.'
+        : 'maze resumed. the blobs have returned to their extremely specific hobby.')
+      return next
+    })
   }
 
   function moveGhosts(nextPlayer) {
@@ -81,7 +95,7 @@ export default function DotGobbler() {
   }
 
   function move(direction) {
-    if (status !== 'playing') return
+    if (status !== 'playing' || paused) return
     const next = nextPoint(player, direction)
     if (!canGo(next)) {
       setMessage('wall. famously bad at moving out of the way.')
@@ -126,6 +140,12 @@ export default function DotGobbler() {
         return
       }
 
+      if (event.key.toLowerCase() === 'p') {
+        event.preventDefault()
+        togglePause()
+        return
+      }
+
       if (keys[event.key]) {
         event.preventDefault()
         move(keys[event.key])
@@ -135,6 +155,31 @@ export default function DotGobbler() {
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
   })
+
+  useEffect(() => {
+    function pauseWhenAway() {
+      if (status !== 'playing' || paused) return
+
+      setPaused(true)
+      setMessage('maze paused while you were away. the blobs were not permitted to continue their audit unsupervised.')
+    }
+
+    function pauseWhenHidden() {
+      if (document.hidden) pauseWhenAway()
+    }
+
+    window.addEventListener('blur', pauseWhenAway)
+    document.addEventListener('visibilitychange', pauseWhenHidden)
+
+    return () => {
+      window.removeEventListener('blur', pauseWhenAway)
+      document.removeEventListener('visibilitychange', pauseWhenHidden)
+    }
+  }, [paused, status])
+
+  const pausedMessage = paused
+    ? 'maze paused. press P or use the cabinet button to resume the same maze.'
+    : message
 
   return (
     <main className="gobbler-shell">
@@ -149,7 +194,7 @@ export default function DotGobbler() {
           <h1 id="gobbler-title">dot<br />gobbler.</h1>
           <p className="gobbler-description">eat every dot. avoid the three blobs, who have no hobbies besides ruining a nice walk.</p>
           <div className="gobbler-score"><span>DOTS LEFT</span><strong>{String(dots.size).padStart(2, '0')}</strong></div>
-          <p className="gobbler-help">arrow keys work. the little buttons also work. Escape starts a fresh maze. technology remains alive.</p>
+          <p className="gobbler-help">arrow keys work. the little buttons also work. P pauses or resumes the maze. Escape starts a fresh maze. technology remains alive.</p>
         </div>
 
         <div className="gobbler-machine">
@@ -167,18 +212,29 @@ export default function DotGobbler() {
                 </span>
               )
             }))}
+            {paused && status === 'playing' && <div className="maze-result"><b>PAUSED</b><span>press P or use Pause Maze to resume.</span></div>}
             {status !== 'playing' && <div className="maze-result"><b>{status === 'won' ? 'DOT KING' : 'BLOBBED'}</b><span>{status === 'won' ? 'the maze fears you now.' : 'the maze got you.'}</span></div>}
           </div>
           <div className="gobbler-controls">
-            <button onClick={() => move({ x: 0, y: -1 })} aria-label="Move up">↑</button>
-            <button onClick={() => move({ x: -1, y: 0 })} aria-label="Move left">←</button>
-            <button onClick={() => move({ x: 0, y: 1 })} aria-label="Move down">↓</button>
-            <button onClick={() => move({ x: 1, y: 0 })} aria-label="Move right">→</button>
+            <button onClick={() => move({ x: 0, y: -1 })} aria-label="Move up" disabled={paused || status !== 'playing'}>↑</button>
+            <button onClick={() => move({ x: -1, y: 0 })} aria-label="Move left" disabled={paused || status !== 'playing'}>←</button>
+            <button onClick={() => move({ x: 0, y: 1 })} aria-label="Move down" disabled={paused || status !== 'playing'}>↓</button>
+            <button onClick={() => move({ x: 1, y: 0 })} aria-label="Move right" disabled={paused || status !== 'playing'}>→</button>
           </div>
+          <button
+            className="gobbler-pause-control"
+            type="button"
+            onClick={togglePause}
+            disabled={status !== 'playing'}
+            aria-pressed={paused}
+            aria-keyshortcuts="P"
+          >
+            {paused ? 'resume maze (P)' : 'pause maze (P)'}
+          </button>
         </div>
 
         <footer className="gobbler-footer">
-          <span role="status">{message}</span>
+          <span role="status">{pausedMessage}</span>
           <button onClick={reset}>{status === 'playing' ? 'panic reset' : 'try again'}</button>
         </footer>
       </section>
