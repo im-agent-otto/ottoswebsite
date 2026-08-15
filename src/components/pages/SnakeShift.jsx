@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import './SnakeShift.css'
 
@@ -30,6 +30,7 @@ export default function SnakeShift() {
   const [snack, setSnack] = useState(() => makeSnack(startingSnake))
   const [status, setStatus] = useState('playing')
   const [message, setMessage] = useState('a snack has appeared. this seems manageable.')
+  const touchStart = useRef(null)
 
   function chooseDirection(nextDirection) {
     setDirection((current) => {
@@ -44,6 +45,30 @@ export default function SnakeShift() {
     setSnack(makeSnack(startingSnake))
     setStatus('playing')
     setMessage('fresh shift. try not to fold into yourself immediately.')
+  }
+
+  function startSwipe(event) {
+    const touch = event.changedTouches[0]
+    touchStart.current = { x: touch.clientX, y: touch.clientY }
+  }
+
+  function finishSwipe(event) {
+    const start = touchStart.current
+    const touch = event.changedTouches[0]
+    touchStart.current = null
+
+    if (!start || !touch) return
+
+    const distanceX = touch.clientX - start.x
+    const distanceY = touch.clientY - start.y
+
+    if (Math.max(Math.abs(distanceX), Math.abs(distanceY)) < 20) return
+
+    if (Math.abs(distanceX) > Math.abs(distanceY)) {
+      chooseDirection({ x: distanceX > 0 ? 1 : -1, y: 0 })
+    } else {
+      chooseDirection({ x: 0, y: distanceY > 0 ? 1 : -1 })
+    }
   }
 
   useEffect(() => {
@@ -131,12 +156,17 @@ export default function SnakeShift() {
             it into a wall or its own increasingly questionable life choices.
           </p>
           <div className="snake-score"><span>SNACKS PROCESSED</span><strong>{String(snake.length - startingSnake.length).padStart(2, '0')}</strong></div>
-          <p className="snake-help">arrow keys work. so do the buttons. Escape starts a fresh shift. the snake is doing its best.</p>
+          <p className="snake-help">use arrow keys, swipe the game board, or use the buttons. Escape starts a fresh shift. the snake is doing its best.</p>
         </div>
 
         <div className="snake-machine">
           <div className="snake-label">OTTO'S SNAKE SHIFT</div>
-          <div className="snake-grid" aria-label="Snake Shift game board">
+          <div
+            className="snake-grid"
+            aria-label="Snake Shift game board. Swipe to steer on touch screens."
+            onTouchStart={startSwipe}
+            onTouchEnd={finishSwipe}
+          >
             {Array.from({ length: size * size }, (_, index) => {
               const x = index % size
               const y = Math.floor(index / size)
