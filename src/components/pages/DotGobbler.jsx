@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import './DotGobbler.css'
 
@@ -65,6 +65,7 @@ export default function DotGobbler() {
   const [paused, setPaused] = useState(false)
   const [bestScore, setBestScore] = useState(loadBestScore)
   const [message, setMessage] = useState('the dots are free. suspiciously free.')
+  const touchStart = useRef(null)
   const score = totalDots - dots.size
 
   function reset() {
@@ -150,12 +151,40 @@ export default function DotGobbler() {
     }
   }
 
+  function startSwipe(event) {
+    const touch = event.changedTouches[0]
+    touchStart.current = touch ? { x: touch.clientX, y: touch.clientY } : null
+  }
+
+  function finishSwipe(event) {
+    const startTouch = touchStart.current
+    const touch = event.changedTouches[0]
+    touchStart.current = null
+
+    if (!startTouch || !touch || status !== 'playing' || paused) return
+
+    const distanceX = touch.clientX - startTouch.x
+    const distanceY = touch.clientY - startTouch.y
+
+    if (Math.max(Math.abs(distanceX), Math.abs(distanceY)) < 20) return
+
+    if (Math.abs(distanceX) > Math.abs(distanceY)) {
+      move({ x: distanceX > 0 ? 1 : -1, y: 0 })
+    } else {
+      move({ x: 0, y: distanceY > 0 ? 1 : -1 })
+    }
+  }
+
   useEffect(() => {
     const keys = {
       ArrowLeft: { x: -1, y: 0 },
       ArrowRight: { x: 1, y: 0 },
       ArrowUp: { x: 0, y: -1 },
       ArrowDown: { x: 0, y: 1 },
+      a: { x: -1, y: 0 },
+      d: { x: 1, y: 0 },
+      w: { x: 0, y: -1 },
+      s: { x: 0, y: 1 },
     }
 
     function onKeyDown(event) {
@@ -176,9 +205,11 @@ export default function DotGobbler() {
         return
       }
 
-      if (keys[event.key]) {
+      const direction = keys[event.key] || keys[event.key.toLowerCase()]
+
+      if (direction) {
         event.preventDefault()
-        move(keys[event.key])
+        move(direction)
       }
     }
 
@@ -233,12 +264,18 @@ export default function DotGobbler() {
               <strong>{String(bestScore).padStart(2, '0')}</strong>
             </div>
           </div>
-          <p className="gobbler-help">arrow keys work. the little buttons also work. P pauses or resumes the maze. Escape starts a fresh maze. technology remains alive.</p>
+          <p className="gobbler-help">arrow keys, WASD, swipes on the game board, and the little buttons all work. P pauses or resumes the maze. Escape starts a fresh maze. technology remains alive.</p>
         </div>
 
         <div className="gobbler-machine">
           <div className="machine-label">OTTO'S DOT GOBBLER</div>
-          <div className="maze" aria-label="Dot Gobbler game board">
+          <div
+            className="maze"
+            aria-label="Dot Gobbler game board. Swipe to steer on touch screens."
+            onTouchStart={startSwipe}
+            onTouchEnd={finishSwipe}
+            style={{ touchAction: 'none' }}
+          >
             {maze.flatMap((row, y) => row.split('').map((cell, x) => {
               const key = `${x}-${y}`
               const isPlayer = player.x === x && player.y === y
