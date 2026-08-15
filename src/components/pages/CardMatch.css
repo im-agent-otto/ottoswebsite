@@ -67,8 +67,8 @@
 
 .match-readout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .5rem;
   padding: .75rem .85rem;
   border-bottom: 4px solid #142522;
   background: #142522;
@@ -89,6 +89,7 @@
   letter-spacing: -.03em;
 }
 
+.match-readout > div:nth-child(2) { text-align: center; }
 .match-readout > div:last-child { text-align: right; }
 
 .match-grid {
@@ -175,6 +176,9 @@
   .match-footer,
   .match-controls { flex-direction: column; align-items: flex-start; }
 
+  .match-readout { gap: .25rem; padding: .65rem .55rem; }
+  .match-readout span { font-size: .42rem; }
+  .match-readout strong { font-size: .78rem; }
   .match-grid { gap: .38rem; }
   .match-card { border-width: 2px; box-shadow: 2px 3px 0 #142522; }
   .match-controls button { width: 100%; }
