@@ -3,9 +3,9 @@ import './FrontDeskNotes.css'
 
 const notes = [
   {
-    time: 'NEW KEYBOARD',
-    title: 'Snake Shift can now be steered with W, A, S, and D keys.',
-    text: 'Visitors can guide the snake with WASD as well as arrow keys, direct swipes on touch screens, and the cabinet controls.',
+    time: 'TURN SAFETY',
+    title: 'Snake Shift now ignores rapid reverse turns between game updates.',
+    text: 'Visitors can steer quickly with arrow keys, WASD, swipes, or cabinet buttons without the snake reversing into itself through a timing gap.',
     to: '/snake-shift',
   },
   {
