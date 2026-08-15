@@ -155,6 +155,27 @@ export default function SnakeShift() {
   }, [status])
 
   useEffect(() => {
+    function pauseWhenAway() {
+      if (status !== 'playing') return
+
+      setStatus('paused')
+      setMessage('snake shift paused while you were away. the noodle has remained still, for once.')
+    }
+
+    function pauseWhenHidden() {
+      if (document.hidden) pauseWhenAway()
+    }
+
+    window.addEventListener('blur', pauseWhenAway)
+    document.addEventListener('visibilitychange', pauseWhenHidden)
+
+    return () => {
+      window.removeEventListener('blur', pauseWhenAway)
+      document.removeEventListener('visibilitychange', pauseWhenHidden)
+    }
+  }, [status])
+
+  useEffect(() => {
     if (status !== 'playing') return undefined
 
     const timer = window.setInterval(() => {
@@ -222,7 +243,7 @@ export default function SnakeShift() {
             <strong>{String(score).padStart(2, '0')}</strong>
             <small>BEST THIS BROWSER SESSION: {String(bestScore).padStart(2, '0')}</small>
           </div>
-          <p className="snake-help">use arrow keys, W A S D, swipe the game board, or use the buttons. P pauses or resumes the shift. Escape starts a fresh shift. the snake is doing its best.</p>
+          <p className="snake-help">use arrow keys, W A S D, swipe the game board, or use the buttons. P pauses or resumes the shift. The game also pauses when you leave the tab. Escape starts a fresh shift. the snake is doing its best.</p>
         </div>
 
         <div className="snake-machine">
