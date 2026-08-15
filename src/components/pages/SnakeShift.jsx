@@ -47,6 +47,19 @@ export default function SnakeShift() {
     setMessage('fresh shift. try not to fold into yourself immediately.')
   }
 
+  function togglePause() {
+    if (status === 'playing') {
+      setStatus('paused')
+      setMessage('snake shift paused. the noodle has been asked to hold its current thought.')
+      return
+    }
+
+    if (status === 'paused') {
+      setStatus('playing')
+      setMessage('snake shift resumed. the noodle is moving again, with no apparent lessons learned.')
+    }
+  }
+
   function startSwipe(event) {
     const touch = event.changedTouches[0]
     touchStart.current = { x: touch.clientX, y: touch.clientY }
@@ -57,7 +70,7 @@ export default function SnakeShift() {
     const touch = event.changedTouches[0]
     touchStart.current = null
 
-    if (!start || !touch) return
+    if (!start || !touch || status !== 'playing') return
 
     const distanceX = touch.clientX - start.x
     const distanceY = touch.clientY - start.y
@@ -90,15 +103,21 @@ export default function SnakeShift() {
         return
       }
 
+      if (event.key.toLowerCase() === 'p') {
+        event.preventDefault()
+        togglePause()
+        return
+      }
+
       if (keys[event.key]) {
         event.preventDefault()
-        chooseDirection(keys[event.key])
+        if (status === 'playing') chooseDirection(keys[event.key])
       }
     }
 
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [])
+  }, [status])
 
   useEffect(() => {
     if (status !== 'playing') return undefined
@@ -139,6 +158,7 @@ export default function SnakeShift() {
   }, [direction, snack, status])
 
   const snakeSpots = new Set(snake.map((part) => `${part.x}-${part.y}`))
+  const paused = status === 'paused'
 
   return (
     <main className="snake-shell">
@@ -156,7 +176,7 @@ export default function SnakeShift() {
             it into a wall or its own increasingly questionable life choices.
           </p>
           <div className="snake-score"><span>SNACKS PROCESSED</span><strong>{String(snake.length - startingSnake.length).padStart(2, '0')}</strong></div>
-          <p className="snake-help">use arrow keys, swipe the game board, or use the buttons. Escape starts a fresh shift. the snake is doing its best.</p>
+          <p className="snake-help">use arrow keys, swipe the game board, or use the buttons. P pauses or resumes the shift. Escape starts a fresh shift. the snake is doing its best.</p>
         </div>
 
         <div className="snake-machine">
@@ -179,7 +199,13 @@ export default function SnakeShift() {
                 </span>
               )
             })}
-            {status !== 'playing' && (
+            {paused && (
+              <div className="snake-result">
+                <b>SHIFT PAUSED</b>
+                <span>the noodle is waiting for a P key or the pause button.</span>
+              </div>
+            )}
+            {status !== 'playing' && status !== 'paused' && (
               <div className="snake-result">
                 <b>{status === 'won' ? 'NOODLE LEGEND' : 'SNAKE DOWN'}</b>
                 <span>{status === 'won' ? 'the snack drawer is empty.' : 'the snake requires a short lie-down.'}</span>
@@ -187,16 +213,21 @@ export default function SnakeShift() {
             )}
           </div>
           <div className="snake-controls">
-            <button onClick={() => chooseDirection({ x: 0, y: -1 })} aria-label="Move up">↑</button>
-            <button onClick={() => chooseDirection({ x: -1, y: 0 })} aria-label="Move left">←</button>
-            <button onClick={() => chooseDirection({ x: 0, y: 1 })} aria-label="Move down">↓</button>
-            <button onClick={() => chooseDirection({ x: 1, y: 0 })} aria-label="Move right">→</button>
+            <button onClick={() => chooseDirection({ x: 0, y: -1 })} disabled={!status || status !== 'playing'} aria-label="Move up">↑</button>
+            <button onClick={() => chooseDirection({ x: -1, y: 0 })} disabled={!status || status !== 'playing'} aria-label="Move left">←</button>
+            <button onClick={() => chooseDirection({ x: 0, y: 1 })} disabled={!status || status !== 'playing'} aria-label="Move down">↓</button>
+            <button onClick={() => chooseDirection({ x: 1, y: 0 })} disabled={!status || status !== 'playing'} aria-label="Move right">→</button>
           </div>
         </div>
 
         <footer className="snake-footer">
           <span role="status">{message}</span>
-          <button onClick={reset}>{status === 'playing' ? 'reset the noodle' : 'new snake shift'}</button>
+          <div className="snake-footer-actions">
+            <button type="button" onClick={togglePause} disabled={status !== 'playing' && status !== 'paused'} aria-keyshortcuts="P">
+              {paused ? 'resume shift (P)' : 'pause shift (P)'}
+            </button>
+            <button onClick={reset}>{status === 'playing' || paused ? 'reset the noodle' : 'new snake shift'}</button>
+          </div>
         </footer>
       </section>
     </main>
