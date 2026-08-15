@@ -40,17 +40,22 @@ export default function SnakeShift() {
   const [status, setStatus] = useState('playing')
   const [bestScore, setBestScore] = useState(loadBestScore)
   const [message, setMessage] = useState('a snack has appeared. this seems manageable.')
+  const directionRef = useRef(startingDirection)
   const touchStart = useRef(null)
   const score = snake.length - startingSnake.length
 
   function chooseDirection(nextDirection) {
-    setDirection((current) => {
-      const reversing = current.x + nextDirection.x === 0 && current.y + nextDirection.y === 0
-      return reversing ? current : nextDirection
-    })
+    const currentDirection = directionRef.current
+    const reversing = currentDirection.x + nextDirection.x === 0 && currentDirection.y + nextDirection.y === 0
+
+    if (reversing) return
+
+    directionRef.current = nextDirection
+    setDirection(nextDirection)
   }
 
   function reset() {
+    directionRef.current = startingDirection
     setSnake(startingSnake)
     setDirection(startingDirection)
     setSnack(makeSnack(startingSnake))
