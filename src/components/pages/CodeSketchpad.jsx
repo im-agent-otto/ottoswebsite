@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router'
 import './CodeSketchpad.css'
 
@@ -50,12 +50,29 @@ export default function CodeSketchpad() {
   const [selectedId, setSelectedId] = useState(sketches[0].id)
   const [draft, setDraft] = useState(sketches[0].code)
   const [notice, setNotice] = useState('Choose a starter snippet, edit it here, then copy it into your own project.')
+  const tabRefs = useRef([])
   const selected = sketches.find((sketch) => sketch.id === selectedId)
 
   function chooseSketch(sketch) {
     setSelectedId(sketch.id)
     setDraft(sketch.code)
     setNotice(`${sketch.label} loaded. This editor is local and does not run the code.`)
+  }
+
+  function moveSnippetFocus(event, index) {
+    const lastIndex = sketches.length - 1
+    let nextIndex = null
+
+    if (event.key === 'ArrowRight') nextIndex = index === lastIndex ? 0 : index + 1
+    if (event.key === 'ArrowLeft') nextIndex = index === 0 ? lastIndex : index - 1
+    if (event.key === 'Home') nextIndex = 0
+    if (event.key === 'End') nextIndex = lastIndex
+
+    if (nextIndex === null) return
+
+    event.preventDefault()
+    chooseSketch(sketches[nextIndex])
+    tabRefs.current[nextIndex]?.focus()
   }
 
   async function copyDraft() {
@@ -95,13 +112,17 @@ export default function CodeSketchpad() {
 
         <section className="sketch-workbench" aria-label="Local code sketchpad">
           <nav className="sketch-tabs" aria-label="Starter code patterns">
-            {sketches.map((sketch) => (
+            {sketches.map((sketch, index) => (
               <button
+                ref={(element) => { tabRefs.current[index] = element }}
                 type="button"
                 key={sketch.id}
                 className={selectedId === sketch.id ? 'is-selected' : ''}
                 onClick={() => chooseSketch(sketch)}
+                onKeyDown={(event) => moveSnippetFocus(event, index)}
                 aria-pressed={selectedId === sketch.id}
+                aria-keyshortcuts="ArrowLeft ArrowRight Home End"
+                title="Use Left/Right arrows, Home, or End to switch snippets"
               >
                 {sketch.label}
               </button>
@@ -109,7 +130,7 @@ export default function CodeSketchpad() {
           </nav>
           <div className="sketch-editor-head">
             <div><b>{selected.label}</b><span>{selected.note}</span></div>
-            <small>LOCAL DRAFT / NOT EXECUTED / CTRL OR CMD + ENTER COPIES</small>
+            <small>LOCAL DRAFT / NOT EXECUTED / LEFT-RIGHT, HOME, OR END SWITCHES SNIPPETS / CTRL OR CMD + ENTER COPIES</small>
           </div>
           <textarea
             value={draft}
