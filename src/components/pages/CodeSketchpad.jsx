@@ -151,11 +151,19 @@ export default function CodeSketchpad() {
     }
   }
 
-  function copyWithShortcut(event) {
-    if (event.key !== 'Enter' || (!event.ctrlKey && !event.metaKey)) return
+  function handleEditorShortcut(event) {
+    if (!event.ctrlKey && !event.metaKey) return
 
-    event.preventDefault()
-    copyDraft()
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      copyDraft()
+      return
+    }
+
+    if (event.key.toLowerCase() === 's') {
+      event.preventDefault()
+      downloadDraft()
+    }
   }
 
   function restoreStarter() {
@@ -214,19 +222,19 @@ export default function CodeSketchpad() {
           </nav>
           <div className="sketch-editor-head">
             <div><b>{selected.label}</b><span>{selected.note}</span></div>
-            <small>LOCAL DRAFT / NOT EXECUTED / SAVED FOR THIS BROWSER SESSION / LEFT-RIGHT, HOME, OR END SWITCHES SNIPPETS / CTRL OR CMD + ENTER COPIES</small>
+            <small>LOCAL DRAFT / NOT EXECUTED / SAVED FOR THIS BROWSER SESSION / LEFT-RIGHT, HOME, OR END SWITCHES SNIPPETS / CTRL OR CMD + ENTER COPIES / CTRL OR CMD + S DOWNLOADS</small>
           </div>
           <textarea
             value={draft}
             onChange={(event) => updateDraft(event.target.value)}
-            onKeyDown={copyWithShortcut}
+            onKeyDown={handleEditorShortcut}
             spellCheck="false"
-            aria-keyshortcuts="Control+Enter Meta+Enter"
+            aria-keyshortcuts="Control+Enter Meta+Enter Control+S Meta+S"
             aria-label={`${selected.label} code editor`}
           />
           <div className="sketch-actions">
             <button type="button" onClick={copyDraft}>copy code (Ctrl/Cmd+Enter)</button>
-            <button type="button" onClick={downloadDraft}>download file</button>
+            <button type="button" onClick={downloadDraft}>download file (Ctrl/Cmd+S)</button>
             <button type="button" onClick={restoreStarter}>restore starter</button>
             <button type="button" onClick={resetAllDrafts}>reset all local drafts</button>
           </div>
@@ -240,7 +248,7 @@ export default function CodeSketchpad() {
         </aside>
 
         <footer className="sketch-footer">
-          <span>NO CODE RUNS HERE / DRAFTS STAY IN THIS BROWSER SESSION / DOWNLOAD FILE SAVES THE CURRENT LOCAL DRAFT TO THIS DEVICE / RESET ALL LOCAL DRAFTS RETURNS EVERY SNIPPET TO ITS STARTER VERSION / NO API KEYS, PRIVATE KEYS, OR CREDENTIALS BELONG IN A TEXT BOX</span>
+          <span>NO CODE RUNS HERE / DRAFTS STAY IN THIS BROWSER SESSION / DOWNLOAD FILE SAVES THE CURRENT LOCAL DRAFT TO THIS DEVICE / CTRL/CMD+S DOWNLOADS THE CURRENT LOCAL DRAFT FROM THE EDITOR / RESET ALL LOCAL DRAFTS RETURNS EVERY SNIPPET TO ITS STARTER VERSION / NO API KEYS, PRIVATE KEYS, OR CREDENTIALS BELONG IN A TEXT BOX</span>
           <Link to="/ai-challenge">open the AI Challenge Desk →</Link>
         </footer>
       </section>
