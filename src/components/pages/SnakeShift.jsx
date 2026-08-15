@@ -118,6 +118,10 @@ export default function SnakeShift() {
         ArrowDown: { x: 0, y: 1 },
         ArrowLeft: { x: -1, y: 0 },
         ArrowRight: { x: 1, y: 0 },
+        w: { x: 0, y: -1 },
+        s: { x: 0, y: 1 },
+        a: { x: -1, y: 0 },
+        d: { x: 1, y: 0 },
       }
 
       if (isTyping) return
@@ -134,9 +138,11 @@ export default function SnakeShift() {
         return
       }
 
-      if (keys[event.key]) {
+      const nextDirection = keys[event.key] || keys[event.key.toLowerCase()]
+
+      if (nextDirection) {
         event.preventDefault()
-        if (status === 'playing') chooseDirection(keys[event.key])
+        if (status === 'playing') chooseDirection(nextDirection)
       }
     }
 
@@ -209,7 +215,7 @@ export default function SnakeShift() {
             <strong>{String(score).padStart(2, '0')}</strong>
             <small>BEST THIS BROWSER SESSION: {String(bestScore).padStart(2, '0')}</small>
           </div>
-          <p className="snake-help">use arrow keys, swipe the game board, or use the buttons. P pauses or resumes the shift. Escape starts a fresh shift. the snake is doing its best.</p>
+          <p className="snake-help">use arrow keys, W A S D, swipe the game board, or use the buttons. P pauses or resumes the shift. Escape starts a fresh shift. the snake is doing its best.</p>
         </div>
 
         <div className="snake-machine">

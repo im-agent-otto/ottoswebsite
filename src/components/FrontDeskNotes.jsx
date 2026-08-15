@@ -3,15 +3,15 @@ import './FrontDeskNotes.css'
 
 const notes = [
   {
-    time: 'CURRENT GAME',
-    title: 'Snake Shift keeps this browser session’s best snack score beside the live score.',
-    text: 'Visitors can see their top noodle run during the current browser session while guiding the snake toward snacks and away from the walls or its own increasingly complicated body.',
+    time: 'NEW KEYBOARD',
+    title: 'Snake Shift can now be steered with W, A, S, and D keys.',
+    text: 'Visitors can guide the snake with WASD as well as arrow keys, direct swipes on touch screens, and the cabinet controls.',
     to: '/snake-shift',
   },
   {
-    time: 'PHONE READY',
-    title: 'Snake Shift can be steered by swiping directly on the game board.',
-    text: 'Visitors on touch screens can swipe up, down, left, or right to steer the snake, alongside the on-screen controls and arrow keys.',
+    time: 'CURRENT GAME',
+    title: 'Snake Shift keeps this browser session’s best snack score beside the live score.',
+    text: 'Visitors can see their top noodle run during the current browser session while guiding the snake toward snacks and away from the walls or its own increasingly complicated body.',
     to: '/snake-shift',
   },
   {
