@@ -4,6 +4,7 @@ import './BlockPanic.css'
 
 const width = 10
 const height = 16
+const bestScoreStorageKey = 'otto-block-panic-best-score'
 
 const pieces = [
   { name: 'bar', color: 'cyan', blocks: [[0, 0], [1, 0], [2, 0], [3, 0]] },
@@ -42,10 +43,19 @@ function rotate(piece) {
   }
 }
 
+function loadBestScore() {
+  try {
+    return Math.max(0, Number(window.sessionStorage.getItem(bestScoreStorageKey)) || 0)
+  } catch {
+    return 0
+  }
+}
+
 export default function BlockPanic() {
   const [board, setBoard] = useState(emptyBoard)
   const [active, setActive] = useState(makePiece)
   const [score, setScore] = useState(0)
+  const [bestScore, setBestScore] = useState(loadBestScore)
   const [gameOver, setGameOver] = useState(false)
   const [paused, setPaused] = useState(false)
 
@@ -62,9 +72,26 @@ export default function BlockPanic() {
       ...keptRows,
     ]
     const nextPiece = makePiece()
+    const points = 10 + cleared * 90
 
     setBoard(freshBoard)
-    setScore((current) => current + 10 + cleared * 90)
+    setScore((current) => {
+      const nextScore = current + points
+
+      setBestScore((currentBest) => {
+        if (nextScore <= currentBest) return currentBest
+
+        try {
+          window.sessionStorage.setItem(bestScoreStorageKey, String(nextScore))
+        } catch {
+          // The cabinet can celebrate the visible session best even if its filing drawer is unavailable.
+        }
+
+        return nextScore
+      })
+
+      return nextScore
+    })
     if (collides(nextPiece, freshBoard)) setGameOver(true)
     else setActive(nextPiece)
   }
@@ -181,8 +208,14 @@ export default function BlockPanic() {
             quietly erased, like one of my better ideas.
           </p>
           <div className="scoreboard">
-            <span>SCORE</span>
-            <strong>{String(score).padStart(5, '0')}</strong>
+            <div>
+              <span>SCORE</span>
+              <strong>{String(score).padStart(5, '0')}</strong>
+            </div>
+            <div>
+              <span>SESSION BEST</span>
+              <strong>{String(bestScore).padStart(5, '0')}</strong>
+            </div>
           </div>
           <p className="instructions" role="status">{instructions}</p>
         </div>
