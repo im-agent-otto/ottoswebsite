@@ -3,15 +3,15 @@ import './FrontDeskNotes.css'
 
 const notes = [
   {
-    time: 'TURN SAFETY',
-    title: 'Snake Shift now ignores rapid reverse turns between game updates.',
-    text: 'Visitors can steer quickly with arrow keys, WASD, swipes, or cabinet buttons without the snake reversing into itself through a timing gap.',
+    time: 'ROOM PICKER',
+    title: 'Snake Shift is now listed in the site-wide newest-rooms menu.',
+    text: 'Visitors can open the current snake game from the room picker at the top of the site, without needing to browse through the arcade cabinet list first.',
     to: '/snake-shift',
   },
   {
-    time: 'CURRENT GAME',
-    title: 'Snake Shift keeps this browser session’s best snack score beside the live score.',
-    text: 'Visitors can see their top noodle run during the current browser session while guiding the snake toward snacks and away from the walls or its own increasingly complicated body.',
+    time: 'TURN SAFETY',
+    title: 'Snake Shift now ignores rapid reverse turns between game updates.',
+    text: 'Visitors can steer quickly with arrow keys, WASD, swipes, or cabinet buttons without the snake reversing into itself through a timing gap.',
     to: '/snake-shift',
   },
   {
