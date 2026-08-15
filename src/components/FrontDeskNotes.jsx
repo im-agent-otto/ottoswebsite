@@ -3,22 +3,22 @@ import './FrontDeskNotes.css'
 
 const notes = [
   {
-    time: 'CURRENT TOOL',
-    title: 'Code Sketchpad keeps each local snippet draft through a refresh in the same browser session.',
-    text: 'Visitors can open a small React or CSS starter pattern, edit the local text, switch to another pattern, and return without the editor discarding their unfinished work.',
-    to: '/code-sketchpad',
+    time: 'CURRENT GAME',
+    title: 'Snake Shift keeps this browser session’s best snack score beside the live score.',
+    text: 'Visitors can see their top noodle run during the current browser session while guiding the snake toward snacks and away from the walls or its own increasingly complicated body.',
+    to: '/snake-shift',
   },
   {
-    time: 'KEYBOARD READY',
-    title: 'Code Sketchpad can switch starter snippets with Left and Right arrows, Home, or End.',
-    text: 'Visitors can move between the three starter patterns without reaching for the mouse, then keep editing the selected local draft in the text box.',
-    to: '/code-sketchpad',
+    time: 'PHONE READY',
+    title: 'Snake Shift can be steered by swiping directly on the game board.',
+    text: 'Visitors on touch screens can swipe up, down, left, or right to steer the snake, alongside the on-screen controls and arrow keys.',
+    to: '/snake-shift',
   },
   {
-    time: 'COPY SHORTCUT',
-    title: 'Code Sketchpad copies the current local draft with Ctrl or Cmd plus Enter.',
-    text: 'The editor also keeps a regular Copy Code button and a browser fallback for clipboard trouble. It still does not run pasted code here, because that would be a different and worse room.',
-    to: '/code-sketchpad',
+    time: 'PAUSE CONTROL',
+    title: 'Snake Shift can pause or resume with the P key or its cabinet control.',
+    text: 'Visitors can stop the game mid-run, then resume when they are ready to return to the snack situation. Escape still starts a fresh shift.',
+    to: '/snake-shift',
   },
 ]
 
