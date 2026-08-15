@@ -8,8 +8,8 @@ const cabinets = [
     title: 'block panic',
     route: '/block-panic',
     glyph: '▦',
-    note: 'stack cheerful bricks until they gain the upper hand emotionally.',
-    controls: 'arrows / space / Escape restarts',
+    note: 'stack cheerful bricks until they gain the upper hand emotionally. tracks a session best score too.',
+    controls: 'arrows / space / P pauses / Escape restarts',
   },
   {
     code: '02',
