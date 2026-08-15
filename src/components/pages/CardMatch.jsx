@@ -4,6 +4,7 @@ import './CardMatch.css'
 
 const symbols = ['♠', '♥', '♦', '♣', '★', '☀']
 const columnCount = 4
+const bestTurnsStorageKey = 'otto-card-match-best-turns'
 
 function shuffledDeck() {
   return [...symbols, ...symbols]
@@ -26,10 +27,20 @@ function cardName(symbol) {
   }[symbol]
 }
 
+function loadBestTurns() {
+  try {
+    const saved = Number(window.sessionStorage.getItem(bestTurnsStorageKey))
+    return Number.isInteger(saved) && saved > 0 ? saved : null
+  } catch {
+    return null
+  }
+}
+
 export default function CardMatch() {
   const [deck, setDeck] = useState(shuffledDeck)
   const [openCards, setOpenCards] = useState([])
   const [turns, setTurns] = useState(0)
+  const [bestTurns, setBestTurns] = useState(loadBestTurns)
   const [locked, setLocked] = useState(false)
   const [message, setMessage] = useState('turn over two cards and find their matching partner. the deck has no mercy, but it is at least honest.')
   const gameVersionRef = useRef(0)
@@ -45,6 +56,20 @@ export default function CardMatch() {
     window.requestAnimationFrame(() => {
       cardRefs.current.find((card) => card && !card.disabled)?.focus()
     })
+  }
+
+  function recordBestTurns(nextTurns) {
+    if (bestTurns !== null && nextTurns >= bestTurns) return false
+
+    setBestTurns(nextTurns)
+
+    try {
+      window.sessionStorage.setItem(bestTurnsStorageKey, String(nextTurns))
+    } catch {
+      // The cabinet can still celebrate the visible score if browser session storage refuses its filing duty.
+    }
+
+    return true
   }
 
   function flipCard(card) {
@@ -63,8 +88,10 @@ export default function CardMatch() {
     const secondCard = deck.find((item) => item.id === secondId)
     const isMatch = firstCard.symbol === secondCard.symbol
     const checkedGameVersion = gameVersionRef.current
+    const nextTurns = turns + 1
+    const clearsDeck = isMatch && matchedCount === deck.length - 2
 
-    setTurns((current) => current + 1)
+    setTurns(nextTurns)
     setLocked(true)
 
     window.clearTimeout(checkTimerRef.current)
@@ -77,7 +104,15 @@ export default function CardMatch() {
             ? { ...item, matched: true }
             : item
         )))
-        setMessage(`pair found: ${cardName(firstCard.symbol)}. the card drawer has reluctantly approved.`)
+
+        if (clearsDeck) {
+          const newBest = recordBestTurns(nextTurns)
+          setMessage(newBest
+            ? `deck cleared in ${nextTurns} turns. new session best: the card drawer is reluctantly impressed.`
+            : `deck cleared in ${nextTurns} turns. the card drawer has filed this under “competent.”`)
+        } else {
+          setMessage(`pair found: ${cardName(firstCard.symbol)}. the card drawer has reluctantly approved.`)
+        }
       } else {
         setMessage('not a pair. the cards have returned to their tiny private lives.')
       }
@@ -155,7 +190,8 @@ export default function CardMatch() {
           <h1 id="match-title">card<br />match.</h1>
           <p>
             flip two cards at a time and find every matching symbol. your turn
-            count stays in this visit only, where it can do no lasting harm.
+            count and best cleared deck stay in this browser session only, where
+            they can do no lasting harm.
           </p>
         </div>
 
@@ -163,6 +199,7 @@ export default function CardMatch() {
           <div className="match-readout">
             <div><span>PAIRS FOUND</span><strong>{status}</strong></div>
             <div><span>TURNS</span><strong>{String(turns).padStart(2, '0')}</strong></div>
+            <div><span>SESSION BEST</span><strong>{bestTurns === null ? '—' : `${String(bestTurns).padStart(2, '0')} TURNS`}</strong></div>
           </div>
           <div className="match-grid">
             {deck.map((card, index) => {
@@ -191,7 +228,7 @@ export default function CardMatch() {
         </section>
 
         <footer className="match-footer">
-          <span>RULES: two cards per turn / matching pairs stay open / KEYBOARD: focus a card, then use arrow keys to move between available cards / ESC SHUFFLES A FRESH DECK</span>
+          <span>RULES: two cards per turn / matching pairs stay open / SESSION BEST: fewest turns used to clear a deck in this browser session / KEYBOARD: focus a card, then use arrow keys to move between available cards / ESC SHUFFLES A FRESH DECK</span>
           <Link to="/arcade">inspect another game →</Link>
         </footer>
       </section>
