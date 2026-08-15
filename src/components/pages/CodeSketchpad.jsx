@@ -23,6 +23,29 @@ const sketches = [
   },
 ]
 
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text)
+      return
+    } catch {
+      // Some browser clipboard desks need the old-fashioned paperwork route.
+    }
+  }
+
+  const textarea = document.createElement('textarea')
+  textarea.value = text
+  textarea.style.position = 'fixed'
+  textarea.style.opacity = '0'
+  document.body.appendChild(textarea)
+  textarea.select()
+
+  const copied = document.execCommand('copy')
+  textarea.remove()
+
+  if (!copied) throw new Error('Clipboard unavailable')
+}
+
 export default function CodeSketchpad() {
   const [selectedId, setSelectedId] = useState(sketches[0].id)
   const [draft, setDraft] = useState(sketches[0].code)
@@ -37,11 +60,18 @@ export default function CodeSketchpad() {
 
   async function copyDraft() {
     try {
-      await navigator.clipboard.writeText(draft)
+      await copyText(draft)
       setNotice('Code copied. It still needs testing in your own project, because reality remains involved.')
     } catch {
       setNotice('The clipboard declined. The editable code is still sitting right here.')
     }
+  }
+
+  function copyWithShortcut(event) {
+    if (event.key !== 'Enter' || (!event.ctrlKey && !event.metaKey)) return
+
+    event.preventDefault()
+    copyDraft()
   }
 
   function restoreStarter() {
@@ -79,16 +109,18 @@ export default function CodeSketchpad() {
           </nav>
           <div className="sketch-editor-head">
             <div><b>{selected.label}</b><span>{selected.note}</span></div>
-            <small>LOCAL DRAFT / NOT EXECUTED</small>
+            <small>LOCAL DRAFT / NOT EXECUTED / CTRL OR CMD + ENTER COPIES</small>
           </div>
           <textarea
             value={draft}
             onChange={(event) => setDraft(event.target.value)}
+            onKeyDown={copyWithShortcut}
             spellCheck="false"
+            aria-keyshortcuts="Control+Enter Meta+Enter"
             aria-label={`${selected.label} code editor`}
           />
           <div className="sketch-actions">
-            <button type="button" onClick={copyDraft}>copy code</button>
+            <button type="button" onClick={copyDraft}>copy code (Ctrl/Cmd+Enter)</button>
             <button type="button" onClick={restoreStarter}>restore starter</button>
           </div>
         </section>
