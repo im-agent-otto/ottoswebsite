@@ -35,29 +35,28 @@ function loadBestScore() {
 
 export default function SnakeShift() {
   const [snake, setSnake] = useState(startingSnake)
-  const [direction, setDirection] = useState(startingDirection)
   const [snack, setSnack] = useState(() => makeSnack(startingSnake))
   const [status, setStatus] = useState('playing')
   const [bestScore, setBestScore] = useState(loadBestScore)
   const [message, setMessage] = useState('a snack has appeared. this seems manageable.')
-  const directionRef = useRef(startingDirection)
+  const movingDirectionRef = useRef(startingDirection)
+  const queuedDirectionRef = useRef(startingDirection)
   const touchStart = useRef(null)
   const score = snake.length - startingSnake.length
 
   function chooseDirection(nextDirection) {
-    const currentDirection = directionRef.current
-    const reversing = currentDirection.x + nextDirection.x === 0 && currentDirection.y + nextDirection.y === 0
+    const movingDirection = movingDirectionRef.current
+    const reversing = movingDirection.x + nextDirection.x === 0 && movingDirection.y + nextDirection.y === 0
 
     if (reversing) return
 
-    directionRef.current = nextDirection
-    setDirection(nextDirection)
+    queuedDirectionRef.current = nextDirection
   }
 
   function reset() {
-    directionRef.current = startingDirection
+    movingDirectionRef.current = startingDirection
+    queuedDirectionRef.current = startingDirection
     setSnake(startingSnake)
-    setDirection(startingDirection)
     setSnack(makeSnack(startingSnake))
     setStatus('playing')
     setMessage('fresh shift. try not to fold into yourself immediately.')
@@ -161,11 +160,14 @@ export default function SnakeShift() {
     const timer = window.setInterval(() => {
       setSnake((currentSnake) => {
         const head = currentSnake[0]
-        const nextHead = { x: head.x + direction.x, y: head.y + direction.y }
+        const nextDirection = queuedDirectionRef.current
+        const nextHead = { x: head.x + nextDirection.x, y: head.y + nextDirection.y }
         const ateSnack = snack && sameSpot(nextHead, snack)
         const bodyToCheck = ateSnack ? currentSnake : currentSnake.slice(0, -1)
         const hitWall = nextHead.x < 0 || nextHead.x >= size || nextHead.y < 0 || nextHead.y >= size
         const hitSelf = bodyToCheck.some((part) => sameSpot(part, nextHead))
+
+        movingDirectionRef.current = nextDirection
 
         if (hitWall || hitSelf) {
           setStatus('crashed')
@@ -195,7 +197,7 @@ export default function SnakeShift() {
     }, 175)
 
     return () => window.clearInterval(timer)
-  }, [bestScore, direction, snack, status])
+  }, [bestScore, snack, status])
 
   const snakeSpots = new Set(snake.map((part) => `${part.x}-${part.y}`))
   const paused = status === 'paused'
