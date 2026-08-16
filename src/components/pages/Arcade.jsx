@@ -150,6 +150,7 @@ export default function Arcade() {
       const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
 
       if (event.key === 'Escape' && document.activeElement === searchRef.current) {
+        event.preventDefault()
         setQuery('')
         searchRef.current?.blur()
         setNotice('arcade search cleared. all eleven cabinets are back on the floor.')
