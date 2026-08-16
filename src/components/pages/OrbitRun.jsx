@@ -4,6 +4,7 @@ import './OrbitRun.css'
 
 const laneCount = 5
 const initialShipLane = 2
+const bestDistanceStorageKey = 'otto-orbit-run-best-distance'
 const initialObjects = [
   { id: 'star-1', lane: 1, row: 1, kind: 'star' },
   { id: 'rock-1', lane: 3, row: 3, kind: 'rock' },
@@ -20,11 +21,20 @@ function makeObject(id) {
   }
 }
 
+function loadBestDistance() {
+  try {
+    return Math.max(0, Number(window.sessionStorage.getItem(bestDistanceStorageKey)) || 0)
+  } catch {
+    return 0
+  }
+}
+
 export default function OrbitRun() {
   const [shipLane, setShipLane] = useState(initialShipLane)
   const [objects, setObjects] = useState(initialObjects)
   const [score, setScore] = useState(0)
   const [distance, setDistance] = useState(0)
+  const [bestDistance, setBestDistance] = useState(loadBestDistance)
   const [status, setStatus] = useState('flying')
   const [message, setMessage] = useState('steer through the lanes. stars are useful. rocks remain committed to being rocks.')
 
@@ -54,6 +64,20 @@ export default function OrbitRun() {
       setStatus('flying')
       setMessage('flight resumed. the ship has returned to its lightly supervised space duties.')
     }
+  }
+
+  function recordBestDistance(nextDistance) {
+    setBestDistance((currentBest) => {
+      if (nextDistance <= currentBest) return currentBest
+
+      try {
+        window.sessionStorage.setItem(bestDistanceStorageKey, String(nextDistance))
+      } catch {
+        // The cabinet can still show the visible best distance if its session filing drawer is unavailable.
+      }
+
+      return nextDistance
+    })
   }
 
   useEffect(() => {
@@ -140,7 +164,11 @@ export default function OrbitRun() {
         if (Math.random() < 0.56) advanced.unshift(makeObject(`object-${Date.now()}-${Math.random()}`))
         return advanced
       })
-      setDistance((current) => current + 1)
+      setDistance((current) => {
+        const nextDistance = current + 1
+        recordBestDistance(nextDistance)
+        return nextDistance
+      })
     }, 560)
 
     return () => window.clearInterval(flightTimer)
@@ -177,6 +205,7 @@ export default function OrbitRun() {
           <div className="orbit-readout">
             <div><span>STARLIGHT</span><strong>{String(score).padStart(3, '0')}</strong></div>
             <div><span>DISTANCE</span><strong>{String(distance).padStart(3, '0')}</strong></div>
+            <div><span>SESSION BEST</span><strong>{String(bestDistance).padStart(3, '0')}</strong></div>
             <div><span>FLIGHT STATUS</span><strong>{status === 'flying' ? 'MOVING' : status === 'paused' ? 'PAUSED' : 'WHOOPS'}</strong></div>
           </div>
           <div className="orbit-space" role="grid" aria-label="Orbit Run flight lanes">
@@ -202,7 +231,7 @@ export default function OrbitRun() {
         <button className="orbit-restart" type="button" onClick={restart}>{status === 'crashed' ? 'launch another ship ↻' : 'restart this flight ↻'}</button>
 
         <footer className="orbit-footer">
-          <span>CONTROLS: LEFT AND RIGHT ARROW KEYS OR THE STEERING BUTTONS / P PAUSES OR RESUMES THE FLIGHT / ESC RESTARTS THE FLIGHT / THE SHIP PAUSES IF YOU LEAVE THE TAB</span>
+          <span>CONTROLS: LEFT AND RIGHT ARROW KEYS OR THE STEERING BUTTONS / P PAUSES OR RESUMES THE FLIGHT / ESC RESTARTS THE FLIGHT / THE SHIP PAUSES IF YOU LEAVE THE TAB / SESSION BEST RECORDS YOUR LONGEST DISTANCE IN THIS BROWSER SESSION</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>

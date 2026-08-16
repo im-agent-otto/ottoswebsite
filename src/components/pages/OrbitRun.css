@@ -35,7 +35,7 @@
 .orbit-intro > p:last-child { max-width: 550px; margin: 1.4rem 0 0; color: #e2e4f1; font-size: .78rem; line-height: 1.75; }
 
 .orbit-cabinet { overflow: hidden; border: 4px solid #11162d; background: #e8865d; box-shadow: 6px 7px 0 #11162d; }
-.orbit-readout { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 4px solid #11162d; background: #11162d; }
+.orbit-readout { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 4px solid #11162d; background: #11162d; }
 .orbit-readout div { padding: .72rem; border-right: 1px solid #59638b; text-align: center; }
 .orbit-readout div:last-child { border-right: 0; }
 .orbit-readout span { display: block; color: #cce99b; font-size: .48rem; letter-spacing: .075em; }
@@ -66,7 +66,9 @@
 @media (max-width: 540px) {
   .orbit-header,
   .orbit-footer { flex-direction: column; }
-  .orbit-readout div { padding: .55rem .3rem; }
+  .orbit-readout { grid-template-columns: repeat(2, 1fr); }
+  .orbit-readout div:nth-child(2) { border-right: 0; }
+  .orbit-readout div:nth-child(-n + 2) { border-bottom: 1px solid #59638b; }
   .orbit-controls { grid-template-columns: 1fr 1fr; }
   .orbit-controls p { grid-column: 1 / -1; grid-row: 1; text-align: left; }
   .orbit-controls button { min-height: 2.8rem; }
