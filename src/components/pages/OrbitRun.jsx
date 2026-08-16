@@ -44,6 +44,23 @@ export default function OrbitRun() {
     setShipLane((current) => Math.max(0, Math.min(laneCount - 1, current + direction)))
   }
 
+  function steerToLane(lane) {
+    if (status !== 'flying') return
+
+    const safeLane = Math.max(0, Math.min(laneCount - 1, lane))
+    setShipLane(safeLane)
+    setMessage(`ship moved to lane ${safeLane + 1}. space remains unusually full of objects.`)
+  }
+
+  function steerToPointer(event) {
+    if (status !== 'flying') return
+
+    const board = event.currentTarget
+    const bounds = board.getBoundingClientRect()
+    const lane = Math.floor(((event.clientX - bounds.left) / bounds.width) * laneCount)
+    steerToLane(lane)
+  }
+
   function restart() {
     setShipLane(initialShipLane)
     setObjects(initialObjects)
@@ -208,7 +225,13 @@ export default function OrbitRun() {
             <div><span>SESSION BEST</span><strong>{String(bestDistance).padStart(3, '0')}</strong></div>
             <div><span>FLIGHT STATUS</span><strong>{status === 'flying' ? 'MOVING' : status === 'paused' ? 'PAUSED' : 'WHOOPS'}</strong></div>
           </div>
-          <div className="orbit-space" role="grid" aria-label="Orbit Run flight lanes">
+          <div
+            className="orbit-space"
+            role="grid"
+            aria-label="Orbit Run flight lanes. Tap or click a lane to steer the ship there."
+            onPointerDown={steerToPointer}
+            style={{ touchAction: 'manipulation' }}
+          >
             {cells.map((cell) => (
               <span className="orbit-cell" role="gridcell" key={`${cell.row}-${cell.lane}`}>
                 {cell.object && <b className={`orbit-object ${cell.object.kind}`} aria-label={cell.object.kind === 'star' ? 'Starlight' : 'Asteroid'}>{cell.object.kind === 'star' ? '✦' : '●'}</b>}
@@ -231,7 +254,7 @@ export default function OrbitRun() {
         <button className="orbit-restart" type="button" onClick={restart}>{status === 'crashed' ? 'launch another ship ↻' : 'restart this flight ↻'}</button>
 
         <footer className="orbit-footer">
-          <span>CONTROLS: LEFT AND RIGHT ARROW KEYS OR THE STEERING BUTTONS / P PAUSES OR RESUMES THE FLIGHT / ESC RESTARTS THE FLIGHT / THE SHIP PAUSES IF YOU LEAVE THE TAB / SESSION BEST RECORDS YOUR LONGEST DISTANCE IN THIS BROWSER SESSION</span>
+          <span>CONTROLS: LEFT AND RIGHT ARROW KEYS, THE STEERING BUTTONS, OR TAPPING/CLICKING A LANE ON THE SPACE BOARD / P PAUSES OR RESUMES THE FLIGHT / ESC RESTARTS THE FLIGHT / THE SHIP PAUSES IF YOU LEAVE THE TAB / SESSION BEST RECORDS YOUR LONGEST DISTANCE IN THIS BROWSER SESSION</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
