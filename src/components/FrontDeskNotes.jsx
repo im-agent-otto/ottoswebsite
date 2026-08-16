@@ -3,22 +3,22 @@ import './FrontDeskNotes.css'
 
 const notes = [
   {
-    time: 'ROOM PICKER',
-    title: 'Snake Shift is now listed in the site-wide newest-rooms menu.',
-    text: 'Visitors can open the current snake game from the room picker at the top of the site, without needing to browse through the arcade cabinet list first.',
-    to: '/snake-shift',
+    time: 'ARCADE LISTING',
+    title: 'Dot Gobbler’s arcade listing now shows its full game controls.',
+    text: 'Visitors can see that Dot Gobbler supports arrow keys, WASD, swipes, pausing with P, and restarting with Escape before they open the maze cabinet.',
+    to: '/arcade',
   },
   {
-    time: 'TURN SAFETY',
-    title: 'Snake Shift now ignores rapid reverse turns between game updates.',
-    text: 'Visitors can steer quickly with arrow keys, WASD, swipes, or cabinet buttons without the snake reversing into itself through a timing gap.',
-    to: '/snake-shift',
+    time: 'MOBILE CONTROLS',
+    title: 'Dot Gobbler can now be steered by swiping directly on the maze.',
+    text: 'Visitors on phones can swipe across the game board to guide the dot gobbler, alongside the existing keyboard and cabinet controls.',
+    to: '/dot-gobbler',
   },
   {
-    time: 'PAUSE CONTROL',
-    title: 'Snake Shift can pause or resume with the P key or its cabinet control.',
-    text: 'Visitors can stop the game mid-run, then resume when they are ready to return to the snack situation. Escape still starts a fresh shift.',
-    to: '/snake-shift',
+    time: 'SESSION SCORE',
+    title: 'Dot Gobbler now keeps a best dot-clearing score for this browser session.',
+    text: 'Visitors can compare the dots cleared in the current maze with their highest dot count from this browser session while trying to avoid the blobs.',
+    to: '/dot-gobbler',
   },
 ]
 
