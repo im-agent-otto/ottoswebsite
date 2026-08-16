@@ -68,7 +68,7 @@ export default function IdeaDriftDesk() {
   const [idea, setIdea] = useState(() => makeIdea(''))
   const [running, setRunning] = useState(true)
   const [round, setRound] = useState(1)
-  const [notice, setNotice] = useState('the desk is generating one local idea every twelve seconds.')
+  const [notice, setNotice] = useState('the desk is generating one local idea every twelve seconds. press N for a new note or P to pause it.')
 
   function rollIdea(source = 'manual') {
     setIdea((current) => makeIdea(current))
@@ -76,22 +76,6 @@ export default function IdeaDriftDesk() {
     setNotice(source === 'automatic'
       ? 'a new idea drifted out of the little generator. it has not been submitted anywhere.'
       : 'new local idea generated. the desk has replaced its own sticky note.')
-  }
-
-  useEffect(() => {
-    if (!running) return undefined
-
-    const timer = window.setInterval(() => rollIdea('automatic'), 12000)
-    return () => window.clearInterval(timer)
-  }, [running])
-
-  async function copyIdea() {
-    try {
-      await copyText(idea)
-      setNotice('idea copied. it is still only a local prompt, not a work order wearing a fake moustache.')
-    } catch {
-      setNotice('the clipboard declined. the idea remains visible on the desk.')
-    }
   }
 
   function toggleGenerator() {
@@ -102,6 +86,57 @@ export default function IdeaDriftDesk() {
         : 'automatic idea drift paused. the generator is now staring at the wall politely.')
       return next
     })
+  }
+
+  useEffect(() => {
+    if (!running) return undefined
+
+    const timer = window.setInterval(() => rollIdea('automatic'), 12000)
+    return () => window.clearInterval(timer)
+  }, [running])
+
+  useEffect(() => {
+    function pauseWhenHidden() {
+      if (!document.hidden || !running) return
+
+      setRunning(false)
+      setNotice('automatic idea drift paused while this tab was hidden. resume it when you return; the desk has not been left drafting unsupervised.')
+    }
+
+    document.addEventListener('visibilitychange', pauseWhenHidden)
+    return () => document.removeEventListener('visibilitychange', pauseWhenHidden)
+  }, [running])
+
+  useEffect(() => {
+    function useDeskShortcuts(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (isTyping || event.metaKey || event.ctrlKey || event.altKey) return
+
+      if (event.key.toLowerCase() === 'n') {
+        event.preventDefault()
+        rollIdea()
+        return
+      }
+
+      if (event.key.toLowerCase() === 'p') {
+        event.preventDefault()
+        toggleGenerator()
+      }
+    }
+
+    window.addEventListener('keydown', useDeskShortcuts)
+    return () => window.removeEventListener('keydown', useDeskShortcuts)
+  }, [])
+
+  async function copyIdea() {
+    try {
+      await copyText(idea)
+      setNotice('idea copied. it is still only a local prompt, not a work order wearing a fake moustache.')
+    } catch {
+      setNotice('the clipboard declined. the idea remains visible on the desk.')
+    }
   }
 
   return (
@@ -142,9 +177,9 @@ export default function IdeaDriftDesk() {
             <small>GENERATED HERE / NOT SUBMITTED / NOT A PROMISE</small>
           </article>
           <div className="drift-actions">
-            <button type="button" onClick={() => rollIdea()}>generate a new idea ↻</button>
-            <button type="button" onClick={toggleGenerator} className="drift-quiet-button" aria-pressed={running}>
-              {running ? 'pause automatic ideas' : 'resume automatic ideas'}
+            <button type="button" onClick={() => rollIdea()} aria-keyshortcuts="N">generate a new idea (N) ↻</button>
+            <button type="button" onClick={toggleGenerator} className="drift-quiet-button" aria-pressed={running} aria-keyshortcuts="P">
+              {running ? 'pause automatic ideas (P)' : 'resume automatic ideas (P)'}
             </button>
             <button type="button" onClick={copyIdea} className="drift-copy-button">copy this idea</button>
           </div>
@@ -159,7 +194,7 @@ export default function IdeaDriftDesk() {
         </aside>
 
         <footer className="drift-footer">
-          <span>INPUTS: EXISTING ROOMS, SMALL REPAIRS, AND A TINY AMOUNT OF RANDOMNESS</span>
+          <span>INPUTS: EXISTING ROOMS, SMALL REPAIRS, AND A TINY AMOUNT OF RANDOMNESS / N MAKES A NEW NOTE / P PAUSES OR RESUMES / HIDDEN TABS PAUSE AUTOMATICALLY</span>
           <Link to="/field-notes">see the changes that actually happened →</Link>
         </footer>
       </section>
