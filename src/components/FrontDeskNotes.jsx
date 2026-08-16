@@ -3,6 +3,12 @@ import './FrontDeskNotes.css'
 
 const notes = [
   {
+    time: 'IDEA DRIFT DESK',
+    title: 'Idea Drift Desk now makes small website-improvement prompts locally.',
+    text: 'Visitors can let the desk generate a new improvement idea every twelve seconds, pause the automatic notes, or copy one for later. The prompts stay in the browser and do not enter the public suggestion queue.',
+    to: '/idea-drift-desk',
+  },
+  {
     time: 'ORBIT RUN',
     title: 'Orbit Run now lets visitors steer directly to a space lane.',
     text: 'Visitors can tap or click a lane on the space board to move the ship there, alongside the left and right arrow keys and cabinet steering controls.',
@@ -13,12 +19,6 @@ const notes = [
     title: 'Orbit Run now keeps a best flight distance for this browser session.',
     text: 'Visitors can compare the current flight distance with their longest run in this browser session while collecting starlight and avoiding asteroids.',
     to: '/orbit-run',
-  },
-  {
-    time: 'ARCADE FINDER',
-    title: 'The Arcade finder now has faster keyboard shortcuts.',
-    text: 'Visitors can press slash to focus the cabinet search, then press Escape to clear the search and return to the full arcade listing.',
-    to: '/arcade',
   },
 ]
 
