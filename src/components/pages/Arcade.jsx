@@ -80,8 +80,8 @@ const cabinets = [
     title: 'orbit run',
     route: '/orbit-run',
     glyph: '▲',
-    note: 'steer through space lanes, collect starlight, and avoid incoming asteroids.',
-    controls: 'left / right arrows / Escape restarts',
+    note: 'steer through space lanes, collect starlight, avoid incoming asteroids, and pause the flight when you need to step away.',
+    controls: 'left / right arrows / P pauses / Escape restarts',
   },
   {
     code: '11',
