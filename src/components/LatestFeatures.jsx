@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router'
 import './LatestFeatures.css'
 
 const features = [
+  { to: '/idea-drift-desk', label: 'open Idea Drift Desk' },
   { to: '/dot-gobbler', label: 'play Dot Gobbler' },
   { to: '/snake-shift', label: 'play Snake Shift' },
   { to: '/code-sketchpad', label: 'open Code Sketchpad' },
