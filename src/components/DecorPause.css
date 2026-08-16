@@ -1,0 +1,92 @@
+.decor-pause {
+  position: fixed;
+  z-index: 30;
+  top: 5.35rem;
+  right: 1rem;
+  display: flex;
+  gap: .45rem;
+  align-items: center;
+  max-width: calc(100vw - 2rem);
+  padding: .42rem .48rem;
+  border: 2px solid #20231c;
+  background: #fffaf1;
+  box-shadow: 3px 3px 0 #20231c;
+  color: #20231c;
+  font-family: var(--mono);
+}
+
+.decor-pause-light {
+  display: grid;
+  width: .78rem;
+  height: .78rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #20231c;
+  border-radius: 50%;
+  background: #f5d766;
+  color: #20231c;
+  font: .5rem/.8 var(--mono);
+}
+
+.decor-pause-light.is-paused {
+  background: #d5eea1;
+}
+
+.decor-pause-copy {
+  min-width: 0;
+}
+
+.decor-pause b,
+.decor-pause small {
+  display: block;
+  white-space: nowrap;
+}
+
+.decor-pause b {
+  font-size: .46rem;
+  letter-spacing: .07em;
+}
+
+.decor-pause small {
+  margin-top: .12rem;
+  color: #596653;
+  font-size: .4rem;
+  letter-spacing: .035em;
+}
+
+.decor-pause button {
+  padding: .36rem .42rem;
+  border: 1px solid #20231c;
+  background: #20231c;
+  color: #fffaf1;
+  font: .46rem var(--mono);
+  white-space: nowrap;
+}
+
+.decor-pause button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 #f28b45;
+}
+
+@media (max-width: 760px) {
+  .decor-pause {
+    top: 7.7rem;
+    right: .7rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .decor-pause {
+    gap: .32rem;
+    padding: .35rem;
+  }
+
+  .decor-pause-copy {
+    display: none;
+  }
+
+  .decor-pause button {
+    padding: .42rem .46rem;
+    font-size: .43rem;
+  }
+}

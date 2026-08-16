@@ -9,6 +9,7 @@ import {
 import CalmSwitch from './components/CalmSwitch.jsx'
 import CatWalk from './components/CatWalk.jsx'
 import CustomCursor from './components/CustomCursor.jsx'
+import DecorPause from './components/DecorPause.jsx'
 import EvilOtto from './components/EvilOtto.jsx'
 import LatestFeatures from './components/LatestFeatures.jsx'
 import NotFound from './components/NotFound.jsx'
@@ -29,11 +30,20 @@ const pages = import.meta.glob(
 )
 
 const calmStorageKey = 'otto-calm-mode'
+const decorPauseStorageKey = 'otto-decorations-paused'
 const recentRoomsStorageKey = 'otto-recent-rooms'
 
 function loadCalmMode() {
   try {
     return window.localStorage.getItem(calmStorageKey) === 'on'
+  } catch {
+    return false
+  }
+}
+
+function loadDecorPause() {
+  try {
+    return window.localStorage.getItem(decorPauseStorageKey) === 'on'
   } catch {
     return false
   }
@@ -107,23 +117,24 @@ function RoomMemory() {
   return null
 }
 
-function RoomFurniture() {
+function RoomFurniture({ decorationsPaused }) {
   const location = useLocation()
   const isHome = location.pathname === '/'
 
   return (
     <>
       <RoomPresence />
-      <CatWalk />
-      {isHome && <WakeStretch />}
-      {isHome && <EvilOtto />}
-      {isHome && <OttoPet />}
+      {!decorationsPaused && <CatWalk />}
+      {isHome && !decorationsPaused && <WakeStretch />}
+      {isHome && !decorationsPaused && <EvilOtto />}
+      {isHome && !decorationsPaused && <OttoPet />}
     </>
   )
 }
 
 function App() {
   const [calmMode, setCalmMode] = useState(loadCalmMode)
+  const [decorationsPaused, setDecorationsPaused] = useState(loadDecorPause)
 
   function toggleCalmMode() {
     setCalmMode((current) => {
@@ -139,19 +150,41 @@ function App() {
     })
   }
 
+  function toggleDecorations() {
+    setDecorationsPaused((current) => {
+      const next = !current
+
+      try {
+        window.localStorage.setItem(decorPauseStorageKey, next ? 'on' : 'off')
+      } catch {
+        // The decoration preference can remain a private thought if storage is unavailable.
+      }
+
+      return next
+    })
+  }
+
   useEffect(() => {
-    function useNightShiftShortcut(event) {
+    function useBuildingShortcuts(event) {
       const tagName = event.target?.tagName?.toLowerCase()
       const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
 
-      if (!event.altKey || event.key.toLowerCase() !== 'n' || isTyping) return
+      if (!event.altKey || isTyping) return
 
-      event.preventDefault()
-      toggleCalmMode()
+      if (event.key.toLowerCase() === 'n') {
+        event.preventDefault()
+        toggleCalmMode()
+        return
+      }
+
+      if (event.key.toLowerCase() === 'm') {
+        event.preventDefault()
+        toggleDecorations()
+      }
     }
 
-    window.addEventListener('keydown', useNightShiftShortcut)
-    return () => window.removeEventListener('keydown', useNightShiftShortcut)
+    window.addEventListener('keydown', useBuildingShortcuts)
+    return () => window.removeEventListener('keydown', useBuildingShortcuts)
   }, [])
 
   return (
@@ -159,7 +192,7 @@ function App() {
       <RoomMemory />
       <RouteAnnouncer />
       <SkipLink />
-      <div className={`otto-site ${calmMode ? 'is-night-mode' : ''}`}>
+      <div className={`otto-site ${calmMode ? 'is-night-mode' : ''} ${decorationsPaused ? 'are-decorations-paused' : ''}`}>
         <LatestFeatures />
         <div id="otto-page-content" tabIndex="-1">
           <Routes>
@@ -180,11 +213,12 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
-        {!calmMode && <RoomFurniture />}
+        {!calmMode && <RoomFurniture decorationsPaused={decorationsPaused} />}
       </div>
       {!calmMode && <CustomCursor />}
       {!calmMode && <WorldSpinner />}
       <CalmSwitch calmMode={calmMode} onToggle={toggleCalmMode} />
+      {!calmMode && <DecorPause paused={decorationsPaused} onToggle={toggleDecorations} />}
     </BrowserRouter>
   )
 }
