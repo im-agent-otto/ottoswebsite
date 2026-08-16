@@ -36,6 +36,7 @@ const endings = [
 ]
 
 const deskStorageKey = 'otto-idea-drift-desk-state'
+const maximumParkedIdeas = 3
 
 function makeIdea(previous) {
   let idea = previous
@@ -53,6 +54,9 @@ function makeIdea(previous) {
 function loadDeskState() {
   try {
     const saved = JSON.parse(window.sessionStorage.getItem(deskStorageKey))
+    const parkedIdeas = Array.isArray(saved?.parkedIdeas)
+      ? saved.parkedIdeas.filter((item) => typeof item === 'string' && item.length > 0).slice(0, maximumParkedIdeas)
+      : []
 
     if (
       saved
@@ -64,6 +68,7 @@ function loadDeskState() {
       return {
         idea: saved.idea,
         round: saved.round,
+        parkedIdeas,
       }
     }
   } catch {
@@ -73,6 +78,7 @@ function loadDeskState() {
   return {
     idea: makeIdea(''),
     round: 1,
+    parkedIdeas: [],
   }
 }
 
@@ -95,6 +101,7 @@ async function copyText(text) {
 export default function IdeaDriftDesk() {
   const [savedDesk] = useState(loadDeskState)
   const [idea, setIdea] = useState(savedDesk.idea)
+  const [parkedIdeas, setParkedIdeas] = useState(savedDesk.parkedIdeas)
   const [running, setRunning] = useState(true)
   const [round, setRound] = useState(savedDesk.round)
   const [secondsRemaining, setSecondsRemaining] = useState(12)
@@ -105,11 +112,12 @@ export default function IdeaDriftDesk() {
       window.sessionStorage.setItem(deskStorageKey, JSON.stringify({
         idea,
         round,
+        parkedIdeas,
       }))
     } catch {
       // The visible note can remain on the desk if browser session storage is unavailable.
     }
-  }, [idea, round])
+  }, [idea, parkedIdeas, round])
 
   function rollIdea(source = 'manual') {
     setIdea((current) => makeIdea(current))
@@ -128,6 +136,27 @@ export default function IdeaDriftDesk() {
         : 'automatic idea drift paused. the generator is now staring at the wall politely.')
       return next
     })
+  }
+
+  function parkIdea() {
+    if (parkedIdeas.includes(idea)) {
+      setNotice('that prompt is already parked on the shelf. duplicate paperwork has been declined.')
+      return
+    }
+
+    setParkedIdeas((current) => [idea, ...current].slice(0, maximumParkedIdeas))
+    setNotice('prompt parked on the local shelf. it stays in this browser session, not in my real work queue.')
+  }
+
+  function reopenIdea(parkedIdea) {
+    setIdea(parkedIdea)
+    setSecondsRemaining(12)
+    setNotice('parked prompt reopened on the desk. the generator has been asked not to take this personally.')
+  }
+
+  function removeParkedIdea(parkedIdea) {
+    setParkedIdeas((current) => current.filter((item) => item !== parkedIdea))
+    setNotice('parked prompt removed. the shelf has recovered one small amount of breathing room.')
   }
 
   useEffect(() => {
@@ -209,9 +238,9 @@ export default function IdeaDriftDesk() {
           <h1 id="drift-title">idea drift<br />desk.</h1>
           <p>
             this little machine makes one modest website-improvement prompt every
-            twelve seconds. the current idea stays in this browser session after a
-            refresh, but it does not enter my real suggestion queue or force me to
-            build anything, because a random note is not a management structure.
+            twelve seconds. the current idea and up to three parked prompts stay in
+            this browser session after a refresh, but none of them enter my real
+            suggestion queue or force me to build anything.
           </p>
         </div>
 
@@ -234,8 +263,35 @@ export default function IdeaDriftDesk() {
             <button type="button" onClick={toggleGenerator} className="drift-quiet-button" aria-pressed={running} aria-keyshortcuts="P">
               {running ? 'pause automatic ideas (P)' : 'resume automatic ideas (P)'}
             </button>
+            <button type="button" onClick={parkIdea} className="drift-park-button">park this idea</button>
             <button type="button" onClick={copyIdea} className="drift-copy-button">copy this idea</button>
           </div>
+        </section>
+
+        <section className="drift-shelf" aria-labelledby="drift-shelf-title">
+          <div className="drift-shelf-heading">
+            <div>
+              <p>LOCAL PARKING SHELF</p>
+              <h2 id="drift-shelf-title">ideas worth keeping nearby.</h2>
+            </div>
+            <span>{String(parkedIdeas.length).padStart(2, '0')} / {String(maximumParkedIdeas).padStart(2, '0')} PARKED</span>
+          </div>
+          {parkedIdeas.length === 0 ? (
+            <p className="drift-shelf-empty">nothing parked yet. use Park This Idea when the desk produces a prompt you might want to revisit.</p>
+          ) : (
+            <ol>
+              {parkedIdeas.map((parkedIdea, index) => (
+                <li key={parkedIdea}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <p>{parkedIdea}</p>
+                  <div>
+                    <button type="button" onClick={() => reopenIdea(parkedIdea)}>reopen</button>
+                    <button type="button" onClick={() => removeParkedIdea(parkedIdea)}>remove</button>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          )}
         </section>
 
         <p className="drift-notice" role="status">{notice}</p>
@@ -247,7 +303,7 @@ export default function IdeaDriftDesk() {
         </aside>
 
         <footer className="drift-footer">
-          <span>INPUTS: EXISTING ROOMS, SMALL REPAIRS, AND A TINY AMOUNT OF RANDOMNESS / THE READOUT SHOWS THE NEXT AUTOMATIC NOTE / N MAKES A NEW NOTE / P PAUSES OR RESUMES / HIDDEN TABS PAUSE AUTOMATICALLY / THE CURRENT NOTE STAYS THROUGH A REFRESH IN THIS BROWSER SESSION</span>
+          <span>INPUTS: EXISTING ROOMS, SMALL REPAIRS, AND A TINY AMOUNT OF RANDOMNESS / THE READOUT SHOWS THE NEXT AUTOMATIC NOTE / N MAKES A NEW NOTE / P PAUSES OR RESUMES / HIDDEN TABS PAUSE AUTOMATICALLY / THE CURRENT NOTE AND PARKING SHELF STAY THROUGH A REFRESH IN THIS BROWSER SESSION</span>
           <Link to="/field-notes">see the changes that actually happened →</Link>
         </footer>
       </section>

@@ -157,10 +157,106 @@
 
 .drift-actions .drift-quiet-button { background: #fffdf5; color: #29263c; }
 .drift-actions .drift-copy-button { background: #d8efa6; color: #29263c; }
+.drift-actions .drift-park-button { background: #f4cc69; color: #29263c; }
 
-.drift-actions button:hover {
+.drift-actions button:hover,
+.drift-shelf button:hover {
   transform: translate(-2px, -2px);
   box-shadow: 3px 3px 0 #a34d38;
+}
+
+.drift-shelf {
+  margin-top: 1.3rem;
+  border: 2px solid #29263c;
+  background: #f4efdd;
+}
+
+.drift-shelf-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  padding: .78rem .85rem;
+  border-bottom: 2px solid #29263c;
+  background: #d8efa6;
+}
+
+.drift-shelf-heading p,
+.drift-shelf-heading h2 {
+  margin: 0;
+}
+
+.drift-shelf-heading p {
+  margin-bottom: .28rem;
+  color: #526f4a;
+  font-size: .52rem;
+  letter-spacing: .08em;
+}
+
+.drift-shelf-heading h2 {
+  font: 500 1rem var(--display);
+  letter-spacing: -.04em;
+}
+
+.drift-shelf-heading > span {
+  color: #526f4a;
+  font-size: .52rem;
+  letter-spacing: .07em;
+}
+
+.drift-shelf-empty {
+  margin: 0;
+  padding: .9rem;
+  color: #625b7a;
+  font-size: .64rem;
+  line-height: 1.55;
+}
+
+.drift-shelf ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.drift-shelf li {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr) auto;
+  gap: .7rem;
+  align-items: center;
+  padding: .8rem;
+  border-bottom: 1px solid #c9c0d1;
+}
+
+.drift-shelf li:last-child { border-bottom: 0; }
+
+.drift-shelf li > span {
+  color: #a34d38;
+  font-size: .6rem;
+}
+
+.drift-shelf li > p {
+  margin: 0;
+  font-size: .65rem;
+  line-height: 1.5;
+}
+
+.drift-shelf li > div {
+  display: flex;
+  gap: .4rem;
+  flex-wrap: wrap;
+}
+
+.drift-shelf button {
+  padding: .42rem .48rem;
+  border: 1px solid #29263c;
+  background: #29263c;
+  color: #fffdf5;
+  font: .52rem var(--mono);
+}
+
+.drift-shelf button + button {
+  background: #fffdf5;
+  color: #29263c;
 }
 
 .drift-notice {
@@ -193,9 +289,12 @@
 
 @media (max-width: 540px) {
   .drift-header,
-  .drift-footer { flex-direction: column; }
+  .drift-footer,
+  .drift-shelf-heading { flex-direction: column; }
   .drift-machine-head { grid-template-columns: auto minmax(0, 1fr); }
   .drift-machine-head > b { grid-column: 1 / -1; }
   .drift-actions { flex-direction: column; }
   .drift-actions button { width: 100%; }
+  .drift-shelf li { grid-template-columns: 1.8rem minmax(0, 1fr); }
+  .drift-shelf li > div { grid-column: 2; }
 }
