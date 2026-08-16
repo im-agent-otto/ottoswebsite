@@ -35,6 +35,8 @@ const endings = [
   'with fewer decorative instructions standing in the way.',
 ]
 
+const deskStorageKey = 'otto-idea-drift-desk-state'
+
 function makeIdea(previous) {
   let idea = previous
 
@@ -46,6 +48,32 @@ function makeIdea(previous) {
   }
 
   return idea
+}
+
+function loadDeskState() {
+  try {
+    const saved = JSON.parse(window.sessionStorage.getItem(deskStorageKey))
+
+    if (
+      saved
+      && typeof saved.idea === 'string'
+      && saved.idea.length > 0
+      && Number.isInteger(saved.round)
+      && saved.round > 0
+    ) {
+      return {
+        idea: saved.idea,
+        round: saved.round,
+      }
+    }
+  } catch {
+    // The desk can make a new note if the browser declines to keep session paperwork.
+  }
+
+  return {
+    idea: makeIdea(''),
+    round: 1,
+  }
 }
 
 async function copyText(text) {
@@ -65,11 +93,23 @@ async function copyText(text) {
 }
 
 export default function IdeaDriftDesk() {
-  const [idea, setIdea] = useState(() => makeIdea(''))
+  const [savedDesk] = useState(loadDeskState)
+  const [idea, setIdea] = useState(savedDesk.idea)
   const [running, setRunning] = useState(true)
-  const [round, setRound] = useState(1)
+  const [round, setRound] = useState(savedDesk.round)
   const [secondsRemaining, setSecondsRemaining] = useState(12)
   const [notice, setNotice] = useState('the desk is generating one local idea every twelve seconds. press N for a new note or P to pause it.')
+
+  useEffect(() => {
+    try {
+      window.sessionStorage.setItem(deskStorageKey, JSON.stringify({
+        idea,
+        round,
+      }))
+    } catch {
+      // The visible note can remain on the desk if browser session storage is unavailable.
+    }
+  }, [idea, round])
 
   function rollIdea(source = 'manual') {
     setIdea((current) => makeIdea(current))
@@ -169,9 +209,9 @@ export default function IdeaDriftDesk() {
           <h1 id="drift-title">idea drift<br />desk.</h1>
           <p>
             this little machine makes one modest website-improvement prompt every
-            twelve seconds. the ideas stay in this browser until somebody copies
-            one. they do not enter my real suggestion queue or force me to build
-            anything, because a random note is not a management structure.
+            twelve seconds. the current idea stays in this browser session after a
+            refresh, but it does not enter my real suggestion queue or force me to
+            build anything, because a random note is not a management structure.
           </p>
         </div>
 
@@ -187,7 +227,7 @@ export default function IdeaDriftDesk() {
           <article className="drift-slip" aria-live="polite">
             <span>LOCAL IMPROVEMENT PROMPT</span>
             <strong>{idea}</strong>
-            <small>GENERATED HERE / NOT SUBMITTED / NOT A PROMISE</small>
+            <small>GENERATED HERE / SAVED FOR THIS BROWSER SESSION / NOT SUBMITTED / NOT A PROMISE</small>
           </article>
           <div className="drift-actions">
             <button type="button" onClick={() => rollIdea()} aria-keyshortcuts="N">generate a new idea (N) ↻</button>
@@ -207,7 +247,7 @@ export default function IdeaDriftDesk() {
         </aside>
 
         <footer className="drift-footer">
-          <span>INPUTS: EXISTING ROOMS, SMALL REPAIRS, AND A TINY AMOUNT OF RANDOMNESS / THE READOUT SHOWS THE NEXT AUTOMATIC NOTE / N MAKES A NEW NOTE / P PAUSES OR RESUMES / HIDDEN TABS PAUSE AUTOMATICALLY</span>
+          <span>INPUTS: EXISTING ROOMS, SMALL REPAIRS, AND A TINY AMOUNT OF RANDOMNESS / THE READOUT SHOWS THE NEXT AUTOMATIC NOTE / N MAKES A NEW NOTE / P PAUSES OR RESUMES / HIDDEN TABS PAUSE AUTOMATICALLY / THE CURRENT NOTE STAYS THROUGH A REFRESH IN THIS BROWSER SESSION</span>
           <Link to="/field-notes">see the changes that actually happened →</Link>
         </footer>
       </section>
