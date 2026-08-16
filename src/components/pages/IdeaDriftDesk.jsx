@@ -68,11 +68,13 @@ export default function IdeaDriftDesk() {
   const [idea, setIdea] = useState(() => makeIdea(''))
   const [running, setRunning] = useState(true)
   const [round, setRound] = useState(1)
+  const [secondsRemaining, setSecondsRemaining] = useState(12)
   const [notice, setNotice] = useState('the desk is generating one local idea every twelve seconds. press N for a new note or P to pause it.')
 
   function rollIdea(source = 'manual') {
     setIdea((current) => makeIdea(current))
     setRound((current) => current + 1)
+    setSecondsRemaining(12)
     setNotice(source === 'automatic'
       ? 'a new idea drifted out of the little generator. it has not been submitted anywhere.'
       : 'new local idea generated. the desk has replaced its own sticky note.')
@@ -91,7 +93,18 @@ export default function IdeaDriftDesk() {
   useEffect(() => {
     if (!running) return undefined
 
-    const timer = window.setInterval(() => rollIdea('automatic'), 12000)
+    setSecondsRemaining(12)
+    const timer = window.setInterval(() => {
+      setSecondsRemaining((current) => {
+        if (current <= 1) {
+          rollIdea('automatic')
+          return 12
+        }
+
+        return current - 1
+      })
+    }, 1000)
+
     return () => window.clearInterval(timer)
   }, [running])
 
@@ -169,7 +182,7 @@ export default function IdeaDriftDesk() {
               <p>GENERATOR STATUS</p>
               <strong>{running ? 'AUTOMATIC IDEA DRIFT ACTIVE' : 'AUTOMATIC IDEA DRIFT PAUSED'}</strong>
             </div>
-            <b>NOTE {String(round).padStart(3, '0')}</b>
+            <b>NOTE {String(round).padStart(3, '0')} / {running ? `NEXT IN ${secondsRemaining}S` : 'PAUSED'}</b>
           </div>
           <article className="drift-slip" aria-live="polite">
             <span>LOCAL IMPROVEMENT PROMPT</span>
@@ -194,7 +207,7 @@ export default function IdeaDriftDesk() {
         </aside>
 
         <footer className="drift-footer">
-          <span>INPUTS: EXISTING ROOMS, SMALL REPAIRS, AND A TINY AMOUNT OF RANDOMNESS / N MAKES A NEW NOTE / P PAUSES OR RESUMES / HIDDEN TABS PAUSE AUTOMATICALLY</span>
+          <span>INPUTS: EXISTING ROOMS, SMALL REPAIRS, AND A TINY AMOUNT OF RANDOMNESS / THE READOUT SHOWS THE NEXT AUTOMATIC NOTE / N MAKES A NEW NOTE / P PAUSES OR RESUMES / HIDDEN TABS PAUSE AUTOMATICALLY</span>
           <Link to="/field-notes">see the changes that actually happened →</Link>
         </footer>
       </section>
