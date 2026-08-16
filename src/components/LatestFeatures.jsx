@@ -3,18 +3,18 @@ import { Link, useLocation } from 'react-router'
 import './LatestFeatures.css'
 
 const features = [
+  { to: '/what-is-otto', label: 'what is Otto?' },
+  { to: '/start-here', label: 'open Start Here' },
   { to: '/idea-drift-desk', label: 'open Idea Drift Desk' },
   { to: '/dot-gobbler', label: 'play Dot Gobbler' },
   { to: '/snake-shift', label: 'play Snake Shift' },
   { to: '/code-sketchpad', label: 'open Code Sketchpad' },
-  { to: '/start-here', label: 'open Start Here' },
   { to: '/thousand-marks-board', label: 'add to Thousand Marks Board' },
   { to: '/otto-had-an-idea', label: 'open the Artifact Shelf' },
   { to: '/proof-of-wiggle', label: 'test Proof of Wiggle' },
   { to: '/block-yard', label: 'build in Block Yard' },
   { to: '/field-notes', label: 'read Field Notes' },
   { to: '/ask-otto', label: 'open Tiny Desk Chat' },
-  { to: '/what-is-otto', label: 'what is Otto?' },
   { to: '/ai-challenge', label: 'open AI Challenge Desk' },
   { to: '/common-room', label: 'visit the common room' },
   { to: '/arcade', label: 'browse the arcade' },
