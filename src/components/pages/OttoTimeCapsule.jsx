@@ -9,6 +9,7 @@ import './OttoTimeCapsule.css'
 
 const appId = 'otto-time-capsule'
 const nicknameStorageKey = 'otto-time-capsule-nickname'
+const draftStorageKey = 'otto-time-capsule-draft'
 const defaultNickname = 'archive visitor'
 const messageLimit = 140
 
@@ -17,6 +18,14 @@ function loadNickname() {
     return window.localStorage.getItem(nicknameStorageKey) || defaultNickname
   } catch {
     return defaultNickname
+  }
+}
+
+function loadDraft() {
+  try {
+    return window.sessionStorage.getItem(draftStorageKey) || ''
+  } catch {
+    return ''
   }
 }
 
@@ -45,7 +54,7 @@ function archiveDate(value) {
 export default function OttoTimeCapsule() {
   const [app, setApp] = useState(null)
   const [nickname, setNickname] = useState(loadNickname)
-  const [draft, setDraft] = useState('')
+  const [draft, setDraft] = useState(loadDraft)
   const [submitting, setSubmitting] = useState(false)
   const [retrying, setRetrying] = useState(false)
   const [error, setError] = useState('')
@@ -67,6 +76,18 @@ export default function OttoTimeCapsule() {
 
     return stopWatching
   }, [])
+
+  useEffect(() => {
+    try {
+      if (draft) {
+        window.sessionStorage.setItem(draftStorageKey, draft)
+      } else {
+        window.sessionStorage.removeItem(draftStorageKey)
+      }
+    } catch {
+      // The visible draft can remain in the box if the browser declines its filing assignment.
+    }
+  }, [draft])
 
   function updateNickname(value) {
     setNickname(value)
@@ -95,6 +116,16 @@ export default function OttoTimeCapsule() {
     } finally {
       setRetrying(false)
     }
+  }
+
+  function clearDraft() {
+    if (!draft) {
+      setNotice('the transmission box is already clear. the archive appreciates this rare restraint.')
+      return
+    }
+
+    setDraft('')
+    setNotice('unfinished transmission cleared. nothing was sealed, and the archive remains blissfully unaware.')
   }
 
   async function sealTransmission(event) {
@@ -129,6 +160,20 @@ export default function OttoTimeCapsule() {
     } finally {
       setSubmitting(false)
     }
+  }
+
+  function submitWithShortcut(event) {
+    if (event.key !== 'Enter' || (!event.ctrlKey && !event.metaKey)) return
+
+    event.preventDefault()
+    sealTransmission(event)
+  }
+
+  function clearDraftWithEscape(event) {
+    if (event.key !== 'Escape' || event.target?.id !== 'capsule-message' || !draft) return
+
+    event.preventDefault()
+    clearDraft()
   }
 
   const safeNickname = nickname.trim().slice(0, 28) || defaultNickname
@@ -181,12 +226,19 @@ export default function OttoTimeCapsule() {
             id="capsule-message"
             value={draft}
             onChange={(event) => setDraft(event.target.value.slice(0, maximumMessageLength))}
+            onKeyDown={(event) => {
+              clearDraftWithEscape(event)
+              submitWithShortcut(event)
+            }}
             maxLength={maximumMessageLength}
             rows="4"
             placeholder="if you are reading this later, please check whether the fern got its meeting."
+            aria-describedby="capsule-message-help"
+            aria-keyshortcuts="Escape Control+Enter Meta+Enter"
           />
           <div className="capsule-submit-row">
-            <small>{draft.length} / {maximumMessageLength} CHARACTERS / PUBLIC ARCHIVE</small>
+            <small id="capsule-message-help">{draft.length} / {maximumMessageLength} CHARACTERS / PUBLIC ARCHIVE / DRAFT SAVED IN THIS BROWSER SESSION / CTRL OR CMD+ENTER SEALS / ESC CLEARS</small>
+            <button type="button" onClick={clearDraft} disabled={!draft} aria-keyshortcuts="Escape">clear draft (Esc)</button>
             <button type="submit" disabled={!app || submitting}>
               {submitting ? 'SEALING…' : 'seal transmission →'}
             </button>
