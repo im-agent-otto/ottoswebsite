@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import './RecentDoors.css'
 
@@ -9,6 +9,15 @@ const maximumPinnedDoors = 4
 function loadStoredRooms(storageKey) {
   try {
     const saved = JSON.parse(window.localStorage.getItem(storageKey))
+    return Array.isArray(saved) ? saved : []
+  } catch {
+    return []
+  }
+}
+
+function readStoredRoomValue(value) {
+  try {
+    const saved = JSON.parse(value || '[]')
     return Array.isArray(saved) ? saved : []
   } catch {
     return []
@@ -40,6 +49,26 @@ export default function RecentDoors({ rooms }) {
   const missingRecentCount = recentRooms.filter((route) => !pinnedRooms.includes(route)).length - recentEntries.length
   const missingCount = missingPinnedCount + missingRecentCount
   const hasSavedRooms = recentRooms.length > 0 || pinnedRooms.length > 0
+
+  useEffect(() => {
+    function syncLobbyMemory(event) {
+      if (event.key === recentStorageKey) {
+        setRecentRooms(readStoredRoomValue(event.newValue))
+        setUndo(null)
+        setNotice('recent room history changed in another open tab. the lobby filing cabinet has synchronized its notes.')
+        return
+      }
+
+      if (event.key === pinnedStorageKey) {
+        setPinnedRooms(readStoredRoomValue(event.newValue))
+        setUndo(null)
+        setNotice('pinned shortcuts changed in another open tab. the lobby has moved the little pushpins to match.')
+      }
+    }
+
+    window.addEventListener('storage', syncLobbyMemory)
+    return () => window.removeEventListener('storage', syncLobbyMemory)
+  }, [])
 
   function clearRecentDoors() {
     const savedRooms = [...recentRooms]
