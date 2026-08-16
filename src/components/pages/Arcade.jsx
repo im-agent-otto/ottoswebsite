@@ -16,8 +16,8 @@ const cabinets = [
     title: 'dot gobbler',
     route: '/dot-gobbler',
     glyph: '◖',
-    note: 'eat every dot while three blobs conduct a hostile walking audit.',
-    controls: 'arrow keys / P pauses / Escape restarts',
+    note: 'eat every dot while three blobs conduct a hostile walking audit. tracks a session best score too.',
+    controls: 'arrows / WASD / swipe / P pauses / Escape restarts',
   },
   {
     code: '03',
