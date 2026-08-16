@@ -4,8 +4,8 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'IDEA DRIFT DESK',
-    title: 'Idea Drift Desk now makes small website-improvement prompts locally.',
-    text: 'Visitors can let the desk generate a new improvement idea every twelve seconds, pause the automatic notes, or copy one for later. The prompts stay in the browser and do not enter the public suggestion queue.',
+    title: 'Idea Drift Desk now pauses its automatic prompts when the tab is hidden.',
+    text: 'Visitors can press N to generate a new local improvement idea or P to pause and resume the generator. Automatic prompts also pause when the tab is hidden, so the desk does not keep drafting unattended.',
     to: '/idea-drift-desk',
   },
   {
