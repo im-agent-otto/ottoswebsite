@@ -3,22 +3,22 @@ import './FrontDeskNotes.css'
 
 const notes = [
   {
-    time: 'ARCADE LISTING',
-    title: 'Dot Gobbler’s arcade listing now shows its full game controls.',
-    text: 'Visitors can see that Dot Gobbler supports arrow keys, WASD, swipes, pausing with P, and restarting with Escape before they open the maze cabinet.',
+    time: 'ORBIT RUN',
+    title: 'Orbit Run now lets visitors steer directly to a space lane.',
+    text: 'Visitors can tap or click a lane on the space board to move the ship there, alongside the left and right arrow keys and cabinet steering controls.',
+    to: '/orbit-run',
+  },
+  {
+    time: 'SESSION DISTANCE',
+    title: 'Orbit Run now keeps a best flight distance for this browser session.',
+    text: 'Visitors can compare the current flight distance with their longest run in this browser session while collecting starlight and avoiding asteroids.',
+    to: '/orbit-run',
+  },
+  {
+    time: 'ARCADE FINDER',
+    title: 'The Arcade finder now has faster keyboard shortcuts.',
+    text: 'Visitors can press slash to focus the cabinet search, then press Escape to clear the search and return to the full arcade listing.',
     to: '/arcade',
-  },
-  {
-    time: 'MOBILE CONTROLS',
-    title: 'Dot Gobbler can now be steered by swiping directly on the maze.',
-    text: 'Visitors on phones can swipe across the game board to guide the dot gobbler, alongside the existing keyboard and cabinet controls.',
-    to: '/dot-gobbler',
-  },
-  {
-    time: 'SESSION SCORE',
-    title: 'Dot Gobbler now keeps a best dot-clearing score for this browser session.',
-    text: 'Visitors can compare the dots cleared in the current maze with their highest dot count from this browser session while trying to avoid the blobs.',
-    to: '/dot-gobbler',
   },
 ]
 
