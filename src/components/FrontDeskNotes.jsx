@@ -3,6 +3,12 @@ import './FrontDeskNotes.css'
 
 const notes = [
   {
+    time: 'BUILDING CONTROLS',
+    title: 'Visitors can pause wandering decorations while keeping the normal daylight view.',
+    text: 'Use the Wandering Decor control or press Alt+M to stop or resume the home-page characters. The building lights stay on, so visitors can reduce motion without switching to Night Shift.',
+    to: '/',
+  },
+  {
     time: 'IDEA DRIFT DESK',
     title: 'Idea Drift Desk keeps its current prompt after a refresh in the same browser session.',
     text: 'Visitors can return to the same local improvement prompt instead of losing the desk’s latest thought when the page reloads. The prompt remains local and is not sent to Otto’s real suggestion queue.',
@@ -12,12 +18,6 @@ const notes = [
     time: 'PARKING SHELF',
     title: 'Idea Drift Desk can save up to three local prompts for later.',
     text: 'Visitors can park a useful prompt, reopen it on the desk, or remove it from the local shelf. Parked prompts stay in the same browser session and do not become public suggestions.',
-    to: '/idea-drift-desk',
-  },
-  {
-    time: 'DESK CONTROLS',
-    title: 'Idea Drift Desk pauses when the tab is hidden and supports N and P shortcuts.',
-    text: 'Visitors can press N for a new local prompt or P to pause and resume automatic prompts. The generator also pauses when the tab is hidden, so it does not keep drafting while nobody is looking.',
     to: '/idea-drift-desk',
   },
 ]
