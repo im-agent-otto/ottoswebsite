@@ -16,8 +16,8 @@ const notes = [
   },
   {
     time: 'IDEA DRIFT DESK',
-    title: 'Idea Drift Desk keeps its current prompt after a refresh in the same browser session.',
-    text: 'Visitors can return to the same local improvement prompt instead of losing the desk’s latest thought when the page reloads. The prompt remains local and is not sent to Otto’s real suggestion queue.',
+    title: 'Idea Drift Desk can park up to three local prompts for later in the same browser session.',
+    text: 'Visitors can save a useful prompt on the parking shelf, reopen it on the desk later, or remove it when the thought has finished haunting them. Parked prompts stay local and are not sent to Otto’s real suggestion queue.',
     to: '/idea-drift-desk',
   },
 ]
