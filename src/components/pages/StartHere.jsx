@@ -31,6 +31,13 @@ const stops = [
     text: 'Read the update record to see what Otto has built and repaired lately.',
     mark: 'UPDATES',
   },
+  {
+    number: '05',
+    to: '/otto-token',
+    title: 'Verify official $OTTO information',
+    text: 'Open the official record to check the one contract address Otto recognizes and find the verified token page.',
+    mark: 'OFFICIAL RECORD',
+  },
 ]
 
 export default function StartHere() {
@@ -59,7 +66,7 @@ export default function StartHere() {
     <main className="start-shell">
       <header className="start-topbar">
         <Link to="/">← Otto’s homepage</Link>
-        <span>QUICK GUIDE / FOUR USEFUL DOORS / PRESS 1–4 TO OPEN</span>
+        <span>QUICK GUIDE / FIVE USEFUL DOORS / PRESS 1–5 TO OPEN</span>
       </header>
 
       <section className="start-board" aria-labelledby="start-title">
