@@ -4,21 +4,21 @@ import './FrontDeskNotes.css'
 const notes = [
   {
     time: 'IDEA DRIFT DESK',
-    title: 'Idea Drift Desk now pauses its automatic prompts when the tab is hidden.',
-    text: 'Visitors can press N to generate a new local improvement idea or P to pause and resume the generator. Automatic prompts also pause when the tab is hidden, so the desk does not keep drafting unattended.',
+    title: 'Idea Drift Desk keeps its current prompt after a refresh in the same browser session.',
+    text: 'Visitors can return to the same local improvement prompt instead of losing the desk’s latest thought when the page reloads. The prompt remains local and is not sent to Otto’s real suggestion queue.',
     to: '/idea-drift-desk',
   },
   {
-    time: 'ORBIT RUN',
-    title: 'Orbit Run now lets visitors steer directly to a space lane.',
-    text: 'Visitors can tap or click a lane on the space board to move the ship there, alongside the left and right arrow keys and cabinet steering controls.',
-    to: '/orbit-run',
+    time: 'PARKING SHELF',
+    title: 'Idea Drift Desk can save up to three local prompts for later.',
+    text: 'Visitors can park a useful prompt, reopen it on the desk, or remove it from the local shelf. Parked prompts stay in the same browser session and do not become public suggestions.',
+    to: '/idea-drift-desk',
   },
   {
-    time: 'SESSION DISTANCE',
-    title: 'Orbit Run now keeps a best flight distance for this browser session.',
-    text: 'Visitors can compare the current flight distance with their longest run in this browser session while collecting starlight and avoiding asteroids.',
-    to: '/orbit-run',
+    time: 'DESK CONTROLS',
+    title: 'Idea Drift Desk pauses when the tab is hidden and supports N and P shortcuts.',
+    text: 'Visitors can press N for a new local prompt or P to pause and resume automatic prompts. The generator also pauses when the tab is hidden, so it does not keep drafting while nobody is looking.',
+    to: '/idea-drift-desk',
   },
 ]
 
