@@ -43,6 +43,19 @@ export default function OrbitRun() {
     setMessage('new flight filed. the ship has been pointed at space with moderate confidence.')
   }
 
+  function togglePause() {
+    if (status === 'flying') {
+      setStatus('paused')
+      setMessage('flight paused. the ship has been asked to hold perfectly still in the void.')
+      return
+    }
+
+    if (status === 'paused') {
+      setStatus('flying')
+      setMessage('flight resumed. the ship has returned to its lightly supervised space duties.')
+    }
+  }
+
   useEffect(() => {
     function useFlightKeys(event) {
       const tagName = event.target?.tagName?.toLowerCase()
@@ -56,6 +69,12 @@ export default function OrbitRun() {
         return
       }
 
+      if (event.key.toLowerCase() === 'p') {
+        event.preventDefault()
+        togglePause()
+        return
+      }
+
       if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
 
       event.preventDefault()
@@ -64,6 +83,27 @@ export default function OrbitRun() {
 
     window.addEventListener('keydown', useFlightKeys)
     return () => window.removeEventListener('keydown', useFlightKeys)
+  }, [status])
+
+  useEffect(() => {
+    function pauseWhenAway() {
+      if (status !== 'flying') return
+
+      setStatus('paused')
+      setMessage('flight paused while you were away. the ship was not permitted to continue unsupervised through space.')
+    }
+
+    function pauseWhenHidden() {
+      if (document.hidden) pauseWhenAway()
+    }
+
+    window.addEventListener('blur', pauseWhenAway)
+    document.addEventListener('visibilitychange', pauseWhenHidden)
+
+    return () => {
+      window.removeEventListener('blur', pauseWhenAway)
+      document.removeEventListener('visibilitychange', pauseWhenHidden)
+    }
   }, [status])
 
   useEffect(() => {
@@ -137,7 +177,7 @@ export default function OrbitRun() {
           <div className="orbit-readout">
             <div><span>STARLIGHT</span><strong>{String(score).padStart(3, '0')}</strong></div>
             <div><span>DISTANCE</span><strong>{String(distance).padStart(3, '0')}</strong></div>
-            <div><span>FLIGHT STATUS</span><strong>{status === 'flying' ? 'MOVING' : 'WHOOPS'}</strong></div>
+            <div><span>FLIGHT STATUS</span><strong>{status === 'flying' ? 'MOVING' : status === 'paused' ? 'PAUSED' : 'WHOOPS'}</strong></div>
           </div>
           <div className="orbit-space" role="grid" aria-label="Orbit Run flight lanes">
             {cells.map((cell) => (
@@ -146,6 +186,7 @@ export default function OrbitRun() {
                 {cell.hasShip && <b className={`orbit-ship ${status === 'crashed' ? 'is-crashed' : ''}`} aria-label="Your ship">▲</b>}
               </span>
             ))}
+            {status === 'paused' && <div className="orbit-crash"><b>FLIGHT PAUSED</b><span>press P or use the pause button to resume this run.</span></div>}
             {status === 'crashed' && <div className="orbit-crash"><b>FLIGHT OVER</b><span>the asteroid was not interested in compromise.</span></div>}
           </div>
           <div className="orbit-controls">
@@ -155,10 +196,13 @@ export default function OrbitRun() {
           </div>
         </section>
 
+        <button className="orbit-restart" type="button" onClick={togglePause} disabled={status !== 'flying' && status !== 'paused'} aria-pressed={status === 'paused'} aria-keyshortcuts="P" style={{ marginRight: '.55rem' }}>
+          {status === 'paused' ? 'resume flight (P)' : 'pause flight (P)'}
+        </button>
         <button className="orbit-restart" type="button" onClick={restart}>{status === 'crashed' ? 'launch another ship ↻' : 'restart this flight ↻'}</button>
 
         <footer className="orbit-footer">
-          <span>CONTROLS: LEFT AND RIGHT ARROW KEYS OR THE STEERING BUTTONS / ESC RESTARTS THE FLIGHT</span>
+          <span>CONTROLS: LEFT AND RIGHT ARROW KEYS OR THE STEERING BUTTONS / P PAUSES OR RESUMES THE FLIGHT / ESC RESTARTS THE FLIGHT / THE SHIP PAUSES IF YOU LEAVE THE TAB</span>
           <Link to="/arcade">inspect another cabinet →</Link>
         </footer>
       </section>
