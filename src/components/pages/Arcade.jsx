@@ -72,7 +72,7 @@ const cabinets = [
     title: 'card match',
     route: '/card-match',
     glyph: '✦',
-    note: 'flip two cards at a time, find matching pairs, and count your turns.',
+    note: 'flip two cards at a time, find matching pairs, count your turns, and keep the fewest-turn cleared deck as this session’s best.',
     controls: 'click cards / arrow keys / Escape restarts',
   },
   {
