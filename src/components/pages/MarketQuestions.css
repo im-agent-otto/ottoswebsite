@@ -1,0 +1,188 @@
+.market-questions-shell {
+  min-height: 100svh;
+  padding: clamp(1rem, 5vw, 3rem);
+  background: #d8d0b5;
+  color: #292b25;
+  font-family: var(--mono);
+}
+
+.market-questions-board {
+  width: min(100%, 850px);
+  margin: 0 auto;
+  border: 3px solid #292b25;
+  background: #fffaf0;
+  box-shadow: 10px 10px 0 #7d765d;
+}
+
+.market-questions-header,
+.market-questions-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem clamp(1rem, 5vw, 3.4rem);
+  color: #5d6554;
+  font-size: .63rem;
+  letter-spacing: .055em;
+}
+
+.market-questions-header {
+  border-bottom: 1px solid #bdb49b;
+}
+
+.market-questions-header a,
+.market-questions-footer a {
+  color: #292b25;
+}
+
+.market-questions-intro {
+  padding: clamp(2.5rem, 8vw, 5rem) clamp(1.2rem, 8vw, 5.4rem) 2rem;
+  background: repeating-linear-gradient(0deg, transparent 0 30px, rgba(41, 43, 37, .07) 31px);
+}
+
+.market-questions-stamp {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: .34rem .45rem;
+  border: 2px solid #a34f38;
+  color: #913f2d;
+  font-size: .54rem;
+  letter-spacing: .08em;
+  transform: rotate(-2deg);
+}
+
+.market-questions-intro h1 {
+  max-width: 610px;
+  margin: 0;
+  font: 500 clamp(3rem, 10vw, 6.4rem)/.8 var(--display);
+  letter-spacing: -.1em;
+}
+
+.market-questions-intro > p {
+  max-width: 590px;
+  margin: 1.45rem 0 0;
+  font-size: .77rem;
+  line-height: 1.75;
+}
+
+.market-questions-ticket {
+  margin: 0 clamp(1rem, 5vw, 3.4rem) 1.3rem;
+  border: 3px solid #292b25;
+  background: #e4efbc;
+  box-shadow: 5px 6px 0 #292b25;
+}
+
+.market-questions-ticket > p {
+  margin: 0;
+  padding: .75rem .9rem;
+  border-bottom: 2px solid #292b25;
+  background: #292b25;
+  color: #e4efbc;
+  font-size: .54rem;
+  letter-spacing: .08em;
+}
+
+.market-questions-ticket > div {
+  padding: 1rem;
+}
+
+.market-questions-ticket strong {
+  display: block;
+  max-width: 620px;
+  font: 500 clamp(1.1rem, 3.8vw, 1.55rem)/1.28 var(--display);
+  letter-spacing: -.045em;
+}
+
+.market-questions-ticket span {
+  display: block;
+  max-width: 630px;
+  margin-top: .65rem;
+  font-size: .67rem;
+  line-height: 1.6;
+}
+
+.market-questions-list {
+  margin: 0 clamp(1rem, 5vw, 3.4rem);
+  padding: 0;
+  list-style: none;
+  border-top: 2px solid #292b25;
+}
+
+.market-questions-list li {
+  display: grid;
+  grid-template-columns: 3.1rem minmax(0, 1fr);
+  gap: .8rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid #bdb49b;
+}
+
+.market-questions-number {
+  display: grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  place-items: center;
+  border: 2px solid #292b25;
+  background: #f3cc67;
+  color: #9a452f;
+  font: 500 .78rem var(--display);
+}
+
+.market-questions-list h2 {
+  margin: 0;
+  font: 500 clamp(1.25rem, 4vw, 1.7rem)/1.05 var(--display);
+  letter-spacing: -.055em;
+}
+
+.market-questions-list p {
+  max-width: 610px;
+  margin: .6rem 0 0;
+  color: #4f574a;
+  font-size: .68rem;
+  line-height: 1.65;
+}
+
+.market-questions-links {
+  display: flex;
+  gap: .7rem;
+  flex-wrap: wrap;
+  margin: 1.35rem clamp(1rem, 5vw, 3.4rem) 0;
+  padding: 1rem;
+  border: 2px solid #292b25;
+  background: #f5e4bd;
+}
+
+.market-questions-links a {
+  padding: .65rem .72rem;
+  border: 2px solid #292b25;
+  background: #292b25;
+  color: #fffaf0;
+  font-size: .61rem;
+  text-decoration: none;
+}
+
+.market-questions-links a:last-child {
+  background: #fffaf0;
+  color: #292b25;
+}
+
+.market-questions-links a:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 #a34f38;
+}
+
+.market-questions-footer {
+  margin-top: 1.35rem;
+  border-top: 1px solid #bdb49b;
+  line-height: 1.55;
+}
+
+@media (max-width: 560px) {
+  .market-questions-header,
+  .market-questions-footer {
+    flex-direction: column;
+  }
+
+  .market-questions-list li {
+    grid-template-columns: 1fr;
+  }
+}
