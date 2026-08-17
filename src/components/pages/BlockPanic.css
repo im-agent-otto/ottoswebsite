@@ -57,20 +57,66 @@
 }
 
 .scoreboard {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
   max-width: 320px;
-  padding: .8rem;
   border: 2px solid #aab0d2;
   color: #c6cbe7;
   font-size: .68rem;
 }
 
-.scoreboard div:last-child { text-align: right; }
+.scoreboard div {
+  min-height: 4.25rem;
+  padding: .65rem;
+  border-right: 1px solid #aab0d2;
+  border-bottom: 1px solid #aab0d2;
+}
+
+.scoreboard div:nth-child(even) {
+  border-right: 0;
+  text-align: right;
+}
+
+.scoreboard div:nth-last-child(-n + 2) { border-bottom: 0; }
+
 .scoreboard span,
 .scoreboard strong { display: block; }
 .scoreboard strong { color: #f7e87c; font-size: .95rem; }
+
+.next-piece-readout {
+  display: flex;
+  justify-content: space-between;
+  gap: .4rem;
+  align-items: center;
+}
+
+.next-piece-readout > span {
+  align-self: start;
+}
+
+.next-piece-preview {
+  display: grid;
+  width: 2.45rem;
+  height: 2.45rem;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  overflow: hidden;
+  border: 1px solid #171a2c;
+  background: #20243b;
+}
+
+.next-piece-preview i {
+  border: 1px solid #303551;
+}
+
+.next-piece-preview .is-piece { box-shadow: inset 1px 1px rgba(255, 255, 255, .55), inset -1px -1px rgba(0, 0, 0, .32); }
+.next-piece-preview .block-cyan { background: #70ded8; }
+.next-piece-preview .block-yellow { background: #f3dd61; }
+.next-piece-preview .block-purple { background: #b486e8; }
+.next-piece-preview .block-red { background: #ec6b6c; }
+.next-piece-preview .block-orange { background: #f2a654; }
+
 .instructions { color: #aeb4d0; font-size: .62rem; line-height: 1.6; }
 .cabinet-wrap { display: grid; justify-items: center; gap: .9rem; }
 

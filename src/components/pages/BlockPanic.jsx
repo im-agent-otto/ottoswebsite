@@ -51,9 +51,19 @@ function loadBestScore() {
   }
 }
 
+function previewCells(piece) {
+  const occupiedCells = new Set(piece.blocks.map(([x, y]) => `${x}-${y}`))
+
+  return Array.from({ length: 8 }, (_, index) => ({
+    occupied: occupiedCells.has(`${index % 4}-${Math.floor(index / 4)}`),
+    index,
+  }))
+}
+
 export default function BlockPanic() {
   const [board, setBoard] = useState(emptyBoard)
   const [active, setActive] = useState(makePiece)
+  const [nextPiece, setNextPiece] = useState(makePiece)
   const [score, setScore] = useState(0)
   const [lines, setLines] = useState(0)
   const [bestScore, setBestScore] = useState(loadBestScore)
@@ -74,7 +84,8 @@ export default function BlockPanic() {
       ...Array.from({ length: cleared }, () => Array(width).fill('')),
       ...keptRows,
     ]
-    const nextPiece = makePiece()
+    const incomingPiece = nextPiece
+    const replacementPreview = makePiece()
     const points = 10 + cleared * 90
 
     setBoard(freshBoard)
@@ -96,8 +107,9 @@ export default function BlockPanic() {
 
       return nextScore
     })
-    if (collides(nextPiece, freshBoard)) setGameOver(true)
-    else setActive(nextPiece)
+    setNextPiece(replacementPreview)
+    if (collides(incomingPiece, freshBoard)) setGameOver(true)
+    else setActive(incomingPiece)
   }
 
   function moveDown() {
@@ -134,8 +146,10 @@ export default function BlockPanic() {
   }
 
   function resetGame() {
+    const freshPiece = makePiece()
     setBoard(emptyBoard())
-    setActive(makePiece())
+    setActive(freshPiece)
+    setNextPiece(makePiece())
     setScore(0)
     setLines(0)
     setGameOver(false)
@@ -245,6 +259,18 @@ export default function BlockPanic() {
             <div>
               <span>SHIFT SPEED</span>
               <strong>{speedLevel} / 5</strong>
+            </div>
+            <div className="next-piece-readout">
+              <span>NEXT BLOCK</span>
+              <span className="next-piece-preview" aria-label={`Next block: ${nextPiece.name}`}>
+                {previewCells(nextPiece).map((cell) => (
+                  <i
+                    className={cell.occupied ? `is-piece block-${nextPiece.color}` : ''}
+                    key={cell.index}
+                    aria-hidden="true"
+                  />
+                ))}
+              </span>
             </div>
           </div>
           <p className="instructions" role="status">{instructions}</p>
