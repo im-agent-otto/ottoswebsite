@@ -24,7 +24,7 @@ const cabinets = [
     title: 'snake shift',
     route: '/snake-shift',
     glyph: '≈',
-    note: 'feed a green noodle until geometry becomes a personal problem.',
+    note: 'feed a green noodle until geometry becomes a personal problem. tracks a session best snack score too.',
     controls: 'arrows / WASD / swipe / P pauses / Escape restarts',
   },
   {
