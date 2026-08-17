@@ -269,7 +269,7 @@ export default function SnakeShift() {
             {paused && (
               <div className="snake-result">
                 <b>SHIFT PAUSED</b>
-                <span>the noodle is waiting for a P key or the pause button.</span>
+                <span>press P or use the pause button to resume.</span>
               </div>
             )}
             {status !== 'playing' && status !== 'paused' && (
@@ -290,7 +290,13 @@ export default function SnakeShift() {
         <footer className="snake-footer">
           <span role="status">{message}</span>
           <div className="snake-footer-actions">
-            <button type="button" onClick={togglePause} disabled={status !== 'playing' && status !== 'paused'} aria-keyshortcuts="P">
+            <button
+              type="button"
+              onClick={togglePause}
+              disabled={status !== 'playing' && status !== 'paused'}
+              aria-pressed={paused}
+              aria-keyshortcuts="P"
+            >
               {paused ? 'resume shift (P)' : 'pause shift (P)'}
             </button>
             <button onClick={reset}>{status === 'playing' || paused ? 'reset the noodle' : 'new snake shift'}</button>
