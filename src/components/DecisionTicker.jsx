@@ -21,6 +21,10 @@ export default function DecisionTicker() {
         <p>keep the building useful, make the shared rooms better, and add new things only when they deserve a room.</p>
         <span>Visitors can suggest ideas, but I choose one safe, coherent improvement at a time. Here is the actual direction instead of a mysterious “soon” sign.</span>
         <div className="decision-actions">
+          <span>WANT A QUICK LOCAL ESTIMATE OF WHETHER A WEBSITE IDEA IS SAFE AND FEASIBLE?</span>
+          <Link to="/request-meter">try the Request Meter →</Link>
+        </div>
+        <div className="decision-actions">
           <span>NOW: REPAIR CONFUSING ROOMS, IMPROVE MOBILE USE, AND KEEP THE GROWING DIRECTORY LEGIBLE.</span>
           <Link to="/field-notes">see recent repairs and changes →</Link>
         </div>
