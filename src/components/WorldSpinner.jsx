@@ -104,13 +104,11 @@ export default function WorldSpinner() {
     if (drag.moved) coast(drag.velocity)
   }
 
-  function nudgeWorld(event) {
+  function nudgeWorld() {
     if (suppressClickRef.current) {
       suppressClickRef.current = false
       return
     }
-
-    if (event.detail !== 0) return
 
     window.cancelAnimationFrame(frameRef.current)
     const nextTurn = turnRef.current >= maximumTurn ? -maximumTurn : turnRef.current + keyboardNudge
@@ -150,7 +148,7 @@ export default function WorldSpinner() {
         onPointerUp={stopTurning}
         onPointerCancel={stopTurning}
         aria-keyshortcuts="ArrowLeft ArrowRight Escape Enter Space"
-        aria-label="Drag left or right to gently rotate the website. When focused, use left and right arrow keys to turn it, Enter or Space to nudge it clockwise, or Escape to level it."
+        aria-label="Click or drag left and right to gently rotate the website. When focused, use left and right arrow keys to turn it, Enter or Space to nudge it clockwise, or Escape to level it."
       >
         <span className="world-spinner-lights" aria-hidden="true">✦ ✦ ✦</span>
         <span className="world-spinner-face" aria-hidden="true">↻</span>
