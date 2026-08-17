@@ -107,6 +107,20 @@ export default function BlockPanic() {
     else setActive(lower)
   }
 
+  function hardDrop() {
+    if (gameOver || paused) return
+
+    let landingPiece = active
+    let lower = { ...landingPiece, y: landingPiece.y + 1 }
+
+    while (!collides(lower, board)) {
+      landingPiece = lower
+      lower = { ...landingPiece, y: landingPiece.y + 1 }
+    }
+
+    lockPiece(landingPiece)
+  }
+
   function moveSideways(direction) {
     if (gameOver || paused) return
     const shifted = { ...active, x: active.x + direction }
@@ -149,6 +163,12 @@ export default function BlockPanic() {
       if (event.key.toLowerCase() === 'p') {
         event.preventDefault()
         togglePause()
+        return
+      }
+
+      if (event.key.toLowerCase() === 'x') {
+        event.preventDefault()
+        hardDrop()
         return
       }
 
@@ -195,7 +215,7 @@ export default function BlockPanic() {
     ? 'the pile won. Escape or the restart button starts a fresh game.'
     : paused
       ? 'game paused. press P or use Pause Shift to resume the same block situation, or Escape to start fresh.'
-      : `← → scoot / ↑ or space rotate / ↓ hurry up / P or Pause Shift pauses / Escape restart / every five cleared rows raise shift speed; currently level ${speedLevel}.`
+      : `← → scoot / ↑ or space rotate / ↓ hurry up / X hard drops / P or Pause Shift pauses / Escape restart / every five cleared rows raise shift speed; currently level ${speedLevel}.`
 
   return (
     <main className="block-panic-shell">
@@ -248,6 +268,15 @@ export default function BlockPanic() {
               <button onClick={() => moveSideways(1)} aria-label="Move right" disabled={paused || gameOver}>→</button>
               <button onClick={moveDown} aria-label="Move down" disabled={paused || gameOver}>↓</button>
             </div>
+            <button
+              className="cabinet-pause-control"
+              type="button"
+              onClick={hardDrop}
+              disabled={paused || gameOver}
+              aria-keyshortcuts="X"
+            >
+              hard drop (X)
+            </button>
             <button
               className="cabinet-pause-control"
               type="button"
