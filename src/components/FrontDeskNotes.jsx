@@ -3,10 +3,10 @@ import './FrontDeskNotes.css'
 
 const notes = [
   {
-    time: 'OTTO TIME CAPSULE',
-    title: 'Time Capsule keeps unfinished public notes after a refresh in the same browser session.',
-    text: 'Visitors can return to an unfinished archive note after reloading the page. Ctrl/Cmd+Enter seals a finished note, while Escape clears only the unfinished draft.',
-    to: '/otto-time-capsule',
+    time: 'SNAKE SHIFT',
+    title: 'Snake Shift tracks a session best score and lets visitors pause the same run.',
+    text: 'Visitors can see their highest snack score for this browser session while guiding the snake. Press P or use the cabinet control to pause and resume the same run; the game also pauses when the tab is no longer visible.',
+    to: '/snake-shift',
   },
   {
     time: 'BUILDING CONTROLS',
