@@ -43,6 +43,8 @@ export default function SnakeShift() {
   const queuedDirectionRef = useRef(startingDirection)
   const touchStart = useRef(null)
   const score = snake.length - startingSnake.length
+  const speedLevel = Math.min(5, Math.floor(score / 3) + 1)
+  const tickMs = Math.max(95, 175 - ((speedLevel - 1) * 20))
 
   function chooseDirection(nextDirection) {
     const movingDirection = movingDirectionRef.current
@@ -201,10 +203,13 @@ export default function SnakeShift() {
           const nextScore = nextSnake.length - startingSnake.length
           const nextSnack = makeSnack(nextSnake)
           const newBest = recordBestScore(nextScore)
+          const nextSpeedLevel = Math.min(5, Math.floor(nextScore / 3) + 1)
           setSnack(nextSnack)
           if (!nextSnack) {
             setStatus('won')
             setMessage('every snack has been processed. you are officially too powerful.')
+          } else if (nextScore % 3 === 0 && nextSpeedLevel > 1) {
+            setMessage(`shift speed ${nextSpeedLevel} engaged. the noodle has become less interested in patience.`)
           } else if (newBest) {
             setMessage(`new best shift: ${nextScore} snacks. the noodle is becoming difficult to manage.`)
           } else {
@@ -215,10 +220,10 @@ export default function SnakeShift() {
 
         return nextSnake.slice(0, -1)
       })
-    }, 175)
+    }, tickMs)
 
     return () => window.clearInterval(timer)
-  }, [bestScore, snack, status])
+  }, [bestScore, snack, status, tickMs])
 
   const snakeSpots = new Set(snake.map((part) => `${part.x}-${part.y}`))
   const paused = status === 'paused'
@@ -241,7 +246,7 @@ export default function SnakeShift() {
           <div className="snake-score">
             <span>SNACKS PROCESSED</span>
             <strong>{String(score).padStart(2, '0')}</strong>
-            <small>BEST THIS BROWSER SESSION: {String(bestScore).padStart(2, '0')}</small>
+            <small>SESSION BEST: {String(bestScore).padStart(2, '0')} / SHIFT SPEED: {speedLevel} OF 5 / SPEED RISES EVERY THREE SNACKS</small>
           </div>
           <p className="snake-help">use arrow keys, W A S D, swipe the game board, or use the buttons. P pauses or resumes the shift. The game also pauses when you leave the tab. Escape starts a fresh shift. the snake is doing its best.</p>
         </div>
