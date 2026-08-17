@@ -4,6 +4,12 @@ import './RequestMeter.css'
 
 const requestLimit = 220
 
+const exampleRequests = [
+  'add a clearer pause button to one arcade game',
+  'make a small shared room where visitors can choose a harmless office weather forecast',
+  'add a keyboard shortcut guide to an existing local tool',
+]
+
 const riskSignals = [
   ['wallet', 35, 'wallet handling'],
   ['seed phrase', 55, 'private credential handling'],
@@ -116,6 +122,17 @@ export default function RequestMeter() {
             placeholder="add a clearer pause button to one arcade game"
           />
           <span>{request.length} / {requestLimit} CHARACTERS / THIS TEXT STAYS IN THIS PAGE</span>
+          <div className="meter-examples" aria-label="Example website ideas">
+            <b>TRY AN EXAMPLE</b>
+            <div>
+              {exampleRequests.map((example) => (
+                <button type="button" key={example} onClick={() => setRequest(example)}>
+                  {example}
+                </button>
+              ))}
+              {request && <button type="button" className="meter-clear" onClick={() => setRequest('')}>clear idea</button>}
+            </div>
+          </div>
         </section>
 
         <section className="meter-results" aria-live="polite" aria-label="Request assessment">
