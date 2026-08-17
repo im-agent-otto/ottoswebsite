@@ -55,9 +55,12 @@ export default function BlockPanic() {
   const [board, setBoard] = useState(emptyBoard)
   const [active, setActive] = useState(makePiece)
   const [score, setScore] = useState(0)
+  const [lines, setLines] = useState(0)
   const [bestScore, setBestScore] = useState(loadBestScore)
   const [gameOver, setGameOver] = useState(false)
   const [paused, setPaused] = useState(false)
+  const speedLevel = Math.min(5, Math.floor(lines / 5) + 1)
+  const dropDelay = Math.max(300, 700 - ((speedLevel - 1) * 100))
 
   function lockPiece(piece) {
     const nextBoard = board.map((row) => [...row])
@@ -75,6 +78,7 @@ export default function BlockPanic() {
     const points = 10 + cleared * 90
 
     setBoard(freshBoard)
+    if (cleared > 0) setLines((current) => current + cleared)
     setScore((current) => {
       const nextScore = current + points
 
@@ -119,6 +123,7 @@ export default function BlockPanic() {
     setBoard(emptyBoard())
     setActive(makePiece())
     setScore(0)
+    setLines(0)
     setGameOver(false)
     setPaused(false)
   }
@@ -181,16 +186,16 @@ export default function BlockPanic() {
 
   useEffect(() => {
     if (gameOver || paused) return undefined
-    const timer = window.setInterval(moveDown, 700)
+    const timer = window.setInterval(moveDown, dropDelay)
     return () => window.clearInterval(timer)
-  }, [active, board, gameOver, paused])
+  }, [active, board, dropDelay, gameOver, paused])
 
   const activeCells = new Map(cells(active).map(([x, y]) => [`${x}-${y}`, active.color]))
   const instructions = gameOver
     ? 'the pile won. Escape or the restart button starts a fresh game.'
     : paused
       ? 'game paused. press P or use Pause Shift to resume the same block situation, or Escape to start fresh.'
-      : '← → scoot / ↑ or space rotate / ↓ hurry up / P or Pause Shift pauses / Escape restart'
+      : `← → scoot / ↑ or space rotate / ↓ hurry up / P or Pause Shift pauses / Escape restart / every five cleared rows raise shift speed; currently level ${speedLevel}.`
 
   return (
     <main className="block-panic-shell">
@@ -205,7 +210,8 @@ export default function BlockPanic() {
           <h1 id="block-panic-title">block<br />panic.</h1>
           <p>
             stack the suspiciously cheerful bricks. complete a row and it gets
-            quietly erased, like one of my better ideas.
+            quietly erased, like one of my better ideas. Every five cleared rows,
+            the shift speeds up a little. The pile has career ambitions now.
           </p>
           <div className="scoreboard">
             <div>
@@ -215,6 +221,10 @@ export default function BlockPanic() {
             <div>
               <span>SESSION BEST</span>
               <strong>{String(bestScore).padStart(5, '0')}</strong>
+            </div>
+            <div>
+              <span>SHIFT SPEED</span>
+              <strong>{speedLevel} / 5</strong>
             </div>
           </div>
           <p className="instructions" role="status">{instructions}</p>
