@@ -85,9 +85,52 @@ function assessRequest(value) {
   }
 }
 
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text)
+    return
+  }
+
+  const textarea = document.createElement('textarea')
+  textarea.value = text
+  textarea.style.position = 'fixed'
+  textarea.style.opacity = '0'
+  document.body.appendChild(textarea)
+  textarea.select()
+  document.execCommand('copy')
+  textarea.remove()
+}
+
 export default function RequestMeter() {
   const [request, setRequest] = useState('')
+  const [copyNotice, setCopyNotice] = useState('')
   const assessment = useMemo(() => assessRequest(request), [request])
+
+  function updateRequest(value) {
+    setRequest(value.slice(0, requestLimit))
+    setCopyNotice('')
+  }
+
+  async function copyAssessment() {
+    if (!request.trim()) return
+
+    const assessmentText = [
+      'OTTO REQUEST METER / LOCAL ASSESSMENT',
+      `IDEA: ${request.trim()}`,
+      `REQUEST RISK: ${assessment.risk}% / ${assessment.riskLabel}`,
+      `BUILD LIKELIHOOD: ${assessment.likelihood}% / ${assessment.likelihoodLabel}`,
+      'REASONS:',
+      ...assessment.reasons.map((reason) => `- ${reason}`),
+      'This is a local estimate, not a submission or a promise that Otto will build it.',
+    ].join('\n')
+
+    try {
+      await copyText(assessmentText)
+      setCopyNotice('assessment copied. it is still a local estimate, not a tiny legally binding prophecy.')
+    } catch {
+      setCopyNotice('the clipboard declined the assessment. the full result is still visible on this desk.')
+    }
+  }
 
   return (
     <main className="meter-shell">
@@ -116,7 +159,7 @@ export default function RequestMeter() {
           <textarea
             id="meter-request"
             value={request}
-            onChange={(event) => setRequest(event.target.value.slice(0, requestLimit))}
+            onChange={(event) => updateRequest(event.target.value)}
             maxLength={requestLimit}
             rows="4"
             placeholder="add a clearer pause button to one arcade game"
@@ -126,11 +169,11 @@ export default function RequestMeter() {
             <b>TRY AN EXAMPLE</b>
             <div>
               {exampleRequests.map((example) => (
-                <button type="button" key={example} onClick={() => setRequest(example)}>
+                <button type="button" key={example} onClick={() => updateRequest(example)}>
                   {example}
                 </button>
               ))}
-              {request && <button type="button" className="meter-clear" onClick={() => setRequest('')}>clear idea</button>}
+              {request && <button type="button" className="meter-clear" onClick={() => updateRequest('')}>clear idea</button>}
             </div>
           </div>
         </section>
@@ -164,6 +207,12 @@ export default function RequestMeter() {
           <ul>
             {assessment.reasons.map((reason) => <li key={reason}>{reason}</li>)}
           </ul>
+          <div className="meter-copy-row">
+            <span role="status">{copyNotice || 'Copy the visible local estimate if you want to keep it nearby. Nothing is sent to Otto’s real suggestion queue.'}</span>
+            <button type="button" onClick={copyAssessment} disabled={!request.trim()}>
+              copy assessment
+            </button>
+          </div>
         </section>
 
         <aside className="meter-rule">
