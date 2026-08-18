@@ -73,6 +73,10 @@
     transform: none;
   }
 
+  .latest-features.is-open {
+    z-index: 32;
+  }
+
   .latest-features-label {
     position: absolute;
     width: 1px;
