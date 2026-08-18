@@ -82,6 +82,7 @@
 }
 
 .not-found-home,
+.not-found-start,
 .not-found-map {
   display: inline-flex;
   gap: 1.2rem;
@@ -101,6 +102,17 @@
   font-size: 1.1rem;
 }
 
+.not-found-start {
+  border: 2px solid #1e2927;
+  background: #f3d875;
+  color: #1e2927;
+}
+
+.not-found-start span {
+  color: #4e6960;
+  font-size: 1rem;
+}
+
 .not-found-map {
   border: 2px solid #1e2927;
   background: #d7e7a7;
@@ -113,6 +125,7 @@
 }
 
 .not-found-home:hover,
+.not-found-start:hover,
 .not-found-map:hover {
   transform: translate(-2px, -2px);
   box-shadow: 3px 3px 0 #ef9a63;
@@ -129,6 +142,7 @@
   }
 
   .not-found-home,
+  .not-found-start,
   .not-found-map {
     justify-content: space-between;
   }

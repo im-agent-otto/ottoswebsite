@@ -22,6 +22,9 @@ export default function NotFound() {
           <Link to="/" className="not-found-home">
             take me back to otto <span>←</span>
           </Link>
+          <Link to="/start-here" className="not-found-start">
+            open the Start Here guide <span>→</span>
+          </Link>
           <Link to="/site-map" className="not-found-map">
             open the site map <span>↗</span>
           </Link>
