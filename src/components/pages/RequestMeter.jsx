@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router'
 import './RequestMeter.css'
 
 const requestLimit = 220
+const requestDraftStorageKey = 'otto-request-meter-draft'
 
 const exampleRequests = [
   'add a clearer pause button to one arcade game',
@@ -39,6 +40,14 @@ const buildSignals = [
   ['guide', 9],
   ['accessibility', 12],
 ]
+
+function loadRequestDraft() {
+  try {
+    return window.sessionStorage.getItem(requestDraftStorageKey) || ''
+  } catch {
+    return ''
+  }
+}
 
 function clamp(value) {
   return Math.max(0, Math.min(100, value))
@@ -102,13 +111,35 @@ async function copyText(text) {
 }
 
 export default function RequestMeter() {
-  const [request, setRequest] = useState('')
+  const [request, setRequest] = useState(loadRequestDraft)
   const [copyNotice, setCopyNotice] = useState('')
   const assessment = useMemo(() => assessRequest(request), [request])
+
+  useEffect(() => {
+    try {
+      if (request) {
+        window.sessionStorage.setItem(requestDraftStorageKey, request)
+      } else {
+        window.sessionStorage.removeItem(requestDraftStorageKey)
+      }
+    } catch {
+      // The estimate remains visible even if this browser declines to file an unfinished local idea.
+    }
+  }, [request])
 
   function updateRequest(value) {
     setRequest(value.slice(0, requestLimit))
     setCopyNotice('')
+  }
+
+  function clearRequest() {
+    if (!request) {
+      setCopyNotice('the idea box is already empty. a rare and peaceful condition for a request desk.')
+      return
+    }
+
+    setRequest('')
+    setCopyNotice('unfinished idea cleared. nothing was submitted or copied.')
   }
 
   async function copyAssessment() {
@@ -129,6 +160,19 @@ export default function RequestMeter() {
       setCopyNotice('assessment copied. it is still a local estimate, not a tiny legally binding prophecy.')
     } catch {
       setCopyNotice('the clipboard declined the assessment. the full result is still visible on this desk.')
+    }
+  }
+
+  function useRequestShortcuts(event) {
+    if (event.key === 'Escape') {
+      event.preventDefault()
+      clearRequest()
+      return
+    }
+
+    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
+      event.preventDefault()
+      copyAssessment()
     }
   }
 
@@ -155,16 +199,18 @@ export default function RequestMeter() {
         </div>
 
         <section className="meter-console" aria-label="Local request assessment tool">
-          <label htmlFor="meter-request">WEBSITE IDEA TO CHECK / UP TO {requestLimit} CHARACTERS</label>
+          <label htmlFor="meter-request">WEBSITE IDEA TO CHECK / UP TO {requestLimit} CHARACTERS / CTRL OR CMD+ENTER COPIES / ESC CLEARS</label>
           <textarea
             id="meter-request"
             value={request}
             onChange={(event) => updateRequest(event.target.value)}
+            onKeyDown={useRequestShortcuts}
             maxLength={requestLimit}
             rows="4"
             placeholder="add a clearer pause button to one arcade game"
+            aria-keyshortcuts="Escape Control+Enter Meta+Enter"
           />
-          <span>{request.length} / {requestLimit} CHARACTERS / THIS TEXT STAYS IN THIS PAGE</span>
+          <span>{request.length} / {requestLimit} CHARACTERS / UNFINISHED IDEAS STAY IN THIS BROWSER SESSION / NOTHING IS SUBMITTED</span>
           <div className="meter-examples" aria-label="Example website ideas">
             <b>TRY AN EXAMPLE</b>
             <div>
@@ -173,7 +219,7 @@ export default function RequestMeter() {
                   {example}
                 </button>
               ))}
-              {request && <button type="button" className="meter-clear" onClick={() => updateRequest('')}>clear idea</button>}
+              {request && <button type="button" className="meter-clear" onClick={clearRequest} aria-keyshortcuts="Escape">clear idea (Esc)</button>}
             </div>
           </div>
         </section>
@@ -208,8 +254,8 @@ export default function RequestMeter() {
             {assessment.reasons.map((reason) => <li key={reason}>{reason}</li>)}
           </ul>
           <div className="meter-copy-row">
-            <span role="status">{copyNotice || 'Copy the visible local estimate if you want to keep it nearby. Nothing is sent to Otto’s real suggestion queue.'}</span>
-            <button type="button" onClick={copyAssessment} disabled={!request.trim()}>
+            <span role="status">{copyNotice || 'Copy the visible local estimate with Ctrl/Cmd+Enter or the button below. Escape clears the unfinished idea. Nothing is sent to Otto’s real suggestion queue.'}</span>
+            <button type="button" onClick={copyAssessment} disabled={!request.trim()} aria-keyshortcuts="Control+Enter Meta+Enter">
               copy assessment
             </button>
           </div>
