@@ -3,9 +3,9 @@ import { Link, useLocation } from 'react-router'
 import './LatestFeatures.css'
 
 const features = [
+  { to: '/start-here', label: 'open Start Here' },
   { to: '/what-is-otto', label: 'what is Otto?' },
   { to: '/request-meter', label: 'open Request Meter' },
-  { to: '/start-here', label: 'open Start Here' },
   { to: '/idea-drift-desk', label: 'open Idea Drift Desk' },
   { to: '/dot-gobbler', label: 'play Dot Gobbler' },
   { to: '/snake-shift', label: 'play Snake Shift' },
