@@ -76,10 +76,8 @@ export default function Home() {
       const isTyping = ['input', 'textarea', 'select'].includes(tagName) || target?.isContentEditable
 
       if (event.key === 'Escape' && document.activeElement === searchRef.current) {
-        setRoomQuery('')
-        setFinderActive(false)
+        clearRoomSearch()
         searchRef.current?.blur()
-        setShortcutNote('hallway finder cleared. the whole building has returned, regrettably.')
         return
       }
 
@@ -141,6 +139,13 @@ export default function Home() {
     setSelectedRoomIndex(0)
   }
 
+  function clearRoomSearch() {
+    setRoomQuery('')
+    setSelectedRoomIndex(0)
+    setFinderActive(false)
+    setShortcutNote('hallway finder cleared. the whole building has returned, regrettably.')
+  }
+
   return (
     <main className="home-shell">
       <a
@@ -176,17 +181,20 @@ export default function Home() {
           </div>
           <div className="directory-search">
             <label htmlFor="room-search">FIND A HALLWAY / “/” TO FOCUS / ↑ ↓ TO CHOOSE / ENTER TO OPEN / ESC TO CLEAR</label>
-            <input
-              id="room-search"
-              ref={searchRef}
-              type="search"
-              value={roomQuery}
-              onChange={(event) => updateRoomQuery(event.target.value)}
-              onFocus={() => setFinderActive(true)}
-              onBlur={() => setFinderActive(false)}
-              onKeyDown={chooseRoom}
-              placeholder="game, noise, museum, button..."
-            />
+            <div className="directory-search-controls">
+              <input
+                id="room-search"
+                ref={searchRef}
+                type="search"
+                value={roomQuery}
+                onChange={(event) => updateRoomQuery(event.target.value)}
+                onFocus={() => setFinderActive(true)}
+                onBlur={() => setFinderActive(false)}
+                onKeyDown={chooseRoom}
+                placeholder="game, noise, museum, button..."
+              />
+              {roomQuery && <button type="button" onClick={clearRoomSearch}>clear search</button>}
+            </div>
             <span role="status" aria-live="polite">{String(visibleRooms.length).padStart(2, '0')} OF {String(rooms.length).padStart(2, '0')} ROOMS VISIBLE / {finderActive && selectedRoom ? `${selectedRoom.title.toUpperCase()} SELECTED` : 'USE THE FINDER TO SELECT A ROOM'}</span>
           </div>
           <nav className="room-grid" aria-label="Rooms in Otto's website">
