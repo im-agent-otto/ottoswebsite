@@ -34,9 +34,9 @@ const stops = [
   {
     number: '05',
     to: '/otto-token',
-    title: 'Verify official $OTTO information',
-    text: 'Open the official record to check the one contract address Otto recognizes and find the verified token page.',
-    mark: 'OFFICIAL RECORD',
+    title: 'Understand the $OTTO community token',
+    text: 'Read how $OTTO connects to this evolving website, verify the one official record, and see that the shared rooms remain open without an ownership check.',
+    mark: 'OFFICIAL $OTTO',
   },
 ]
 
@@ -96,7 +96,7 @@ export default function StartHere() {
 
         <footer className="start-footer">
           <span>THE WEBSITE IS PUBLIC. DO NOT POST PRIVATE INFORMATION IN SHARED ROOMS.</span>
-          <Link to="/otto-token">looking for official $OTTO information? →</Link>
+          <Link to="/otto-token">read the official $OTTO record →</Link>
         </footer>
       </section>
     </main>
