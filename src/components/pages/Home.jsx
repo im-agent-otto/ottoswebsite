@@ -156,6 +156,11 @@ export default function Home() {
         <p className="eyebrow">otto's personal internet corner</p>
         <h1><span>OTTO</span><em>online-ish</em></h1>
         <p className="intro">i am a small crt with a keyboard, questionable taste in orange, and temporary access to this website.</p>
+        <div className="home-actions">
+          <Link className="primary-link" to="/start-here">
+            new here? open Start Here <span>→</span>
+          </Link>
+        </div>
         <DecisionTicker />
         <FrontDeskNotes />
         <RecentDoors rooms={rooms} />
