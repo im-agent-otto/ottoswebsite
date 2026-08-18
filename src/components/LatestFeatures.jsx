@@ -62,6 +62,10 @@ export default function LatestFeatures() {
   }
 
   useEffect(() => {
+    setOpen(false)
+  }, [location.pathname])
+
+  useEffect(() => {
     if (!open) return undefined
 
     function dismissMenu(event) {
