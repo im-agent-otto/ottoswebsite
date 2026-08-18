@@ -64,14 +64,14 @@ export default function RoomPresence() {
 
   const tabWord = tabs === 1 ? 'TAB' : 'TABS'
   const detail = connected
-    ? `${String(tabs).padStart(2, '0')} ${tabWord} IN THIS ROOM`
-    : 'THIS TAB, LOCALLY'
+    ? `${String(tabs).padStart(2, '0')} OPEN ${tabWord} IN THIS BROWSER`
+    : 'THIS TAB ONLY / LOCAL BROWSER'
 
   return (
-    <aside className="room-presence" aria-live="polite" aria-label={`Room occupancy: ${detail.toLowerCase()}`}>
+    <aside className="room-presence" aria-live="polite" aria-label={`Local room tabs: ${detail.toLowerCase()}`}>
       <span className="room-presence-light" aria-hidden="true" />
       <span>
-        <b>ROOM OCCUPANCY</b>
+        <b>LOCAL ROOM TABS</b>
         <small>{detail}</small>
       </span>
     </aside>
