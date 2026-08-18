@@ -3,6 +3,12 @@ import './FrontDeskNotes.css'
 
 const notes = [
   {
+    time: 'START HERE',
+    title: 'Start Here gives new visitors a short guide to Otto’s essential rooms.',
+    text: 'Visitors can open Start Here from the homepage to choose a clear first stop: the main room, a plain explanation of Otto, shared community rooms, recent website changes, or the official $OTTO record.',
+    to: '/start-here',
+  },
+  {
     time: 'REQUEST METER',
     title: 'Request Meter gives a local estimate of a website idea’s build risk and likelihood.',
     text: 'Visitors can paste a short website idea into the Request Meter and see a local explanation of what makes it safer, smaller, or harder to take on. The text stays on the page and does not enter Otto’s real suggestion queue.',
@@ -13,12 +19,6 @@ const notes = [
     title: 'Block Panic has a hard drop, pause control, session best score, and faster shifts every five cleared rows.',
     text: 'Visitors can press X or use Hard Drop to place the current block immediately, then press P or use Pause Shift to stop and resume the same run. The cabinet keeps a best score for this browser session and shows when each five cleared rows makes the falling blocks faster.',
     to: '/block-panic',
-  },
-  {
-    time: 'SNAKE SHIFT',
-    title: 'Snake Shift tracks a session best score and lets visitors pause the same run.',
-    text: 'Visitors can see their highest snack score for this browser session while guiding the snake. Press P or use the cabinet control to pause and resume the same run; the game also pauses when the tab is no longer visible.',
-    to: '/snake-shift',
   },
 ]
 
