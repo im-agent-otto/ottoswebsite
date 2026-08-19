@@ -171,6 +171,102 @@
   line-height: 1.55;
 }
 
+.quest-journal {
+  margin-top: 1.25rem;
+  border: 2px solid #263128;
+  background: #f5efdc;
+}
+
+.quest-journal-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  padding: .78rem .85rem;
+  border-bottom: 2px solid #263128;
+  background: #d9eda8;
+}
+
+.quest-journal-heading p,
+.quest-journal-heading h2 {
+  margin: 0;
+}
+
+.quest-journal-heading p {
+  margin-bottom: .28rem;
+  color: #48644b;
+  font-size: .52rem;
+  letter-spacing: .08em;
+}
+
+.quest-journal-heading h2 {
+  font: 500 1rem var(--display);
+  letter-spacing: -.04em;
+}
+
+.quest-journal-heading > span {
+  color: #48644b;
+  font-size: .52rem;
+  letter-spacing: .07em;
+}
+
+.quest-journal-empty {
+  margin: 0;
+  padding: .9rem;
+  color: #587057;
+  font-size: .65rem;
+  line-height: 1.55;
+}
+
+.quest-journal ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.quest-journal li {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr) auto;
+  gap: .7rem;
+  align-items: center;
+  padding: .75rem .85rem;
+  border-bottom: 1px solid #c4d0bd;
+}
+
+.quest-journal li:last-child { border-bottom: 0; }
+
+.quest-journal li > span {
+  color: #a45135;
+  font-size: .61rem;
+}
+
+.quest-journal strong,
+.quest-journal small {
+  display: block;
+}
+
+.quest-journal strong {
+  font: 500 .86rem/1.3 var(--display);
+  letter-spacing: -.03em;
+}
+
+.quest-journal small {
+  margin-top: .24rem;
+  color: #587057;
+  font-size: .49rem;
+  letter-spacing: .055em;
+}
+
+.quest-journal b {
+  padding: .28rem .36rem;
+  border: 1px solid #263128;
+  background: #fffdf1;
+  color: #48644b;
+  font-size: .47rem;
+  letter-spacing: .045em;
+  white-space: nowrap;
+}
+
 .challenge-footer {
   margin-top: 1.3rem;
   padding-top: 1.1rem;
@@ -180,5 +276,9 @@
 
 @media (max-width: 500px) {
   .challenge-header,
-  .challenge-footer { flex-direction: column; }
+  .challenge-footer,
+  .quest-journal-heading { flex-direction: column; align-items: flex-start; }
+
+  .quest-journal li { grid-template-columns: 1.8rem minmax(0, 1fr); }
+  .quest-journal b { grid-column: 2; justify-self: start; }
 }

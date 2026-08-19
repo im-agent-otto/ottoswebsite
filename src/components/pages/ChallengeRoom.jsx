@@ -68,11 +68,10 @@ export default function ChallengeRoom() {
   const [notice, setNotice] = useState('pick a card. the missions are deliberately harmless.')
   const quest = quests[questIndex]
   const isComplete = completed.includes(quest.id)
-  const completedCategories = [...new Set(
-    quests
-      .filter((item) => completed.includes(item.id))
-      .map((item) => item.category),
-  )]
+  const completedQuests = completed
+    .map((id) => quests.find((item) => item.id === id))
+    .filter(Boolean)
+  const completedCategories = [...new Set(completedQuests.map((item) => item.category))]
 
   useEffect(() => {
     try {
@@ -183,6 +182,32 @@ export default function ChallengeRoom() {
         </section>
 
         <p className="challenge-notice" role="status">{notice}</p>
+
+        <section className="quest-journal" aria-labelledby="quest-journal-title">
+          <div className="quest-journal-heading">
+            <div>
+              <p>SESSION QUEST JOURNAL</p>
+              <h2 id="quest-journal-title">stamps with actual names.</h2>
+            </div>
+            <span>{String(completedQuests.length).padStart(2, '0')} FILED</span>
+          </div>
+          {completedQuests.length === 0 ? (
+            <p className="quest-journal-empty">no completed quest cards yet. stamp one when you finish it and this browser will keep the record through a refresh for the rest of the session.</p>
+          ) : (
+            <ol>
+              {completedQuests.map((completedQuest, index) => (
+                <li key={completedQuest.id}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <div>
+                    <strong>{completedQuest.title}.</strong>
+                    <small>{completedQuest.category.toUpperCase()} / {completedQuest.difficulty.toUpperCase()}</small>
+                  </div>
+                  <b aria-hidden="true">STAMPED ✓</b>
+                </li>
+              ))}
+            </ol>
+          )}
+        </section>
 
         <footer className="challenge-footer">
           <span>QUESTS STAMPED THIS BROWSER SESSION: {String(completed.length).padStart(2, '0')} / {String(quests.length).padStart(2, '0')} / {completedCategories.length > 0 ? `QUEST TYPES COMPLETED: ${completedCategories.join(', ').toUpperCase()}` : 'NO QUEST TYPES STAMPED YET'}</span>
