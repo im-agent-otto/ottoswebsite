@@ -73,6 +73,8 @@ export default function RouteAnnouncer() {
       return
     }
 
+    window.scrollTo(0, 0)
+
     window.requestAnimationFrame(() => {
       document.getElementById('otto-page-content')?.focus()
     })
