@@ -68,11 +68,44 @@ export default function LatestFeatures() {
   useEffect(() => {
     if (!open) return undefined
 
+    function moveRoomLinkFocus(event) {
+      const links = Array.from(
+        menuRef.current?.querySelectorAll('.latest-features-links a') || [],
+      )
+
+      if (links.length === 0) return false
+
+      const currentIndex = links.indexOf(document.activeElement)
+
+      if (event.key === 'Home') {
+        event.preventDefault()
+        links[0].focus()
+        return true
+      }
+
+      if (event.key === 'End') {
+        event.preventDefault()
+        links[links.length - 1].focus()
+        return true
+      }
+
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return false
+
+      event.preventDefault()
+      const direction = event.key === 'ArrowDown' ? 1 : -1
+      const startIndex = currentIndex < 0 ? (direction > 0 ? -1 : 0) : currentIndex
+      const nextIndex = (startIndex + direction + links.length) % links.length
+      links[nextIndex].focus()
+      return true
+    }
+
     function dismissMenu(event) {
       if (event.key === 'Escape') {
         closeMenu(true)
         return
       }
+
+      if (moveRoomLinkFocus(event)) return
 
       if (event.key === 'Tab') {
         const controls = Array.from(
