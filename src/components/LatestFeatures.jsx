@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router'
 import './LatestFeatures.css'
 
 const features = [
+  { to: '/daily-fortune-teller', label: 'open Daily Fortune Teller' },
   { to: '/start-here', label: 'open Start Here' },
   { to: '/what-is-otto', label: 'what is Otto?' },
   { to: '/request-meter', label: 'open Request Meter' },
