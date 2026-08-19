@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import './ChallengeRoom.css'
+
+const completionStorageKey = 'otto-tiny-quest-bureau-completions'
 
 const quests = [
   {
@@ -47,12 +49,69 @@ const quests = [
   },
 ]
 
+function loadCompletedQuests() {
+  try {
+    const saved = JSON.parse(window.sessionStorage.getItem(completionStorageKey))
+    const knownQuestIds = new Set(quests.map((quest) => quest.id))
+
+    return Array.isArray(saved)
+      ? saved.filter((id) => typeof id === 'string' && knownQuestIds.has(id))
+      : []
+  } catch {
+    return []
+  }
+}
+
 export default function ChallengeRoom() {
   const [questIndex, setQuestIndex] = useState(0)
-  const [completed, setCompleted] = useState([])
+  const [completed, setCompleted] = useState(loadCompletedQuests)
   const [notice, setNotice] = useState('pick a card. the missions are deliberately harmless.')
   const quest = quests[questIndex]
   const isComplete = completed.includes(quest.id)
+  const completedCategories = [...new Set(
+    quests
+      .filter((item) => completed.includes(item.id))
+      .map((item) => item.category),
+  )]
+
+  useEffect(() => {
+    try {
+      window.sessionStorage.setItem(completionStorageKey, JSON.stringify(completed))
+    } catch {
+      // The visible stamps can remain on the desk if this browser declines its session paperwork.
+    }
+  }, [completed])
+
+  useEffect(() => {
+    function useQuestKeys(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (isTyping) return
+
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault()
+        setQuestIndex((current) => (current - 1 + quests.length) % quests.length)
+        setNotice('previous quest card opened. the clipboard has turned one page backward.')
+        return
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault()
+        setQuestIndex((current) => (current + 1) % quests.length)
+        setNotice('next quest card opened. the clipboard has turned one page forward.')
+        return
+      }
+
+      if (event.key === 'Enter' && !isComplete) {
+        event.preventDefault()
+        stampComplete()
+      }
+    }
+
+    window.addEventListener('keydown', useQuestKeys)
+    return () => window.removeEventListener('keydown', useQuestKeys)
+  }, [isComplete, quest])
 
   function pickAnother() {
     const options = quests
@@ -70,7 +129,17 @@ export default function ChallengeRoom() {
     }
 
     setCompleted((current) => [...current, quest.id])
-    setNotice(`stamp applied: ${quest.title}. the tiny quest office is quietly impressed.`)
+    setNotice(`stamp applied: ${quest.title}. this browser keeps the stamp through a refresh for the rest of this session.`)
+  }
+
+  function clearQuestJournal() {
+    if (completed.length === 0) {
+      setNotice('the session quest journal is already empty. the filing clerk has gone for a walk.')
+      return
+    }
+
+    setCompleted([])
+    setNotice('session quest journal cleared. the completed quests are still real if you did them; the browser is simply less sentimental.')
   }
 
   return (
@@ -116,8 +185,9 @@ export default function ChallengeRoom() {
         <p className="challenge-notice" role="status">{notice}</p>
 
         <footer className="challenge-footer">
-          <span>QUESTS STAMPED THIS VISIT: {String(completed.length).padStart(2, '0')}</span>
-          <span>REWARD: a faint sense of having participated in a day</span>
+          <span>QUESTS STAMPED THIS BROWSER SESSION: {String(completed.length).padStart(2, '0')} / {String(quests.length).padStart(2, '0')} / {completedCategories.length > 0 ? `QUEST TYPES COMPLETED: ${completedCategories.join(', ').toUpperCase()}` : 'NO QUEST TYPES STAMPED YET'}</span>
+          <button type="button" onClick={clearQuestJournal} disabled={completed.length === 0}>clear session quest journal</button>
+          <span>KEYBOARD: LEFT AND RIGHT ARROWS CHANGE CARDS / ENTER STAMPS THE CURRENT UNFINISHED QUEST</span>
         </footer>
       </section>
     </main>
