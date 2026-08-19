@@ -72,6 +72,9 @@ export default function ChallengeRoom() {
     .map((id) => quests.find((item) => item.id === id))
     .filter(Boolean)
   const completedCategories = [...new Set(completedQuests.map((item) => item.category))]
+  const unfinishedQuestIndexes = quests
+    .map((item, index) => (completed.includes(item.id) ? null : index))
+    .filter((index) => index !== null)
 
   useEffect(() => {
     try {
@@ -80,6 +83,17 @@ export default function ChallengeRoom() {
       // The visible stamps can remain on the desk if this browser declines its session paperwork.
     }
   }, [completed])
+
+  function nextUnfinishedQuest() {
+    if (unfinishedQuestIndexes.length === 0) {
+      setNotice('every quest card is stamped for this browser session. the clipboard is genuinely impressed.')
+      return
+    }
+
+    const nextIndex = unfinishedQuestIndexes.find((index) => index > questIndex) ?? unfinishedQuestIndexes[0]
+    setQuestIndex(nextIndex)
+    setNotice(`next unfinished quest opened: ${quests[nextIndex].title}. the clipboard skipped the completed paperwork.`)
+  }
 
   useEffect(() => {
     function useQuestKeys(event) {
@@ -102,6 +116,12 @@ export default function ChallengeRoom() {
         return
       }
 
+      if (event.key.toLowerCase() === 'n') {
+        event.preventDefault()
+        nextUnfinishedQuest()
+        return
+      }
+
       if (event.key === 'Enter' && !isComplete) {
         event.preventDefault()
         stampComplete()
@@ -110,15 +130,26 @@ export default function ChallengeRoom() {
 
     window.addEventListener('keydown', useQuestKeys)
     return () => window.removeEventListener('keydown', useQuestKeys)
-  }, [isComplete, quest])
+  }, [completed, isComplete, quest, questIndex, unfinishedQuestIndexes])
 
   function pickAnother() {
-    const options = quests
-      .map((item, index) => index)
-      .filter((index) => index !== questIndex)
+    const unfinishedOptions = unfinishedQuestIndexes.filter((index) => index !== questIndex)
+    const options = unfinishedOptions.length > 0
+      ? unfinishedOptions
+      : quests
+        .map((item, index) => index)
+        .filter((index) => index !== questIndex)
     const nextIndex = options[Math.floor(Math.random() * options.length)]
+
+    if (nextIndex === undefined) {
+      setNotice('there is only one quest card left on the clipboard, and it is already open.')
+      return
+    }
+
     setQuestIndex(nextIndex)
-    setNotice('new card deployed. the clipboard has no idea where you are, which is probably for the best.')
+    setNotice(unfinishedOptions.length > 0
+      ? 'new unfinished card deployed. the clipboard skipped the completed paperwork.'
+      : 'new card deployed. every quest is already stamped, so the clipboard is now revisiting its favorites.')
   }
 
   function stampComplete() {
@@ -176,6 +207,9 @@ export default function ChallengeRoom() {
               <button type="button" className="stamp-button" onClick={stampComplete}>
                 {isComplete ? 'STAMPED ✓' : 'stamp this done'}
               </button>
+              <button type="button" className="another-button" onClick={nextUnfinishedQuest} aria-keyshortcuts="N">
+                next unfinished quest (N)
+              </button>
               <button type="button" className="another-button" onClick={pickAnother}>another card ↻</button>
             </div>
           </div>
@@ -212,7 +246,7 @@ export default function ChallengeRoom() {
         <footer className="challenge-footer">
           <span>QUESTS STAMPED THIS BROWSER SESSION: {String(completed.length).padStart(2, '0')} / {String(quests.length).padStart(2, '0')} / {completedCategories.length > 0 ? `QUEST TYPES COMPLETED: ${completedCategories.join(', ').toUpperCase()}` : 'NO QUEST TYPES STAMPED YET'}</span>
           <button type="button" onClick={clearQuestJournal} disabled={completed.length === 0}>clear session quest journal</button>
-          <span>KEYBOARD: LEFT AND RIGHT ARROWS CHANGE CARDS / ENTER STAMPS THE CURRENT UNFINISHED QUEST</span>
+          <span>KEYBOARD: LEFT AND RIGHT ARROWS CHANGE CARDS / N OPENS THE NEXT UNFINISHED QUEST / ENTER STAMPS THE CURRENT UNFINISHED QUEST</span>
         </footer>
       </section>
     </main>
