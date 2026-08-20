@@ -97,7 +97,16 @@
 .fortune-controls { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 1rem; }
 .fortune-controls button { padding: .68rem .75rem; border: 2px solid #29243b; background: #29243b; color: #fffdf5; font: .61rem var(--mono); }
 .fortune-controls button + button { background: #fffdf5; color: #29243b; }
+.fortune-controls .fortune-copy-button { background: #d9efa4; color: #29243b; }
 .fortune-controls button:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 #a24b60; }
+
+.fortune-copy-notice {
+  min-height: 2.4em;
+  margin: .8rem 0 0;
+  color: #625b7a;
+  font-size: .58rem;
+  line-height: 1.55;
+}
 
 .fortune-note { margin-top: 1.3rem; padding: .9rem; border: 2px dashed #b7abca; background: #d9efa4; color: #29243b; }
 .fortune-note p { margin: 0 0 .4rem; color: #4e6d49; font-size: .54rem; letter-spacing: .08em; }

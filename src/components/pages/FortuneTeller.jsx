@@ -61,21 +61,58 @@ function dateLabel() {
   }).format(new Date())
 }
 
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text)
+    return
+  }
+
+  const textarea = document.createElement('textarea')
+  textarea.value = text
+  textarea.style.position = 'fixed'
+  textarea.style.opacity = '0'
+  document.body.appendChild(textarea)
+  textarea.select()
+  document.execCommand('copy')
+  textarea.remove()
+}
+
 export default function FortuneTeller() {
   const dailyIndex = useMemo(() => dayNumber() % fortunes.length, [])
   const [fortuneIndex, setFortuneIndex] = useState(dailyIndex)
   const [draws, setDraws] = useState(0)
+  const [copyNotice, setCopyNotice] = useState('')
   const fortune = fortunes[fortuneIndex]
   const isDailyFortune = fortuneIndex === dailyIndex && draws === 0
 
   function drawAnotherFortune() {
     setFortuneIndex((current) => (current + 1) % fortunes.length)
     setDraws((current) => current + 1)
+    setCopyNotice('')
   }
 
   function returnToDailyFortune() {
     setFortuneIndex(dailyIndex)
     setDraws(0)
+    setCopyNotice('')
+  }
+
+  async function copyFortune() {
+    const cardLabel = isDailyFortune ? `Daily Fortune / ${dateLabel()}` : `Extra Fortune Draw / ${draws}`
+    const fortuneText = [
+      cardLabel,
+      `Omen: ${fortune.omen}`,
+      `Forecast: ${fortune.forecast}`,
+      `Desk advice: ${fortune.advice}`,
+      'From Otto’s Daily Fortune Teller. Decorative mysticism only.',
+    ].join('\n')
+
+    try {
+      await copyText(fortuneText)
+      setCopyNotice('fortune copied. the clipboard has accepted one small omen.')
+    } catch {
+      setCopyNotice('the clipboard declined the omen. the card is still visible above.')
+    }
   }
 
   useEffect(() => {
@@ -94,12 +131,18 @@ export default function FortuneTeller() {
       if (event.key.toLowerCase() === 'd') {
         event.preventDefault()
         returnToDailyFortune()
+        return
+      }
+
+      if (event.key.toLowerCase() === 'c') {
+        event.preventDefault()
+        copyFortune()
       }
     }
 
     window.addEventListener('keydown', useFortuneKeys)
     return () => window.removeEventListener('keydown', useFortuneKeys)
-  }, [dailyIndex])
+  }, [dailyIndex, draws, fortune, isDailyFortune])
 
   return (
     <main className="fortune-shell">
@@ -135,12 +178,14 @@ export default function FortuneTeller() {
           <div className="fortune-controls">
             <button type="button" onClick={drawAnotherFortune} aria-keyshortcuts="N">draw another card (N) ↻</button>
             {!isDailyFortune && <button type="button" onClick={returnToDailyFortune} aria-keyshortcuts="D">return to today&apos;s card (D)</button>}
+            <button type="button" onClick={copyFortune} className="fortune-copy-button" aria-keyshortcuts="C">copy fortune (C)</button>
           </div>
+          <p className="fortune-copy-notice" role="status">{copyNotice || 'Copy the current omen, forecast, and desk advice with C or the copy button.'}</p>
         </section>
 
         <aside className="fortune-note">
           <p>HOW THE LITTLE ORACLE WORKS</p>
-          <strong>Today&apos;s first fortune is calculated in this browser from the calendar date. Extra cards only change this visit. Press N to draw another card or D to return to today&apos;s card. The machine is decorative, but the suggestion to drink water may still be solid.</strong>
+          <strong>Today&apos;s first fortune is calculated in this browser from the calendar date. Extra cards only change this visit. Press N to draw another card, D to return to today&apos;s card, or C to copy the card&apos;s text. The machine is decorative, but the suggestion to drink water may still be solid.</strong>
         </aside>
 
         <footer className="fortune-footer">
