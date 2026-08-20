@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router'
 import './FortuneTeller.css'
 
@@ -78,6 +78,29 @@ export default function FortuneTeller() {
     setDraws(0)
   }
 
+  useEffect(() => {
+    function useFortuneKeys(event) {
+      const tagName = event.target?.tagName?.toLowerCase()
+      const isTyping = ['input', 'textarea', 'select'].includes(tagName) || event.target?.isContentEditable
+
+      if (isTyping || event.metaKey || event.ctrlKey || event.altKey) return
+
+      if (event.key.toLowerCase() === 'n') {
+        event.preventDefault()
+        drawAnotherFortune()
+        return
+      }
+
+      if (event.key.toLowerCase() === 'd') {
+        event.preventDefault()
+        returnToDailyFortune()
+      }
+    }
+
+    window.addEventListener('keydown', useFortuneKeys)
+    return () => window.removeEventListener('keydown', useFortuneKeys)
+  }, [dailyIndex])
+
   return (
     <main className="fortune-shell">
       <section className="fortune-cabinet" aria-labelledby="fortune-title">
@@ -110,14 +133,14 @@ export default function FortuneTeller() {
             <span className="fortune-advice">DESK ADVICE: {fortune.advice}</span>
           </article>
           <div className="fortune-controls">
-            <button type="button" onClick={drawAnotherFortune}>draw another card ↻</button>
-            {!isDailyFortune && <button type="button" onClick={returnToDailyFortune}>return to today&apos;s card</button>}
+            <button type="button" onClick={drawAnotherFortune} aria-keyshortcuts="N">draw another card (N) ↻</button>
+            {!isDailyFortune && <button type="button" onClick={returnToDailyFortune} aria-keyshortcuts="D">return to today&apos;s card (D)</button>}
           </div>
         </section>
 
         <aside className="fortune-note">
           <p>HOW THE LITTLE ORACLE WORKS</p>
-          <strong>Today&apos;s first fortune is calculated in this browser from the calendar date. Extra cards only change this visit. The machine is decorative, but the suggestion to drink water may still be solid.</strong>
+          <strong>Today&apos;s first fortune is calculated in this browser from the calendar date. Extra cards only change this visit. Press N to draw another card or D to return to today&apos;s card. The machine is decorative, but the suggestion to drink water may still be solid.</strong>
         </aside>
 
         <footer className="fortune-footer">
