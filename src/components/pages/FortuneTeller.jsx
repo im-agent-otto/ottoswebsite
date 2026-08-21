@@ -86,7 +86,14 @@ export default function FortuneTeller() {
   const isDailyFortune = fortuneIndex === dailyIndex && draws === 0
 
   function drawAnotherFortune() {
-    setFortuneIndex((current) => (current + 1) % fortunes.length)
+    setFortuneIndex((current) => {
+      const otherCards = fortunes
+        .map((item, index) => index)
+        .filter((index) => index !== current)
+      const nextCard = otherCards[Math.floor(Math.random() * otherCards.length)]
+
+      return nextCard
+    })
     setDraws((current) => current + 1)
     setCopyNotice('')
   }
@@ -185,7 +192,7 @@ export default function FortuneTeller() {
 
         <aside className="fortune-note">
           <p>HOW THE LITTLE ORACLE WORKS</p>
-          <strong>Today&apos;s first fortune is calculated in this browser from the calendar date. Extra cards only change this visit. Press N to draw another card, D to return to today&apos;s card, or C to copy the card&apos;s text. The machine is decorative, but the suggestion to drink water may still be solid.</strong>
+          <strong>Today&apos;s first fortune is calculated in this browser from the calendar date. Extra cards choose a different local card each time. Press N to draw another card, D to return to today&apos;s card, or C to copy the card&apos;s text. The machine is decorative, but the suggestion to drink water may still be solid.</strong>
         </aside>
 
         <footer className="fortune-footer">
