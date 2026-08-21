@@ -81,6 +81,7 @@ export default function FortuneTeller() {
   const dailyIndex = useMemo(() => dayNumber() % fortunes.length, [])
   const [fortuneIndex, setFortuneIndex] = useState(dailyIndex)
   const [draws, setDraws] = useState(0)
+  const [drawHistory, setDrawHistory] = useState([])
   const [copyNotice, setCopyNotice] = useState('')
   const fortune = fortunes[fortuneIndex]
   const isDailyFortune = fortuneIndex === dailyIndex && draws === 0
@@ -92,6 +93,11 @@ export default function FortuneTeller() {
         .filter((index) => index !== current)
       const nextCard = otherCards[Math.floor(Math.random() * otherCards.length)]
 
+      setDrawHistory((history) => [
+        { id: `${Date.now()}-${nextCard}`, index: nextCard },
+        ...history.filter((entry) => entry.index !== nextCard),
+      ].slice(0, 4))
+
       return nextCard
     })
     setDraws((current) => current + 1)
@@ -102,6 +108,12 @@ export default function FortuneTeller() {
     setFortuneIndex(dailyIndex)
     setDraws(0)
     setCopyNotice('')
+  }
+
+  function revisitFortune(entry) {
+    setFortuneIndex(entry.index)
+    setDraws((current) => Math.max(1, current))
+    setCopyNotice(`reopened ${fortunes[entry.index].omen}. the little oracle keeps a short receipt shelf for this visit.`)
   }
 
   async function copyFortune() {
@@ -188,11 +200,41 @@ export default function FortuneTeller() {
             <button type="button" onClick={copyFortune} className="fortune-copy-button" aria-keyshortcuts="C">copy fortune (C)</button>
           </div>
           <p className="fortune-copy-notice" role="status">{copyNotice || 'Copy the current omen, forecast, and desk advice with C or the copy button.'}</p>
+
+          <section className="fortune-history" aria-labelledby="fortune-history-title">
+            <div className="fortune-history-heading">
+              <div>
+                <p>THIS VISIT&apos;S EXTRA DRAWS</p>
+                <h2 id="fortune-history-title">recent cards on the desk.</h2>
+              </div>
+              <span>{String(drawHistory.length).padStart(2, '0')} KEPT NEARBY</span>
+            </div>
+            {drawHistory.length === 0 ? (
+              <p className="fortune-history-empty">no extra cards yet. draw another card and the oracle will keep a short local receipt shelf until this visit ends.</p>
+            ) : (
+              <ol>
+                {drawHistory.map((entry, index) => {
+                  const savedFortune = fortunes[entry.index]
+
+                  return (
+                    <li key={entry.id}>
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      <div>
+                        <strong>{savedFortune.omen}</strong>
+                        <small>{savedFortune.advice}</small>
+                      </div>
+                      <button type="button" onClick={() => revisitFortune(entry)}>reopen card</button>
+                    </li>
+                  )
+                })}
+              </ol>
+            )}
+          </section>
         </section>
 
         <aside className="fortune-note">
           <p>HOW THE LITTLE ORACLE WORKS</p>
-          <strong>Today&apos;s first fortune is calculated in this browser from the calendar date. Extra cards choose a different local card each time. Press N to draw another card, D to return to today&apos;s card, or C to copy the card&apos;s text. The machine is decorative, but the suggestion to drink water may still be solid.</strong>
+          <strong>Today&apos;s first fortune is calculated in this browser from the calendar date. Extra cards choose a different local card each time, and the four most recent extra draws stay on this page until the visit ends. Press N to draw another card, D to return to today&apos;s card, or C to copy the card&apos;s text. The machine is decorative, but the suggestion to drink water may still be solid.</strong>
         </aside>
 
         <footer className="fortune-footer">

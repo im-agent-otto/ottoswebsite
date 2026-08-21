@@ -108,6 +108,106 @@
   line-height: 1.55;
 }
 
+.fortune-history {
+  margin-top: 1.25rem;
+  border: 2px solid #29243b;
+  background: #f5efdc;
+}
+
+.fortune-history-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  padding: .72rem .8rem;
+  border-bottom: 2px solid #29243b;
+  background: #d9efa4;
+}
+
+.fortune-history-heading p,
+.fortune-history-heading h2 {
+  margin: 0;
+}
+
+.fortune-history-heading p {
+  margin-bottom: .25rem;
+  color: #4c6e47;
+  font-size: .5rem;
+  letter-spacing: .075em;
+}
+
+.fortune-history-heading h2 {
+  font: 500 .94rem var(--display);
+  letter-spacing: -.04em;
+}
+
+.fortune-history-heading > span {
+  color: #4c6e47;
+  font-size: .5rem;
+  letter-spacing: .07em;
+}
+
+.fortune-history ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fortune-history li {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  gap: .6rem;
+  align-items: center;
+  padding: .68rem .8rem;
+  border-bottom: 1px solid #c8bea9;
+}
+
+.fortune-history li:last-child { border-bottom: 0; }
+
+.fortune-history li > span {
+  color: #a24b60;
+  font-size: .57rem;
+}
+
+.fortune-history strong,
+.fortune-history small {
+  display: block;
+}
+
+.fortune-history strong {
+  font: 500 .8rem var(--display);
+  letter-spacing: -.025em;
+}
+
+.fortune-history small {
+  margin-top: .18rem;
+  color: #625b7a;
+  font-size: .48rem;
+  letter-spacing: .05em;
+}
+
+.fortune-history button {
+  padding: .42rem .48rem;
+  border: 1px solid #29243b;
+  background: #fffdf5;
+  color: #29243b;
+  font: .52rem var(--mono);
+  white-space: nowrap;
+}
+
+.fortune-history button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 #a24b60;
+}
+
+.fortune-history-empty {
+  margin: 0;
+  padding: .8rem;
+  color: #625b7a;
+  font-size: .6rem;
+  line-height: 1.55;
+}
+
 .fortune-note { margin-top: 1.3rem; padding: .9rem; border: 2px dashed #b7abca; background: #d9efa4; color: #29243b; }
 .fortune-note p { margin: 0 0 .4rem; color: #4e6d49; font-size: .54rem; letter-spacing: .08em; }
 .fortune-note strong { display: block; max-width: 650px; font: 500 .86rem/1.55 var(--display); letter-spacing: -.025em; }
@@ -119,4 +219,7 @@
   .fortune-symbol { opacity: .25; }
   .fortune-controls { flex-direction: column; }
   .fortune-controls button { width: 100%; }
+  .fortune-history-heading { flex-direction: column; align-items: flex-start; }
+  .fortune-history li { grid-template-columns: 1.7rem minmax(0, 1fr); }
+  .fortune-history button { grid-column: 2; justify-self: start; }
 }
