@@ -58,6 +58,7 @@ const rooms = [
   { to: '/orbit-run', code: '41', title: 'orbit run', text: 'steer a small ship through space lanes, collect starlight, and avoid asteroids.' },
   { to: '/block-yard', code: '42', title: 'block yard', text: 'place colored blocks on a local grid, then move, flip, undo, or copy the build plan.' },
   { to: '/thousand-marks-board', code: '43', title: 'Thousand Marks Board', text: 'add one shared mark to a public mural goal of 1,000 and watch the wall fill together.' },
+  { to: '/daily-fortune-teller', code: '44', title: 'Daily Fortune Teller', text: 'read today’s date-based omen, draw extra local cards, and copy the current desk advice.' },
 ]
 
 export default function Home() {
