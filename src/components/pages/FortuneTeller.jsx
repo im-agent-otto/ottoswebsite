@@ -47,6 +47,9 @@ const fortunes = [
   },
 ]
 
+const drawShelfStorageKey = 'otto-fortune-teller-draw-shelf'
+const maximumSavedDraws = 4
+
 function dayNumber() {
   const now = new Date()
   const start = new Date(now.getFullYear(), 0, 0)
@@ -59,6 +62,26 @@ function dateLabel() {
     month: 'long',
     day: 'numeric',
   }).format(new Date())
+}
+
+function loadDrawHistory() {
+  try {
+    const saved = JSON.parse(window.sessionStorage.getItem(drawShelfStorageKey))
+
+    if (!Array.isArray(saved)) return []
+
+    return saved
+      .filter((entry) => (
+        entry
+        && typeof entry.id === 'string'
+        && Number.isInteger(entry.index)
+        && entry.index >= 0
+        && entry.index < fortunes.length
+      ))
+      .slice(0, maximumSavedDraws)
+  } catch {
+    return []
+  }
 }
 
 async function copyText(text) {
@@ -81,10 +104,22 @@ export default function FortuneTeller() {
   const dailyIndex = useMemo(() => dayNumber() % fortunes.length, [])
   const [fortuneIndex, setFortuneIndex] = useState(dailyIndex)
   const [draws, setDraws] = useState(0)
-  const [drawHistory, setDrawHistory] = useState([])
+  const [drawHistory, setDrawHistory] = useState(loadDrawHistory)
   const [copyNotice, setCopyNotice] = useState('')
   const fortune = fortunes[fortuneIndex]
   const isDailyFortune = fortuneIndex === dailyIndex && draws === 0
+
+  useEffect(() => {
+    try {
+      if (drawHistory.length > 0) {
+        window.sessionStorage.setItem(drawShelfStorageKey, JSON.stringify(drawHistory))
+      } else {
+        window.sessionStorage.removeItem(drawShelfStorageKey)
+      }
+    } catch {
+      // The visible cards can remain on the desk if this browser declines session paperwork.
+    }
+  }, [drawHistory])
 
   function drawAnotherFortune() {
     setFortuneIndex((current) => {
@@ -96,7 +131,7 @@ export default function FortuneTeller() {
       setDrawHistory((history) => [
         { id: `${Date.now()}-${nextCard}`, index: nextCard },
         ...history.filter((entry) => entry.index !== nextCard),
-      ].slice(0, 4))
+      ].slice(0, maximumSavedDraws))
 
       return nextCard
     })
@@ -113,7 +148,12 @@ export default function FortuneTeller() {
   function revisitFortune(entry) {
     setFortuneIndex(entry.index)
     setDraws((current) => Math.max(1, current))
-    setCopyNotice(`reopened ${fortunes[entry.index].omen}. the little oracle keeps a short receipt shelf for this visit.`)
+    setCopyNotice(`reopened ${fortunes[entry.index].omen}. the little oracle keeps this card through a refresh for the current browser session.`)
+  }
+
+  function clearDrawHistory() {
+    setDrawHistory([])
+    setCopyNotice('recent extra cards cleared. the oracle has a clean desk again.')
   }
 
   async function copyFortune() {
@@ -204,13 +244,16 @@ export default function FortuneTeller() {
           <section className="fortune-history" aria-labelledby="fortune-history-title">
             <div className="fortune-history-heading">
               <div>
-                <p>THIS VISIT&apos;S EXTRA DRAWS</p>
+                <p>THIS BROWSER SESSION&apos;S EXTRA DRAWS</p>
                 <h2 id="fortune-history-title">recent cards on the desk.</h2>
               </div>
-              <span>{String(drawHistory.length).padStart(2, '0')} KEPT NEARBY</span>
+              <div className="fortune-history-actions">
+                <span>{String(drawHistory.length).padStart(2, '0')} KEPT NEARBY</span>
+                {drawHistory.length > 0 && <button type="button" onClick={clearDrawHistory}>clear saved cards</button>}
+              </div>
             </div>
             {drawHistory.length === 0 ? (
-              <p className="fortune-history-empty">no extra cards yet. draw another card and the oracle will keep a short local receipt shelf until this visit ends.</p>
+              <p className="fortune-history-empty">no extra cards yet. draw another card and the oracle will keep a short local receipt shelf through a refresh for this browser session.</p>
             ) : (
               <ol>
                 {drawHistory.map((entry, index) => {
@@ -234,7 +277,7 @@ export default function FortuneTeller() {
 
         <aside className="fortune-note">
           <p>HOW THE LITTLE ORACLE WORKS</p>
-          <strong>Today&apos;s first fortune is calculated in this browser from the calendar date. Extra cards choose a different local card each time, and the four most recent extra draws stay on this page until the visit ends. Press N to draw another card, D to return to today&apos;s card, or C to copy the card&apos;s text. The machine is decorative, but the suggestion to drink water may still be solid.</strong>
+          <strong>Today&apos;s first fortune is calculated in this browser from the calendar date. Extra cards choose a different local card each time, and the four most recent extra draws stay on this page through a refresh for the current browser session. Press N to draw another card, D to return to today&apos;s card, or C to copy the card&apos;s text. The machine is decorative, but the suggestion to drink water may still be solid.</strong>
         </aside>
 
         <footer className="fortune-footer">
