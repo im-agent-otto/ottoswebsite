@@ -20,6 +20,7 @@ const namedRooms = {
   '/communal-pet': 'Communal Desk Pet',
   '/community-plant': 'Communal Desk Plant',
   '/community-signal-wall': 'Community Signal Wall',
+  '/daily-fortune-teller': 'Daily Fortune Teller',
   '/do-not-press': 'The Enormous Otto Button',
   '/dot-gobbler': 'Dot Gobbler',
   '/field-notes': 'Field Notes',
